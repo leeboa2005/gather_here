@@ -217,7 +217,6 @@ export type Database = {
           nickname: string | null
           profile_image_url: string | null
           self_introduction: string | null
-          skill: string | null
           user_id: string
         }
         Insert: {
@@ -228,7 +227,6 @@ export type Database = {
           nickname?: string | null
           profile_image_url?: string | null
           self_introduction?: string | null
-          skill?: string | null
           user_id?: string
         }
         Update: {
@@ -239,7 +237,6 @@ export type Database = {
           nickname?: string | null
           profile_image_url?: string | null
           self_introduction?: string | null
-          skill?: string | null
           user_id?: string
         }
         Relationships: [
