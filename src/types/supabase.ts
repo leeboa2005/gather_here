@@ -35,7 +35,7 @@ export type Database = {
           },
         ]
       }
-      interests: {
+      Interests: {
         Row: {
           category: string | null
           created_at: string
