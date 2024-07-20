@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider>{children}</Provider>
+        <span>Issue Template</span>
       </body>
     </html>
   );
