@@ -15,8 +15,8 @@ const config: Config = {
         xs: { max: "320px" },
       },
       maxWidth: {
-        "container-l": "1020px",
-        "container-m": "710px",
+        "container-l": "1050px",
+        "container-m": "730px",
         "container-s": "80%",
       },
     },
