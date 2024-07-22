@@ -2,5 +2,9 @@ import Image from "next/image";
 import MainPage from "./(mainPage)/page";
 
 export default function Home() {
-  return <MainPage />;
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <MainPage />
+    </main>
+  );
 }
