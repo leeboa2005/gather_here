@@ -1,15 +1,16 @@
 "use client";
 
+import Home from "@/components/MainPage/HomePage/Home";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState("All");
 
-  const All = dynamic(() => import("@/app/(root)/(MainPage)/All/page"));
-  const Studies = dynamic(() => import("@/app/(root)/(MainPage)/Studies/page"));
-  const Projects = dynamic(() => import("@/app/(root)/(MainPage)/Projects/page"));
-  const Events = dynamic(() => import("@/app/(root)/(MainPage)/Events/page"));
+  const All = dynamic(() => import("@/app/(root)/(mainPage)/all/page"));
+  const Studies = dynamic(() => import("@/app/(root)/(mainPage)/studies/page"));
+  const Projects = dynamic(() => import("@/app/(root)/(mainPage)/projects/page"));
+  const Events = dynamic(() => import("@/app/(root)/(mainPage)/events/page"));
 
   const renderContent = () => {
     switch (activeTab) {
@@ -42,7 +43,10 @@ const MainPage = () => {
           IT행사
         </button>
       </nav>
-      <main>{renderContent()}</main>
+      <main>
+        {activeTab === "all" && <Home />}
+        {renderContent()}
+      </main>
     </div>
   );
 };
