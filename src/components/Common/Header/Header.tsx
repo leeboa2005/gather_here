@@ -47,13 +47,13 @@ const Header: React.FC = () => {
           </form>
           {isLoggedIn ? (
             <div className="flex items-center space-x-2">
-              <Link href="/MyPage">프로필</Link>
+              <Link href="/mypage">프로필</Link>
               <button onClick={() => setIsLoggedIn(false)} className=" text-white ">
                 로그아웃
               </button>
             </div>
           ) : (
-            <Link href="/Login">로그인</Link>
+            <Link href="/login">로그인</Link>
           )}
         </nav>
       </div>
