@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Provider from "@/Provider/Provider";
+import ContextProvider from "@/Provider/ContextProvider";
 import Header from "@/components/Common/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,7 +34,9 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <Header />
-        <Provider>{children}</Provider>
+        <ContextProvider>
+          <Provider>{children}</Provider>
+        </ContextProvider>
       </body>
     </html>
   );
