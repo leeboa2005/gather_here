@@ -1,15 +1,12 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
-
 const Header: React.FC = () => {
   /* 로그인 기능 개발 전 테스트용
-    false 일때 : 로그인 
-    true 일때 : 프로필, 로그아웃 
+    false 일때 : 로그인
+    true 일때 : 프로필, 로그아웃
   */
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
     <header className="bg-[#1A1B1E] shadow-md">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center pt-4 pb-4 text-white">
@@ -17,7 +14,7 @@ const Header: React.FC = () => {
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
         <nav className="flex items-center space-x-4">
-          <form className="flex items-center border rounded border-white overflow-hidden">
+          <form className="flex s:hidden items-center border rounded border-white overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
             </label>
@@ -48,7 +45,7 @@ const Header: React.FC = () => {
           {isLoggedIn ? (
             <div className="flex items-center space-x-2">
               <Link href="/mypage">프로필</Link>
-              <button onClick={() => setIsLoggedIn(false)} className=" text-white ">
+              <button onClick={() => setIsLoggedIn(false)} className="text-white">
                 로그아웃
               </button>
             </div>
@@ -60,5 +57,4 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
 export default Header;
