@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 const Header: React.FC = () => {
   /* 로그인 기능 개발 전 테스트용
-    false 일때 : 로그인
+    false 일때 : 로그인 
     true 일때 : 프로필, 로그아웃
   */
   const [isLoggedIn, setIsLoggedIn] = useState(false);
