@@ -1,25 +1,28 @@
 "use client";
 
-import Home from "@/components/MainPage/HomePage/Home";
+import useFetchPosts from "@/hooks/useFetchPosts";
+import { Post } from "@/types/posts/Post.type";
+import { UseQueryResult } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 
-const MainPage = () => {
-  const [activeTab, setActiveTab] = useState("All");
+const All = dynamic(() => import("@/app/(root)/(mainpage)/all/page"));
+const Studies = dynamic(() => import("@/app/(root)/(mainpage)/studies/page"));
+const Projects = dynamic(() => import("@/app/(root)/(mainpage)/projects/page"));
+const Events = dynamic(() => import("@/app/(root)/(mainpage)/events/page"));
 
-  const All = dynamic(() => import("@/app/(root)/(mainPage)/all/page"));
-  const Studies = dynamic(() => import("@/app/(root)/(mainPage)/studies/page"));
-  const Projects = dynamic(() => import("@/app/(root)/(mainPage)/projects/page"));
-  const Events = dynamic(() => import("@/app/(root)/(mainPage)/events/page"));
+const MainPage = () => {
+  const [activeTab, setActiveTab] = useState("all");
+  const { data: posts, isLoading, error }: UseQueryResult<Post[], Error> = useFetchPosts();
 
   const renderContent = () => {
     switch (activeTab) {
       case "all":
         return <All />;
       case "studies":
-        return <Studies />;
+        return <Studies posts={posts || []} />;
       case "projects":
-        return <Projects />;
+        return <Projects posts={posts || []} />;
       case "events":
         return <Events />;
       default:
@@ -27,8 +30,16 @@ const MainPage = () => {
     }
   };
 
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
-    <div>
+    <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
       <nav className="p-5">
         <button className="mr-3" onClick={() => setActiveTab("all")}>
           전체
@@ -43,10 +54,7 @@ const MainPage = () => {
           IT행사
         </button>
       </nav>
-      <main>
-        {activeTab === "all" && <Home />}
-        {renderContent()}
-      </main>
+      <main>{renderContent()}</main>
     </div>
   );
 };

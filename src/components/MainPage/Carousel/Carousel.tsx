@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import PostCard from "@/components/MainPage/PostCard/PostCardShort";
 import { Post } from "@/types/posts/Post.type";

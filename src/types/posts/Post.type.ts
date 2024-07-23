@@ -13,5 +13,4 @@ export type Post = {
   deadline: string;
   title: string;
   content: string;
-  tags: string[];
 };
