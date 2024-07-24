@@ -21,7 +21,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/line-clamp"), // 텍스트줄임 ...
+  ],
 };
 
 export default config;
