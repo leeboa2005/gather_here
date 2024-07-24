@@ -1,14 +1,10 @@
 import Calender from "@/components/Common/MainSideBar/Calender/Calender";
 import React from "react";
 
-const page = () => {
+export default function Home() {
   return (
-    <section>
-      <div className="w-96">
-        <Calender />
-      </div>
-    </section>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Calender />
+    </main>
   );
-};
-
-export default page;
+}
