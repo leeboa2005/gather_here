@@ -1,4 +1,4 @@
-import Calender from "@/components/Common/MainSideBar/Calender/Calender";
+import Calender from "@/components/MainPage/MainSideBar/Calender/Calender";
 import React from "react";
 
 export default function Home() {
