@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Provider from "@/Provider/Provider";
+import Provider from "@/provider/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
