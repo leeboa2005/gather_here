@@ -16,26 +16,19 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="p-8 m-5 text-center bg-slate-100 shadow-md rounded-2xl">
-      <p>{post.user_id}</p>
-      <h2 className="truncate">{post.title}</h2>
-      <p className="truncate">{post.content}</p>
-      <p>{post.category}</p>
-      <p>모집 포지션: {post.target_position}</p>
-      <p>
-        마감일: {setDeadlines}(D-{daysLeft})
-      </p>
-      <p>위치: {post.location}</p>
-      <span>총 인원: {post.total_members} / </span>
-      <span>모집 인원: {post.recruitments}</span>
-      <p>기술 스택: {post.tech_stack}</p>
-      <span>깃 or 오픈톡: </span>
-      {post.personal_link ? (
-        <a className="truncate" href={post.personal_link} target="_blank" rel="noopener noreferrer">
-          {post.personal_link}
-        </a>
-      ) : (
-        <span>링크 없음</span>
-      )}
+      <p className="text-sm text-gray-500">작성자 {post.user_id}</p>
+      <h2 className="text-left text-xl font-bold truncate">{post.title}</h2>
+      <div className="flex justify-between items-center mt-2">
+        <p className="text-sm bg-gray-200 rounded-full px-2 py-1">D-{daysLeft}</p>
+        <p className="text-sm text-gray-500">마감일 : {setDeadlines}</p>
+      </div>
+      <p className="mt-5 mb-5 truncate">{post.content}</p>
+      <div className="mt-4">
+        <p className="text-sm text-gray-500">
+          모집 : {post.target_position} / 인원 : {post.recruitments}
+        </p>
+        <p className="text-sm mt-2 text-gray-500">기술 스택: {post.tech_stack}</p>
+      </div>
     </div>
   );
 };
