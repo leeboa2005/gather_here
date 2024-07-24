@@ -11,13 +11,12 @@ const config: Config = {
     extend: {
       screens: {
         m: { max: "1068px" },
-        s: { max: "734px" },
-        xs: { max: "320px" },
+        s: { max: "768px" },
       },
       maxWidth: {
-        "container-l": "1050px",
-        "container-m": "730px",
-        "container-s": "80%",
+        "container-l": "1048px",
+        "container-m": "744px",
+        "container-s": "335px",
       },
     },
   },
