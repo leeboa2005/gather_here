@@ -1,7 +1,7 @@
 import React from "react";
 
-const page = () => {
-  return <div>page</div>;
+const MyPage: React.FC = () => {
+  return <div>MyPage 기본 페이지</div>;
 };
 
-export default page;
+export default MyPage;
