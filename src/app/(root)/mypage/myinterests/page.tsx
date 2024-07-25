@@ -1,7 +1,8 @@
 import React from "react";
+import InterestsTap from "@/components/MyPage/MyInterests/InterestsTap";
 
-const page = () => {
-  return <div>MyInterests</div>;
+const MyInterestsPage = () => {
+  return <InterestsTap />;
 };
 
-export default page;
+export default MyInterestsPage;

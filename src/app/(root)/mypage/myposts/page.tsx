@@ -1,7 +1,11 @@
-import React from "react";
+import PostsTap from "@/components/MyPage/MyPosts/PostsTap";
 
-const page = () => {
-  return <div>MyPosts</div>;
+const MyPostsPage = () => {
+  return (
+    <div>
+      <PostsTap />
+    </div>
+  );
 };
 
-export default page;
+export default MyPostsPage;
