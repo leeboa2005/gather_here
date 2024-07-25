@@ -12,6 +12,7 @@ export async function GET(request: Request) {
 
     if (!error) {
       console.log('Code exchanged successfully, redirecting to:', `${origin}${next}`)
+      console.log(origin,next)
       return NextResponse.redirect(`${origin}${next}`)
     } else {
       console.error('Error exchanging code for session:', error.message)
