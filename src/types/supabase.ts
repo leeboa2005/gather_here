@@ -73,9 +73,11 @@ export type Database = {
       }
       IT_Events: {
         Row: {
-          apply_done: string
+          apply_done: string | null
           apply_start: string | null
           category: string
+          date_done: string
+          date_start: string
           description: string
           event_id: string
           host: string
@@ -85,21 +87,25 @@ export type Database = {
           title: string
         }
         Insert: {
-          apply_done: string
+          apply_done?: string | null
           apply_start?: string | null
-          category?: string
+          category: string
+          date_done: string
+          date_start: string
           description: string
           event_id?: string
           host: string
           img_url?: string | null
-          link_url?: string
+          link_url: string
           location: string
           title?: string
         }
         Update: {
-          apply_done?: string
+          apply_done?: string | null
           apply_start?: string | null
           category?: string
+          date_done?: string
+          date_start?: string
           description?: string
           event_id?: string
           host?: string
@@ -157,12 +163,13 @@ export type Database = {
           deadline: string
           duration: number
           location: string
-          personal_link: Json | null
+          personal_link: string | null
           post_id: string
           recruitments: number
           tags: string[] | null
-          target_position: string
+          target_position: string[]
           tech_stack: string
+          title: string | null
           total_members: number
           user_id: string
         }
@@ -173,12 +180,13 @@ export type Database = {
           deadline?: string
           duration: number
           location: string
-          personal_link?: Json | null
+          personal_link?: string | null
           post_id?: string
           recruitments: number
           tags?: string[] | null
-          target_position: string
+          target_position: string[]
           tech_stack?: string
+          title?: string | null
           total_members: number
           user_id?: string
         }
@@ -189,12 +197,13 @@ export type Database = {
           deadline?: string
           duration?: number
           location?: string
-          personal_link?: Json | null
+          personal_link?: string | null
           post_id?: string
           recruitments?: number
           tags?: string[] | null
-          target_position?: string
+          target_position?: string[]
           tech_stack?: string
+          title?: string | null
           total_members?: number
           user_id?: string
         }
