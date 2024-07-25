@@ -6,12 +6,13 @@ import { useAuthStore } from "@/store/authStore";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 
+const supabase = createClient();
+
 const Header: React.FC = () => {
   const { user, setUser, resetUser } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    const supabase = createClient();
     supabase.auth.getUser().then((data) => {
       if (data.data.user) {
         setUser(data.data.user);
@@ -20,16 +21,16 @@ const Header: React.FC = () => {
   }, [setUser]);
 
   const signOut = async () => {
-    const supabase = createClient();
     const { error } = await supabase.auth.signOut();
     if (!error) {
-      console.log("Sign out successful");
+      console.log("logout successful");
       resetUser();
       router.push("/");
     } else {
-      console.error("Error signing out:", error);
+      console.error("Error logout:", error);
     }
   };
+
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
