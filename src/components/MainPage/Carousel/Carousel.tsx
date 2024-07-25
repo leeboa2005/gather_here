@@ -36,8 +36,8 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           },
         }}
       >
-        {posts.map((post) => (
-          <SwiperSlide key={post.post_id} className="flex justify-center items-center">
+        {posts.map((post, index) => (
+          <SwiperSlide key={`${post.post_id}_${index}`} className="flex justify-center items-center">
             <PostCardShort post={post} />
           </SwiperSlide>
         ))}

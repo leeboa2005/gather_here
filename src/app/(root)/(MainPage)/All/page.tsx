@@ -1,22 +1,16 @@
-import PostCardLong from "@/components/MainPage/PostCard/PostCardLong";
+import React from "react";
 import { fetchPosts } from "@/lib/fetchPosts";
 import { Post } from "@/types/posts/Post.type";
-import React from "react";
+import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 
 const AllPage = async () => {
-  const posts: Post[] = await fetchPosts();
+  const initialPosts: Post[] = await fetchPosts(0);
 
-  if (!posts || posts.length === 0) {
+  if (!initialPosts || initialPosts.length === 0) {
     return <div>포스트를 불러오는 중 문제가 발생했습니다.</div>;
   }
 
-  return (
-    <>
-      {posts.map((post) => (
-        <PostCardLong key={post.post_id} post={post} />
-      ))}
-    </>
-  );
+  return <InfiniteScrollComponent initialPosts={initialPosts} />;
 };
 
 export default AllPage;
