@@ -1,14 +1,11 @@
-import React from "react";
 import NavTabs from "@/components/MainPage/NavTab/NavTabs";
-import AllPage from "./all/page";
+import React from "react";
 
-const MainPage = async () => {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
       <NavTabs />
-      <AllPage />
+      <main>{children}</main>
     </div>
   );
-};
-
-export default MainPage;
+}

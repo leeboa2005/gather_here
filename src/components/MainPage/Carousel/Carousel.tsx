@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -23,6 +24,17 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         navigation
         pagination={{ clickable: true }}
         className="w-full h-full"
+        breakpoints={{
+          335: {
+            slidesPerView: 1,
+          },
+          769: {
+            slidesPerView: 2,
+          },
+          1068: {
+            slidesPerView: 3,
+          },
+        }}
       >
         {posts.map((post) => (
           <SwiperSlide key={post.post_id} className="flex justify-center items-center">

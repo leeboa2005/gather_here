@@ -1,30 +1,30 @@
-import Carousel from "@/components/MainPage/Carousel/Carousel";
-import PostCardLong from "@/components/MainPage/PostCard/PostCardLong";
-import { Post } from "@/types/posts/Post.type";
 import React from "react";
+import { fetchPosts } from "@/lib/fetchPosts";
+import ProjectContent from "@/components/MainPage/PageContent/ProjectContent";
+import PostCardLong from "@/components/MainPage/PostCard/PostCardLong";
 
-interface StudyPageProps {
-  posts: Post[];
-}
+const ProjectsPage = async () => {
+  const posts = await fetchPosts();
 
-const ProjectPage: React.FC<StudyPageProps> = ({ posts }) => {
+  if (!posts || posts.length === 0) {
+    return <div>포스트를 불러오는 중 문제가 발생했습니다.</div>;
+  }
   const today = new Date();
   const sevenDaysPosts = new Date(today);
   sevenDaysPosts.setDate(today.getDate() + 200); // 7로바꾸면 D-7게시글만
-  const studyPosts = (posts || []).filter(
+
+  const projectPosts = posts.filter(
     (post) => post.category === "프로젝트" && new Date(post.deadline) <= sevenDaysPosts,
   );
+
   return (
     <>
-      <div>
-        <h1 className="font-bold text-lg">마감 임박</h1>
-        <Carousel posts={studyPosts} />
-        {studyPosts.map((post) => (
-          <PostCardLong key={post.post_id} post={post} />
-        ))}
-      </div>
+      <ProjectContent posts={projectPosts} />
+      {projectPosts.map((post) => (
+        <PostCardLong key={post.post_id} post={post} />
+      ))}
     </>
   );
 };
 
-export default ProjectPage;
+export default ProjectsPage;
