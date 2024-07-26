@@ -91,25 +91,66 @@ const PostPage = () => {
   ];
 
   const totalMembersOptions: Option[] = [
+    { value: "3", label: "3명 이하" },
+    { value: "4", label: "4명" },
     { value: "5", label: "5명" },
-    { value: "10", label: "10명" },
+    { value: "6", label: "6명" },
+    { value: "7", label: "7명 이상" },
   ];
 
   const targetPositionOptions: Option[] = [
-    { value: "개발자", label: "개발자" },
+    { value: "프론트엔드", label: "프론트엔드" },
+    { value: "백엔드", label: "백엔드" },
     { value: "디자이너", label: "디자이너" },
+    { value: "IOS", label: "IOS" },
+    { value: "안드로이드", label: "안드로이드" },
+    { value: "데브옵스", label: "데브옵스" },
+    { value: "PM", label: "PM" },
+    { value: "기획자", label: "기획자" },
+    { value: "마케터", label: "마케터" },
   ];
 
   const recruitmentsOptions: Option[] = [
     { value: "1", label: "1명" },
     { value: "2", label: "2명" },
     { value: "3", label: "3명" },
+    { value: "4", label: "4명" },
+    { value: "5", label: "5명" },
+    { value: "6", label: "5명 이상" },
   ];
 
   const techStackOptions: Option[] = [
-    { value: "React", label: "React" },
-    { value: "Vue", label: "Vue" },
+    { value: "AWS", label: "AWS" },
+    { value: "Docker", label: "Docker" },
+    { value: "Django", label: "Django" },
+    { value: "Express", label: "Express" },
+    { value: "Figma", label: "Figma" },
+    { value: "Firebase", label: "Firebase" },
+    { value: "Flutter", label: "Flutter" },
+    { value: "Git", label: "Git" },
+    { value: "Go", label: "Go" },
+    { value: "GraphQL", label: "GraphQL" },
+    { value: "Java", label: "Java" },
+    { value: "Javascript", label: "Javascript" },
+    { value: "Jest", label: "Jest" },
+    { value: "Kotlin", label: "Kotlin" },
+    { value: "Kubernetes", label: "Kubernetes" },
+    { value: "MongoDB", label: "MongoDB" },
+    { value: "MySQL", label: "MySQL" },
+    { value: "Nestjs", label: "Nestjs" },
+    { value: "Nextjs", label: "Nextjs" },
+    { value: "Nodejs", label: "Nodejs" },
+    { value: "Php", label: "Php" },
     { value: "Python", label: "Python" },
+    { value: "React", label: "React" },
+    { value: "ReactNative", label: "ReactNative" },
+    { value: "Spring", label: "Spring" },
+    { value: "Svelte", label: "Svelte" },
+    { value: "Swift", label: "Swift" },
+    { value: "TypeScript", label: "TypeScript" },
+    { value: "Unity", label: "Unity" },
+    { value: "Vue", label: "Vue" },
+    { value: "Zeplin", label: "Zeplin" },
   ];
 
   const placeOptions: Option[] = [
