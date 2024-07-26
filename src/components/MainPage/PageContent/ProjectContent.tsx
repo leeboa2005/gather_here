@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchDeadlinePosts } from "@/lib/fetchDeadlinePosts";
 import { Post } from "@/types/posts/Post.type";
-import PostCardLong from "@/components/MainPage/PostCard/PostCardLong";
+import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });

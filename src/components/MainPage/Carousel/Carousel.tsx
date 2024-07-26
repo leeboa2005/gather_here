@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
-import PostCardShort from "@/components/MainPage/PostCard/PostCardShort";
+import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
 import { Post } from "@/types/posts/Post.type";
 import FilterBar from "../FilterBar/FilterBar";
 

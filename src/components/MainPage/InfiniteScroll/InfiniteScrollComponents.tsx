@@ -1,5 +1,5 @@
 "use client";
-import PostCardLong from "@/components/MainPage/PostCard/PostCardLong";
+import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "../AdCard/AdCard";
 import { fetchPosts } from "@/lib/fetchPosts";
 import { Post } from "@/types/posts/Post.type";
