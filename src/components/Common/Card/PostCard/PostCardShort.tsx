@@ -26,10 +26,10 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <p className="mt-2 text-left text-sm h-16 overflow-hidden line-clamp-3">{post.content}</p>
         <div className="mt-1">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 truncate">
             모집 : {post.target_position} / 인원 : {post.recruitments}
           </p>
-          <p className="text-sm mt-2 text-gray-500">기술 스택: {post.tech_stack}</p>
+          <p className="text-sm mt-2 text-gray-500 truncate">기술 스택: {post.tech_stack}</p>
         </div>
       </div>
     </div>
