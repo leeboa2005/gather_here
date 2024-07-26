@@ -62,7 +62,7 @@ const ProfilePicture: React.FC = () => {
         const uniqueFileName = `profile_${base64Encode(userId)}.png`;
         const { error: uploadError } = await supabase.storage
           .from("images")
-          .upload(`profileImages/${uniqueFileName}`, file, { upsert: true }); // 동일한 이미지이면 덮어씌우기 upsert
+          .upload(`profileImages/${uniqueFileName}`, file, { upsert: true }); // 동일한 이미지이면 새로운 이미지로 변경됨
         if (uploadError) {
           console.error("파일 업로드 에러:", uploadError);
           setUploading(false);
