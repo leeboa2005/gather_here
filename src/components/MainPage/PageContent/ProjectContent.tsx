@@ -6,6 +6,7 @@ import { fetchDeadlinePosts } from "@/lib/fetchDeadlinePosts";
 import { Post } from "@/types/posts/Post.type";
 import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
+import { fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -17,13 +18,17 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  // 캐러셀용 상태추가하고
 
   useEffect(() => {
-    loadMorePosts();
-  }, []);
+    const loadCarouselData = async () => {
+      await fetchPostsWithDeadLine();
+    };
+    loadCarouselData();
+  }, []); // 캐러셀용 따로
 
   const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchDeadlinePosts(page, "프로젝트", 200); // 필요한 날짜 범위로 변경
+    const newPosts: Post[] = await fetchDeadlinePosts(page, "프로젝트", 50); // 필요한 날짜 범위로 변경
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);

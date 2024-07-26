@@ -13,3 +13,14 @@ export const fetchPosts = async (page: number): Promise<Post[]> => {
   if (error) throw new Error(error.message);
   return data as Post[];
 };
+
+export const fetchPostsWithDeadLine = async (): Promise<Post[]> => {
+  const supabase = createClient();
+  const postsPerPage = 5;
+  const today = new Date().toISOString().split("T")[0];
+
+  const { data, error } = await supabase.from("Posts").select("*").gt("deadline", today);
+
+  if (error) throw new Error(error.message);
+  return data as Post[];
+};
