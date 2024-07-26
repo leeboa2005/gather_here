@@ -58,6 +58,8 @@ const Calender: React.FC = () => {
     return <div>Error</div>;
   }
 
+  console.log(...IT_Events); // 추후 삭제
+
   return (
     <FullCalendar
       // 큰 값으로 설정하면 더 작게 보임
