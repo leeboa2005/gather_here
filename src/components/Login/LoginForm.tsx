@@ -4,12 +4,15 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import OAuthButtons from './OAuthButtons';
+import { useAuthStore } from '@/store/authStore';
+
 
 const LoginForm = () => {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { setUser } = useAuthStore();
 
   const handleLogin = async (provider: 'google' | 'kakao' | 'github') => {
     setLoading(true);
@@ -18,7 +21,7 @@ const LoginForm = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: 'http://localhost3000.com/api/auth/callback',
+        redirectTo: 'http://localhost:3000/api/auth/callback',
       },
     });
 
@@ -31,7 +34,7 @@ const LoginForm = () => {
 
     if (data) {
       console.log('Login successful:', data);
-      router.push('/');
+       router.push('/'); 
     } else {
       console.error('Login data is empty.');
       setError('Login failed. Please try again.');
