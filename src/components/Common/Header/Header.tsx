@@ -13,12 +13,16 @@ const Header: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getUser().then((data) => {
-      if (data.data.user) {
-        setUser(data.data.user);
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
+        setUser(data.user);
       }
-    });
+    };
+    getUser();
   }, [setUser]);
+
+  console.log(user);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -30,7 +34,6 @@ const Header: React.FC = () => {
       console.error("Error logout:", error);
     }
   };
-
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
@@ -84,3 +87,8 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
+// 1. user : null
+// 2. user : user있음
+// 3. user : null
+// 4. user : user있음
