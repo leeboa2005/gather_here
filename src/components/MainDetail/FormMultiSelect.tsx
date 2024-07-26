@@ -28,7 +28,6 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value
         options={options}
         className="basic-multi-select"
         classNamePrefix="select"
-        placeholder="선택해주세요"
       />
     </div>
   );
