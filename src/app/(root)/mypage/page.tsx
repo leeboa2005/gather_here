@@ -1,7 +1,13 @@
-import React from "react";
+import ProfilePicture from "@/components/MyPage/MyInfo/ProfilePicture";
+import ProfileInfo from "@/components/MyPage/MyInfo/ProfileInfo";
 
-const page = () => {
-  return <div>MyPage</div>;
+const MyInfo = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <ProfilePicture />
+      <ProfileInfo />
+    </div>
+  );
 };
 
-export default page;
+export default MyInfo;
