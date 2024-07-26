@@ -23,7 +23,7 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
   }, []);
 
   const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchDeadlinePosts(page, "스터디", 50); // 7로 바꾸면 D-7 게시글만
+    const newPosts: Post[] = await fetchDeadlinePosts(page, "스터디", 100); // 7로 바꾸면 D-7 게시글만
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
