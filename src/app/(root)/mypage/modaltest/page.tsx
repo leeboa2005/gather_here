@@ -16,6 +16,7 @@ const ModalTest: React.FC = () => {
       </div>,
     );
   };
+  
   // 페이지 레이아웃
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">

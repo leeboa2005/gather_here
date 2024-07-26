@@ -84,8 +84,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
-// 1. user : null
-// 2. user : user있음
-// 3. user : null
-// 4. user : user있음

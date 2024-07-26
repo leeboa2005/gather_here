@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Provider from "@/provider/Provider";
 import ContextProvider from "@/provider/ContextProvider";
 import Header from "@/components/Common/Header/Header";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,16 +28,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  // loginModal,
+}: {
   children: React.ReactNode;
-}>) {
+  // loginModal: React.ReactNode;
+}) {
   return (
     <html lang="ko">
       <body className={inter.className}>
         <Header />
-        <ContextProvider>
-          <Provider>{children}</Provider>
-        </ContextProvider>
+        <Link href="/login">로그인 모달열기</Link>
+        {/* <ContextProvider>
+          <Provider>{children} {loginModal} </Provider>
+        </ContextProvider> */}
       </body>
     </html>
   );
