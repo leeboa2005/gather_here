@@ -12,14 +12,28 @@ export type Database = {
       Channels: {
         Row: {
           channel_id: string
+          participants: string
+          total_users: number
         }
         Insert: {
           channel_id?: string
+          participants?: string
+          total_users: number
         }
         Update: {
           channel_id?: string
+          participants?: string
+          total_users?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "Channels_participants_fkey"
+            columns: ["participants"]
+            isOneToOne: false
+            referencedRelation: "Users"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       Interests: {
         Row: {
@@ -70,7 +84,6 @@ export type Database = {
           img_url: string | null
           link_url: string
           location: string
-          price: Json | null
           title: string
         }
         Insert: {
@@ -85,7 +98,6 @@ export type Database = {
           img_url?: string | null
           link_url: string
           location: string
-          price?: Json | null
           title?: string
         }
         Update: {
@@ -100,7 +112,6 @@ export type Database = {
           img_url?: string | null
           link_url?: string
           location?: string
-          price?: Json | null
           title?: string
         }
         Relationships: []
@@ -151,13 +162,13 @@ export type Database = {
           created_at: string
           deadline: string
           duration: number
-          location: string | null
+          location: string
           personal_link: string | null
-          place: string
           post_id: string
           recruitments: number
+          tags: string[] | null
           target_position: string[]
-          tech_stack: string[] | null
+          tech_stack: string
           title: string | null
           total_members: number
           user_id: string
@@ -168,13 +179,13 @@ export type Database = {
           created_at?: string
           deadline?: string
           duration: number
-          location?: string | null
+          location: string
           personal_link?: string | null
-          place: string
           post_id?: string
           recruitments: number
+          tags?: string[] | null
           target_position: string[]
-          tech_stack?: string[] | null
+          tech_stack?: string
           title?: string | null
           total_members: number
           user_id?: string
@@ -185,13 +196,13 @@ export type Database = {
           created_at?: string
           deadline?: string
           duration?: number
-          location?: string | null
+          location?: string
           personal_link?: string | null
-          place?: string
           post_id?: string
           recruitments?: number
+          tags?: string[] | null
           target_position?: string[]
-          tech_stack?: string[] | null
+          tech_stack?: string
           title?: string | null
           total_members?: number
           user_id?: string
