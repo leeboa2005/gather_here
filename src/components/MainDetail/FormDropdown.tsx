@@ -18,6 +18,7 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ label, options, value, onCh
         multiple={multiple}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       >
+        <option value="">--선택해주세요--</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

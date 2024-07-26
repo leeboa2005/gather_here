@@ -161,7 +161,13 @@ const PostPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto mt-8">
-      <FormInput label="제목" value={title} onChange={handleInputChange(setTitle)} maxLength={30} />
+      <FormInput
+        label="제목"
+        value={title}
+        onChange={handleInputChange(setTitle)}
+        maxLength={30}
+        placeholder="제목을 입력해주세요"
+      />
       <FormDropdown label="분류" options={categoryOptions} value={category} onChange={handleInputChange(setCategory)} />
       <FormDropdown label="지역" options={locationOptions} value={location} onChange={handleInputChange(setLocation)} />
       <FormDropdown label="기간" options={durationOptions} value={duration} onChange={handleInputChange(setDuration)} />
@@ -171,7 +177,12 @@ const PostPage = () => {
         value={totalMembers}
         onChange={handleInputChange(setTotalMembers)}
       />
-      <FormInput label="연락 방법" value={personalLink} onChange={handleInputChange(setPersonalLink)} />
+      <FormInput
+        label="연락 방법"
+        value={personalLink}
+        onChange={handleInputChange(setPersonalLink)}
+        placeholder="연락 방법을 입력해주세요"
+      />
       <FormMultiSelect
         label="모집 대상"
         options={targetPositionOptions}
