@@ -56,7 +56,7 @@ const ProfilePicture: React.FC = () => {
 
   // 프로필 이미지 업로드 및 업데이트 함수
   const uploadProfileImage = async (file: File | Blob, altText: string) => {
-    setUploading(true); // 업로드 시작
+    setUploading(true);
 
     try {
       const FileName = `profile_${base64Encode(userId)}.png`; // 파일명 난독화
@@ -95,7 +95,7 @@ const ProfilePicture: React.FC = () => {
     } catch (error) {
       console.error("파일 업로드 중 오류 발생:", error);
     } finally {
-      setUploading(false); // 업로드 완료
+      setUploading(false);
     }
   };
 
