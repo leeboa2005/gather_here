@@ -7,10 +7,11 @@ export type Post = {
   location: string;
   total_members: number;
   personal_link?: string;
-  target_position: string;
+  target_position: string[];
   recruitments: number;
-  tech_stack: string;
+  tech_stack: string | string[];
   deadline: string;
   title: string;
   content: string;
+  place?: string;
 };

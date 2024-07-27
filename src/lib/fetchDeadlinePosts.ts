@@ -3,7 +3,6 @@ import { Post } from "@/types/posts/Post.type";
 
 export const fetchDeadlinePosts = async (page: number, category: string, days: number): Promise<Post[]> => {
   const posts = await fetchPosts(page);
-  console.log(posts.length);
   const today = new Date();
   const deadlineDate = new Date(today);
   deadlineDate.setDate(today.getDate() + days);

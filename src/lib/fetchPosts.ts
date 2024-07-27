@@ -1,5 +1,5 @@
-import { createClient } from "@/utils/supabase/client";
 import { Post } from "@/types/posts/Post.type";
+import { createClient } from "@/utils/supabase/client";
 
 export const fetchPosts = async (page: number): Promise<Post[]> => {
   const supabase = createClient();
