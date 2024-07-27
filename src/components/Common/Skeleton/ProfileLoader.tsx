@@ -1,11 +1,11 @@
 import React from "react";
 
-const SkeletonLoader: React.FC<{ className?: string; children?: React.ReactNode }> = ({ className, children }) => {
+const ProfileLoader: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={`animate-pulse ${className}`}>
-      <div className="bg-gray-200 w-full h-full">{children}</div>
+      <div className="bg-gray-200 marker:w-full h-full"></div>
     </div>
   );
 };
 
-export default SkeletonLoader;
+export default ProfileLoader;
