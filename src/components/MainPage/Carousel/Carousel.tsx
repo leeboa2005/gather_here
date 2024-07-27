@@ -8,7 +8,6 @@ import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
 import { Post } from "@/types/posts/Post.type";
-import FilterBar from "../FilterBar/FilterBar";
 
 interface CarouselProps {
   posts: Post[];
@@ -17,7 +16,6 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = ({ posts }) => {
   return (
     <>
-      <FilterBar />
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         slidesPerView={3}

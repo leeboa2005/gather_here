@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchDeadlinePosts } from "@/lib/fetchDeadlinePosts";
 import { Post } from "@/types/posts/Post.type";
 import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
-import { fetchPostsWithDeadLine } from "@/lib/fetchPosts";
+import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
+import FilterBar from "../FilterBar/FilterBar";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -18,31 +18,40 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  // 캐러셀용 상태추가하고
+  const [carouselPosts, setCarouselPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const loadCarouselData = async () => {
-      await fetchPostsWithDeadLine();
+      const carouselData = await fetchPostsWithDeadLine(14, "프로젝트"); // D-일수이내것만 보여지게
+      setCarouselPosts(carouselData);
     };
     loadCarouselData();
-  }, []); // 캐러셀용 따로
+  }, []);
 
   const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchDeadlinePosts(page, "프로젝트", 50); // 필요한 날짜 범위로 변경
+    const newPosts: Post[] = await fetchPosts(page, "프로젝트");
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
       return;
     }
 
-    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+    setPosts((prevPosts) => {
+      const allPosts = [...prevPosts, ...newPosts];
+      const uniquePosts = allPosts.filter(
+        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
+      );
+      return uniquePosts;
+    });
+
     setPage((prevPage) => prevPage + 1);
   };
 
   return (
     <div>
+      <FilterBar />
       <h1 className="font-bold text-lg">마감 임박</h1>
-      <Carousel posts={posts} />
+      <Carousel posts={carouselPosts} />
       <InfiniteScroll
         dataLength={posts.length}
         next={loadMorePosts}

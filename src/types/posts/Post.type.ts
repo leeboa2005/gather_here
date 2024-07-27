@@ -6,7 +6,7 @@ export type Post = {
   duration: number;
   location: string;
   total_members: number;
-  personal_link?: string;
+  personal_link?: string | null;
   target_position: string[];
   recruitments: number;
   tech_stack: string | string[];

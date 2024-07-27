@@ -1,32 +1,17 @@
 "use client";
-import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
-import AdCard from "../AdCard/AdCard";
-import { fetchPosts } from "@/lib/fetchPosts";
-import { Post } from "@/types/posts/Post.type";
-import React, { useState } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
+import AdCard from "@/components/MainPage/AdCard/AdCard";
+import { Post } from "@/types/posts/Post.type";
 
 interface InfiniteScrollComponentProps {
-  initialPosts: Post[];
+  posts: Post[];
+  hasMore: boolean;
+  loadMorePosts: () => Promise<void>;
 }
 
-const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1); // 초기 페이지는 이미 불러왔으므로 1로 시작
-
-  const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchPosts(page);
-
-    if (!newPosts || newPosts.length === 0) {
-      setHasMore(false);
-      return;
-    }
-
-    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-    setPage((prevPage) => prevPage + 1);
-  };
-
+const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ posts = [], hasMore, loadMorePosts }) => {
   return (
     <InfiniteScroll
       dataLength={posts.length}
