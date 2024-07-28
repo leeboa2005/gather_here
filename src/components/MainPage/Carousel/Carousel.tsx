@@ -15,22 +15,22 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ posts }) => {
   return (
-    <>
+    <div className="relative z-0">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
-        slidesPerView={3}
+        slidesPerView={2}
         navigation
         pagination={{ clickable: true }}
         className="w-full h-full"
         breakpoints={{
-          335: {
+          336: {
             slidesPerView: 1,
           },
           769: {
             slidesPerView: 2,
           },
           1068: {
-            slidesPerView: 3,
+            slidesPerView: 2.3,
           },
         }}
       >
@@ -40,7 +40,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 

@@ -21,7 +21,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         <h2 className="text-left text-xl font-bold truncate">{post.title}</h2>
         <div className="flex justify-between items-center mt-2">
           <p className="text-sm bg-gray-200 rounded-full px-2 py-1">D-{daysLeft}</p>
-          <p className="text-sm bg-gray-200 rounded-full px-2 py-1">{post.category}</p>
+          {/* <p className="text-sm bg-gray-200 rounded-full px-2 py-1">{post.category}</p> */}
           <p className="text-sm text-gray-500">마감일 : {setDeadlines}</p>
         </div>
         <p className="mt-2 text-left text-sm h-16 overflow-hidden line-clamp-3">{post.content}</p>

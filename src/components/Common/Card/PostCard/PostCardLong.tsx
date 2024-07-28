@@ -22,7 +22,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <div className="flex justify-between">
         <h2 className="text-left text-lg font-bold truncate w-3/4">{post.title}</h2>
         <div className="flex">
-          <p className="text-sm w-auto bg-gray-200 rounded-full px-2 py-1 flex-shrink-0">{post.category}</p>
+          {/* <p className="text-sm w-auto bg-gray-200 rounded-full px-2 py-1 flex-shrink-0">{post.category}</p> */}
           <p className="text-sm w-auto bg-gray-200 rounded-full px-2 py-1 flex-shrink-0">D-{daysLeft}</p>
           <p className="text-sm text-gray-500 hidden md:block flex-shrink-0">마감일 : {setDeadlines}</p>
         </div>

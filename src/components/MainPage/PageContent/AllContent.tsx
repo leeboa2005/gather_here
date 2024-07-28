@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { fetchPosts } from "@/lib/fetchPosts";
 import { Post } from "@/types/posts/Post.type";
+import Calender from "../MainSideBar/Calender/Calender";
 
 interface AllContentProps {
   initialPosts: Post[];
@@ -11,7 +12,7 @@ interface AllContentProps {
 const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(2); // 초기 페이지를 2로 설정 (1페이지는 이미 불러왔)
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     const uniquePosts = initialPosts.filter(
@@ -44,7 +45,16 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     }
   };
 
-  return <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />;
+  return (
+    <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 flex space-x-4 mt-6">
+      <div className="w-2/3">
+        <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+      </div>
+      <div className="w-1/3">
+        <Calender />
+      </div>
+    </div>
+  );
 };
 
 export default AllContent;
