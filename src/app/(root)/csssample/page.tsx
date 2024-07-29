@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-/* type, label, htmlFor, mt-3(간격)은 작업하는 내용에 맞게 변경하여 사용해 주세요.
+/* type, label, htmlFor, mt-3(간격), width는 작업하는 내용에 맞게 변경하여 사용하시면 됩니다.
    input 사용할 때 label은 화면에 보이지는 않지만(sr-only) 웹 접근성을 위해 추가하였습니다.
 */
 const Page = () => {
@@ -12,40 +12,16 @@ const Page = () => {
         <label className="sr-only" htmlFor="">
           input창에 대한 내용
         </label>
-        <input id="" className="shared-input-large mt-3" type="" placeholder="테스트용" />
-
-        <label className="sr-only" htmlFor="">
-          input창에 대한 내용
-        </label>
-        <input id="" className="shared-input-medium mt-3" type="" placeholder="테스트용" />
-
-        <label className="sr-only" htmlFor="">
-          input창에 대한 내용
-        </label>
-        <input id="" className="shared-input-small mt-3" type="" placeholder="테스트용" />
+        <input id="" className="shared-input mt-3" type="" placeholder="테스트용" />
 
         {/* input - gray */}
         <label className="sr-only" htmlFor="">
           input창에 대한 내용
         </label>
-        <input id="" className="shared-input-gray-large mt-3" type="" placeholder="테스트용" />
-
-        <label className="sr-only" htmlFor="">
-          input창에 대한 내용
-        </label>
-        <input id="" className="shared-input-gray-medium mt-3" type="" placeholder="테스트용" />
-
-        <label className="sr-only" htmlFor="">
-          input창에 대한 내용
-        </label>
-        <input id="" className="shared-input-gray-small mt-3" type="" placeholder="테스트용" />
-
-        <label className="sr-only" htmlFor="">
-          select 창에 대한 내용
-        </label>
+        <input id="" className="shared-input-gray mt-3" type="" placeholder="테스트용" />
 
         {/* select */}
-        <select id="" className="shared-select-large mt-3">
+        <select id="" className="shared-select mt-3 block">
           <option value="">프론트엔드</option>
           <option value="">백엔드</option>
           <option value="">디자이너</option>
@@ -60,7 +36,7 @@ const Page = () => {
         <label className="sr-only" htmlFor="">
           지역 선택
         </label>
-        <select id="" className="shared-select-medium mt-3">
+        <select id="" className="shared-select mt-3 block">
           <option value="">서울</option>
           <option value="">부산</option>
           <option value="">대구</option>
@@ -83,7 +59,7 @@ const Page = () => {
         <label className="sr-only" htmlFor="">
           기술스택 선택
         </label>
-        <select id="" className="shared-select-small mt-3">
+        <select id="" className="shared-select mt-3 block">
           <option value="">JavaScript</option>
           <option value="">TypeScript</option>
           <option value="">React</option>
@@ -119,7 +95,7 @@ const Page = () => {
         <label className="sr-only" htmlFor="">
           select 창에 대한 내용
         </label>
-        <select id="" className="shared-select-gray-large mt-3">
+        <select id="" className="shared-select-gray mt-3 block">
           <option value="">프론트엔드</option>
           <option value="">백엔드</option>
           <option value="">디자이너</option>
@@ -134,7 +110,7 @@ const Page = () => {
         <label className="sr-only" htmlFor="">
           모집인원 선택
         </label>
-        <select id="" className="shared-select-gray-small mt-3">
+        <select id="" className="shared-select-gray mt-3 block">
           <option value="">1인</option>
           <option value="">2인</option>
           <option value="">3인</option>
@@ -143,16 +119,7 @@ const Page = () => {
         </select>
 
         {/* button - green */}
-        <button type="submit" className="shared-button-green-full mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-green-large mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-green-medium mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-green-small mt-3">
+        <button type="submit" className="shared-button-green mt-3">
           테스트
         </button>
 
@@ -160,29 +127,12 @@ const Page = () => {
         <button type="submit" className="shared-button-gray-full mt-3">
           테스트
         </button>
-        <button type="submit" className="shared-button-gray-large mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-gray-medium mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-gray-small mt-3">
+
+        {/* button - outline */}
+        <button type="submit" className="shared-button-outline mt-3">
           테스트
         </button>
 
-        {/* button - outline */}
-        <button type="submit" className="shared-button-outline-full mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-outline-large mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-outline-medium mt-3">
-          테스트
-        </button>
-        <button type="submit" className="shared-button-outline-small mt-3">
-          테스트
-        </button>
         <button type="button" className="tab-button mt-3" aria-label="전체 보기">
           전체
         </button>
@@ -190,12 +140,16 @@ const Page = () => {
         {/* button - circle */}
         <div>
           <button type="button" className="circle-button mt-3" aria-label="아이콘 버튼">
-            아이콘
+            <Image src="/Common/Icons/close.png" alt="닫기 버튼" width={21} height={21} />
           </button>
           <button type="button" className="circle-button-gray mt-3 mb-3" aria-label="회색 아이콘 버튼">
-            아이콘
+            <Image src="/Common/Icons/close.png" alt="닫기 버튼" width={21} height={21} />
           </button>
         </div>
+
+        <button className="square-button-small mb-3">
+          <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
+        </button>
 
         {/* button - tab */}
         <button type="button" className="square-button square-button-default mt-3">
@@ -203,7 +157,7 @@ const Page = () => {
         </button>
 
         {/* button - square */}
-        <div className="grid grid-cols-3 gap-1 mt-3 w-[275px]">
+        <div className="grid grid-cols-3 gap-1 mt-3 w-[280px]">
           <button type="submit" className="square-button button-frontend" aria-label="프론트엔드">
             프론트엔드
           </button>
@@ -236,11 +190,11 @@ const Page = () => {
 
       {/* button - login */}
       <button className="shared-button-google flex items-center justify-center  mt-3" aria-label="구글로 로그인하기">
-        <Image src="/logos/google-logo.png" alt="구글 로고" width={24} height={24} className="mr-2" />
+        <Image src="/logos/google-logo.png" alt="구글 로고" width={30} height={30} className="mr-2" />
         구글로 로그인하기
       </button>
       <button className="shared-button-kakao flex items-center justify-center  mt-3" aria-label="카카오로 로그인하기">
-        <Image src="/logos/kakao-logo.png" alt="카카오 로고" width={24} height={24} className="mr-2" />
+        <Image src="/logos/kakao-logo.png" alt="카카오 로고" width={22} height={22} className="mr-2" />
         카카오로 로그인하기
       </button>
       <button className="shared-button-github flex items-center justify-center  mt-3" aria-label="깃허브로 로그인하기">

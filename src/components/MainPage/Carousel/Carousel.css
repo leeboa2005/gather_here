@@ -1,0 +1,13 @@
+/* carousel.css */
+.swiper-button-next,
+.swiper-button-prev {
+  color: black;
+}
+
+.swiper-pagination-bullet {
+  background-color: black;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black;
+}

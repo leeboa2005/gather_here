@@ -1,7 +1,11 @@
 import React from "react";
 
-const page = () => {
-  return <div>page</div>;
+const EventPage = () => {
+  return (
+    <div>
+      <h2>IT 행사</h2>
+    </div>
+  );
 };
 
-export default page;
+export default EventPage;

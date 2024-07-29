@@ -1,7 +1,14 @@
 import React from "react";
+import StudiesContent from "@/components/MainPage/PageContent/StudiesContent";
+import { fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 
-const page = () => {
-  return <div>page</div>;
+const StudiesPage = async () => {
+  const posts = await fetchPostsWithDeadLine(14, "스터디");
+  if (!posts || posts.length === 0) {
+    return <div>포스트를 불러오는 중 문제가 발생했습니다.</div>;
+  }
+
+  return <StudiesContent initialPosts={posts} />;
 };
 
-export default page;
+export default StudiesPage;

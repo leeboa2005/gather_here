@@ -13,113 +13,86 @@ body {
 
 /* input styles  */
 @layer utilities {
-  .shared-input-large {
-    @apply bg-background text-fontWhite w-[390px] h-[42px] border-2 border-labelStrong p-2 rounded-md m:w-[300px] focus:outline-primaryHeavy;
-  }
-  .shared-input-medium {
-    @apply bg-background text-fontWhite w-[360px] h-[42px] border-2 border-labelStrong  p-2 rounded-md m:w-[208px] focus:outline-primaryHeavy;
-  }
-  .shared-input-small {
-    @apply bg-background text-fontWhite w-[245px] h-[42px] border-2 border-labelStrong p-2 rounded-md m:w-[200px] focus:outline-primaryHeavy;
+  .shared-input {
+    @apply bg-background text-fontWhite px-[16px] py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
   }
 
-  .shared-input-gray-large {
-    @apply bg-fillLight text-fontWhite w-[390px] h-[42px]  p-2 rounded-md m:w-[300px] focus:outline-fontWhite;
+  .shared-input-gray {
+    @apply bg-fillLight text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
-  .shared-input-gray-medium {
-    @apply bg-fillLight text-fontWhite w-[360px] h-[42px]  p-2 rounded-md m:w-[208px] focus:outline-fontWhite;
-  }
-  .shared-input-gray-small {
-    @apply bg-fillLight text-fontWhite w-[245px] h-[42px]   p-2 rounded-md m:w-[200px] focus:outline-fontWhite;
+
+  .shared-input-gray-2 {
+    @apply bg-fillNormal text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 
   /* select styles */
-  .shared-select-large {
-    @apply bg-background text-fontWhite w-[390px] h-[42px] border-2 border-labelStrong  p-2 rounded-md m:w-[300px] focus:outline-primaryHeavy;
+  .shared-select {
+    @apply bg-background text-fontWhite px-[16px] py-[10px] min-h-[45px] border-[1px] border-labelStrong  p-2 rounded-md  focus:outline-primaryHeavy;
   }
-  .shared-select-medium {
-    @apply bg-background text-fontWhite w-[360px] h-[42px] border-2 border-labelStrong  p-2 rounded-md m:w-[208px] focus:outline-primaryHeavy;
+
+  .shared-select-gray {
+    @apply bg-fillLight text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
-  .shared-select-small {
-    @apply bg-background text-fontWhite w-[245px] h-[42px] border-2 border-labelStrong  p-2 rounded-md m:w-[200px] focus:outline-primaryHeavy;
-  }
-  .shared-select-gray-large {
-    @apply bg-fillLight text-fontWhite w-[390px] h-[42px] p-2 rounded-md m:w-[300px] focus:outline-fontWhite;
-  }
-  .shared-select-gray-medium {
-    @apply bg-fillLight text-fontWhite w-[360px] h-[42px] p-2 rounded-md m:w-[208px] focus:outline-fontWhite;
-  }
-  .shared-select-gray-small {
-    @apply bg-fillLight text-fontWhite w-[245px] h-[42px] p-2 rounded-md m:w-[200px] focus:outline-fontWhite;
+
+  .shared-select-gray-2 {
+    @apply bg-fillNormal text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 }
 
 /* button styles  */
 @layer utilities {
   /* button - green */
-  .shared-button-green-full {
-    @apply text-labelAlternative bg-primary min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
-  }
-  .shared-button-green-large {
-    @apply text-labelAlternative bg-primary min-w-[169px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
-  }
-  .shared-button-green-medium {
-    @apply text-labelAlternative bg-primary min-w-[136px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
-  }
-  .shared-button-green-small {
-    @apply text-labelAlternative bg-primary min-w-[100px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
+  .shared-button-green {
+    @apply text-labelAlternative bg-primary px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
   }
 
   /* button - gray  */
-  .shared-button-gray-full {
-    @apply text-fontWhite bg-fillLight min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+  .shared-button-gray {
+    @apply text-fontWhite bg-fillLight px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
   }
-  .shared-button-gray-large {
-    @apply text-fontWhite bg-fillLight min-w-[169px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+
+  /* button - black */
+  .shared-button-black {
+    @apply text-fontWhite bg-fillStrong px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-black;
   }
-  .shared-button-gray-medium {
-    @apply text-fontWhite bg-fillLight min-w-[136px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
-  }
-  .shared-button-gray-small {
-    @apply text-fontWhite bg-fillLight min-w-[100px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+
+  /* button - white */
+  .shared-button-white {
+    @apply text-fillStrong bg-fontWhite px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-white;
   }
 
   /* button - outline */
-  .shared-button-outline-full {
-    @apply text-primary border-2 border-primary min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
-  }
-  .shared-button-outline-large {
-    @apply text-primary border-2 border-primary min-w-[169px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
-  }
-  .shared-button-outline-medium {
-    @apply text-primary border-2 border-primary min-w-[136px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
-  }
-  .shared-button-outline-small {
-    @apply text-primary border-2 border-primary min-w-[100px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
+  .shared-button-outline {
+    @apply text-primary border-[1px] border-primary px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
   }
 
   /* button - tab */
   .tab-button {
-    @apply flex items-center justify-center w-[64px] px-3 py-2 text-baseS rounded-lg text-primary bg-fillStrong hover:bg-black  transition-opacity;
+    @apply flex items-center justify-center px-[16px] py-[10px] text-baseS rounded-lg text-primary bg-fillStrong hover:bg-black  transition-opacity;
   }
 
   /* button - circle */
   .circle-button {
-    @apply w-14 h-14 p-[8px] rounded-full flex items-center justify-center bg-primary text-labelAlternative hover:bg-primaryHeavy transition-colors duration-300;
+    @apply p-[10px] rounded-full flex items-center justify-center bg-primary text-labelAlternative hover:bg-primaryHeavy transition-colors duration-300;
   }
   .circle-button-gray {
-    @apply w-14 h-14 p-[8px] rounded-full flex items-center justify-center bg-fillLight hover:bg-fillNeutral text-fontWhite transition-colors duration-300;
+    @apply p-[10px] rounded-full flex items-center justify-center bg-fillLight hover:bg-fillNeutral text-fontWhite transition-colors duration-300;
+  }
+
+  /* button - square small */
+  .square-button-small {
+    @apply flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillNeutral text-white;
   }
 
   /* button - square */
   .square-button {
-    @apply bg-fillLight text-fontWhite w-[80px] h-[80px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
+    @apply bg-fillLight text-labelNormal w-[80px] h-[80px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
   }
   .square-button:hover {
     @apply text-labelAlternative;
   }
   .square-button.square-button-default:hover {
-    @apply bg-primaryHeavy;
+    @apply bg-primary;
   }
   .square-button.button-ios:hover {
     @apply bg-accentPurple;
@@ -151,24 +124,24 @@ body {
 
   /* button - google  */
   .shared-button-google {
-    @apply text-labelAlternative bg-white min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-white min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - kakao */
   .shared-button-kakao {
-    @apply text-labelAlternative bg-[#FEE500] min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-[#FEE500] min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - github */
   .shared-button-github {
-    @apply text-fontWhite bg-[#24292F] min-w-[300px] h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-fontWhite bg-[#24292F] min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 }
 
 /* label styles*/
 @layer utilities {
   .label {
-    @apply flex flex-col items-center justify-center text-baseXs px-3 py-1 max-w-16 rounded-[20px] border transition-opacity;
+    @apply flex flex-col items-center justify-center text-baseXs px-[12px] py-[5px] rounded-[20px] border transition-opacity;
   }
   .label-default {
     @apply border-labelAlternative text-labelNeutral bg-fillNormal;

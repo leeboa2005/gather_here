@@ -33,8 +33,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="font-main bg-background text-fontWhite">
-        <Header />
         <ContextProvider>
+          <Header />
           <Provider>{children}</Provider>
         </ContextProvider>
       </body>

@@ -17,7 +17,7 @@ const ProfileInfo: React.FC = () => {
         <div className="relative w-80 p-6 bg-white rounded-lg shadow-lg">
           <button
             onClick={onRequestClose}
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            className="absolute top-2 right-2 text-gray-500 hover:"
             aria-label="모달 닫기"
           >
             <svg
@@ -42,14 +42,10 @@ const ProfileInfo: React.FC = () => {
             </p>
           </div>
           <div className="flex justify-center space-x-2">
-            <button
-              onClick={onRequestClose}
-              className="px-4 py-3 bg-gray-100 rounded-md text-sm w-40"
-              aria-label="회원 탈퇴 취소"
-            >
+            <button onClick={onRequestClose} className="shared-button-gray w-1/2" aria-label="회원 탈퇴 취소">
               취소
             </button>
-            <button type="submit" className="px-4 py-3 bg-gray-900 text-white rounded-md text-sm  w-40">
+            <button type="submit" className="shared-button-black w-1/2">
               탈퇴
             </button>
           </div>
@@ -61,11 +57,11 @@ const ProfileInfo: React.FC = () => {
   return (
     <section>
       <form className="space-y-6">
-        <fieldset className="bg-white rounded-2xl border border-gray-200 s:border-none shadow-sm p-7 s:p-0">
+        <fieldset className="rounded-2xl bg-fillLight shadow-sm p-6 s:p-0 s:bg-background">
           <h1 className="text-lg font-semibold mb-4">기본 정보</h1>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="nickname" className="block text-sm font-medium mb-1">
                 닉네임
               </label>
               <input
@@ -73,11 +69,11 @@ const ProfileInfo: React.FC = () => {
                 id="nickname"
                 name="nickname"
                 placeholder="닉네임을 입력해주세요."
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full shared-input-gray-2"
               />
             </div>
             <div>
-              <label htmlFor="blog" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="blog" className="block text-sm font-medium mb-1">
                 블로그 <span className="text-gray-400">(선택)</span>
               </label>
               <input
@@ -85,39 +81,35 @@ const ProfileInfo: React.FC = () => {
                 id="blog"
                 name="blog"
                 placeholder="링크를 입력해주세요."
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full shared-input-gray-2"
               />
             </div>
             <div>
-              <label htmlFor="job" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="job" className="block text-sm font-medium  mb-1">
                 직군
               </label>
-              <select id="job" name="job" className="w-full p-2 border border-gray-300 rounded-md">
+              <select id="job" name="job" className="w-full shared-select-gray-2">
                 <option>프론트엔드 개발자</option>
               </select>
             </div>
             <div>
-              <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="experience" className="block text-sm font-medium  mb-1">
                 경력
               </label>
-              <select id="experience" name="experience" className="w-full p-2 border border-gray-300 rounded-md">
+              <select id="experience" name="experience" className="w-full shared-select-gray-2">
                 <option>N년</option>
               </select>
             </div>
           </div>
           <div className="mt-6">
-            <button type="button" aria-label=" 회원 탈퇴" onClick={handleOpenModal} className="mb-6">
+            <button type="button" aria-label=" 회원 탈퇴" onClick={handleOpenModal} className="mb-6 hover:underline">
               회원 탈퇴
             </button>
-            <div className="space-x-2">
-              <button type="button" aria-label=" 회원 정보 취소" className="px-4 py-2 bg-gray-100 rounded-md text-sm">
+            <div className="flex justify-start gap-2">
+              <button type="button" aria-label=" 회원 정보 취소" className="shared-button-white">
                 취소
               </button>
-              <button
-                type="submit"
-                aria-label=" 회원 정보 저장"
-                className="px-4 py-2 bg-gray-900 text-white rounded-md text-sm"
-              >
+              <button type="submit" aria-label=" 회원 정보 저장" className="shared-button-black">
                 저장
               </button>
             </div>
