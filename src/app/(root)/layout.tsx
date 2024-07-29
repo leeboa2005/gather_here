@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <ContextProvider>
-        <Header />
+          <Header />
           <Provider>{children}</Provider>
         </ContextProvider>
       </body>
