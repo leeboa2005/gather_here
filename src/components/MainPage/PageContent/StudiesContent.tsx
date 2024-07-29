@@ -113,7 +113,7 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Calender />
       </CommonModal>
-    </div>
+    </div> // 캘린더→채팅컴포넌트로 바뀔예정
   );
 };
 

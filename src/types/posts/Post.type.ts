@@ -15,3 +15,9 @@ export type Post = {
   content: string;
   place?: string;
 };
+
+// export type Users = {
+//   email: string;
+//   nickname: string;
+//   profile_image_url: string;
+// };
