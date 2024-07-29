@@ -10,7 +10,6 @@ const Signup01: React.FC = () => {
   const handleJobSelection = (job_title: string) => {
     setSelectedJob(job_title);
     setJob(job_title);
-    console.log("Job selected:", job_title); // 콘솔 로그 추가
     nextStep();
   };
 

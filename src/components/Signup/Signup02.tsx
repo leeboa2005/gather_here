@@ -10,7 +10,6 @@ const Signup02: React.FC = () => {
   const handleExperienceSelection = (experience: string) => {
     setSelectedExperience(experience);
     setExperience(experience);
-    console.log("Experience selected:", experience); // 콘솔 로그 추가
     nextStep();
   };
 

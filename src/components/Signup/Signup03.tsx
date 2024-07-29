@@ -45,17 +45,6 @@ const Signup03: React.FC = () => {
     // }
 
     try {
-      console.log('Attempting to insert data:', {
-        user_id: user.id,
-        job_title,
-        experience,
-        nickname,
-        profile_image_url,
-        blog,
-        email: user.email,
-      });
-
-      // Check if the user already exists
       const { data, error: fetchError } = await supabase
         .from('Users')
         .select('user_id')
@@ -68,8 +57,6 @@ const Signup03: React.FC = () => {
       }
 
       if (data && data.length > 0) {
-        console.log('User already exists, updating profile.');
-        // Update the existing user
         const { error: updateError } = await supabase
           .from('Users')
           .update({
@@ -90,10 +77,7 @@ const Signup03: React.FC = () => {
 
         setNickname(nickname);
         setBlog(blog);
-        console.log('Profile updated:', { nickname, blog });
       } else {
-        console.log('Inserting new user data.');
-        // Insert new user
         const { error: insertError } = await supabase.from('Users').insert({
           user_id: user.id,
           job_title,
@@ -112,7 +96,6 @@ const Signup03: React.FC = () => {
 
         setNickname(nickname);
         setBlog(blog);
-        console.log('Profile saved:', { nickname, blog });
       }
 
       nextStep();
