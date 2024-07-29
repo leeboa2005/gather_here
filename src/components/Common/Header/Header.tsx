@@ -5,12 +5,15 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/provider/ContextProvider";
+import LoginForm from "@/components/Login/LoginForm";
 
 const supabase = createClient();
 
 const Header: React.FC = () => {
   const { user, setUser, resetUser } = useAuthStore();
   const router = useRouter();
+  const { openModal } = useModal();
 
   useEffect(() => {
     const getUser = async () => {
@@ -31,6 +34,12 @@ const Header: React.FC = () => {
       console.error("Error logout:", error);
     }
   };
+
+  const handleOpenModal = () => {
+    openModal(
+      <LoginForm />
+    );
+  }
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
@@ -75,7 +84,7 @@ const Header: React.FC = () => {
               </button>
             </div>
           ) : (
-            <Link href="/login">로그인</Link>
+            <button onClick={handleOpenModal}>로그인</button>
           )}
         </nav>
       </div>
@@ -84,8 +93,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
-// 1. user : null
-// 2. user : user있음
-// 3. user : null
-// 4. user : user있음
