@@ -4,7 +4,8 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import OAuthButtons from './OAuthButtons';
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from '@/store/useAuthStore';
+
 
 
 const LoginForm = () => {
@@ -44,7 +45,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-[400px] h-[400px] relative bg-white rounded-[20px] ">
+    <div className="w-[400px] h-[500px] relative bg-white rounded-[20px] ">
       <div className="left-[114px] top-[30px] absolute text-center text-black/20 text-2xl font-medium font-['Pretendard JP'] leading-9">
         3초만에 가입하고 <br />대화 시작하기
       </div>
@@ -63,7 +64,7 @@ const LoginForm = () => {
         <OAuthButtons handleLogin={handleLogin} />
       )}
 
-      <div className="w-80 left-[40px] top-[340px] absolute text-center text-[#999999] text-xs font-medium font-['Pretendard JP'] leading-tight">
+      <div className="w-80 left-[40px] top-[400px] absolute text-center text-[#999999] text-xs font-medium font-['Pretendard JP'] leading-tight">
         로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을
         의미하며, 서비스 이용을 위해 이메일과 이름, 프로필 이미지를
         수집합니다.

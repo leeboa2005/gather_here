@@ -1,24 +1,26 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
-import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
-import { useModal } from "@/provider/ContextProvider";
-import LoginForm from "@/components/Login/LoginForm";
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/provider/ContextProvider';
+import LoginForm from '@/components/Login/LoginForm';
+
+import useSignupStore from '@/store/useSignupStore';
+// import SignupForm from '@/components/Signup/SigupForm';
 
 const supabase = createClient();
 
 const Header: React.FC = () => {
-  const { user, setUser, resetUser } = useAuthStore();
+  const { user, setUser, resetUser } = useSignupStore();
   const router = useRouter();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) {
         setUser(data.user);
       }
     };
@@ -29,17 +31,19 @@ const Header: React.FC = () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
       resetUser();
-      router.push("/");
+      router.push('/');
     } else {
-      console.error("Error logout:", error);
+      console.error('Error logging out:', error);
     }
   };
 
-  const handleOpenModal = () => {
-    openModal(
-      <LoginForm />
-    );
-  }
+  const handleOpenLoginModal = () => {
+    openModal(<LoginForm />);
+  };
+
+  // const handleOpenSignupModal = () => {
+  //   openModal(<SignupForm />);
+  // };
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
@@ -49,9 +53,7 @@ const Header: React.FC = () => {
         </Link>
         <nav className="flex items-center space-x-4">
           <form className="flex s:hidden items-center border rounded border-white overflow-hidden">
-            <label htmlFor="search" className="sr-only">
-              검색창
-            </label>
+            <label htmlFor="search" className="sr-only">검색창</label>
             <input
               type="text"
               id="search"
@@ -79,12 +81,10 @@ const Header: React.FC = () => {
           {user ? (
             <div className="flex items-center space-x-2">
               <Link href="/mypage">프로필</Link>
-              <button onClick={signOut} className="text-white">
-                로그아웃
-              </button>
+              <button onClick={signOut} className="text-white">로그아웃</button>
             </div>
           ) : (
-            <button onClick={handleOpenModal}>로그인</button>
+            <button onClick={handleOpenLoginModal} className="text-white">로그인</button>
           )}
         </nav>
       </div>
