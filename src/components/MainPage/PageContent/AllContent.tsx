@@ -4,7 +4,7 @@ import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/Infini
 import { fetchPosts } from "@/lib/fetchPosts";
 import { Post } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
-import Chat from "../MainSideBar/Calender/Chat/Chat";
+import Chat from "../MainSideBar/Chat/Chat";
 
 interface AllContentProps {
   initialPosts: Post[];
