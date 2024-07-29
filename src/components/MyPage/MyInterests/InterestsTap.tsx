@@ -13,35 +13,35 @@ const InterestsTap: React.FC = () => {
 
   return (
     <div className="relative">
-      <div className="sticky z-10 bg-white border-b s:relative s:top-auto">
+      <div className="sticky z-10 border-fillNeutral border-b-[1px]  s:relative s:top-auto">
         <div className="flex space-x-4 sm:space-x-2">
           <button
-            className={`px-4 py-2 s:px-2 sm:py-1 text-base sm:text-sm ${
-              selectedTab === "전체" ? "font-bold border-b-2 border-black" : ""
+            className={`px-4 py-2 s:px-2 sm:py-1  ${
+              selectedTab === "전체" ? "font-bold border-b-[1px] border-fontWhite" : ""
             }`}
             onClick={() => handleTabClick("전체")}
           >
             전체
           </button>
           <button
-            className={`px-4 py-2 s:px-2 sm:py-1 text-base sm:text-sm ${
-              selectedTab === "스터디" ? "font-bold border-b-2 border-black" : ""
+            className={`px-4 py-2 s:px-2 sm:py-1 ${
+              selectedTab === "스터디" ? "font-bold border-b-[1px] border-fontWhite" : ""
             }`}
             onClick={() => handleTabClick("스터디")}
           >
             스터디
           </button>
           <button
-            className={`px-4 py-2 s:px-2 sm:py-1 text-base sm:text-sm ${
-              selectedTab === "프로젝트" ? "font-bold border-b-2 border-black" : ""
+            className={`px-4 py-2 s:px-2 sm:py-1 ${
+              selectedTab === "프로젝트" ? "font-bold border-b-[1px] border-fontWhite" : ""
             }`}
             onClick={() => handleTabClick("프로젝트")}
           >
             프로젝트
           </button>
           <button
-            className={`px-4 py-2 s:px-2 sm:py-1 text-base sm:text-sm ${
-              selectedTab === "IT 행사" ? "font-bold border-b-2 border-black" : ""
+            className={`px-4 py-2 s:px-2 sm:py-1 ${
+              selectedTab === "IT 행사" ? "font-bold border-b-[1px] border-fontWhite" : ""
             }`}
             onClick={() => handleTabClick("IT 행사")}
           >

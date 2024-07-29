@@ -5,6 +5,7 @@ import { fetchPosts } from "@/lib/fetchPosts";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
+import Chat from "../MainSideBar/Chat/Chat";
 
 interface AllContentProps {
   initialPosts: PostWithUser[];
@@ -75,6 +76,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
           <div className="w-1/3">
             <div className="sticky top-4">
               <Calender />
+              <Chat />
             </div>
           </div>
         )}
@@ -84,13 +86,13 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
           onClick={openModal}
           className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-full shadow-lg z-50"
         >
-          캘린더
+          채팅
         </button>
       )}
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <Calender />
+        <Chat />
       </CommonModal>
-    </div> // 캘린더→채팅컴포넌트로 바뀔예정
+    </div>
   );
 };
 
