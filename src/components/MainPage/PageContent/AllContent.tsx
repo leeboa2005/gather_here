@@ -4,6 +4,7 @@ import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/Infini
 import { fetchPosts } from "@/lib/fetchPosts";
 import { Post } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
+import Chat from "../MainSideBar/Calender/Chat/Chat";
 
 interface AllContentProps {
   initialPosts: Post[];
@@ -52,6 +53,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
       </div>
       <div className="w-1/3">
         <Calender />
+        <Chat />
       </div>
     </div>
   );
