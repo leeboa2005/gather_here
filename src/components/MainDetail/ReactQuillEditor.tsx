@@ -7,6 +7,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ReactQuillEditorProps {
   value: string;
   onChange: (content: string) => void;
+  placeholder: string; // placeholder 속성을 추가합니다.
 }
 
 const modules = {
@@ -22,14 +23,14 @@ const modules = {
 
 const formats = ["header", "font", "size", "bold", "italic", "underline", "strike", "list", "bullet", "link", "image"];
 
-const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange }) => {
+const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, placeholder }) => {
   return (
     <ReactQuill
       value={value}
       onChange={onChange}
       modules={modules}
       formats={formats}
-      placeholder="내용을 입력해주세요"
+      placeholder={placeholder} // placeholder를 여기에 추가합니다.
     />
   );
 };

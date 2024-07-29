@@ -16,6 +16,10 @@ interface Option {
   label: string;
 }
 
+interface Post {
+  post_id: string;
+}
+
 const supabase = createClient();
 
 const PostPage = () => {
@@ -36,12 +40,12 @@ const PostPage = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const user = await supabase.auth.getUser();
-      if (user?.data?.user) {
-        setUserId(user.data.user.id);
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) {
+        setUserId(data.user.id);
       } else {
         toast.error("로그인이 필요합니다!");
-        router.push("/login"); // 로그인 페이지로 리디렉션
+        router.push("/login");
       }
     };
     getUser();
@@ -66,12 +70,12 @@ const PostPage = () => {
       target_position: targetPosition.map((pos) => pos.value),
       recruitments: Number(recruitments),
       tech_stack: techStack.length > 0 ? `{${techStack.map((ts) => `"${ts.value}"`).join(",")}}` : "",
-      deadline: deadline,
+      deadline: deadline || "",
       content: content,
       place: place,
     };
 
-    const { data, error } = await supabase.from("Posts").insert(payload);
+    const { data, error } = await supabase.from("Posts").insert(payload).select("post_id");
 
     if (error) {
       console.error("데이터 안들어간다:", error);
@@ -80,7 +84,7 @@ const PostPage = () => {
       console.log("데이터 잘들어간다:", data);
       toast.success("제출되었습니다!");
       if (data && data[0] && data[0].post_id) {
-        router.push(`/maindetail/${data[0].post_id}`); // 상세 페이지로 리디렉션
+        router.push(`/maindetail/${data[0].post_id}`);
       }
     }
   };
