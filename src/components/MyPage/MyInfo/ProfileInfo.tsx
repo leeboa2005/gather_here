@@ -32,7 +32,7 @@ const ProfileInfo: React.FC = () => {
             </svg>
           </button>
           <div className="mb-4 w-auto flex justify-center">
-            <Image src="/Common/caution_icon.png" alt="Profile Image" width={70} height={70} />
+            <Image src="/Common/Icons/caution_icon.png" alt="Profile Image" width={70} height={70} />
           </div>
           <h2 className="mb-2 text-lg font-semibold">정말 탈퇴하시겠어요?</h2>
           <div className="mb-5">
