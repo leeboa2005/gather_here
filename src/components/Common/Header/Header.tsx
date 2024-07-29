@@ -6,9 +6,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/provider/ContextProvider';
 import LoginForm from '@/components/Login/LoginForm';
-
 import useSignupStore from '@/store/useSignupStore';
-// import SignupForm from '@/components/Signup/SigupForm';
 
 const supabase = createClient();
 
@@ -40,10 +38,6 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
-
-  // const handleOpenSignupModal = () => {
-  //   openModal(<SignupForm />);
-  // };
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
