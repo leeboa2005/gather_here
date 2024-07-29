@@ -16,10 +16,6 @@ interface Option {
   label: string;
 }
 
-interface Post {
-  post_id: string;
-}
-
 const supabase = createClient();
 
 const PostPage = () => {
@@ -69,13 +65,13 @@ const PostPage = () => {
       personal_link: personalLink,
       target_position: targetPosition.map((pos) => pos.value),
       recruitments: Number(recruitments),
-      tech_stack: techStack.length > 0 ? `{${techStack.map((ts) => `"${ts.value}"`).join(",")}}` : "",
+      tech_stack: techStack.map((ts) => ts.value),
       deadline: deadline || "",
       content: content,
       place: place,
     };
 
-    const { data, error } = await supabase.from("Posts").insert(payload).select("post_id");
+    const { data, error } = await supabase.from("Posts").insert([payload]).select("post_id");
 
     if (error) {
       console.error("데이터 안들어간다:", error);
@@ -286,13 +282,14 @@ const PostPage = () => {
 
       <div className="bg-gray-100 p-6 rounded-lg shadow-md space-y-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">내용</label>
-        <ReactQuillEditor value={content} onChange={setContent} placeholder="내용을 입력해주세요" />
+        <ReactQuillEditor value={content} onChange={setContent} />
       </div>
 
       <div className="flex justify-end space-x-4">
         <button
           type="button"
           className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={() => router.push("/")} // 메인 페이지로 리디렉션
         >
           취소
         </button>

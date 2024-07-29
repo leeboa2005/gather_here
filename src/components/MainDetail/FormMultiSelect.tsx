@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "react-select";
+import { useId } from "react";
 
 interface Option {
   value: string;
@@ -14,6 +15,8 @@ interface FormMultiSelectProps {
 }
 
 const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value, onChange }) => {
+  const instanceId = useId();
+
   const handleChange = (selectedOptions: any) => {
     onChange(selectedOptions || []);
   };
@@ -28,6 +31,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value
         options={options}
         className="basic-multi-select"
         classNamePrefix="select"
+        instanceId={instanceId}
       />
     </div>
   );
