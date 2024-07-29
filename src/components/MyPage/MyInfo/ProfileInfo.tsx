@@ -61,7 +61,7 @@ const ProfileInfo: React.FC = () => {
   return (
     <section>
       <form className="space-y-6">
-        <fieldset className="bg-white rounded-2xl border border-gray-200 s:border-none shadow-sm p-7 s:p-0">
+        <fieldset className="bg-white rounded-2xl border border-gray-200 s:border-none shadow-sm p-6 s:p-0">
           <h1 className="text-lg font-semibold mb-4">기본 정보</h1>
           <div className="grid grid-cols-2 gap-4">
             <div>
