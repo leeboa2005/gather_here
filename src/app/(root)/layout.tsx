@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className="font-main bg-background text-fontWhite">
         <ContextProvider>
           <Header />
           <Provider>{children}</Provider>
