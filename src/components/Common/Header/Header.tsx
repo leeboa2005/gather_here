@@ -1,32 +1,30 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
+import useSignupStore from "@/store/useSignupStore";
+// import SignupForm from '@/components/Signup/SigupForm';
 
 const supabase = createClient();
-
 const Header: React.FC = () => {
-  const { user, setUser, resetUser } = useAuthStore();
+  const { user, setUser, resetUser } = useSignupStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   // 로그아웃
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
       resetUser();
-      setIsModalOpen(false);
       router.push("/");
     } else {
-      console.error("Error logout:", error);
+      console.error("Error logging out:", error);
     }
   };
 
@@ -34,21 +32,19 @@ const Header: React.FC = () => {
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
-
   // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
-  const handleOpenModal = () => {
+  const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
 
   // 사용자 정보를 가져옴
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) {
         setUser(data.user);
       }
     };
@@ -183,5 +179,4 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
 export default Header;
