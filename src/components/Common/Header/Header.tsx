@@ -102,22 +102,14 @@ const Header: React.FC = () => {
                 >
                   <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
                 </Link>
-                <button
-                  onClick={signOut}
-                  className="flex s:hidden items-center justify-center shared-button-gray-small ml-2"
-                  style={{ minWidth: "80px" }}
-                >
+                <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
                   로그아웃
                 </button>
               </div>
             ) : (
-              <Link
-                href="/login"
-                className="flex items-center justify-center shared-button-gray-small"
-                style={{ minWidth: "70px" }}
-              >
+              <button onClick={handleOpenLoginModal} className="shared-button-gray">
                 로그인
-              </Link>
+              </button>
             )}
           </div>
         </nav>
