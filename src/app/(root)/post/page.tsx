@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
-import dynamic from "next/dynamic";
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import FormInput from "@/components/MainDetail/FormInput";
 import FormDropdown from "@/components/MainDetail/FormDropdown";
+import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
+import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
 import "react-quill/dist/quill.snow.css";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-const FormMultiSelect = dynamic(() => import("@/components/MainDetail/FormMultiSelect"), { ssr: false });
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Option {
   value: string;
@@ -30,12 +31,32 @@ const PostPage = () => {
   const [deadline, setDeadline] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [place, setPlace] = useState<string>("");
+  const [userId, setUserId] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await supabase.auth.getUser();
+      if (user?.data?.user) {
+        setUserId(user.data.user.id);
+      } else {
+        toast.error("로그인이 필요합니다!");
+        router.push("/login"); // 로그인 페이지로 리디렉션
+      }
+    };
+    getUser();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!userId) {
+      toast.error("로그인이 필요합니다!");
+      return;
+    }
+
     const payload = {
-      user_id: "2e47ab8c-da7a-4590-b114-b0512b1b22cd",
+      user_id: userId,
       title,
       category,
       location,
@@ -52,8 +73,16 @@ const PostPage = () => {
 
     const { data, error } = await supabase.from("Posts").insert(payload);
 
-    if (error) console.error("데이터 안들어간다:", error);
-    else console.log("데이터 잘들어간다:", data);
+    if (error) {
+      console.error("데이터 안들어간다:", error);
+      toast.error("다시 시도해주세요!");
+    } else {
+      console.log("데이터 잘들어간다:", data);
+      toast.success("제출되었습니다!");
+      if (data && data[0] && data[0].post_id) {
+        router.push(`/maindetail/${data[0].post_id}`); // 상세 페이지로 리디렉션
+      }
+    }
   };
 
   const handleInputChange =
@@ -161,6 +190,7 @@ const PostPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8 space-y-6">
+      <ToastContainer />
       <div className="space-y-4">
         <FormInput
           label="제목"
@@ -252,7 +282,7 @@ const PostPage = () => {
 
       <div className="bg-gray-100 p-6 rounded-lg shadow-md space-y-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">내용</label>
-        <ReactQuill value={content} onChange={setContent} placeholder="내용을 입력해주세요" />
+        <ReactQuillEditor value={content} onChange={setContent} placeholder="내용을 입력해주세요" />
       </div>
 
       <div className="flex justify-end space-x-4">
