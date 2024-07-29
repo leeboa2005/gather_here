@@ -54,7 +54,7 @@ const Header: React.FC = () => {
         <Link href="/">
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
-        <nav className="flex items-center">
+        <nav className="flex items-center gap-2">
           <form className="relative s:hidden items-center overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
