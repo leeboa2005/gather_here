@@ -3,18 +3,21 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
+import interactionPlugin from "@fullcalendar/interaction";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./fullcalender.css";
 
 const detectMobileDevice = () => {
   const mobileWidth = 1068;
 
-  return window.innerWidth <= mobileWidth;
+  return innerWidth <= mobileWidth;
 }; // UserAgent 이용해야할지 ?
 
 const Calender: React.FC = () => {
+  const calenderRef = useRef<FullCalendar | null>(null); // 캘린더 객체 내부의 메서드를 사용하기 위해 정의함, | null 인 이유는 렌더링 이전에는 null 인 상태기 때문에 안정성을 위해 추가.
+  const [isGrid, setIsGrid] = useState(true);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
@@ -62,11 +65,27 @@ const Calender: React.FC = () => {
 
   return (
     <FullCalendar
-      // 큰 값으로 설정하면 더 작게 보임
+      plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
       allDayText=""
+      aspectRatio={2} // 큰 값으로 설정하면 더 작게 보임
+      customButtons={{
+        viewChanger: {
+          click() {
+            if (isGrid) {
+              calenderRef.current?.getApi().changeView("list");
+              setIsGrid(false);
+            } else {
+              calenderRef.current?.getApi().changeView("dayGridMonth");
+              setIsGrid(true);
+            }
+          },
+        },
+      }}
+      dateClick={(info) => {
+        console.log(info);
+        alert("Current view: " + info.view);
+      }}
       showNonCurrentDates={false}
-      aspectRatio={2}
-      plugins={[dayGridPlugin, listPlugin]}
       initialView={!isMobileDevice ? "dayGridMonth" : "list"}
       eventSources={[
         {
@@ -78,17 +97,20 @@ const Calender: React.FC = () => {
       ]}
       dayMaxEventRows={0}
       eventDisplay="list-item"
-      headerToolbar={{
-        /* start: "prev,next,today" */
-        start: "prev",
-        center: "title",
-        end: "next",
-        /* end: "dayGridMonth,listWeek" */
-      }}
+      headerToolbar={
+        isMobileDevice
+          ? {
+              start: "prev",
+              center: "title",
+              end: "next",
+            }
+          : { start: "title", end: "prev,next,viewChanger" }
+      }
       titleFormat={function (date) {
         return date.date.year + "년 " + (date.date.month + 1) + "월";
       }}
       locale="ko"
+      ref={calenderRef}
     />
   );
 };
