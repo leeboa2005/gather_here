@@ -44,7 +44,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-[400px] h-[400px] relative bg-white rounded-[20px] shadow">
+    <div className="w-[400px] h-[400px] relative bg-white rounded-[20px] ">
       <div className="left-[114px] top-[30px] absolute text-center text-black/20 text-2xl font-medium font-['Pretendard JP'] leading-9">
         3초만에 가입하고 <br />대화 시작하기
       </div>
