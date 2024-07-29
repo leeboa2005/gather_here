@@ -1,14 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
+import { useAuthStore } from "@/store/authStore";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/provider/ContextProvider";
+import LoginForm from "@/components/Login/LoginForm";
+
+const supabase = createClient();
 
 const Header: React.FC = () => {
-  /* 로그인 기능 개발 전 테스트용
-    false 일때 : 로그인 
-    true 일때 : 프로필, 로그아웃 
-  */
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, setUser, resetUser } = useAuthStore();
+  const router = useRouter();
+  const { openModal } = useModal();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
+        setUser(data.user);
+      }
+    };
+    getUser();
+  }, [setUser]);
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      resetUser();
+      router.push("/");
+    } else {
+      console.error("Error logout:", error);
+    }
+  };
+
+  const handleOpenModal = () => {
+    openModal(
+      <LoginForm />
+    );
+  }
 
   return (
     <header className="bg-[#1A1B1E] shadow-md">
@@ -45,15 +76,15 @@ const Header: React.FC = () => {
               </svg>
             </button>
           </form>
-          {isLoggedIn ? (
+          {user ? (
             <div className="flex items-center space-x-2">
               <Link href="/mypage">프로필</Link>
-              <button onClick={() => setIsLoggedIn(false)} className="text-white">
+              <button onClick={signOut} className="text-white">
                 로그아웃
               </button>
             </div>
           ) : (
-            <Link href="/login">로그인</Link>
+            <button onClick={handleOpenModal}>로그인</button>
           )}
         </nav>
       </div>

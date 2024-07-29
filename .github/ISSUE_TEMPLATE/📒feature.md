@@ -1,19 +1,19 @@
 ---
-name: '📒FEATURE'
+name: "📒FEATURE"
 about: 새로운 기능 추가
-title: '[FEATURE] '
-labels: ''
-assignees: ''
+title: "[FEATURE] "
+labels: ""
+assignees: ""
 ---
 
 ## Description
 
-### 어떤 코드를 리팩토링중인지 작성해주세요.
+### 어떤 부분을 작업중인지 작성해주세요.
 
 ## To-Do
 
--   [ ] todo1
--   [ ] todo2
+- [ ] todo1
+- [ ] todo2
 
 ## ETC
 
