@@ -37,28 +37,22 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
 
   // 게시물
   const loadMorePosts = async () => {
-    console.log("Loading more posts for page:", page);
     const newPosts: PostWithUser[] = await fetchPosts(page);
-    console.log("New posts:", newPosts);
 
     if (!newPosts || newPosts.length === 0) {
-      console.log("No more posts to load");
       setHasMore(false);
       return;
     }
 
     setPosts((prevPosts) => {
       const allPosts = [...prevPosts, ...newPosts];
-      console.log("All posts before filtering:", allPosts);
       const uniquePosts = allPosts.filter(
         (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
       );
-      console.log("Unique posts after filtering:", uniquePosts);
       return uniquePosts;
     });
 
     setPage((prevPage) => {
-      console.log("Setting page to:", prevPage + 1);
       return prevPage + 1;
     });
   };
