@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen": "supabase gen types typescript --project-id yrmjrxuealdugqizqtjg --schema public > src/types/supabase.ts"
+
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.15",
