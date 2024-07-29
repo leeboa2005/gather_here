@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
@@ -13,21 +13,21 @@ import CommonModal from "@/components/Common/Modal/CommonModal";
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
 interface StudiesContentProps {
-  initialPosts: Post[];
+  initialPosts: PostWithUser[];
 }
 
 const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [carouselPosts, setCarouselPosts] = useState<Post[]>([]);
+  const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   // 마감임박 캐러셀, 게시물
   useEffect(() => {
     const loadCarouselData = async () => {
-      const carouselData = await fetchPostsWithDeadLine(14, "스터디"); // D-일수이내
+      const carouselData = await fetchPostsWithDeadLine(15, "스터디"); // D-일수이내
       setCarouselPosts(carouselData);
     };
     loadCarouselData();
@@ -46,7 +46,7 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
 
   // 하단 게시물리스트
   const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchPosts(page, "스터디");
+    const newPosts: PostWithUser[] = await fetchPosts(page, "스터디");
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);

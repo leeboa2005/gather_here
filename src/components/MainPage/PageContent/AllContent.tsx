@@ -2,16 +2,16 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { fetchPosts } from "@/lib/fetchPosts";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 
 interface AllContentProps {
-  initialPosts: Post[];
+  initialPosts: PostWithUser[];
 }
 
 const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,27 +37,30 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
 
   // 게시물
   const loadMorePosts = async () => {
-    try {
-      const newPosts: Post[] = await fetchPosts(page);
+    console.log("Loading more posts for page:", page);
+    const newPosts: PostWithUser[] = await fetchPosts(page);
+    console.log("New posts:", newPosts);
 
-      if (!newPosts || newPosts.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      setPosts((prevPosts) => {
-        const allPosts = [...prevPosts, ...newPosts];
-        const uniquePosts = allPosts.filter(
-          (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-        );
-        return uniquePosts;
-      });
-
-      setPage((prevPage) => prevPage + 1);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
+    if (!newPosts || newPosts.length === 0) {
+      console.log("No more posts to load");
       setHasMore(false);
+      return;
     }
+
+    setPosts((prevPosts) => {
+      const allPosts = [...prevPosts, ...newPosts];
+      console.log("All posts before filtering:", allPosts);
+      const uniquePosts = allPosts.filter(
+        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
+      );
+      console.log("Unique posts after filtering:", uniquePosts);
+      return uniquePosts;
+    });
+
+    setPage((prevPage) => {
+      console.log("Setting page to:", prevPage + 1);
+      return prevPage + 1;
+    });
   };
 
   const openModal = () => {

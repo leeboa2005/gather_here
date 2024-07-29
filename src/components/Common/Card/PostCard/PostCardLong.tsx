@@ -1,8 +1,8 @@
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 import React from "react";
 
 interface PostCardProps {
-  post: Post;
+  post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
@@ -17,7 +17,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   return (
     <div className="w-auto p-10 bg-slate-100 shadow-md rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3">
-        <p className="text-sm text-gray-500">작성자 {post.user_id}</p>
+        <p className="text-sm text-gray-500">작성자 {post.user.nickname}</p>
       </div>
       <div className="flex justify-between">
         <h2 className="text-left text-lg font-bold truncate w-3/4">{post.title}</h2>
