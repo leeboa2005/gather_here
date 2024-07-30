@@ -19,18 +19,16 @@ const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange }) 
       onChange={onChange}
       modules={{
         toolbar: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
           [{ font: [] }],
           [{ size: ["small", false, "large", "huge"] }],
           ["bold", "italic", "underline", "strike"],
-          [{ color: [] }, { background: [] }],
+          [{ align: [] }, { color: [] }, { background: [] }],
           [{ list: "ordered" }, { list: "bullet" }],
           ["link", "image"],
           ["clean"],
         ],
       }}
       formats={[
-        "header",
         "font",
         "size",
         "bold",
