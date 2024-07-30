@@ -1,7 +1,6 @@
-/* carousel.css */
 .swiper-button-next,
 .swiper-button-prev {
-  color: black;
+  color: white;
 }
 
 .swiper-pagination-bullet {
@@ -9,5 +8,5 @@
 }
 
 .swiper-pagination-bullet-active {
-  background-color: black;
+  background-color: white;
 }
