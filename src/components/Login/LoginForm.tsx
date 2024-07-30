@@ -34,7 +34,6 @@ const LoginForm = () => {
     }
 
     if (data) {
-      console.log('Login successful:', data);
        router.push('/'); 
     } else {
       console.error('Login data is empty.');
