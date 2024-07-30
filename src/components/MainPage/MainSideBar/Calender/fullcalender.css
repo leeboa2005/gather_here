@@ -1,3 +1,7 @@
+.fc {
+  margin: 20px;
+}
+
 .fc-viewChanger-button.fc-button.fc-button-primary {
   background-image: url("../../../../../public/Calender/Change.png");
   background-position: center;
@@ -9,9 +13,25 @@
 
 .fc .fc-button-primary {
   background-color: transparent;
-  border: none;
+  border: 0px;
+}
 
-  :hover {
-    background-color: transparent;
-  }
+.fc-icon {
+  color: #919191;
+}
+
+.fc-scrollgrid {
+  border: 0 !important; /* 얘는 important 안 먹이면 안됨.. */
+}
+
+.fc td,
+.fc th {
+  border: 0;
+  border-image-width: 0;
+}
+
+/* 요일 행 높이지정 */
+.fc .fc-scrollgrid-section table {
+  height: 25px;
+  vertical-align: middle;
 }

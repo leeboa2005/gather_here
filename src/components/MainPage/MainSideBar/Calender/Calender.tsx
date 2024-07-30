@@ -61,57 +61,60 @@ const Calender: React.FC = () => {
     return <div>Error</div>;
   }
 
-  console.log(...IT_Events); // 추후 삭제
-
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
-      allDayText=""
-      aspectRatio={2} // 큰 값으로 설정하면 더 작게 보임
-      customButtons={{
-        viewChanger: {
-          click() {
-            if (isGrid) {
-              calenderRef.current?.getApi().changeView("list");
-              setIsGrid(false);
-            } else {
-              calenderRef.current?.getApi().changeView("dayGridMonth");
-              setIsGrid(true);
-            }
+    <>
+      <h4>HOT한 IT 행사 놓치지 마세요</h4>
+      <FullCalendar
+        plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
+        aspectRatio={0.65} // 큰 값으로 설정하면 더 작게 보임
+        ref={calenderRef}
+        customButtons={{
+          viewChanger: {
+            click() {
+              if (isGrid) {
+                calenderRef.current?.getApi().changeView("list");
+                setIsGrid(false);
+              } else {
+                calenderRef.current?.getApi().changeView("dayGridMonth");
+                setIsGrid(true);
+              }
+            },
           },
-        },
-      }}
-      dateClick={(info) => {
-        console.log(info);
-        alert("Current view: " + info.view);
-      }}
-      showNonCurrentDates={false}
-      initialView={!isMobileDevice ? "dayGridMonth" : "list"}
-      eventSources={[
-        {
-          // 이것을 이용해 카테고리별로 색깔을 다르게 할 수 있도록 하면 좋을 듯
-          events: IT_Events,
-          color: "black",
-          textColor: "yellow",
-        },
-      ]}
-      dayMaxEventRows={0}
-      eventDisplay="list-item"
-      headerToolbar={
-        isMobileDevice
-          ? {
-              start: "prev",
-              center: "title",
-              end: "next",
-            }
-          : { start: "title", end: "prev,next,viewChanger" }
-      }
-      titleFormat={function (date) {
-        return date.date.year + "년 " + (date.date.month + 1) + "월";
-      }}
-      locale="ko"
-      ref={calenderRef}
-    />
+        }}
+        dateClick={(info) => {
+          console.log(info);
+          alert("Current view: " + info.view);
+        }}
+        firstDay={1}
+        initialView={!isMobileDevice ? "dayGridMonth" : "list"}
+        eventSources={[
+          {
+            // 이것을 이용해 카테고리별로 색깔을 다르게 할 수 있도록 하면 좋을 듯
+            events: IT_Events,
+            color: "black",
+            textColor: "yellow",
+          },
+        ]}
+        dayMaxEventRows={0}
+        dayCellContent={(cellContent) => {
+          return cellContent.dayNumberText.replace("일", "");
+        }}
+        eventDisplay="list-item"
+        headerToolbar={
+          isMobileDevice
+            ? {
+                start: "prev",
+                center: "title",
+                end: "next",
+              }
+            : { start: "title", end: "prev next viewChanger" }
+        }
+        titleFormat={(date) => {
+          return date.date.year + "년 " + (date.date.month + 1) + "월";
+        }}
+        locale="ko"
+      />
+    </>
   );
 };
 
