@@ -12,6 +12,7 @@ const Signup03: React.FC = () => {
   const [blog, setLocalBlog] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
+  const [blogError, setBlogError] = useState<string | null>(null); // 블로그 에러 상태 추가
 
   useEffect(() => {
     if (user?.user_metadata?.avatar_url) {
@@ -48,13 +49,11 @@ const Signup03: React.FC = () => {
       setError('이미 사용 중인 닉네임입니다.');
       return;
     }
-
     // URL 패턴 유효성 검사 정규식
     const urlPattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})' + // domain name with minimum two letters TLD
+      '(:\\d+)?(\\/[-a-z\\d%_.~+\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF@]*)*' + // port and path with Unicode and @
       '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
       '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
     );
@@ -67,11 +66,12 @@ const Signup03: React.FC = () => {
 
     // URL 유효성 검사
     if (formattedBlog && !urlPattern.test(formattedBlog)) {
-      setError('유효한 블로그 주소를 입력하세요.');
+      setBlogError('유효한 블로그 주소를 입력하세요.');
       return;
     }
 
     setError('');
+    setBlogError('');
 
     try {
       const { data, error: fetchError } = await supabase
@@ -148,7 +148,7 @@ const Signup03: React.FC = () => {
 
   const handleBlogChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalBlog(e.target.value);
-    setError(null);
+    setBlogError(null);
   };
 
   return (
@@ -189,14 +189,15 @@ const Signup03: React.FC = () => {
           onChange={handleBlogChange}
           className="block w-full mt-1 p-2 rounded-md border"
         />
+        {blogError && <p className="text-xs text-red-500 mt-1">{blogError}</p>} {/* 블로그 에러 메시지 */}
       </div>
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full px-4">
       <button
-        onClick={handleNext}
-        className="w-full bg-gray-500 text-white py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-700"
-      >
-        프로필 저장하기
-</button>
+         onClick={handleNext}
+          className="w-full bg-gray-200 text-gray-700 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-gray-800 hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
+        >
+          프로필 저장하기
+      </button>
       </div>
     </div>
   );
