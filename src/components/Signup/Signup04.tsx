@@ -3,17 +3,16 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import useSignupStore from '@/store/useSignupStore';
-import { useModal } from '@/provider/ContextProvider'; // useModal 훅 임포트
+import { useModal } from '@/provider/ContextProvider';
 
 const Signup04: React.FC = () => {
   const router = useRouter();
   const { job_title, experience, nickname, blog, prevStep } = useSignupStore();
-  const { closeModal } = useModal(); // closeModal 함수 가져오기
+  const { closeModal } = useModal();
   
   const handleExplore = () => {
-    closeModal(); // 모달 닫기
+    closeModal();
     router.push('/');
-    console.log("Signup completed:", { job_title, experience, nickname, blog }); // 콘솔 로그 추가
   };
 
   return (
