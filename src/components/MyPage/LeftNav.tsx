@@ -40,7 +40,7 @@ const LeftNav: React.FC = () => {
   };
 
   return (
-    <aside className="sticky s:relative top-0 p-6 s:p-0 max-h-[260px] flex flex-col items-start gap-3 rounded-[20px] border border-[#E6E6E6] s:border-none bg-white shadow-sm">
+    <aside className="sticky top-0 p-6 s:p-0 max-h-[260px] flex flex-col items-start gap-3 rounded-[20px] bg-fillLight shadow-sm s:hidden">
       {loading ? (
         <LeftNavLoader />
       ) : userData ? (

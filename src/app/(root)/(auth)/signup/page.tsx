@@ -16,7 +16,6 @@ const SignupPage = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-
       const { data: { user }, error: userError } = await supabase.auth.getUser();
 
       if (userError) {
@@ -45,9 +44,7 @@ const SignupPage = () => {
       }
 
       if (!modalOpened) {
-        openModal(
-          <SignupForm />
-        );
+        openModal(<SignupForm />, true); // 페이지 비활성화 설정
         setModalOpened(true);
       }
     };
@@ -55,10 +52,7 @@ const SignupPage = () => {
     checkUser();
   }, [openModal, router, modalOpened]);
 
-  return (
-    <>
-    </>
-  );
+  return <></>;
 };
 
 export default SignupPage;

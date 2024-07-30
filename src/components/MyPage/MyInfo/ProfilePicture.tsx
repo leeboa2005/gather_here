@@ -134,10 +134,10 @@ const ProfilePicture: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 s:border-none shadow-sm p-6 s:p-0 s:pb-4">
-      <label className="block text-lg font-semibold text-gray-700 mb-3">프로필 사진</label>
+    <div className=" rounded-2xl bg-fillLight shadow-sm p-6 s:p-0 s:pb-4 s:bg-background">
+      <label className="block text-lg font-subtitle text-fontWhite mb-3">프로필 사진</label>
       <div className="flex items-center s:flex-col s:items-start s:mb-3 gap-4">
-        <div className="w-44 h-44 m:w-36 m:h-36 border rounded-[20px] overflow-hidden bg-gray-100 flex items-center justify-center s:mb-3 relative">
+        <div className="w-44 h-44 m:w-36 m:h-36 border-[1px] rounded-[20px] overflow-hidden bg-gray-100 flex items-center justify-center s:mb-3 relative">
           {loading || uploading ? (
             <ProfileLoader className="w-full h-full rounded-[20px]"></ProfileLoader>
           ) : (
@@ -159,7 +159,7 @@ const ProfilePicture: React.FC = () => {
             <div key={index} className="relative group">
               <button
                 type="button"
-                className="w-20 h-20 m:w-12 m:h-12 rounded-full overflow-hidden border-2 border-gray-200 hover:opacity-85 relative"
+                className="w-20 h-20 m:w-12 m:h-12 rounded-full overflow-hidden border-[1px] border-gray-200 hover:opacity-85 relative"
                 onClick={() => handleIconClick(icon, `${occupations[index]} 프로필 이미지`)}
               >
                 <div className="relative w-full h-full">
@@ -175,7 +175,7 @@ const ProfilePicture: React.FC = () => {
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
+                      className="h-6 w-6 text-fontWhite"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -190,7 +190,7 @@ const ProfilePicture: React.FC = () => {
                   index < 5 ? "bottom-full mb-2" : "top-full mt-2"
                 } left-1/2 transform -translate-x-1/2 ${
                   index === 0 || index === 5 ? "s:-translate-x-1/4" : ""
-                } bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100`}
+                } bg-fillStrong text-fontWhite text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100`}
               >
                 {occupations[index]}
               </div>
@@ -199,11 +199,7 @@ const ProfilePicture: React.FC = () => {
         </div>
       </div>
       <div className="mt-5 flex space-x-2">
-        <button
-          type="button"
-          className="px-4 py-2 w-44 bg-gray-900 rounded-md text-sm text-white"
-          onClick={handleFileUploadClick}
-        >
+        <button type="submit" className="shared-button-black" onClick={handleFileUploadClick}>
           프로필 수정
         </button>
       </div>
