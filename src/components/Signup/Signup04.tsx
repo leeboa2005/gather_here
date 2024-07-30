@@ -20,13 +20,13 @@ const Signup04: React.FC = () => {
       <div className="text-center mt-8">
         <div className="w-full h-80 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img
-            src="https://via.placeholder.com/400x300"
+            src="/logos/6340259.jpg"
             alt="Welcome Image"
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
           />
         </div>
       </div>
-      <div className="text-center mt-10">
+      <div className="text-center mt-6">
         <div className="text-center text-2xl font-medium text-gray-800">환영해요!</div>
         <div className="mt-2 text-center text-gray-600 text-m">
           {nickname}님이 @gather_here에서<br/> 더 많은 경험을 할 수 있도록 도울게요
