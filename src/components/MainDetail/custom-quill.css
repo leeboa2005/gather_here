@@ -1,0 +1,69 @@
+/* custom-quill.css */
+.ql-toolbar .ql-header .ql-picker-label[data-value="1"]::before {
+  content: "H1";
+}
+.ql-toolbar .ql-header .ql-picker-label[data-value="2"]::before {
+  content: "H2";
+}
+.ql-toolbar .ql-header .ql-picker-label[data-value="3"]::before {
+  content: "H3";
+}
+.ql-toolbar .ql-header .ql-picker-label[data-value="4"]::before {
+  content: "H4";
+}
+.ql-toolbar .ql-header .ql-picker-label[data-value="5"]::before {
+  content: "H5";
+}
+.ql-toolbar .ql-header .ql-picker-label[data-value="6"]::before {
+  content: "H6";
+}
+.ql-toolbar .ql-header .ql-picker-label::before {
+  content: "Normal";
+}
+
+.ql-toolbar .ql-size .ql-picker-item[data-value="small"]::before {
+  content: "Small";
+}
+.ql-toolbar .ql-size .ql-picker-item[data-value="large"]::before {
+  content: "Large";
+}
+.ql-toolbar .ql-size .ql-picker-item[data-value="huge"]::before {
+  content: "Huge";
+}
+.ql-toolbar .ql-size .ql-picker-item::before {
+  content: "Normal";
+}
+
+/* Color Picker */
+.ql-toolbar .ql-color .ql-picker-item[data-value="#e60000"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#e60000"]::before {
+  background-color: #e60000;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#ff9900"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#ff9900"]::before {
+  background-color: #ff9900;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#ffff00"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#ffff00"]::before {
+  background-color: #ffff00;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#008a00"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#008a00"]::before {
+  background-color: #008a00;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#0066cc"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#0066cc"]::before {
+  background-color: #0066cc;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#9933ff"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#9933ff"]::before {
+  background-color: #9933ff;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#ffffff"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#ffffff"]::before {
+  background-color: #ffffff;
+}
+.ql-toolbar .ql-color .ql-picker-item[data-value="#000000"]::before,
+.ql-toolbar .ql-background .ql-picker-item[data-value="#000000"]::before {
+  background-color: #000000;
+}

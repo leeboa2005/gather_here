@@ -7,6 +7,9 @@ import DOMPurify from "dompurify";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
+import "react-quill/dist/quill.core.css";
 
 const supabase = createClient();
 
@@ -57,8 +60,8 @@ const MainDetailPage = () => {
   if (!post) return <div>글 없음</div>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
-    ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "h1", "h2", "h3", "p"],
-    ALLOWED_ATTR: ["href", "target"],
+    ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "h1", "h2", "h3", "p", "span", "ul", "ol", "li"],
+    ALLOWED_ATTR: ["href", "target", "style", "class"],
   });
 
   const handleShare = () => {
