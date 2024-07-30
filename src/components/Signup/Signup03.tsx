@@ -11,12 +11,27 @@ const Signup03: React.FC = () => {
   const [nickname, setLocalNickname] = useState<string>('');
   const [blog, setLocalBlog] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (user?.user_metadata?.avatar_url) {
       setProfileImageUrl(user.user_metadata.avatar_url);
     }
   }, [user, setProfileImageUrl]);
+
+  const checkNicknameAvailability = async (nickname: string) => {
+    const { data, error } = await supabase
+      .from('Users')
+      .select('nickname')
+      .eq('nickname', nickname);
+
+    if (error) {
+      console.error('Error checking nickname availability:', error);
+      return;
+    }
+
+    setNicknameAvailable(data.length === 0);
+  };
 
   const handleNext = async () => {
     if (!user?.email) {
@@ -29,20 +44,34 @@ const Signup03: React.FC = () => {
       return;
     }
 
-    // // URL 패턴 유효성 검사 주석 처리 부분 활성화 (필요 시)
-    // const urlPattern = new RegExp(
-    //   '^(https?:\\/\\/)?' + // protocol
-    //   '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-    //   '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    //   '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    //   '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    //   '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
-    // );
+    if (nicknameAvailable === false) {
+      setError('이미 사용 중인 닉네임입니다.');
+      return;
+    }
 
-    // if (blog && !urlPattern.test(blog)) {
-    //   setError('유효한 블로그 주소를 입력하세요.');
-    //   return;
-    // }
+    // URL 패턴 유효성 검사 정규식
+    const urlPattern = new RegExp(
+      '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
+    );
+
+    // URL에 프로토콜이 없으면 추가
+    let formattedBlog = blog;
+    if (!/^https?:\/\//i.test(blog)) {
+      formattedBlog = 'http://' + blog;
+    }
+
+    // URL 유효성 검사
+    if (formattedBlog && !urlPattern.test(formattedBlog)) {
+      setError('유효한 블로그 주소를 입력하세요.');
+      return;
+    }
+
+    setError('');
 
     try {
       const { data, error: fetchError } = await supabase
@@ -63,7 +92,7 @@ const Signup03: React.FC = () => {
             job_title,
             experience,
             nickname,
-            blog,
+            blog: formattedBlog,
             email: user.email,
             profile_image_url,
           })
@@ -76,14 +105,14 @@ const Signup03: React.FC = () => {
         }
 
         setNickname(nickname);
-        setBlog(blog);
+        setBlog(formattedBlog);
       } else {
         const { error: insertError } = await supabase.from('Users').insert({
           user_id: user.id,
           job_title,
           experience,
           nickname,
-          blog,
+          blog: formattedBlog,
           email: user.email,
           profile_image_url,
         });
@@ -95,7 +124,7 @@ const Signup03: React.FC = () => {
         }
 
         setNickname(nickname);
-        setBlog(blog);
+        setBlog(formattedBlog);
       }
 
       nextStep();
@@ -106,8 +135,15 @@ const Signup03: React.FC = () => {
   };
 
   const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLocalNickname(e.target.value);
+    const newNickname = e.target.value;
+    setLocalNickname(newNickname);
     setError(null);
+
+    if (newNickname.length >= 2 && newNickname.length <= 10) {
+      checkNicknameAvailability(newNickname);
+    } else {
+      setNicknameAvailable(null);
+    }
   };
 
   const handleBlogChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -140,22 +176,27 @@ const Signup03: React.FC = () => {
           className="block w-full mt-1 p-2 rounded-md border"
         />
         <p className="text-xs text-gray-500 mt-1">2자 ~ 10자내로 작성해주세요.</p>
+        {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1">이미 사용 중인 닉네임입니다.</p>}
+        {nicknameAvailable === true && <p className="text-xs text-green-500 mt-1">사용 가능한 닉네임입니다.</p>}
         {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
       </div>
       <div className="mt-4">
         <label className="block text-sm font-medium text-gray-700">블로그</label>
         <input
           type="text"
-          placeholder="https://example.com"
+          placeholder="example.com"
           value={blog}
           onChange={handleBlogChange}
           className="block w-full mt-1 p-2 rounded-md border"
         />
       </div>
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full px-4">
-        <button onClick={handleNext} className="w-full bg-blue-500 text-white py-2 rounded-md">
-          프로필 저장하기
-        </button>
+      <button
+        onClick={handleNext}
+        className="w-full bg-gray-500 text-white py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-blue-700 active:scale-95 active:bg-blue-700"
+      >
+        프로필 저장하기
+</button>
       </div>
     </div>
   );
