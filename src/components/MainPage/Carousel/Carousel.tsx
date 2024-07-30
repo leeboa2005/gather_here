@@ -21,7 +21,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         slidesPerView={2}
         navigation
         pagination={{ clickable: true }}
-        className="w-full h-full"
+        className="w-full h-80"
         breakpoints={{
           336: {
             slidesPerView: 1,

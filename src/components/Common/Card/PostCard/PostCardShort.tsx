@@ -24,19 +24,21 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <div className="w-full h-80 max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-8 h-80 m-2 text-center bg-fillAssistive rounded-2xl">
-        <div className="flex justify-between items-center mt-2">
+    <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
+      <div className="p-8 h-72 m-2 text-center bg-fillAssistive rounded-2xl">
+        <div className="flex justify-between items-center">
           <div>
-            <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
-            <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
+            <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
+            <span className="text-baseS text-labelNormal ml-2">~{setDeadlines}</span>
           </div>
           <div onClick={handleInterestClick} className="cursor-pointer">
             <Image src={isActive ? interest_active : interest_basic} alt="interest_basic" width={15} />
           </div>
         </div>
         <h2 className="text-left text-title font-base truncate mt-3 text-labelStrong">{post.title}</h2>
-        <p className="mt-2 text-left text-base h-20 overflow-hidden line-clamp-3 text-labelNeutral">{post.content}</p>
+        <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
+          {post.content}
+        </p>
         <div className="mt-1">
           <div className="flex items-center mb-4">
             {post.user?.profile_image_url && (
