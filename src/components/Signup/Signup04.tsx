@@ -26,7 +26,7 @@ const Signup04: React.FC = () => {
           />
         </div>
       </div>
-      <div className="text-center mt-10"> {/* 마진을 추가하여 텍스트를 아래로 이동 */}
+      <div className="text-center mt-10">
         <div className="text-center text-2xl font-medium text-gray-800">환영해요!</div>
         <div className="mt-2 text-center text-gray-600 text-m">
           {nickname}님이 @gather_here에서<br/> 더 많은 경험을 할 수 있도록 도울게요
