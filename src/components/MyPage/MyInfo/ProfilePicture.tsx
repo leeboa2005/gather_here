@@ -6,7 +6,7 @@ import ProfileLoader from "@/components/Common/Skeleton/ProfileLoader";
 import Image from "next/image";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProfilePicture: React.FC = () => {
@@ -94,17 +94,13 @@ const ProfilePicture: React.FC = () => {
         if (updateError) throw updateError;
         setProfileImage(profileImageUrl);
         setProfileAlt(altText);
-        toast.success("프로필 이미지 업데이트 성공하였습니다.", {
-          onClose: () => console.log("프로필 이미지 업데이트 성공 토스트가 닫혔습니다."),
-        });
+        toast.success("프로필 이미지 업데이트 성공하였습니다.");
       } else {
-        throw new Error("유효한 프로필 이미지 URL을 얻지 못했습니다.");
+        throw new Error("프로필 이미지 URL을 얻지 못했습니다.");
       }
     } catch (error) {
       console.error("프로필 이미지 업데이트 중 오류 발생:", error);
-      toast.error("프로필 이미지 업데이트 실패하였습니다.🥺", {
-        onClose: () => console.log("프로필 이미지 업데이트 실패 토스트가 닫혔습니다."),
-      });
+      toast.error("프로필 이미지 업데이트 실패하였습니다.🥺");
     } finally {
       setUploading(false);
     }
@@ -140,7 +136,6 @@ const ProfilePicture: React.FC = () => {
 
   return (
     <div className="rounded-2xl bg-fillLight shadow-sm p-6 s:p-0 s:pb-4 s:bg-background">
-      <ToastContainer />
       <label className="block text-lg font-subtitle text-fontWhite mb-3">프로필 사진</label>
       <div className="flex items-center s:flex-col s:items-start s:mb-3 gap-4">
         <div className="w-44 h-44 m:w-36 m:h-36 border-[1px] rounded-[20px] overflow-hidden bg-gray-100 flex items-center justify-center s:mb-3 relative">
@@ -205,7 +200,7 @@ const ProfilePicture: React.FC = () => {
         </div>
       </div>
       <div className="mt-5 flex space-x-2">
-        <button type="button" className="shared-button-black" onClick={handleFileUploadClick}>
+        <button type="button" className="shared-button-black w-44  m:w-36 " onClick={handleFileUploadClick}>
           프로필 수정
         </button>
       </div>

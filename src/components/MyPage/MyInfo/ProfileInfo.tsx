@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProfileInfo: React.FC = () => {
@@ -34,7 +34,7 @@ const ProfileInfo: React.FC = () => {
       if (user) {
         const { data, error } = await supabase
           .from("Users")
-          .select("nickname, blog, job_title, experience")
+          .select("email, nickname, blog, job_title, experience")
           .eq("user_id", user.id)
           .single();
 
@@ -141,11 +141,23 @@ const ProfileInfo: React.FC = () => {
 
   return (
     <section>
-      <ToastContainer />
       <form className="space-y-6" onSubmit={handleSubmit}>
         <fieldset className="rounded-2xl bg-fillLight shadow-sm p-6 s:p-0 s:bg-background">
           <h1 className="text-lg font-semibold mb-4">기본 정보</h1>
           <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="nickname" className="block text-sm font-medium mb-1">
+                이메일
+              </label>
+              <input
+                type="text"
+                id="nickname"
+                name="nickname"
+                disabled
+                value={user.email}
+                className="w-full shared-input-gray-2"
+              />
+            </div>
             <div>
               <label htmlFor="nickname" className="block text-sm font-medium mb-1">
                 닉네임
