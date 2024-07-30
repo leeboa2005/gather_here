@@ -10,9 +10,6 @@ import useSignupStore from '@/store/useSignupStore';
 const SignupForm: React.FC = () => {
   const { step, user } = useSignupStore();
 
-  console.log("Current step:", step); // 콘솔 로그 추가
-  console.log("Current user:", user); // 콘솔 로그 추가
-
   switch (step) {
     case 1:
       return <Signup01 />;
