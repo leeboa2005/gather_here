@@ -1,31 +1,116 @@
+"use client";
 import React from "react";
 
-const FilterBar: React.FC = () => {
+interface FilterBarProps {
+  selectedPosition: string;
+  selectedPlace: string;
+  selectedLocation: string;
+  selectedDuration: number | null;
+  onChange: (
+    selectedPosition: string,
+    selectedPlace: string,
+    selectedLocation: string,
+    selectedDuration: number | null,
+  ) => void;
+}
+
+const FilterBar: React.FC<FilterBarProps> = ({
+  selectedPosition,
+  selectedPlace,
+  selectedLocation,
+  selectedDuration,
+  onChange,
+}) => {
+  const handlePositionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(event.target.value, selectedPlace, selectedLocation, selectedDuration);
+  };
+
+  const handlePlaceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(selectedPosition, event.target.value, selectedLocation, selectedDuration);
+  };
+
+  const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(selectedPosition, selectedPlace, event.target.value, selectedDuration);
+  };
+
+  const handleDurationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const duration = event.target.value === "" ? null : parseInt(event.target.value, 10);
+    onChange(selectedPosition, selectedPlace, selectedLocation, duration);
+  };
+
   return (
-    <div className="flex justify-between items-center mt-8 mb-3">
+    <div className="flex justify-between items-center mt-5 mb-3">
       <div className="flex space-x-2">
-        <select className="px-2 py-1 text-center text-baseS text-labelAssistive bg-fillLight rounded-md">
-          <option>직군</option>
-          <option>프론트엔드</option>
-          <option>백엔드</option>
+        <select
+          className={`px-2 py-1 text-center text-baseS rounded-md ${
+            selectedPosition ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+          }`}
+          value={selectedPosition}
+          onChange={handlePositionChange}
+        >
+          <option value="" disabled>
+            직군
+          </option>
+          <option value="프론트엔드">프론트엔드</option>
+          <option value="백엔드">백엔드</option>
+          <option value="디자이너">디자이너</option>
+          <option value="IOS">IOS</option>
+          <option value="안드로이드">안드로이드</option>
+          <option value="데브옵스">데브옵스</option>
+          <option value="PM">PM</option>
+          <option value="기획자">기획자</option>
+          <option value="마케터">마케터</option>
         </select>
-        <select className="px-2 py-1 text-center text-baseS text-labelAssistive bg-fillLight rounded-md">
-          <option>온/오프라인</option>
-          <option>온라인</option>
-          <option>오프라인</option>
+        <select
+          className={`px-2 py-1 text-center text-baseS rounded-md ${
+            selectedPlace ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+          }`}
+          value={selectedPlace}
+          onChange={handlePlaceChange}
+        >
+          <option value="" disabled>
+            방식
+          </option>
+          <option value="온/오프라인">온/오프라인</option>
+          <option value="온라인">온라인</option>
+          <option value="오프라인">오프라인</option>
         </select>
-        <select className="px-2 py-1 text-center text-baseS text-labelAssistive bg-fillLight rounded-md">
-          <option>지역</option>
-          <option>서울</option>
-          <option>부산</option>
+        <select
+          className={`px-2 py-1 text-center text-baseS rounded-md ${
+            selectedLocation ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+          }`}
+          value={selectedLocation}
+          onChange={handleLocationChange}
+        >
+          <option value="" disabled>
+            지역
+          </option>
+          <option value="서울">서울</option>
+          <option value="인천">인천</option>
+          <option value="대전">대전</option>
+          <option value="광주">광주</option>
+          <option value="대구">대구</option>
+          <option value="부산">부산</option>
+          <option value="울산">울산</option>
+          <option value="제주">제주</option>
         </select>
-        <select className="px-2 py-1 text-center text-baseS text-labelAssistive bg-fillLight rounded-md">
-          <option>기간</option>
-          <option>1개월</option>
-          <option>3개월</option>
+        <select
+          className={`px-2 py-1 text-center text-baseS rounded-md ${
+            selectedDuration ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+          }`}
+          value={selectedDuration !== null ? selectedDuration.toString() : ""}
+          onChange={handleDurationChange}
+        >
+          <option value="" disabled>
+            기간
+          </option>
+          <option value="1">1개월</option>
+          <option value="2">2개월</option>
+          <option value="3">3개월</option>
+          <option value="6">6개월</option>
+          <option value="7">6개월 이상</option>
         </select>
       </div>
-      {/* <button className="px-4 py-2 bg-black text-white rounded-full ">모집하기</button> */}
     </div>
   );
 };

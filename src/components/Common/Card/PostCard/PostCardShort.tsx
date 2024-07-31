@@ -4,6 +4,7 @@ import Image from "next/image";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import arrow from "@/../public/Main/arrow.png";
+import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -38,7 +39,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         <h2 className="text-left text-title font-base truncate mt-3 text-labelStrong">{post.title}</h2>
         <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
           {post.content}
-        </p>
+        </p>{" "}
         <div className="mt-1">
           <div className="flex items-center mb-4">
             {post.user?.profile_image_url && (
@@ -54,13 +55,15 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             )}
             <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
           </div>
-          <div className="text-subtitle  text-accentPurple flex items-center justify-between  bg-fillLight p-3 rounded-lg truncate">
-            <div className="flex-1 text-left truncate">{post.target_position}</div>
-            <div className="flex items-center flex-none">
-              <div className="mr-2">{post.recruitments}명</div>
-              <Image src={arrow} alt="interest_basic" width={11} />
+          <Link href={`/maindetail/${post.post_id}`}>
+            <div className="text-subtitle  text-accentPurple flex items-center justify-between  bg-fillLight p-3 rounded-lg truncate">
+              <div className="flex-1 text-left truncate">{post.target_position}</div>
+              <div className="flex items-center flex-none">
+                <div className="mr-2">{post.recruitments}명</div>
+                <Image src={arrow} alt="interest_basic" width={11} />
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

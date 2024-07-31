@@ -1,7 +1,18 @@
 import { createClient } from "@/utils/supabase/client";
 import { PostWithUser } from "@/types/posts/Post.type";
 
-export const fetchPosts = async (page: number, category?: string): Promise<PostWithUser[]> => {
+interface FetchPostsFilters {
+  targetPosition?: string[];
+  place?: string;
+  location?: string;
+  duration?: number | null;
+}
+
+export const fetchPosts = async (
+  page: number,
+  category?: string,
+  filters: FetchPostsFilters = {},
+): Promise<PostWithUser[]> => {
   const supabase = createClient();
   const postsPerPage = 5;
   const today = new Date().toISOString().split("T")[0];
@@ -26,6 +37,19 @@ export const fetchPosts = async (page: number, category?: string): Promise<PostW
 
   if (category) {
     query.eq("category", category);
+  }
+
+  if (filters.targetPosition && filters.targetPosition.length > 0) {
+    query.contains("target_position", filters.targetPosition);
+  }
+  if (filters.place && filters.place !== "") {
+    query.eq("place", filters.place);
+  }
+  if (filters.location && filters.location !== "") {
+    query.eq("location", filters.location);
+  }
+  if (filters.duration !== null && filters.duration !== undefined) {
+    query.eq("duration", filters.duration);
   }
 
   const { data, error } = await query.throwOnError();

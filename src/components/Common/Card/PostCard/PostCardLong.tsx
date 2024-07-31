@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import arrow from "@/../public/Main/arrow.png";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
+import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -53,13 +54,15 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
         )}
         <p className="text-sm text-gray-500">작성자 {post.user?.nickname}</p>
       </div>
-      <div className="text-subtitle  text-accentPurple flex items-center justify-between  bg-fillLight p-3 rounded-lg truncate">
-        <div className="flex-1 text-left truncate">{post.target_position}</div>
-        <div className="flex items-center flex-none">
-          <div className="mr-2">{post.recruitments}명</div>
-          <Image src={arrow} alt="interest_basic" width={11} />
+      <Link href={`/maindetail/${post.post_id}`}>
+        <div className="text-subtitle  text-accentPurple flex items-center justify-between  bg-fillLight p-3 rounded-lg truncate">
+          <div className="flex-1 text-left truncate">{post.target_position}</div>
+          <div className="flex items-center flex-none">
+            <div className="mr-2">{post.recruitments}명</div>
+            <Image src={arrow} alt="interest_basic" width={11} />
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
