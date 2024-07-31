@@ -10,7 +10,6 @@ const Signup01: React.FC = () => {
   const handleJobSelection = (job_title: string) => {
     setSelectedJob(job_title);
     setJob(job_title);
-    console.log("Job selected:", job_title); // 콘솔 로그 추가
     nextStep();
   };
 
@@ -29,15 +28,15 @@ const Signup01: React.FC = () => {
       </div>
       <div className="grid grid-cols-3 gap-4 mt-8">
         {['프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', '기획자', '디자인', '마케팅', '기타'].map((job) => (
-          <button
-            key={job}
-            onClick={() => handleJobSelection(job)}
-            className={`p-4 rounded-md text-center ${
-              selectedJob === job ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            {job}
-          </button>
+        <button
+          key={job}
+          onClick={() => handleJobSelection(job)}
+          className={`p-4 rounded-md text-center transition-all duration-300 transform hover:scale-105 hover:bg-gray-700 hover:text-white ${
+            selectedJob === job ? 'bg-gray-800 text-white shadow-lg' : 'bg-gray-200 text-gray-800'
+          }`}
+        >
+          {job}
+       </button>
         ))}
       </div>
     </div>

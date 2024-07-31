@@ -10,7 +10,6 @@ const Signup02: React.FC = () => {
   const handleExperienceSelection = (experience: string) => {
     setSelectedExperience(experience);
     setExperience(experience);
-    console.log("Experience selected:", experience); // 콘솔 로그 추가
     nextStep();
   };
 
@@ -33,14 +32,14 @@ const Signup02: React.FC = () => {
       <div className="grid grid-cols-3 gap-4 mt-8">
         {['1년 미만', '1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년 이상'].map((experience) => (
           <button
-            key={experience}
-            onClick={() => handleExperienceSelection(experience)}
-            className={`p-4 rounded-md text-center ${
-              selectedExperience === experience ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            {experience}
-          </button>
+          key={experience}
+          onClick={() => handleExperienceSelection(experience)}
+          className={`p-4 rounded-md text-center transition-all duration-300 transform hover:scale-105 hover:bg-gray-700 hover:text-white ${
+            selectedExperience === experience ? 'bg-gray-800 text-white shadow-lg' : 'bg-gray-200 text-gray-800'
+          }`}
+        >
+          {experience}
+        </button>
         ))}
       </div>
     </div>

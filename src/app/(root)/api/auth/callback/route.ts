@@ -11,7 +11,6 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      console.log('Code exchanged successfully, redirecting to:', `${origin}${next}`)
       return NextResponse.redirect(`${origin}/signup`)
     } else {
       console.error('Error exchanging code for session:', error.message)
