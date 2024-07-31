@@ -12,7 +12,7 @@ const Signup03: React.FC = () => {
   const [blog, setLocalBlog] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
-  const [blogError, setBlogError] = useState<string | null>(null); // 블로그 에러 상태 추가
+  const [blogError, setBlogError] = useState<string | null>(null); 
 
   useEffect(() => {
     if (user?.user_metadata?.avatar_url) {
@@ -159,9 +159,9 @@ const Signup03: React.FC = () => {
         </button>
       )}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">1</div>
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">2</div>
-        <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center text-white">3</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">1</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">2</div>
+        <div className="w-5 h-5 bg-gray-800 flex items-center justify-center text-white rounded-md">3</div>
       </div>
       <div className="text-center text-2xl font-medium text-gray-700 leading-9 mt-16">
         거의 다 왔어요
