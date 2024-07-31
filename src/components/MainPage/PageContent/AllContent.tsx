@@ -2,18 +2,21 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { fetchPosts } from "@/lib/fetchPosts";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
+import CommonModal from "@/components/Common/Modal/CommonModal";
 import Chat from "../MainSideBar/Chat/Chat";
 
 interface AllContentProps {
-  initialPosts: Post[];
+  initialPosts: PostWithUser[];
 }
 
 const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const uniquePosts = initialPosts.filter(
@@ -22,39 +25,73 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     setPosts(uniquePosts);
   }, [initialPosts]);
 
+  // 모바일 및 중간 크기 판별
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1068);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 게시물
   const loadMorePosts = async () => {
-    try {
-      const newPosts: Post[] = await fetchPosts(page);
+    const newPosts: PostWithUser[] = await fetchPosts(page);
 
-      if (!newPosts || newPosts.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
-      setPosts((prevPosts) => {
-        const allPosts = [...prevPosts, ...newPosts];
-        const uniquePosts = allPosts.filter(
-          (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-        );
-        return uniquePosts;
-      });
-
-      setPage((prevPage) => prevPage + 1);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
+    if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
+      return;
     }
+
+    setPosts((prevPosts) => {
+      const allPosts = [...prevPosts, ...newPosts];
+      const uniquePosts = allPosts.filter(
+        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
+      );
+      return uniquePosts;
+    });
+
+    setPage((prevPage) => {
+      return prevPage + 1;
+    });
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 flex space-x-4 mt-6">
-      <div className="w-2/3">
-        <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+    <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
+      <div className={`flex ${isMobile ? "flex-col" : "space-x-4"}`}>
+        <div className={`w-full ${!isMobile ? "md:w-2/3" : ""}`}>
+          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+        </div>
+        {!isMobile && (
+          <div className="w-1/3">
+            <div className="sticky top-4">
+              <Calender />
+              <Chat />
+            </div>
+          </div>
+        )}
       </div>
-      <div className="w-1/3">
-        <Calender />
+      {isMobile && (
+        <button
+          onClick={openModal}
+          className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-full shadow-lg z-50"
+        >
+          채팅
+        </button>
+      )}
+      <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Chat />
-      </div>
+      </CommonModal>
     </div>
   );
 };

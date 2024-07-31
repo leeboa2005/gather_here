@@ -3,9 +3,9 @@ const nextConfig = {
   images: {
     domains: [
       "yrmjrxuealdugqizqtjg.supabase.co",
-      "https://lh3.googleusercontent.com",
-      "http://k.kakaocdn.net",
-      "https://avatars.githubusercontent.com",
+      "lh3.googleusercontent.com",
+      "k.kakaocdn.net",
+      "avatars.githubusercontent.com",
     ],
   },
 };

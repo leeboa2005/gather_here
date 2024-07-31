@@ -19,9 +19,9 @@ const Signup02: React.FC = () => {
         &larr;
       </button>
       <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">1</div>
-        <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center text-white">2</div>
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">3</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">1</div>
+        <div className="w-5 h-5 bg-gray-800 flex items-center justify-center text-white rounded-md">2</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">3</div>
       </div>
       <div className="text-center text-2xl font-medium text-gray-700 leading-9 mt-16">
         얼마나 오래 하셨나요?

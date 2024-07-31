@@ -3,10 +3,10 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 
 interface InfiniteScrollComponentProps {
-  posts: Post[];
+  posts: PostWithUser[];
   hasMore: boolean;
   loadMorePosts: () => Promise<void>;
 }

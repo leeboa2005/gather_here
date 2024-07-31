@@ -72,12 +72,12 @@ const Header: React.FC = () => {
           <div className="flex items-center s:space-x-2">
             <button
               onClick={toggleSearch}
-              className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
               <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
             </button>
             <Link href="/post" passHref>
-              <button className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+              <button className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
                 <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
               </button>
             </Link>
@@ -86,14 +86,14 @@ const Header: React.FC = () => {
                 {/* 마이페이지 버튼 (모바일) */}
                 <button
                   onClick={toggleModal}
-                  className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
                 </button>
                 {/* 마이페이지 버튼 (데스크탑, 테블릿) */}
                 <Link
                   href="/mypage"
-                  className="flex s:hidden items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
                 </Link>

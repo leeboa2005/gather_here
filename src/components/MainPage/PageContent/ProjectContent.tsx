@@ -2,32 +2,34 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
+import Image from "next/image";
+import run from "@/../public/Main/run.png";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
 interface ProjectContentProps {
-  initialPosts: Post[];
+  initialPosts: PostWithUser[];
 }
 
 const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
-  const [carouselPosts, setCarouselPosts] = useState<Post[]>([]);
+  const [page, setPage] = useState(2);
+  const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   // 마감임박 캐러셀, 게시물
   useEffect(() => {
     const loadCarouselData = async () => {
-      const carouselData = await fetchPostsWithDeadLine(14, "프로젝트"); // D-일수이내것만 보여지게
+      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트"); // D-일수이내것만 보여지게
       setCarouselPosts(carouselData);
     };
     loadCarouselData();
@@ -46,7 +48,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
 
   // 하단 게시물리스트
   const loadMorePosts = async () => {
-    const newPosts: Post[] = await fetchPosts(page, "프로젝트");
+    const newPosts: PostWithUser[] = await fetchPosts(page, "프로젝트");
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
@@ -76,9 +78,12 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
-          <FilterBar />
-          <h1 className="font-bold text-lg">마감 임박</h1>
+          <div className="flex items-center">
+            <Image src={run} alt="run" width={20} />
+            <h1 className="text-subtitle font-base ml-3">모집이 곧 종료돼요</h1>
+          </div>
           <Carousel posts={carouselPosts} />
+          <FilterBar />
           <InfiniteScroll
             dataLength={posts.length}
             next={loadMorePosts}

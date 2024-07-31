@@ -16,9 +16,9 @@ const Signup01: React.FC = () => {
   return (
     <div className="w-[400px] h-[500px] relative bg-white rounded-[20px] p-4">
       <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
-        <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center text-white">1</div>
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">2</div>
-        <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-black">3</div>
+        <div className="w-5 h-5 bg-gray-800 flex items-center justify-center text-white rounded-md">1</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">2</div>
+        <div className="w-5 h-5 bg-gray-300 flex items-center justify-center text-black rounded-md">3</div>
       </div>
       <div className="text-center text-2xl font-medium text-gray-700 leading-9 mt-16">
         어떤 일을 하고 계신가요?
