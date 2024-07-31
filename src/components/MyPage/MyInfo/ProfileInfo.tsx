@@ -4,57 +4,60 @@ import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUser } from "@/provider/UserContextProvider";
 
 const ProfileInfo: React.FC = () => {
   const { openModal, closeModal } = useModal();
   const supabase = createClient();
   const router = useRouter();
 
-  const [user, setUser] = useState<User | null>(null);
+  const { user, userData, fetchUserData } = useUser();
   const [nickname, setNickname] = useState("");
   const [blog, setBlog] = useState("");
   const [job, setJob] = useState("");
   const [experience, setExperience] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        router.push("/");
-        return;
-      }
-      setUser(user);
+    if (userData) {
+      setNickname(userData.nickname ?? "");
+      setBlog(userData.blog ?? "");
+      setJob(userData.job_title ?? "");
+      setExperience(userData.experience ?? "");
+    }
+  }, [userData]);
 
-      if (user) {
-        const { data, error } = await supabase
-          .from("Users")
-          .select("email, nickname, blog, job_title, experience")
-          .eq("user_id", user.id)
-          .single();
+  const validateForm = () => {
+    let valid = true;
 
-        if (error) {
-          console.error("사용자 정보 로드 에러:", error);
-        } else if (data) {
-          setNickname(data.nickname || "");
-          setBlog(data.blog || "");
-          setJob(data.job_title || "");
-          setExperience(data.experience || "");
-        }
-      }
-    };
+    // 닉네임 유효성 검사
+    if (nickname.length < 2 || nickname.length > 11) {
+      setNicknameError("닉네임은 2-11자 내로 작성해주세요.");
+      valid = false;
+    } else {
+      setNicknameError("");
+    }
 
-    fetchUserData();
-  }, [supabase, router]);
+    // 이메일 유효성 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user?.email ?? "")) {
+      setEmailError("유효한 이메일 주소를 입력해주세요.");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
 
+    return valid;
+  };
+
+  // 사용자 정보 업데이트
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user || !validateForm()) return;
 
     const { error } = await supabase
       .from("Users")
@@ -63,9 +66,10 @@ const ProfileInfo: React.FC = () => {
 
     if (error) {
       console.error("사용자 정보 업데이트 에러:", error);
-      toast.error("사용자 정보 업데이트 중 오류가 발생했습니다.");
+      toast.error("업데이트가 완료되지 않았습니다.");
     } else {
-      toast.success("정보 업데이트되었습니다.");
+      toast.success("정보가 업데이트되었습니다.");
+      fetchUserData();
     }
   };
 
@@ -95,7 +99,7 @@ const ProfileInfo: React.FC = () => {
 
     openModal(
       <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
-        <div className="relative w-80 p-6 bg-white rounded-lg shadow-lg">
+        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-white rounded-lg shadow-lg">
           <button
             onClick={onRequestClose}
             className="absolute top-2 right-2 text-gray-500 hover:"
@@ -135,32 +139,30 @@ const ProfileInfo: React.FC = () => {
     );
   };
 
-  if (!user) {
-    return null;
-  }
-
   return (
     <section>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <fieldset className="rounded-2xl bg-fillLight shadow-sm p-6 s:p-0 s:bg-background">
-          <h1 className="text-lg font-semibold mb-4">기본 정보</h1>
-          <div className="grid grid-cols-2 gap-4">
+        <fieldset className="p-6 s:p-0 ">
+          <h1 className="text-subtitle font-baseBold text-labelNeutral mb-5">기본 정보</h1>
+          <div className="grid grid-cols-2 s:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium mb-1">
+              <label htmlFor="email" className="block text-sm text-labelDisabled font-medium mb-1">
                 이메일
               </label>
               <input
                 type="text"
-                id="nickname"
-                name="nickname"
+                id="email"
+                name="email"
                 disabled
-                value={user.email}
-                className="w-full shared-input-gray-2"
+                value={user?.email ?? ""}
+                className="w-full shared-input-gray-2 border-[1px] border-fillLight"
+                style={{ color: "#454545" }}
               />
+              {emailError && <p className="text-statusDestructive text-baseXs mt-1">{emailError}</p>}
             </div>
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium mb-1">
-                닉네임
+              <label htmlFor="nickname" className="block text-baseS text-labelNormal font-medium mb-1">
+                닉네임 <span className="text-statusDestructive ml-1">*</span>
               </label>
               <input
                 type="text"
@@ -169,56 +171,44 @@ const ProfileInfo: React.FC = () => {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="닉네임을 입력해주세요."
-                className="w-full shared-input-gray-2"
+                className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
+              {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
+              <p className="text-labelAssistive text-baseXs mt-1">닉네임은 2-11자 내로 작성해주세요.</p>
             </div>
-            <div>
-              <label htmlFor="blog" className="block text-sm font-medium mb-1">
-                블로그 <span className="text-gray-400">(선택)</span>
-              </label>
-              <input
-                type="url"
-                id="blog"
-                name="blog"
-                value={blog}
-                onChange={(e) => setBlog(e.target.value)}
-                placeholder="링크를 입력해주세요."
-                className="w-full shared-input-gray-2"
-              />
-            </div>
-            <div>
-              <label htmlFor="job" className="block text-sm font-medium  mb-1">
-                직군
+            <div className="mt-[-13px] s:mt-0">
+              <label htmlFor="job" className="block text-sm font-medium text-labelNormal mb-1">
+                직군 <span className="text-statusDestructive ml-1">*</span>
               </label>
               <select
                 id="job"
                 name="job"
                 value={job}
                 onChange={(e) => setJob(e.target.value)}
-                className="w-full shared-select-gray-2"
+                className="w-full shared-select-gray-2 border-[1px] border-fillLight"
               >
                 <option value="">선택해주세요</option>
-                <option value="프론트엔드 개발자">프론트엔드 개발자</option>
-                <option value="백엔드 개발자">백엔드 개발자</option>
+                <option value="프론트엔드">프론트엔드</option>
+                <option value="백엔드">백엔드</option>
                 <option value="디자이너">디자이너</option>
                 <option value="IOS">IOS</option>
                 <option value="안드로이드">안드로이드</option>
                 <option value="데브옵스">데브옵스</option>
                 <option value="PM">PM</option>
                 <option value="기획자">기획자</option>
-                <option value="마케터">마케터</option>
+                <option value="마케팅">마케팅</option>
               </select>
             </div>
-            <div>
-              <label htmlFor="experience" className="block text-sm font-medium  mb-1">
-                경력
+            <div className="mt-[-13px] s:mt-0">
+              <label htmlFor="experience" className="block text-sm font-medium text-labelNormal mb-1">
+                경력<span className="text-statusDestructive ml-1">*</span>
               </label>
               <select
                 id="experience"
                 name="experience"
                 value={experience}
                 onChange={(e) => setExperience(e.target.value)}
-                className="w-full shared-select-gray-2"
+                className="w-full shared-select-gray-2 border-[1px] border-fillLight"
               >
                 <option value="">선택해주세요</option>
                 <option value="1년 미만">1년 미만</option>
@@ -232,16 +222,31 @@ const ProfileInfo: React.FC = () => {
                 <option value="8년 이상">8년 이상</option>
               </select>
             </div>
+            <div>
+              <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
+                블로그 <span className="text-labelAssistive">(선택)</span>
+              </label>
+              <input
+                type="url"
+                id="blog"
+                name="blog"
+                value={blog}
+                onChange={(e) => setBlog(e.target.value)}
+                placeholder="링크를 입력해주세요."
+                className="w-full shared-input-gray-2 border-[1px] border-fillLight"
+              />
+              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오도 좋아요.</p>
+            </div>
           </div>
-          <div className="mt-6">
-            <button type="button" aria-label="회원 탈퇴" onClick={handleOpenModal} className="mb-6 hover:underline">
-              회원 탈퇴
+          <div className="mt-6 mb-12">
+            <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
+              탈퇴하기
             </button>
-            <div className="flex justify-start gap-2">
-              <button type="button" aria-label="회원 정보 취소" className="shared-button-white">
+            <div className="flex justify-end gap-2">
+              <button type="button" aria-label="회원 정보 취소" className="shared-button-gray">
                 취소
               </button>
-              <button type="submit" aria-label="회원 정보 저장" className="shared-button-black">
+              <button type="submit" aria-label="회원 정보 저장" className="shared-button-green">
                 저장
               </button>
             </div>
