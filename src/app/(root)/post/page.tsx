@@ -296,7 +296,7 @@ const PostPage = () => {
           <button
             type="button"
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => router.push("/")} // 메인 페이지로 리디렉션
+            onClick={() => router.push("/")}
           >
             취소
           </button>

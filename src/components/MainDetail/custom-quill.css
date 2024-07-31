@@ -1,4 +1,3 @@
-/* custom-quill.css */
 .ql-toolbar .ql-header .ql-picker-label[data-value="1"]::before {
   content: "H1";
 }
