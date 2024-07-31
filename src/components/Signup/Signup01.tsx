@@ -1,10 +1,11 @@
 'use client';
 
-import useSignupStore from '@/store/useSignupStore';
+
+import useUserStore from '@/store/useUserStore';
 import React, { useState } from 'react';
 
 const Signup01: React.FC = () => {
-  const { nextStep, setJob } = useSignupStore();
+  const { nextStep, setJob } = useUserStore();
   const [selectedJob, setSelectedJob] = useState<string>('');
 
   const handleJobSelection = (job_title: string) => {

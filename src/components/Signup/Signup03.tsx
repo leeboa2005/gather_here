@@ -1,13 +1,13 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import useSignupStore from '@/store/useSignupStore';
+import useUserStore from '@/store/useUserStore';
 import React, { useState, ChangeEvent, useEffect } from 'react';
 
 const supabase = createClient();
 
 const Signup03: React.FC = () => {
-  const { nextStep, prevStep, setNickname, setBlog, setProfileImageUrl, user, job_title, experience, profile_image_url } = useSignupStore();
+  const { nextStep, prevStep, setNickname, setBlog, setProfileImageUrl, user, job_title, experience, profile_image_url } = useUserStore();
   const [nickname, setLocalNickname] = useState<string>('');
   const [blog, setLocalBlog] = useState<string>('');
   const [error, setError] = useState<string | null>(null);

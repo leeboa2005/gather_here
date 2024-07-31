@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import useSignupStore from '@/store/useSignupStore';
 import { useModal } from '@/provider/ContextProvider';
+import useUserStore from '@/store/useUserStore';
 
 const Signup04: React.FC = () => {
   const router = useRouter();
-  const { job_title, experience, nickname, blog, prevStep } = useSignupStore();
+  const { job_title, experience, nickname, blog, prevStep } = useUserStore();
   const { closeModal } = useModal();
   
   const handleExplore = () => {

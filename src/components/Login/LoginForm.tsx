@@ -4,15 +4,15 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import OAuthButtons from './OAuthButtons';
-import { useAuthStore } from '@/store/useAuthStore';
 import { useModal } from '@/provider/ContextProvider';
+import useUserStore from '@/store/useUserStore';
 
 const LoginForm = () => {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setUser } = useAuthStore();
+  const { setUser } = useUserStore();
   const { closeModal } = useModal();
 
   const handleLogin = async (provider: 'google' | 'kakao' | 'github') => {

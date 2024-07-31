@@ -1,10 +1,10 @@
 'use client';
 
-import useSignupStore from '@/store/useSignupStore';
+import useUserStore from '@/store/useUserStore';
 import React, { useState } from 'react';
 
 const Signup02: React.FC = () => {
-  const { nextStep, prevStep, setExperience } = useSignupStore();
+  const { nextStep, prevStep, setExperience } = useUserStore();
   const [selectedExperience, setSelectedExperience] = useState<string>('');
 
   const handleExperienceSelection = (experience: string) => {

@@ -6,29 +6,33 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
-import useSignupStore from "@/store/useSignupStore";
-// import SignupForm from '@/components/Signup/SigupForm';
+import useUserStore from "@/store/useUserStore";
+
+
 const supabase = createClient();
 const Header: React.FC = () => {
-  const { user, setUser, resetUser } = useSignupStore();
+  const { user, setUser, resetAuthUser } = useUserStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
+
   // 로그아웃
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (!error) {
-      resetUser();
+      resetAuthUser();
       router.push("/");
     } else {
       console.error("Error logging out:", error);
     }
   };
+
   // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
+
   // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -36,6 +40,7 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
+
   // 사용자 정보를 가져옴
   useEffect(() => {
     const getUser = async () => {
@@ -46,6 +51,7 @@ const Header: React.FC = () => {
     };
     getUser();
   }, [setUser]);
+  
   return (
     <header className="bg-background shadow-md relative">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
