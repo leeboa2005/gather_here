@@ -1,32 +1,50 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { Tables, TablesInsert } from "@/types/supabase";
+import { Tables } from "@/types/supabase";
 import { FormEvent, useEffect, useState } from "react";
+import useSignupStore from "@/store/useSignupStore";
+import Image from "next/image";
 
 type MessageRow = Tables<"Messages">;
-type MessageInsert = TablesInsert<"Messages">;
 
 const Chat = () => {
+  const { user } = useSignupStore();
+  const [userInfo, setUserInfo] = useState<UserRow>();
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [deletedMessageId, setDeletedMessageId] = useState<string>("");
   const supabase = createClient();
 
-  const getAllMessages = async () => {
-    const { data, error } = await supabase.from("Messages").select("*").order("sent_at", { ascending: true });
+  // customHook 으로 따로 빼서 코드 정리?
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+      setUserInfo(user as UserRow);
+    };
 
-    setMessages(data as MessageRow[]);
-  };
+    getUserInfo();
+  }, [user]);
 
-  // customHook 으로 따로 빼서 코드 정리
   useEffect(() => {
     // 채팅 내역 불러오기
+    const getAllMessages = async () => {
+      const { data, error } = await supabase
+        .from("Messages")
+        .select(`*, Users (nickname, profile_image_url)`) // user_id 를 통해 관계가 맺어져 있어서 참조가 가능한 듯?
+        .order("sent_at", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      setMessages(data as MessageRow[]);
+    };
+
     getAllMessages();
     // INSERT 이벤트 감지
     const openTalkSubscription = supabase
@@ -69,7 +87,7 @@ const Chat = () => {
       .insert({
         // channel_id 하드코딩 할 필요 없도록 해야함
         channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675",
-        user_id: "2e47ab8c-da7a-4590-b114-b0512b1b22cd",
+        user_id: `${userInfo?.id}`,
         content: `${inputValue}`,
       })
       .select("*");
@@ -79,7 +97,6 @@ const Chat = () => {
       return;
     }
 
-    // setNewMessages(data); // 얘가 원인?, 실질적으로 필요하지 않을 수 있음.
     setInputValue("");
   };
 
@@ -98,24 +115,47 @@ const Chat = () => {
     <div>
       {messages.map((message) => {
         return (
-          <p key={`${message.message_id}`}>
-            {message?.content}
-            {/* 추후 user_id 정보 받아서 message 의 user_id 값과 비교해 조건 부 렌더링 적용하면 됨 */}
-            <button className="border-4 pointer" onClick={() => handleDelete(message.message_id)}>
-              삭제
-            </button>
-          </p>
+          <div key={`${message.message_id}`}>
+            {message.user_id === userInfo?.id ? (
+              <>
+                <div>{message?.content}</div>
+                <button className="border-4 pointer" onClick={() => handleDelete(message.message_id)}>
+                  삭제
+                </button>
+              </>
+            ) : (
+              <>
+                <Image src={message.Users.profile_image_url} width={32} height={32} alt="profile image" />
+                <span>{message.Users.nickname}</span>
+                <div>{message?.content}</div>
+              </>
+            )}
+          </div>
         );
       })}
       <form action="" onSubmit={(evt) => handleSubmit(evt)}>
-        <input
-          type="text"
-          placeholder="메시지를 입력하세요"
-          value={inputValue}
-          onChange={(evt) => setInputValue(evt.target.value)}
-          className="border-4"
-        />
-        <button>전송</button>
+        {user ? (
+          <>
+            <textarea
+              placeholder="메시지를 입력하세요"
+              value={inputValue}
+              onChange={(evt) => setInputValue(evt.target.value)}
+              className="border-4"
+            />
+            <button>전송</button>
+          </>
+        ) : (
+          <>
+            <textarea
+              placeholder="채팅을 이용하려면 로그인을 해주세요."
+              value={inputValue}
+              onChange={(evt) => setInputValue(evt.target.value)}
+              className="border-4"
+              disabled
+            />
+            <button disabled>전송</button>
+          </>
+        )}
       </form>
     </div>
   );
