@@ -81,7 +81,7 @@ body {
 
   /* button - square small */
   .square-button-small {
-    @apply flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillNeutral text-white;
+    @apply flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillNeutral text-white;
   }
 
   /* button - square */
