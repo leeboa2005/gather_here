@@ -130,6 +130,28 @@ const ProfilePicture: React.FC = () => {
               priority
             />
           )}
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 14 13" fill="none">
+              <path
+                d="M8.57895 3.65789H8.58526M7 11.8684H2.89474C2.39222 11.8684 1.91029 11.6688 1.55496 11.3135C1.19962 10.9581 1 10.4762 1 9.97368V2.39474C1 1.89222 1.19962 1.41029 1.55496 1.05496C1.91029 0.699624 2.39222 0.5 2.89474 0.5H10.4737C10.9762 0.5 11.4581 0.699624 11.8135 1.05496C12.1688 1.41029 12.3684 1.89222 12.3684 2.39474V6.5"
+                stroke="#C4C4C4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M1 8.71053L4.15789 5.55264C4.744 4.98864 5.46653 4.98864 6.05263 5.55264L8.57895 8.07895"
+                stroke="#C4C4C4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M7.94727 7.44731L8.57884 6.81573C9.002 6.40899 9.49463 6.2953 9.95695 6.47467M9.21042 10.6052H12.9999M11.1052 8.71046V12.4999"
+                stroke="#C4C4C4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
         <input id="fileInput" type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
         <div className="grid grid-cols-5 gap-2 s:mb-4">
@@ -178,6 +200,17 @@ const ProfilePicture: React.FC = () => {
                     className="rounded-full"
                     priority
                   />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-fontWhite"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
                 </div>
               </button>
               <div

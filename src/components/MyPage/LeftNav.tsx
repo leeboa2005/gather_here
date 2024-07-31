@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useUser } from "@/provider/UserContextProvider";
 import Image from "next/image";
 import LeftNavLoader from "@/components/Common/Skeleton/LeftNavLoader";
-import classNames from "classnames";
 
 const LeftNav: React.FC = () => {
   const pathname = usePathname();
