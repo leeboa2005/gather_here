@@ -7,17 +7,37 @@ const NavTabs = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="p-5">
-      <Link href="/all" className={`mr-3 ${pathname === "/all" ? "font-bold" : ""}`}>
+    <nav className="flex space-x-4">
+      <Link
+        href="/all"
+        className={`px-4 py-2 rounded-full ${
+          pathname === "/all" ? "bg-fillAlternative text-primary" : "text-labelNeutral"
+        }`}
+      >
         전체
       </Link>
-      <Link href="/studies" className={`mr-3 ${pathname === "/studies" ? "font-bold" : ""}`}>
+      <Link
+        href="/studies"
+        className={`px-4 py-2 rounded-full ${
+          pathname === "/studies" ? "bg-fillAlternative  text-primary" : "text-labelNeutral"
+        }`}
+      >
         스터디
       </Link>
-      <Link href="/projects" className={`mr-3 ${pathname === "/projects" ? "font-bold" : ""}`}>
+      <Link
+        href="/projects"
+        className={`px-4 py-2 rounded-full ${
+          pathname === "/projects" ? "bg-fillAlternative  text-primary" : "text-labelNeutral"
+        }`}
+      >
         프로젝트
       </Link>
-      <Link href="/events" className={`mr-3 ${pathname === "/events" ? "font-bold" : ""}`}>
+      <Link
+        href="/events"
+        className={`px-4 py-2 rounded-full ${
+          pathname === "/events" ? "bg-fillAlternative  text-primary" : "text-labelNeutral"
+        }`}
+      >
         IT행사
       </Link>
     </nav>

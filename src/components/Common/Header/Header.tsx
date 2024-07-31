@@ -8,7 +8,6 @@ import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
 import useSignupStore from "@/store/useSignupStore";
 // import SignupForm from '@/components/Signup/SigupForm';
-
 const supabase = createClient();
 const Header: React.FC = () => {
   const { user, setUser, resetUser } = useSignupStore();
@@ -16,7 +15,6 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
   const { openModal, closeModal } = useModal();
-
   // 로그아웃
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -27,7 +25,6 @@ const Header: React.FC = () => {
       console.error("Error logging out:", error);
     }
   };
-
   // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -39,7 +36,6 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
-
   // 사용자 정보를 가져옴
   useEffect(() => {
     const getUser = async () => {
@@ -50,7 +46,6 @@ const Header: React.FC = () => {
     };
     getUser();
   }, [setUser]);
-
   return (
     <header className="bg-background shadow-md relative">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
@@ -77,12 +72,12 @@ const Header: React.FC = () => {
           <div className="flex items-center s:space-x-2">
             <button
               onClick={toggleSearch}
-              className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
               <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
             </button>
             <Link href="/post" passHref>
-              <button className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+              <button className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
                 <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
               </button>
             </Link>
@@ -91,14 +86,14 @@ const Header: React.FC = () => {
                 {/* 마이페이지 버튼 (모바일) */}
                 <button
                   onClick={toggleModal}
-                  className="hidden s:flex items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
                 </button>
                 {/* 마이페이지 버튼 (데스크탑, 테블릿) */}
                 <Link
                   href="/mypage"
-                  className="flex s:hidden items-center justify-center w-[42px] h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
                 </Link>
