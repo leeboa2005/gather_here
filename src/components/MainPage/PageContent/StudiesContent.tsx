@@ -56,7 +56,6 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
     loadMorePosts();
   }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
 
-  // 하단 게시물리스트
   const loadMorePosts = async () => {
     const newPosts: PostWithUser[] = await fetchPosts(page, "스터디", {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,

@@ -24,6 +24,18 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     setIsActive(!isActive);
   };
 
+  const jobTitleClassMap: { [key: string]: string } = {
+    프론트엔드: "text-primary",
+    ios: "text-accentPurple",
+    안드로이드: "text-accentRed",
+    pm: "text-accentColumbia",
+    기획: "text-accentPink",
+    마케팅: "text-accentYellow",
+    백엔드: "text-accentOrange",
+    디자이너: "text-accentMaya",
+    데브옵스: "text-accentMint",
+  };
+
   return (
     <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
       <div className="p-8 h-72 m-2 text-center bg-fillAssistive rounded-2xl">
@@ -56,8 +68,14 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
           </div>
           <Link href={`/maindetail/${post.post_id}`}>
-            <div className="text-subtitle  text-accentPurple flex items-center justify-between  bg-fillLight p-3 rounded-lg truncate">
-              <div className="flex-1 text-left truncate">{post.target_position}</div>
+            <div className="text-subtitle flex items-center justify-between bg-fillLight p-3 rounded-lg truncate">
+              <div className="flex-1 text-left truncate">
+                {post.target_position.map((position, index) => (
+                  <span key={index} className={`${jobTitleClassMap[position] || "text-default"} mr-1`}>
+                    {position}
+                  </span>
+                ))}
+              </div>
               <div className="flex items-center flex-none">
                 <div className="mr-2">{post.recruitments}명</div>
                 <Image src={arrow} alt="interest_basic" width={11} />

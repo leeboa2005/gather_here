@@ -42,7 +42,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
     <div className="flex justify-between items-center mt-5 mb-3">
       <div className="flex space-x-2">
         <select
-          className={`px-2 py-1 text-center text-baseS rounded-md ${
+          className={`shared-select-gray ${
             selectedPosition ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
           }`}
           value={selectedPosition}
@@ -62,7 +62,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <option value="마케터">마케터</option>
         </select>
         <select
-          className={`px-2 py-1 text-center text-baseS rounded-md ${
+          className={`shared-select-gray ${
             selectedPlace ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
           }`}
           value={selectedPlace}
@@ -76,7 +76,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <option value="오프라인">오프라인</option>
         </select>
         <select
-          className={`px-2 py-1 text-center text-baseS rounded-md ${
+          className={`shared-select-gray ${
             selectedLocation ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
           }`}
           value={selectedLocation}
@@ -95,7 +95,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <option value="제주">제주</option>
         </select>
         <select
-          className={`px-2 py-1 text-center text-baseS rounded-md ${
+          className={`shared-select-gray ${
             selectedDuration ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
           }`}
           value={selectedDuration !== null ? selectedDuration.toString() : ""}

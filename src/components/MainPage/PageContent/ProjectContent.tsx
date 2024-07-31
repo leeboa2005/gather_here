@@ -26,16 +26,19 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // 마감임박 캐러셀, 게시물
+  const [selectedPosition, setSelectedPosition] = useState<string>("");
+  const [selectedPlace, setSelectedPlace] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+
   useEffect(() => {
     const loadCarouselData = async () => {
-      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트"); // D-일수이내것만 보여지게
+      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트");
       setCarouselPosts(carouselData);
     };
     loadCarouselData();
   }, []);
 
-  // 모바일 및 중간 크기 판별
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1068);
@@ -46,9 +49,20 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 하단 게시물리스트
+  useEffect(() => {
+    setPage(1);
+    setPosts([]);
+    setHasMore(true);
+    loadMorePosts();
+  }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
+
   const loadMorePosts = async () => {
-    const newPosts: PostWithUser[] = await fetchPosts(page, "프로젝트");
+    const newPosts: PostWithUser[] = await fetchPosts(page, "프로젝트", {
+      targetPosition: selectedPosition ? [selectedPosition] : undefined,
+      place: selectedPlace,
+      location: selectedLocation,
+      duration: selectedDuration,
+    });
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
@@ -74,16 +88,29 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     setIsModalOpen(false);
   };
 
+  const handleFilterChange = (position: string, place: string, location: string, duration: number | null) => {
+    setSelectedPosition(position);
+    setSelectedPlace(place);
+    setSelectedLocation(location);
+    setSelectedDuration(duration);
+  };
+
   return (
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center">
-            <Image src={run} alt="run" width={20} />
-            <h1 className="text-subtitle font-base ml-3">모집이 곧 종료돼요</h1>
+            <Image src={run} alt="run" width={17} />
+            <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
           </div>
           <Carousel posts={carouselPosts} />
-          <FilterBar />
+          <FilterBar
+            selectedPosition={selectedPosition}
+            selectedPlace={selectedPlace}
+            selectedLocation={selectedLocation}
+            selectedDuration={selectedDuration}
+            onChange={handleFilterChange}
+          />
           <InfiniteScroll
             dataLength={posts.length}
             next={loadMorePosts}
@@ -106,7 +133,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
             </div>
           </div>
         )}
-      </div>{" "}
+      </div>
       {isMobile && (
         <button
           onClick={openModal}
@@ -118,7 +145,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Calender />
       </CommonModal>
-    </div> // 캘린더→채팅컴포넌트로 바뀔예정
+    </div>
   );
 };
 
