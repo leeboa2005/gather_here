@@ -16,8 +16,12 @@ export type Post = {
   place?: string;
 };
 
-// export type Users = {
-//   email: string;
-//   nickname: string;
-//   profile_image_url: string;
-// };
+export type User = {
+  email: string;
+  nickname: string;
+  profile_image_url: string;
+};
+
+export type PostWithUser = Post & {
+  user: User;
+};
