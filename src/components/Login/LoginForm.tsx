@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import OAuthButtons from './OAuthButtons';
 import { useAuthStore } from '@/store/useAuthStore';
-
-
+import { useModal } from '@/provider/ContextProvider';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -14,6 +13,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { setUser } = useAuthStore();
+  const { closeModal } = useModal();
 
   const handleLogin = async (provider: 'google' | 'kakao' | 'github') => {
     setLoading(true);
@@ -34,7 +34,6 @@ const LoginForm = () => {
     }
 
     if (data) {
-      console.log('Login successful:', data);
        router.push('/'); 
     } else {
       console.error('Login data is empty.');
@@ -44,8 +43,19 @@ const LoginForm = () => {
     setLoading(false);
   };
 
+  const handleClose = () => {
+    closeModal();
+    router.push('/');
+  };
+
   return (
-    <div className="w-[400px] h-[500px] relative bg-white rounded-[20px] ">
+    <div className="w-[400px] h-[500px] relative bg-white rounded-[20px]">
+      <button
+        onClick={handleClose}
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+      >
+        &times;
+      </button>
       <div className="left-[114px] top-[30px] absolute text-center text-black/20 text-2xl font-medium font-['Pretendard JP'] leading-9">
         3초만에 가입하고 <br />대화 시작하기
       </div>
