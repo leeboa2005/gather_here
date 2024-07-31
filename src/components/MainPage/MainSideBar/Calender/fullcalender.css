@@ -11,27 +11,49 @@
   padding: 15px;
 }
 
-.fc .fc-button-primary {
+.fc .fc-header-toolbar button {
   background-color: transparent;
   border: 0px;
+  margin: -10px;
+  padding: 3px;
 }
 
-.fc-icon {
+/* hover 시 primary color */
+.fc .fc-header-toolbar button:hover {
+  background-color: #c3e88d;
+}
+
+.fc .fc-icon {
   color: #919191;
 }
 
-.fc-scrollgrid {
-  border: 0 !important; /* 얘는 important 안 먹이면 안됨.. */
-}
-
+/* 테이블 border 지우기 */
+.fc table.fc-scrollgrid,
 .fc td,
 .fc th {
   border: 0;
-  border-image-width: 0;
 }
 
-/* 요일 행 높이지정 */
-.fc .fc-scrollgrid-section table {
-  height: 25px;
-  vertical-align: middle;
+.fc .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  height: 100%;
+}
+
+.fc table .fc-daygrid-day-top {
+  display: flex;
+  justify-content: center;
+}
+
+.fc .fc-header-toolbar.fc-toolbar {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #5e5e5e;
+  margin-bottom: 14px;
+}
+
+.fc table.fc-col-header {
+  margin-bottom: 14px;
+}
+
+.fc .fc-day-today.fc-daygrid-day {
+  color: #c3e88d;
+  background-color: transparent;
 }

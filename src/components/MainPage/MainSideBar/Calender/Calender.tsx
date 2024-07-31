@@ -9,6 +9,12 @@ import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import "./fullcalender.css";
 
+type EventsType = {
+  title: string;
+  date_start: string;
+  date_done: string;
+};
+
 const detectMobileDevice = () => {
   const mobileWidth = 1068;
 
@@ -33,7 +39,7 @@ const Calender: React.FC = () => {
     if (response.ok) {
       const { data } = await response.json(); // 캘린더에 표기하기 위해 가져온 행사 일정의 날짜 형식을 바꿔줘야 할 수도 있음. start, end => yyyy-mm-dd 로만 바꾸면 될 듯
 
-      const events = data.map((event: any) => ({
+      const events = data.map((event: EventsType) => ({
         title: event.title,
         start: dayjs(event.date_start).format("YYYY-MM-DD"), // yyyy-mm-dd 로 바꿔줘야함
         end: dayjs(event.date_done).format("YYYY-MM-DD"),
@@ -81,15 +87,14 @@ const Calender: React.FC = () => {
             },
           },
         }}
-        dateClick={(info) => {
-          console.log(info);
-          alert("Current view: " + info.view);
-        }}
+        // dateClick={(info) => {
+        //   console.log(info);
+        //   alert("Current view: " + info.view);
+        // }}
         firstDay={1}
         initialView={!isMobileDevice ? "dayGridMonth" : "list"}
         eventSources={[
           {
-            // 이것을 이용해 카테고리별로 색깔을 다르게 할 수 있도록 하면 좋을 듯
             events: IT_Events,
             color: "black",
             textColor: "yellow",
@@ -98,6 +103,9 @@ const Calender: React.FC = () => {
         dayMaxEventRows={0}
         dayCellContent={(cellContent) => {
           return cellContent.dayNumberText.replace("일", "");
+        }}
+        moreLinkContent={(asdf) => {
+          return asdf.shortText;
         }}
         eventDisplay="list-item"
         headerToolbar={
