@@ -36,7 +36,7 @@ const ProfileInfo: React.FC = () => {
 
     // 닉네임 유효성 검사
     if (nickname.length < 2 || nickname.length > 11) {
-      setNicknameError("닉네임은 2-11자 내로 작성해주세요.");
+      setNicknameError("닉네임은 2-11자가 아닙니다.");
       valid = false;
     } else {
       setNicknameError("");
@@ -99,7 +99,7 @@ const ProfileInfo: React.FC = () => {
 
     openModal(
       <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
-        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-white rounded-lg shadow-lg">
+        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg ">
           <button
             onClick={onRequestClose}
             className="absolute top-2 right-2 text-gray-500 hover:"
@@ -173,8 +173,8 @@ const ProfileInfo: React.FC = () => {
                 placeholder="닉네임을 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
               <p className="text-labelAssistive text-baseXs mt-1">닉네임은 2-11자 내로 작성해주세요.</p>
+              {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
             </div>
             <div className="mt-[-13px] s:mt-0">
               <label htmlFor="job" className="block text-sm font-medium text-labelNormal mb-1">
