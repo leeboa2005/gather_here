@@ -5,6 +5,7 @@ import { Tables } from "@/types/supabase";
 import { FormEvent, useEffect, useState } from "react";
 import useSignupStore from "@/store/useSignupStore";
 import Image from "next/image";
+import dayjs from "dayjs";
 
 type MessageRow = Tables<"Messages">;
 
@@ -117,18 +118,20 @@ const Chat = () => {
         return (
           <div key={`${message.message_id}`}>
             {message.user_id === userInfo?.id ? (
-              <>
-                <div>{message?.content}</div>
+              <div>
+                <p>{message?.content}</p>
+                <span>{dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}</span>
                 <button className="border-4 pointer" onClick={() => handleDelete(message.message_id)}>
                   삭제
                 </button>
-              </>
+              </div>
             ) : (
-              <>
+              <div>
                 <Image src={message.Users.profile_image_url} width={32} height={32} alt="profile image" />
                 <span>{message.Users.nickname}</span>
-                <div>{message?.content}</div>
-              </>
+                <p>{message?.content}</p>
+                <span>{dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}</span>
+              </div>
             )}
           </div>
         );
