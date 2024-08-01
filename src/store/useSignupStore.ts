@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface SignupState {
   step: number;
@@ -21,27 +21,28 @@ interface SignupState {
 
 const useSignupStore = create<SignupState>((set) => ({
   step: 1,
-  job_title: '',
-  experience: '',
-  nickname: '',
-  blog: '',
-  profile_image_url: '',
+  job_title: "",
+  experience: "",
+  nickname: "",
+  blog: "",
+  profile_image_url: "",
   user: null,
   setJob: (job) => set({ job_title: job }),
   setExperience: (experience) => set({ experience }),
   setNickname: (nickname) => set({ nickname }),
   setBlog: (blog) => set({ blog }),
   setProfileImageUrl: (url) => set({ profile_image_url: url }),
-  setUser: (user, profileImageUrl) => set({ user, profile_image_url: profileImageUrl ?? '' }),
-  resetUser: () => set({
-    step: 1,
-    job_title: '',
-    experience: '',
-    nickname: '',
-    blog: '',
-    profile_image_url: '',
-    user: null,
-  }),
+  setUser: (user, profileImageUrl) => set({ user, profile_image_url: profileImageUrl ?? "" }),
+  resetUser: () =>
+    set({
+      step: 1,
+      job_title: "",
+      experience: "",
+      nickname: "",
+      blog: "",
+      profile_image_url: "",
+      user: null,
+    }),
   nextStep: () => set((state) => ({ step: state.step + 1 })),
   prevStep: () => set((state) => ({ step: state.step - 1 })),
 }));
