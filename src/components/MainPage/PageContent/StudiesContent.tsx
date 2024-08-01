@@ -11,6 +11,7 @@ import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import Image from "next/image";
 import run from "@/../public/Main/run.png";
+import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -23,6 +24,7 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
+  const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -33,8 +35,10 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
 
   useEffect(() => {
     const loadCarouselData = async () => {
+      setIsLoadingCarousel(true);
       const carouselData = await fetchPostsWithDeadLine(15, "스터디"); // D-일수이내
       setCarouselPosts(carouselData);
+      setIsLoadingCarousel(false);
     };
     loadCarouselData();
   }, []);
@@ -103,7 +107,15 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
             <Image src={run} alt="run" width={17} />
             <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
           </div>
-          <Carousel posts={carouselPosts} />
+          {isLoadingCarousel ? (
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {Array.from({ length: isMobile ? 1 : 3 }).map((_, index) => (
+                <CarouselLoader key={index} />
+              ))}
+            </div>
+          ) : (
+            <Carousel posts={carouselPosts} />
+          )}
           <FilterBar
             selectedPosition={selectedPosition}
             selectedPlace={selectedPlace}
