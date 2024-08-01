@@ -26,10 +26,10 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
 
   const jobTitleClassMap: { [key: string]: string } = {
     프론트엔드: "text-primary",
-    ios: "text-accentPurple",
+    IOS: "text-accentPurple",
     안드로이드: "text-accentRed",
-    pm: "text-accentColumbia",
-    기획: "text-accentPink",
+    PM: "text-accentColumbia",
+    기획자: "text-accentPink",
     마케팅: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
@@ -38,7 +38,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-8 h-72 m-2 text-center bg-fillAssistive rounded-2xl">
+      <div className="p-5 h-64 m-2 text-center bg-fillAssistive rounded-2xl">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
@@ -48,7 +48,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             <Image src={isActive ? interest_active : interest_basic} alt="interest_basic" width={15} />
           </div>
         </div>
-        <h2 className="text-left text-title font-base truncate mt-3 text-labelStrong">{post.title}</h2>
+        <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
         <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
           {post.content}
         </p>{" "}
@@ -68,13 +68,20 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
           </div>
           <Link href={`/maindetail/${post.post_id}`}>
-            <div className="text-subtitle flex items-center justify-between bg-fillLight p-3 rounded-lg truncate">
+            <div className="text-base flex items-center justify-between bg-fillLight p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
-                {post.target_position.map((position, index) => (
-                  <span key={index} className={`${jobTitleClassMap[position] || "text-default"} mr-1`}>
-                    {position}
-                  </span>
-                ))}
+                {post.target_position.length > 0 && (
+                  <>
+                    <span className={`${jobTitleClassMap[post.target_position[0]] || "text-default"}`}>
+                      {post.target_position[0]}
+                    </span>
+                    {post.target_position.length > 1 && (
+                      <span className={`${jobTitleClassMap[post.target_position[0]] || "text-default"}`}>
+                        +{post.target_position.length - 1}
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
               <div className="flex items-center flex-none">
                 <div className="mr-2">{post.recruitments}명</div>

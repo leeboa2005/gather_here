@@ -74,12 +74,12 @@ const AdCard: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-auto">
+    <div className="w-auto h-auto mr-2 ml-2">
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index}>
             <a href={slide.href} target="_blank" rel="noopener noreferrer">
-              <Image src={slide.src} alt={slide.alt} className="mx-auto" priority />
+              <Image src={slide.src} alt={slide.alt} className="mx-auto rounded-xl" priority />
             </a>
           </div>
         ))}
