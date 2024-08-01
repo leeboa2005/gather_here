@@ -3,7 +3,7 @@ import React from "react";
 const ProfileLoader: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={`animate-pulse ${className}`}>
-      <div className="bg-gray-200 marker:w-full h-full"></div>
+      <div className="bg-fillLight marker:w-full h-full"></div>
     </div>
   );
 };

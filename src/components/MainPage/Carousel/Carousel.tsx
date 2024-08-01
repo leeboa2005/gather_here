@@ -7,10 +7,10 @@ import "swiper/css/pagination";
 import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
-import { Post } from "@/types/posts/Post.type";
+import { PostWithUser } from "@/types/posts/Post.type";
 
 interface CarouselProps {
-  posts: Post[];
+  posts: PostWithUser[];
 }
 
 const Carousel: React.FC<CarouselProps> = ({ posts }) => {
@@ -21,7 +21,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         slidesPerView={2}
         navigation
         pagination={{ clickable: true }}
-        className="w-full h-full"
+        className="w-full h-80"
         breakpoints={{
           336: {
             slidesPerView: 1,
@@ -30,7 +30,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
             slidesPerView: 2,
           },
           1068: {
-            slidesPerView: 2.3,
+            slidesPerView: 2,
           },
         }}
       >
