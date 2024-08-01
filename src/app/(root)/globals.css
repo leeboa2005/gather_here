@@ -163,7 +163,6 @@ body {
 .modal-content {
   pointer-events: auto;
   user-select: auto;
-  background: white;
   padding: 20px;
   border-radius: 8px;
   position: fixed;
