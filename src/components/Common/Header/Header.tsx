@@ -12,7 +12,7 @@ import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
 
 const Header: React.FC = () => {
-  const { user, userData, fetchUserData, logout2 } = useUser();
+  const { user, userData, fetchUserData, initializationUser } = useUser();
   const { resetUser } = useSignupStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
 
     // 상태 초기화 및 리디렉션
     resetUser();
-    logout2();
+    initializationUser();
     router.push("/");
   };
 
