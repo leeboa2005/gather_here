@@ -37,7 +37,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <div className="w-auto p-5 bg-fillAssistive rounded-2xl m-2 mb-4">
+    <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         <div>
@@ -67,7 +67,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
         <p className="text-sm text-gray-500">작성자 {post.user?.nickname}</p>
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
-        <div className="text-base flex items-center justify-between bg-fillLight p-3 rounded-lg truncate">
+        <div className="text-base flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
           <div className="flex-1 text-left truncate">
             {post.target_position.map((position, index) => (
               <span key={index} className={`${jobTitleClassMap[position] || "text-default"}`}>

@@ -38,7 +38,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-5 h-64 m-2 text-center bg-fillAssistive rounded-2xl">
+      <div className="p-5 h-64 m-2 text-center bg-fillStrong rounded-2xl">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
@@ -68,7 +68,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
           </div>
           <Link href={`/maindetail/${post.post_id}`}>
-            <div className="text-base flex items-center justify-between bg-fillLight p-3 rounded-lg truncate">
+            <div className="text-base flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
                 {post.target_position.length > 0 && (
                   <>
