@@ -69,7 +69,7 @@ const Calender: React.FC = () => {
 
   return (
     <>
-      <h4>HOT한 IT 행사 놓치지 마세요</h4>
+      <h4 className="mb-4">HOT한 IT 행사 놓치지 마세요</h4>
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         aspectRatio={0.65} // 큰 값으로 설정하면 더 작게 보임

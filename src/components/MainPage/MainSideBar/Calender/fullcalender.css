@@ -1,5 +1,10 @@
 .fc {
-  margin: 20px;
+  background-color: #28282a;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
 }
 
 .fc-viewChanger-button.fc-button.fc-button-primary {
@@ -38,7 +43,8 @@
   height: 100%;
 }
 
-.fc table .fc-daygrid-day-top {
+.fc table .fc-daygrid-day-top,
+.fc table .fc-daygrid-day-events {
   display: flex;
   justify-content: center;
 }
