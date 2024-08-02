@@ -28,7 +28,7 @@ const MainDetailPage = () => {
       if (id) {
         const { data: postData, error: postError } = await supabase
           .from("Posts")
-          .select("*")
+          .select("*, user:user_id(profile_image_url, nickname, job_title, experience)")
           .eq("post_id", id)
           .single();
 
@@ -40,24 +40,11 @@ const MainDetailPage = () => {
 
         setPost(postData);
 
-        const { data: userData, error: userError } = await supabase
-          .from("Users")
-          .select("profile_image_url, nickname, job_title, experience")
-          .eq("user_id", postData.user_id)
-          .single();
-
-        if (userError) {
-          console.error("Error fetching user:", userError);
-        } else {
-          setUser(userData);
-        }
-
         const { data: currentUserData, error: currentUserError } = await supabase.auth.getUser();
         if (currentUserError) {
           console.error("Error fetching current user:", currentUserError);
         } else {
           setCurrentUser(currentUserData?.user);
-          // 좋아요 상태 체크
           const { data: likeData, error: likeError } = await supabase
             .from("Interests")
             .select("*")
@@ -90,7 +77,7 @@ const MainDetailPage = () => {
       const { error } = await supabase.from("Interests").insert({
         user_id: currentUser.id,
         post_id: id,
-        category: post.category, // category 필드 추가
+        category: post.category,
       });
       if (error) {
         console.error("Error liking post:", error);
