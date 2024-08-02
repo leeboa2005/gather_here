@@ -8,9 +8,10 @@ import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithUser;
+  style?: React.CSSProperties;
 }
 
-const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
+const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
@@ -26,7 +27,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-8 h-72 m-2 text-center bg-fillAssistive rounded-2xl">
+      <div className="p-8 h-72 text-center bg-fillAssistive rounded-2xl">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
