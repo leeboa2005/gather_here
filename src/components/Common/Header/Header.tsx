@@ -1,51 +1,60 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
+import { useUser } from "@/provider/UserContextProvider";
 import useSignupStore from "@/store/useSignupStore";
-// import SignupForm from '@/components/Signup/SigupForm';
+import { createClient } from "@/utils/supabase/client";
+
 const supabase = createClient();
+
 const Header: React.FC = () => {
-  const { user, setUser, resetUser } = useSignupStore();
+  const { user, userData, fetchUserData, initializationUser } = useUser();
+  const { resetUser } = useSignupStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
+  const defaultImage = "/Common/Icons/user.png";
+
   // 로그아웃
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (!error) {
-      resetUser();
-      router.push("/");
-    } else {
+    if (error) {
       console.error("Error logging out:", error);
+      return;
     }
+
+    // 상태 초기화 및 리디렉션
+    resetUser();
+    initializationUser();
+    router.push("/");
   };
+
   // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
+
   // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
+
   // 사용자 정보를 가져옴
   useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data?.user) {
-        setUser(data.user);
-      }
-    };
-    getUser();
-  }, [setUser]);
+    fetchUserData();
+  }, [user]);
+
+  const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
+
   return (
     <header className="bg-background shadow-md relative">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
@@ -69,7 +78,7 @@ const Header: React.FC = () => {
               <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
             </button>
           </form>
-          <div className="flex items-center s:space-x-2">
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleSearch}
               className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
@@ -77,7 +86,7 @@ const Header: React.FC = () => {
               <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
             </button>
             <Link href="/post" passHref>
-              <button className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+              <button className="flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
                 <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
               </button>
             </Link>
@@ -88,14 +97,14 @@ const Header: React.FC = () => {
                   onClick={toggleModal}
                   className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
+                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
                 </button>
                 {/* 마이페이지 버튼 (데스크탑, 테블릿) */}
                 <Link
                   href="/mypage"
                   className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src="/Common/Icons/user.png" alt="유저 버튼 아이콘" width={24} height={24} />
+                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
                 </Link>
                 <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
                   로그아웃
@@ -128,15 +137,22 @@ const Header: React.FC = () => {
         </div>
       )}
       {isModalOpen && user && (
-        <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-4 z-50 s:block hidden">
-          {/* 마이페이지 모달 (모바일) : 사용자 정보 표시 작업 예정 */}
+        <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-5 z-50 s:block hidden">
           <div className="flex items-center mb-4 pb-4 border-b-[1px]">
-            <div className="p-2 bg-slate-100 rounded-full flex items-center justify-center">
-              <Image src="/Common/Icons/user.png" alt="User Icon" width={28} height={28} />
+            <div className="w-[48px] h-[48px] bg-slate-100 rounded-[12px] flex items-center justify-center">
+              <Image
+                src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
+                alt="프로필 이미지"
+                width={48}
+                height={48}
+                className="rounded-[12px]"
+              />
             </div>
             <div className="ml-4">
-              <p className="text-fillStrong text-baseS">{user.email}</p>
-              <p className="text-baseXs text-fillNeutral">프론트엔드 4년</p>
+              <p className="text-fillStrong text-baseS font-subtitle">{userData?.nickname}</p>
+              <p className="text-baseXs text-fillNeutral">
+                {userData?.job_title} {userData?.experience}
+              </p>
             </div>
           </div>
           <ul className="space-y-2">
@@ -166,4 +182,5 @@ const Header: React.FC = () => {
     </header>
   );
 };
+
 export default Header;
