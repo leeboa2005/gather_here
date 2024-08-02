@@ -3,7 +3,6 @@
 import { createClient } from "@/utils/supabase/client";
 import { Tables } from "@/types/supabase";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import useSignupStore from "@/store/useSignupStore";
 import Image from "next/image";
 import dayjs from "dayjs";
 
@@ -16,7 +15,6 @@ type ChatUserInfo = {
 type MessageRow = Tables<"Messages"> & ChatUserInfo;
 
 const Chat = () => {
-  const { user } = useSignupStore();
   const [userInfo, setUserInfo] = useState<UserRow>();
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [deletedMessageId, setDeletedMessageId] = useState<string>("");
@@ -38,7 +36,7 @@ const Chat = () => {
     };
 
     getUserInfo();
-  }, [user]);
+  }, [userInfo]);
 
   useEffect(() => {
     // 채팅 내역 불러오기
@@ -225,7 +223,7 @@ const Chat = () => {
             })}
           </div>
           <form action="" className="w-full" onSubmit={(evt) => handleSubmit(evt)}>
-            {user ? (
+            {userInfo ? (
               <div
                 id="input"
                 className="self-stretch h-[145px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex"
