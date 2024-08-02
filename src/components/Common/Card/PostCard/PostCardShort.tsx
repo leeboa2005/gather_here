@@ -8,9 +8,10 @@ import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithUser;
+  style?: React.CSSProperties;
 }
 
-const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
+const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
