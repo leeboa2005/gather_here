@@ -7,7 +7,13 @@ import useSignupStore from "@/store/useSignupStore";
 import Image from "next/image";
 import dayjs from "dayjs";
 
-type MessageRow = Tables<"Messages">;
+type ChatUserInfo = {
+  Users: {
+    profile_image_url: string;
+    nickname: string;
+  };
+};
+type MessageRow = Tables<"Messages"> & ChatUserInfo;
 
 const Chat = () => {
   const { user } = useSignupStore();
@@ -15,8 +21,8 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [deletedMessageId, setDeletedMessageId] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const editableDivRef = useRef<HTMLDivElement>(null);
-  const hiddenTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [inputValue, setInputValue] = useState<string>("");
   const supabase = createClient();
 
   // customHook 으로 따로 빼서 코드 정리?
@@ -31,12 +37,6 @@ const Chat = () => {
 
     getUserInfo();
   }, [user]);
-
-  useEffect(() => {
-    if (editableDivRef.current) {
-      editableDivRef.current.scrollTop = editableDivRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   useEffect(() => {
     // 채팅 내역 불러오기
@@ -92,29 +92,22 @@ const Chat = () => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (editableDivRef.current && hiddenTextareaRef.current) {
-      hiddenTextareaRef.current.value = editableDivRef.current.innerHTML;
+    const { data, error } = await supabase
+      .from("Messages")
+      .insert({
+        // channel_id 하드코딩 할 필요 없도록 해야함
+        channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675",
+        user_id: `${userInfo?.id}`,
+        content: `${inputValue}`,
+      })
+      .select("*");
 
-      const { data, error } = await supabase
-        .from("Messages")
-        .insert({
-          // channel_id 하드코딩 할 필요 없도록 해야함
-          channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675",
-          user_id: `${userInfo?.id}`,
-          content: `${hiddenTextareaRef.current.value}`,
-        })
-        .select("*");
-
-      if (error) {
-        console.error("에러: ", error);
-        return;
-      }
-
-      editableDivRef.current.innerHTML = "";
-    } else {
-      alert("전송 오류");
+    if (error) {
+      console.error("에러: ", error);
       return;
     }
+
+    setInputValue("");
   };
 
   const handleDelete = async (message_id: string) => {
@@ -130,7 +123,7 @@ const Chat = () => {
 
   return (
     <>
-      <h4>실시간 채팅에 참여해보세요.</h4>
+      <h4 className="ml-2 mb-4">실시간 채팅에 참여해보세요.</h4>
       {isOpen ? (
         <div id="container" className="h-[663px] w-full flex-col justify-start items-start inline-flex">
           <div
@@ -164,20 +157,22 @@ const Chat = () => {
           >
             {messages.map((message) => {
               return (
-                <div key={`${message.message_id}`} className="w-full">
+                <div key={`${message.message_id}`} className="w-full mb-3">
                   {message.user_id === userInfo?.id ? (
-                    <div id="mine" className="self-stretch h-[110px] px-3 flex-col justify-center items-end flex">
+                    <div id="mine" className="self-stretch px-3 flex-col justify-center items-end flex">
                       <div className="flex-col justify-center items-end gap-1 flex">
-                        <button className="border-4 pointer" onClick={() => handleDelete(message.message_id)}>
-                          삭제
-                        </button>
-                        <div className="w-[190px] p-3 bg-[#c3e88d] rounded-tl-[20px] rounded-tr rounded-bl-[20px] rounded-br-[20px] justify-center items-center gap-2.5 inline-flex">
-                          <div className="grow shrink basis-0 text-[#2b2b2b] text-sm font-normal font-['Pretendard'] leading-snug">
-                            <p>{message?.content}</p>
+                        <div className="flex items-end">
+                          <button className="mr-2 pointer" onClick={() => handleDelete(message.message_id)}>
+                            삭제
+                          </button>
+                          <div className="max-w-[190px] p-3 bg-[#c3e88d] rounded-tl-[20px] rounded-tr rounded-bl-[20px] rounded-br-[20px] justify-center items-center gap-2.5 inline-flex">
+                            <div className="w-full text-[#2b2b2b] text-sm font-normal font-['Pretendard'] leading-snug whitespace-pre-wrap break-words overflow-hidden">
+                              {message.content}
+                            </div>
                           </div>
                         </div>
-                        <div className="self-stretch text-right text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
-                          <span>{dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}</span>
+                        <div className="mt-1 self-stretch text-right text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
+                          {dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}
                         </div>
                       </div>
                     </div>
@@ -197,17 +192,17 @@ const Chat = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="w-[190px] flex-col justify-start items-start gap-1 inline-flex">
+                        <div className="max-w-[190px] flex-col justify-start items-start gap-1 inline-flex">
                           <div className="self-stretch text-[#f7f7f7] text-base font-normal font-['Pretendard'] leading-relaxed">
-                            <span>{message.Users.nickname}</span>
+                            {message.Users.nickname}
                           </div>
-                          <div className="self-stretch p-3 bg-[#323334] rounded-tl rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] justify-center items-center gap-2.5 inline-flex">
-                            <div className="grow shrink basis-0 text-[#f7f7f7] text-sm font-normal font-['Pretendard'] leading-snug">
-                              <p>{message?.content}</p>
+                          <div className="w-full p-3 bg-[#323334] rounded-tl rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] justify-center items-center gap-2.5 inline-flex">
+                            <div className="w-full text-[#f7f7f7] text-sm font-normal font-['Pretendard'] leading-snug whitespace-pre-wrap break-words overflow-hidden">
+                              {message.content}
                             </div>
                           </div>
-                          <div className="self-stretch text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
-                            <span>{dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}</span>
+                          <div className="mt-1 self-stretch text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
+                            {dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}
                           </div>
                         </div>
                       </div>
@@ -224,30 +219,16 @@ const Chat = () => {
                 className="self-stretch h-[145px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex"
               >
                 <div className="w-full h-full self-stretch justify-between items-start inline-flex">
-                  <div
-                    className="w-full h-full grow shrink basis-0 text-[#5e5e5e] text-sm font-normal mr-2 font-['Pretendard'] leading-[21px] break-all overflow-y-hidden whitespace-pre-wrap break-words"
-                    contentEditable
-                    onFocus={() => {
-                      if (editableDivRef.current) {
-                        editableDivRef.current.innerText = "";
-                      }
-                    }}
-                    onBlur={() => {
-                      if (editableDivRef.current) {
-                        // editableDivRef.current.innerText = "메시지를 입력해주세요.";
-                      }
-                    }}
-                    suppressContentEditableWarning={true}
-                    ref={editableDivRef}
-                  >
-                    메시지를 입력해주세요.
-                  </div>
-
+                  <textarea
+                    onChange={(evt) => setInputValue(evt.target.value)}
+                    value={inputValue}
+                    placeholder="메시지를 입력해보세요"
+                    className="border mr-4 self-stretch w-full h-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex overflow-auto scrollbar-hide resize-none"
+                  />
                   <div className="justify-center items-center flex">
                     <div className="w-5 h-5 p-1 justify-center items-center flex">
                       <div className="justify-center items-center flex">
-                        <textarea ref={hiddenTextareaRef} placeholder="메시지를 입력하세요" className="hidden" />
-                        <button>전송</button>
+                        <button className={`ml-1 ${!inputValue ? "hidden" : ""}`}>전송</button>
                       </div>
                     </div>
                   </div>
@@ -264,9 +245,7 @@ const Chat = () => {
                   </div>
                   <div className="justify-center items-center flex">
                     <div className="w-5 h-5 p-1 justify-center items-center flex">
-                      <div className="justify-center items-center flex">
-                        <button disabled>전송</button>
-                      </div>
+                      <div className="justify-center items-center flex"></div>
                     </div>
                   </div>
                 </div>
