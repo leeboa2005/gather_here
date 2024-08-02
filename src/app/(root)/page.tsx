@@ -1,6 +1,6 @@
 import React from "react";
 import NavTabs from "@/components/MainPage/NavTab/NavTabs";
-import AllPage from "./all/page";
+import AllPage from "./(mainpage)/all/page";
 
 const MainPage = async () => {
   return (
