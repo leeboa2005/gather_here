@@ -18,10 +18,12 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
     <div className="relative z-0">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
+        spaceBetween={12}
         slidesPerView={2}
         navigation
         pagination={{ clickable: true }}
-        className="w-full h-72"
+        className="w-full"
+        style={{ height: "17rem" }}
         breakpoints={{
           336: {
             slidesPerView: 1,

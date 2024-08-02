@@ -38,7 +38,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-5 h-64 m-2 text-center bg-fillStrong rounded-2xl">
+      <div className="p-5 h-64 text-center bg-fillStrong rounded-2xl">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
