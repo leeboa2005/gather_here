@@ -294,11 +294,7 @@ const PostEditPage = () => {
       </div>
 
       <div className="flex justify-end space-x-4">
-        <button
-          type="button"
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={() => router.push("/")}
-        >
+        <button type="button" className="shared-button-gray-full mt-3" onClick={() => router.push("/")}>
           취소
         </button>
         <button type="submit" className="shared-button-green mt-3">
