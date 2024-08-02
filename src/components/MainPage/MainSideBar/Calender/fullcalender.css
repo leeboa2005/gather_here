@@ -1,13 +1,12 @@
 /* 전체 캘린더 영역에 대한 설정 */
-
 .fc {
   background-color: #141415;
   padding: 20px;
   border-radius: 20px;
+  margin: 20px;
 }
 
 /* 헤더 영역에 대한 설정 */
-
 .fc h2.fc-toolbar-title {
   font-size: 20px;
 }
@@ -45,7 +44,6 @@
 }
 
 /* Grid View 에 대한 설정 */
-
 .fc table.fc-scrollgrid,
 .fc td,
 .fc th {
@@ -54,6 +52,7 @@
 
 .fc table div.fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
   position: relative;
+  height: 100%;
 }
 
 .fc table .fc-daygrid-day-top,
@@ -84,16 +83,11 @@
 }
 
 /* Popover 창에 대한 설정 */
-
 .fc .fc-popover.fc-more-popover.fc-day {
   background-color: #323334;
 }
 
-.fc .fc-event.fc-event-start.fc-event-end.fc-event-future.fc-daygrid-event.fc-daygrid-dot-event {
-}
-
 /* list View 에 대한 설정 */
-
 .fc .fc-list-event-dot {
   border-color: #b0db43;
   margin-top: 3px;
@@ -118,5 +112,17 @@
   scrollbar-width: none; /* 파이어폭스 */
 }
 
-.fc .fc-event.fc-event-start.fc-event-end.fc-event-future.fc-list-event {
+/* 커스텀 캘린더 설정 */
+.custom_calender .fc .fc-scrollgrid-section-body table {
+  height: 100px !important;
+}
+
+.custom_calender .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+  background: green;
+  position: absolute;
+  top: 0;
+}
+
+.custom_calender .fc .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  height: 40px;
 }

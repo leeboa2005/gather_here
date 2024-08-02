@@ -79,7 +79,7 @@ const Calender: NextPage = () => {
   }
 
   return (
-    <>
+    <div className="custom_calender">
       <h4 className="mb-4">HOT한 IT 행사 놓치지 마세요</h4>
       <FullCalendar
         // 공통 옵션
@@ -142,7 +142,7 @@ const Calender: NextPage = () => {
           return { domNodes: arrayOfDomNodes };
         }}
       />
-    </>
+    </div>
   );
 };
 
