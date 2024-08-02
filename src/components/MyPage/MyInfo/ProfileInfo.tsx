@@ -66,7 +66,7 @@ const ProfileInfo: React.FC = () => {
 
     if (error) {
       console.error("사용자 정보 업데이트 에러:", error);
-      toast.error("업데이트가 완료되지 않았습니다.");
+      toast.error("완료되지 않았습니다.");
     } else {
       toast.success("정보가 업데이트되었습니다.");
       fetchUserData();
@@ -224,7 +224,7 @@ const ProfileInfo: React.FC = () => {
             </div>
             <div>
               <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
-                블로그 <span className="text-labelAssistive">(선택)</span>
+                블로그
               </label>
               <input
                 type="url"
@@ -235,7 +235,7 @@ const ProfileInfo: React.FC = () => {
                 placeholder="링크를 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오도 좋아요.</p>
+              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오, 깃허브도 좋아요.</p>
             </div>
           </div>
           <div className="mt-6 mb-12">

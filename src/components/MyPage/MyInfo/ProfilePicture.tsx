@@ -69,13 +69,13 @@ const ProfilePicture: React.FC = () => {
         setProfileImage(profileImageUrl);
         setProfileAlt(altText);
         setUserData({ ...userData, profile_image_url: profileImageUrl });
-        toast.success("프로필 이미지 업데이트 성공하였습니다.");
+        toast.success("업데이트 완료하였습니다.");
       } else {
         throw new Error("프로필 이미지 URL을 얻지 못했습니다.");
       }
     } catch (error) {
       console.error("프로필 이미지 업데이트 중 오류 발생:", error);
-      toast.error("프로필 이미지 업데이트가 완료되지 않았습니다.");
+      toast.error("완료되지 않았습니다.");
     } finally {
       setUploading(false);
     }
