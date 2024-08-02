@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { PostWithUser } from "@/types/posts/Post.type";
-import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
-import AdCard from "@/components/MainPage/AdCard/AdCard";
 import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
@@ -12,6 +9,7 @@ import CommonModal from "@/components/Common/Modal/CommonModal";
 import Image from "next/image";
 import run from "@/../public/Main/run.png";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
+import dynamic from "next/dynamic";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -22,7 +20,7 @@ interface ProjectContentProps {
 const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
   const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +34,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   useEffect(() => {
     const loadCarouselData = async () => {
       setIsLoadingCarousel(true);
-      const carouselData = await fetchPostsWithDeadLine(15, "스터디"); // D-일수이내
+      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트"); // D-일수이내
       setCarouselPosts(carouselData);
       setIsLoadingCarousel(false);
     };
@@ -54,19 +52,26 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   }, []);
 
   useEffect(() => {
-    setPage(1);
-    setPosts([]);
-    setHasMore(true);
-    loadMorePosts();
+    const loadInitialPosts = async () => {
+      setPage(1);
+      setPosts([]);
+      setHasMore(true);
+      await loadMorePosts(true);
+    };
+    loadInitialPosts();
   }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
 
-  const loadMorePosts = async () => {
-    const newPosts: PostWithUser[] = await fetchPosts(page, "프로젝트", {
+  const loadMorePosts = async (isInitialLoad = false) => {
+    const currentPage = isInitialLoad ? 1 : page;
+    console.log(`Loading page: ${currentPage}`);
+    const newPosts: PostWithUser[] = await fetchPosts(currentPage, "프로젝트", {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
       place: selectedPlace,
       location: selectedLocation,
       duration: selectedDuration,
     });
+
+    console.log("Fetched posts:", newPosts);
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
@@ -74,14 +79,22 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     }
 
     setPosts((prevPosts) => {
-      const allPosts = [...prevPosts, ...newPosts];
-      const uniquePosts = allPosts.filter(
-        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-      );
+      const postMap = new Map<string, PostWithUser>();
+      prevPosts.forEach((post) => postMap.set(post.post_id, post));
+      newPosts.forEach((post) => postMap.set(post.post_id, post));
+
+      const uniquePosts = Array.from(postMap.values());
+      console.log("Updated posts:", uniquePosts);
       return uniquePosts;
     });
 
-    setPage((prevPage) => prevPage + 1);
+    if (!isInitialLoad) {
+      setPage((prevPage) => {
+        const newPage = prevPage + 1;
+        console.log(`Updated page: ${newPage}`);
+        return newPage;
+      });
+    }
   };
 
   const openModal = () => {
@@ -123,20 +136,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
             selectedDuration={selectedDuration}
             onChange={handleFilterChange}
           />
-          <InfiniteScroll
-            dataLength={posts.length}
-            next={loadMorePosts}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={<p style={{ textAlign: "center" }}>모든 포스트를 불러왔습니다.</p>}
-          >
-            {posts.map((post, index) => (
-              <React.Fragment key={`${post.post_id}_${index}`}>
-                <PostCardLong post={post} />
-                {(index + 1) % 5 === 0 && <AdCard key={`ad_${index}`} />}
-              </React.Fragment>
-            ))}
-          </InfiniteScroll>
+          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={() => loadMorePosts(false)} />
         </div>
         {!isMobile && (
           <div className="col-span-1">
