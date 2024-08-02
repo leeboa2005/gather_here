@@ -5,6 +5,7 @@ import arrow from "@/../public/Main/arrow.png";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
+import DOMPurify from "dompurify";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -36,6 +37,8 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     데브옵스: "text-accentMint",
   };
 
+  const cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+
   return (
     <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center"></div>
@@ -51,7 +54,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
         <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
-          {post.content}
+          {cleanContent}
         </p>
         <div className="flex items-center mb-4">
           {post.user?.profile_image_url && (

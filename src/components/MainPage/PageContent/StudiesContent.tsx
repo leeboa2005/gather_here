@@ -116,7 +116,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center">
+          <div className="flex items-center mb-3">
             <Image src={run} alt="run" width={17} />
             <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
           </div>
