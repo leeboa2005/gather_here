@@ -36,7 +36,7 @@ const ProfileInfo: React.FC = () => {
 
     // 닉네임 유효성 검사
     if (nickname.length < 2 || nickname.length > 11) {
-      setNicknameError("닉네임은 2-11자 내로 작성해주세요.");
+      setNicknameError("닉네임은 2-11자가 아닙니다.");
       valid = false;
     } else {
       setNicknameError("");
@@ -66,7 +66,7 @@ const ProfileInfo: React.FC = () => {
 
     if (error) {
       console.error("사용자 정보 업데이트 에러:", error);
-      toast.error("업데이트가 완료되지 않았습니다.");
+      toast.error("완료되지 않았습니다.");
     } else {
       toast.success("정보가 업데이트되었습니다.");
       fetchUserData();
@@ -99,7 +99,7 @@ const ProfileInfo: React.FC = () => {
 
     openModal(
       <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
-        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-white rounded-lg shadow-lg">
+        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg ">
           <button
             onClick={onRequestClose}
             className="absolute top-2 right-2 text-gray-500 hover:"
@@ -173,8 +173,8 @@ const ProfileInfo: React.FC = () => {
                 placeholder="닉네임을 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
               <p className="text-labelAssistive text-baseXs mt-1">닉네임은 2-11자 내로 작성해주세요.</p>
+              {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
             </div>
             <div className="mt-[-13px] s:mt-0">
               <label htmlFor="job" className="block text-sm font-medium text-labelNormal mb-1">
@@ -224,7 +224,7 @@ const ProfileInfo: React.FC = () => {
             </div>
             <div>
               <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
-                블로그 <span className="text-labelAssistive">(선택)</span>
+                블로그
               </label>
               <input
                 type="url"
@@ -235,7 +235,7 @@ const ProfileInfo: React.FC = () => {
                 placeholder="링크를 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오도 좋아요.</p>
+              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오, 깃허브도 좋아요.</p>
             </div>
           </div>
           <div className="mt-6 mb-12">

@@ -71,13 +71,6 @@ const Calender: NextPage = () => {
     }
   }, [calenderRef]);
 
-  if (isPending) {
-    return <div>Loading</div>;
-  }
-  if (isError) {
-    return <div>Error</div>;
-  }
-
   return (
     <div className="custom_calender">
       <h4 className="mb-4">HOT한 IT 행사 놓치지 마세요</h4>

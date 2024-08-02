@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/provider/UserContextProvider";
@@ -9,15 +9,8 @@ import LeftNavLoader from "@/components/Common/Skeleton/LeftNavLoader";
 
 const LeftNav: React.FC = () => {
   const pathname = usePathname();
-  const { userData } = useUser();
-  const [loading, setLoading] = useState(true);
+  const { userData, loading } = useUser();
   const defaultImage = "/Mypage/default-profile.png";
-
-  useEffect(() => {
-    if (userData) {
-      setLoading(false);
-    }
-  }, [userData]);
 
   // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
@@ -25,10 +18,10 @@ const LeftNav: React.FC = () => {
   // 직군에 따라 클래스명 매핑
   const jobTitleClassMap: { [key: string]: string } = {
     프론트엔드: "text-primary",
-    ios: "text-accentPurple",
+    IOS: "text-accentPurple",
     안드로이드: "text-accentRed",
-    pm: "text-accentColumbia",
-    기획: "text-accentPink",
+    PM: "text-accentColumbia",
+    기획자: "text-accentPink",
     마케팅: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
@@ -49,19 +42,19 @@ const LeftNav: React.FC = () => {
   const jobTitleClass = userData ? getJobTitleClass(userData.job_title) : "";
 
   return (
-    <aside className="sticky top-0 p-6 s:p-0 min-w-[230px] max-h-[257px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
+    <aside className="sticky top-0 p-6 s:p-0 w-[250px]  max-h-[257px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
       {loading ? (
         <LeftNavLoader />
       ) : userData ? (
-        <div className="flex items-center gap-3 mb-1 pb-5 border-labelAssistive border-b-[1px] w-full">
-          <div className="w-16 h-16 rounded-xl bg-fillLight flex justify-center items-center relative">
+        <div className="flex items-center gap-3 mb-1 pb-5  w-full border-b-[1px] border-labelAssistive">
+          <div className="w-12 h-12 rounded-[12px] bg-fillLight flex justify-center items-center relative">
             <Image
-              src={getProfileImageUrl(userData.profile_image_url || defaultImage)}
+              src={getProfileImageUrl(userData?.profile_image_url || defaultImage)}
               alt="프로필 이미지"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1068px) 100vw"
               style={{ objectFit: "cover" }}
-              className="rounded-xl"
+              className="rounded-[12px]"
               priority
             />
           </div>

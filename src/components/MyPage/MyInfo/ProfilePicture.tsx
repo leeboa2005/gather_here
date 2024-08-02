@@ -1,10 +1,8 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import ProfileLoader from "@/components/Common/Skeleton/ProfileLoader";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@/provider/UserContextProvider";
@@ -17,7 +15,6 @@ const ProfilePicture: React.FC = () => {
   const { user, userData, setUserData } = useUser();
   const defaultImage = "/Mypage/default-profile.png";
   const supabase = createClient();
-  const router = useRouter();
   const iconImages = Array.from(
     { length: 9 },
     (_, index) => `/Mypage/ProfileIcon/${String(index + 1).padStart(2, "0")}.jpg`,
@@ -41,6 +38,7 @@ const ProfilePicture: React.FC = () => {
   const base64Encode = (str: string) => {
     return Buffer.from(str).toString("base64");
   };
+
   // 프로필 이미지 업로드 및 업데이트 함수
   const uploadProfileImage = async (file: File | Blob, altText: string) => {
     if (!user) return;
@@ -70,13 +68,13 @@ const ProfilePicture: React.FC = () => {
         setProfileImage(profileImageUrl);
         setProfileAlt(altText);
         setUserData({ ...userData, profile_image_url: profileImageUrl });
-        toast.success("프로필 이미지 업데이트 성공하였습니다.");
+        toast.success("업데이트 완료하였습니다.");
       } else {
         throw new Error("프로필 이미지 URL을 얻지 못했습니다.");
       }
     } catch (error) {
       console.error("프로필 이미지 업데이트 중 오류 발생:", error);
-      toast.error("프로필 이미지 업데이트가 완료되지 않았습니다.");
+      toast.error("완료되지 않았습니다.");
     } finally {
       setUploading(false);
     }
@@ -105,7 +103,9 @@ const ProfilePicture: React.FC = () => {
   const handleFileUploadClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-    if (fileInput) fileInput.click();
+    if (fileInput) {
+      fileInput.click();
+    }
   };
 
   // 캐시 방지용 URL 생성 함수
