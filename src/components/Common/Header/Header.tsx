@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,11 +16,11 @@ const Header: React.FC = () => {
   const { user, userData, fetchUserData, initializationUser } = useUser();
   const { resetAuthUser } = useSignupStore();
   const router = useRouter();
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
-  const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { openModal } = useModal();
   const defaultImage = "/Common/Icons/user.png";
-  // 로그아웃
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -42,7 +43,7 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
-  // 사용자 정보를 가져옴
+
   useEffect(() => {
     fetchUserData();
   }, [user]);
@@ -54,7 +55,6 @@ const Header: React.FC = () => {
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
         <nav className="flex items-center gap-2">
-          {/* 검색창 (데스크탑, 테블릿) */}
           <form className="relative s:hidden items-center overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
@@ -84,14 +84,12 @@ const Header: React.FC = () => {
             </Link>
             {user ? (
               <div className="flex items-center">
-                {/* 마이페이지 버튼 (모바일) */}
                 <button
                   onClick={toggleModal}
                   className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
                 </button>
-                {/* 마이페이지 버튼 (데스크탑, 테블릿) */}
                 <Link
                   href="/mypage"
                   className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
@@ -110,7 +108,6 @@ const Header: React.FC = () => {
           </div>
         </nav>
       </div>
-      {/* 검색창 (모바일) */}
       {isSearchOpen && (
         <div className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
           <label htmlFor="search" className="sr-only">
@@ -131,14 +128,16 @@ const Header: React.FC = () => {
       {isModalOpen && user && (
         <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-5 z-50 s:block hidden">
           <div className="flex items-center mb-4 pb-4 border-b-[1px]">
-            <div className="w-[48px] h-[48px] bg-slate-100 rounded-[12px] flex items-center justify-center">
-              <Image
-                src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
-                alt="프로필 이미지"
-                width={48}
-                height={48}
-                className="rounded-[12px]"
-              />
+            <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
+              <div className="relative w-full h-full rounded-[12px]">
+                <Image
+                  src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
+                  alt="프로필 이미지"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-[12px]"
+                />
+              </div>
             </div>
             <div className="ml-4">
               <p className="text-fillStrong text-baseS font-subtitle">{userData?.nickname}</p>

@@ -5,11 +5,17 @@ interface FetchPostsFilters {
   place?: string;
   location?: string;
   duration?: number | null;
+  user_id?: string;
 }
+interface FetchPostsOptions {
+  order?: { column: string; ascending: boolean };
+}
+
 export const fetchPosts = async (
   page: number,
   category?: string,
   filters: FetchPostsFilters = {},
+  options: FetchPostsOptions = {},
 ): Promise<PostWithUser[]> => {
   const supabase = createClient();
   const postsPerPage = 5;

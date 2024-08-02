@@ -14,28 +14,28 @@ body {
 /* input styles  */
 @layer utilities {
   .shared-input {
-    @apply bg-background text-fontWhite px-[16px] py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
   }
 
   .shared-input-gray {
-    @apply bg-fillLight text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 
   .shared-input-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 
   /* select styles */
   .shared-select {
-    @apply bg-background text-fontWhite px-[16px] py-[10px] min-h-[45px] border-[1px] border-labelStrong  p-2 rounded-md  focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong  p-2 rounded-md  focus:outline-primaryHeavy;
   }
 
   .shared-select-gray {
-    @apply bg-fillLight text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 
   .shared-select-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-[16px] py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 }
 
@@ -43,32 +43,32 @@ body {
 @layer utilities {
   /* button - green */
   .shared-button-green {
-    @apply text-labelAlternative bg-primary px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
+    @apply text-labelAlternative bg-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
   }
 
   /* button - gray  */
   .shared-button-gray {
-    @apply text-fontWhite bg-fillLight px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+    @apply text-fontWhite bg-fillLight px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
   }
 
   /* button - black */
   .shared-button-black {
-    @apply text-fontWhite bg-fillStrong px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-black;
+    @apply text-fontWhite bg-fillStrong px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-black;
   }
 
   /* button - white */
   .shared-button-white {
-    @apply text-fillStrong bg-fontWhite px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-white;
+    @apply text-fillStrong bg-fontWhite px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-white;
   }
 
   /* button - outline */
   .shared-button-outline {
-    @apply text-primary border-[1px] border-primary px-[16px] py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
+    @apply text-primary border-[1px] border-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
   }
 
   /* button - tab */
   .tab-button {
-    @apply flex items-center justify-center px-[16px] py-[10px] text-baseS rounded-lg text-primary bg-fillStrong hover:bg-black  transition-opacity;
+    @apply flex items-center justify-center px-3 py-2 text-baseS rounded-[12px]  text-primary bg-fillStrong hover:bg-black  transition-opacity;
   }
 
   /* button - circle */
@@ -125,17 +125,17 @@ body {
 
   /* button - google  */
   .shared-button-google {
-    @apply text-labelAlternative bg-white min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-white min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - kakao */
   .shared-button-kakao {
-    @apply text-labelAlternative bg-[#FEE500] min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-[#FEE500] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - github */
   .shared-button-github {
-    @apply text-fontWhite bg-[#24292F] min-w-[303px] px-[16px] py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-fontWhite bg-[#24292F] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 }
 
