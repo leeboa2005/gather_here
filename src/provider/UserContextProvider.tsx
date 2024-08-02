@@ -10,11 +10,13 @@ interface UserContextType {
   loading: boolean;
   initializationUser: () => void;
 }
+
 const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
   const supabase = createClient();
   // 사용자 객체 가져옴
   useEffect(() => {
@@ -24,9 +26,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } = await supabase.auth.getUser();
       setUser(user);
       setLoading(false);
+      setLoading(false);
     };
     fetchUser();
   }, [setUser]);
+
   // 사용자 데이터를 가져옴
   const fetchUserData = async () => {
     if (!user) return;
@@ -47,7 +51,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (user) {
       fetchUserData();
     }
+    if (user) {
+      fetchUserData();
+    }
   }, [user]);
+
   return (
     <UserContext.Provider value={{ user, userData, setUserData, fetchUserData, loading, initializationUser }}>
       {children}

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import ProfileLoader from "@/components/Common/Skeleton/ProfileLoader";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@/provider/UserContextProvider";
@@ -17,7 +16,6 @@ const ProfilePicture: React.FC = () => {
   const { user, userData, setUserData } = useUser();
   const defaultImage = "/Mypage/default-profile.png";
   const supabase = createClient();
-  const router = useRouter();
   const iconImages = Array.from(
     { length: 9 },
     (_, index) => `/Mypage/ProfileIcon/${String(index + 1).padStart(2, "0")}.jpg`,
@@ -41,6 +39,7 @@ const ProfilePicture: React.FC = () => {
   const base64Encode = (str: string) => {
     return Buffer.from(str).toString("base64");
   };
+
   // 프로필 이미지 업로드 및 업데이트 함수
   const uploadProfileImage = async (file: File | Blob, altText: string) => {
     if (!user) return;
@@ -105,7 +104,9 @@ const ProfilePicture: React.FC = () => {
   const handleFileUploadClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-    if (fileInput) fileInput.click();
+    if (fileInput) {
+      fileInput.click();
+    }
   };
 
   // 캐시 방지용 URL 생성 함수

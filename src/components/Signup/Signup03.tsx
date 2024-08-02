@@ -1,13 +1,13 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import useUserStore from '@/store/useUserStore';
+import useSignupStore from '@/store/useSignupStore';
 import React, { useState, ChangeEvent, useEffect } from 'react';
 
 const supabase = createClient();
 
 const Signup03: React.FC = () => {
-  const { nextStep, prevStep, setNickname, setBlog, setProfileImageUrl, user, job_title, experience, profile_image_url } = useUserStore();
+  const { nextStep, prevStep, setNickname, setBlog, setProfileImageUrl, user, job_title, experience, profile_image_url } = useSignupStore();
   const [nickname, setLocalNickname] = useState<string>('');
   const [blog, setLocalBlog] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -152,7 +152,7 @@ const Signup03: React.FC = () => {
   };
 
   return (
-    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-3 pl-4 select-none">
+    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (
         <button onClick={prevStep} className="absolute left-4 top-4 text-[c4c4c4]">
           &larr;
@@ -200,7 +200,7 @@ const Signup03: React.FC = () => {
         onChange={handleBlogChange}
         className="block w-full mt-1 p-2 bg-[#343437] rounded-md border border-background"
       />
-      <p className="text-xs text-gray-500 mt-1">blog / github / notion / tistory / velog / etc</p>
+      {/* <p className="text-xs text-gray-500 mt-1">blog / github / notion / tistory / velog / etc</p> */}
       {blogError && <p className="text-xs text-red-500 mt-1">{blogError}</p>}
     </div>
     <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full px-4">

@@ -5,59 +5,48 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
-import useUserStore from "@/store/useUserStore";
-import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/provider/UserContextProvider";
+import { createClient } from "@/utils/supabase/client";
+import  useSignupStore  from '@/store/useSignupStore';
 
 const supabase = createClient();
 
 const Header: React.FC = () => {
-  const { resetAuthUser } = useUserStore();
-
   const { user, userData, fetchUserData, initializationUser } = useUser();
-
+  const { resetAuthUser } = useSignupStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // 검색창 열림/닫힘 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 마이페이지 모달 열림/닫힘 상태
   const { openModal } = useModal();
   const defaultImage = "/Common/Icons/user.png";
-
-
   // 로그아웃
-   const signOut = async () => {
+  const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Error logging out:", error);
       return;
     }
-
     // 상태 초기화 및 리디렉션
     resetAuthUser();
     initializationUser();
     router.push("/");
   };
-
   // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
-
   // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
-
   // 사용자 정보를 가져옴
   useEffect(() => {
     fetchUserData();
   }, [user]);
-
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
-
   return (
     <header className="bg-background shadow-md relative">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
@@ -185,5 +174,4 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
 export default Header;

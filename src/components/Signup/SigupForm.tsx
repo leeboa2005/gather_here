@@ -5,11 +5,11 @@ import Signup01 from './Signup01';
 import Signup02 from './Signup02';
 import Signup03 from './Signup03';
 import Signup04 from './Signup04';
-import useUserStore from '@/store/useUserStore';
+import useSignupStore from '@/store/useSignupStore';
 
 
 const SignupForm: React.FC = () => {
-  const { step } = useUserStore();
+  const { step } = useSignupStore();
 
   switch (step) {
     case 1:

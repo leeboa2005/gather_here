@@ -1,10 +1,10 @@
 'use client';
 
-import useUserStore from '@/store/useUserStore';
+import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
 
 const Signup01: React.FC = () => {
-  const { nextStep, setJob } = useUserStore();
+  const { nextStep, setJob } = useSignupStore();
   const [selectedJob, setSelectedJob] = useState<string>('');
 
   const handleJobSelection = (job_title: string) => {
@@ -26,7 +26,7 @@ const Signup01: React.FC = () => {
   };
 
  return (
-  <div className="w-full max-w-[400px] h-full max-h-[550px] sm:w-[300px] sm:h-[400px] md:w-[350px] md:h-[450px] lg:w-[400px] lg:h-[550px] relative bg-background rounded-[20px] p-3 select-none">
+  <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
     <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
       <div className="w-[136px] h-10 justify-start items-center gap-2 inline-flex">
         <div className="w-10 h-10 p-2.5 rounded-[11px] border border-[#c3e88d] flex-col justify-center items-center gap-2.5 inline-flex">
@@ -40,13 +40,13 @@ const Signup01: React.FC = () => {
         </div>
       </div>
     </div>
-    <div className="text-center text-2xl font-medium text-#ffffff leading-9 mt-16 sm:text-xl md:text-2xl">
+    <div className="text-center text-2xl font-medium text-[#ffffff] leading-9 mt-16">
       어떤 일을 하고 계신가요?
     </div>
-    <div className="text-center text-[#9a9a9a] mt-2 sm:text-sm md:text-base">
+    <div className="text-center text-[#9a9a9a] mt-2">
       직무와 관련된 스터디 및 프로젝트, <br /> 다양한 IT행사를 추천해 드려요.
     </div>
-    <div className="grid grid-cols-3 gap-1 mt-3 w-[335px] mx-auto sm:gap-1 sm:w-[280px] md:w-[300px] lg:w-[335px]">
+    <div className="grid grid-cols-3 s:gap-[2] gap-4 mt-3 s:w-[335px] w-[370px] mx-auto">
       {['프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', '기획자', '디자인', '마케팅', 'PM'].map((job) => (
         <button
           key={job}

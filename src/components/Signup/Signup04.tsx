@@ -3,11 +3,11 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/provider/ContextProvider';
-import useUserStore from '@/store/useUserStore';
+import useSignupStore from '@/store/useSignupStore';
 
 const Signup04: React.FC = () => {
   const router = useRouter();
-  const { nickname } = useUserStore();
+  const { nickname } = useSignupStore();
   const { closeModal } = useModal();
 
   const handleExplore = () => {
@@ -16,7 +16,7 @@ const Signup04: React.FC = () => {
   };
 
   return (
-    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-3 select-none">
+    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       <div className="text-center mt-8">
         <div className="w-full h-70 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img src="/logos/6340259.jpg" alt="Welcome Image" className="object-contain w-full h-full" />

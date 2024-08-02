@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface AuthState {
   user: any;
@@ -33,11 +33,13 @@ const useUserStore = create<StoreState>((set) => ({
 
   // SignupState 초기값 및 메서드
   step: 1,
+
   job_title: '',
   experience: '',
   nickname: '',
   blog: '',
   profile_image_url: '',
+
   setJob: (job) => set({ job_title: job }),
   setExperience: (experience) => set({ experience }),
   setNickname: (nickname) => set({ nickname }),
@@ -57,3 +59,4 @@ const useUserStore = create<StoreState>((set) => ({
 }));
 
 export default useUserStore;
+

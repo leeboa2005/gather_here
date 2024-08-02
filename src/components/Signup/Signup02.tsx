@@ -1,10 +1,10 @@
 'use client';
 
-import useUserStore from '@/store/useUserStore';
+import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
 
 const Signup02: React.FC = () => {
-  const { nextStep, prevStep, setExperience } = useUserStore();
+  const { nextStep, prevStep, setExperience } = useSignupStore();
   const [selectedExperience, setSelectedExperience] = useState<string>('');
 
   const handleExperienceSelection = (experience: string) => {
@@ -14,7 +14,7 @@ const Signup02: React.FC = () => {
   };
 
   return (
-    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-4 select-none">
+    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (
         <button onClick={prevStep} className="absolute left-4 top-4 text-[c4c4c4]">
           &larr;
@@ -39,7 +39,7 @@ const Signup02: React.FC = () => {
       <div className="text-center text-[#9a9a9a] mt-2">
         경력에 맞게 닮고 싶은 시니어, <br /> 챙겨 주고 싶은 주니어를 소개해 드려요.
       </div>
-      <div className="grid grid-cols-3 gap-1 mt-3 w-[335px] mx-auto">
+      <div className="grid grid-cols-3 s:gap-[2] gap-4 mt-3 s:w-[335px] w-[370px] mx-auto">
         {['1년 미만', '1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년 이상'].map((experience) => (
           <button
           key={experience}
