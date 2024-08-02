@@ -47,7 +47,7 @@ const LoginForm = () => {
   };
 
   return (
-      <div className="w-[370px] h-[550px]  inset-0 z-50 flex items-center relative bg-background rounded-[20px] select-none">
+      <div className="w-[370px] h-[550px]  inset-0 z-50 flex items-center relative bg-fillStrong rounded-[20px] select-none">
         <button
           onClick={handleClose}
           className="absolute top-2 right-2 w-7 h-7 p-1 #5e5e5e; hover:text-[#777]"

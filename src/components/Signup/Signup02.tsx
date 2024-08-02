@@ -14,7 +14,7 @@ const Signup02: React.FC = () => {
   };
 
   return (
-    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
+    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-fillStrong rounded-[20px] p-4 select-none">
       {prevStep && (
         <button onClick={prevStep} className="absolute left-4 top-4 text-[c4c4c4]">
           &larr;

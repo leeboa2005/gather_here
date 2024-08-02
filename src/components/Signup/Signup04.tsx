@@ -16,7 +16,7 @@ const Signup04: React.FC = () => {
   };
 
   return (
-    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
+    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-fillStrong rounded-[20px] p-4 select-none">
       <div className="text-center mt-8">
         <div className="w-full h-70 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img src="/logos/6340259.jpg" alt="Welcome Image" className="object-contain w-full h-full" />

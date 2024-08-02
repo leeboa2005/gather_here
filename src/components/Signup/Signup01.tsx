@@ -26,7 +26,7 @@ const Signup01: React.FC = () => {
   };
 
  return (
-  <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
+  <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-fillStrong rounded-[20px] p-4 select-none">
     <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
       <div className="w-[136px] h-10 justify-start items-center gap-2 inline-flex">
         <div className="w-10 h-10 p-2.5 rounded-[11px] border border-[#c3e88d] flex-col justify-center items-center gap-2.5 inline-flex">
