@@ -47,18 +47,18 @@ const LoginForm = () => {
   };
 
   return (
-      <div className="w-[400px] h-[500px]  inset-0 z-50 flex items-center relative bg-background rounded-[20px] select-none">
+      <div className="w-[400px] h-[550px]  inset-0 z-50 flex items-center relative bg-background rounded-[20px] select-none">
         <button
           onClick={handleClose}
           className="absolute top-2 right-2 w-7 h-7 p-1 #5e5e5e; hover:text-[#777]"
         >
           &times;
         </button>
-        <div className="left-[160px] top-[30px] absolute text-center  #ffffff text-2xl font-medium font-['Pretendard JP'] leading-9">
+        <div className="left-[160px] top-[50px] absolute text-center  #ffffff text-2xl font-medium font-['Pretendard JP'] leading-9">
           가입하기
         </div>
 
-        <div className="left-[90px] top-[70px] absolute text-center  #c4c4c4 text-base  font-normal font-['Pretendard'] leading-relaxed">
+        <div className="left-[90px] top-[90px] absolute text-center  #c4c4c4 text-base  font-normal font-['Pretendard'] leading-relaxed">
           1분만에 SNS로 가입하고 <br /> 나에게 꼭 맞는 동료들을 만나보세요!
         </div>
 
@@ -76,7 +76,7 @@ const LoginForm = () => {
           <OAuthButtons handleLogin={handleLogin} />
         )}
 
-        <div className="w-80 left-[40px] top-[400px] absolute text-center text-[#999999] text-xs font-medium font-['Pretendard JP'] leading-tight">
+        <div className="w-80 left-[40px] top-[440px] absolute text-center text-[#999999] text-xs font-medium font-['Pretendard JP'] leading-tight">
           로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을
           의미하며, 서비스 이용을 위해 이메일과 이름, 프로필 이미지를
           수집합니다.

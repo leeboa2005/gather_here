@@ -14,7 +14,7 @@ const Signup02: React.FC = () => {
   };
 
   return (
-    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-4 pl-6">
+    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (
         <button onClick={prevStep} className="absolute left-4 top-4 text-[c4c4c4]">
           &larr;
@@ -39,13 +39,13 @@ const Signup02: React.FC = () => {
       <div className="text-center text-[#9a9a9a] mt-2">
         경력에 맞게 닮고 싶은 시니어, <br /> 챙겨 주고 싶은 주니어를 소개해 드려요.
       </div>
-      <div className="grid grid-cols-3 gap-3 mt-8">
+      <div className="grid grid-cols-3 gap-1 mt-3 w-[335px] mx-auto">
         {['1년 미만', '1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년 이상'].map((experience) => (
           <button
           key={experience}
           onClick={() => handleExperienceSelection(experience)}
-          className={`w-[91px] h-[91px] p-3 rounded-xl text-center transition-all duration-300 transform hover:scale-105 hover:bg-[#808588] hover:text-white ${
-            selectedExperience === experience ? 'bg-[#ffffff] text-[#c4c4c4] text-base font-mediumshadow-lg' : 'bg-[#343437] text-#c4c4c4'
+          className={`square-button square-button-default ${
+            selectedExperience === experience ? 'bg-[#ffffff] text-[#c4c4c4] font-medium shadow-lg' : 'bg-[#343437] text-[#c4c4c4]'
           }`}
         >
           {experience}

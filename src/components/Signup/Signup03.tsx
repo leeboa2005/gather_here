@@ -152,7 +152,7 @@ const Signup03: React.FC = () => {
   };
 
   return (
-    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-3 pl-4">
+    <div className="w-[400px] h-[550px] relative bg-background rounded-[20px] p-3 pl-4 select-none">
       {prevStep && (
         <button onClick={prevStep} className="absolute left-4 top-4 text-[c4c4c4]">
           &larr;
@@ -192,20 +192,21 @@ const Signup03: React.FC = () => {
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>
     <div className="mt-4">
-      <label className="block text-sm font-medium text-[#bebec1]">블로그 / Github </label>
+      <label className="block text-sm font-medium text-[#bebec1]">포트폴리오 </label>
       <input
         type="text"
-        placeholder="링크를 입력해주세요"
+        placeholder="포트폴리오 링크를 입력해주세요"
         value={blog}
         onChange={handleBlogChange}
         className="block w-full mt-1 p-2 bg-[#343437] rounded-md border border-background"
       />
+      <p className="text-xs text-gray-500 mt-1">blog / github / notion / tistory / velog / etc</p>
       {blogError && <p className="text-xs text-red-500 mt-1">{blogError}</p>}
     </div>
     <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full px-4">
       <button
         onClick={handleNext}
-        className="w-full bg-[#c3e88d] text-gray-700 py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-[#343437] hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
+        className="w-full bg-[#343437] text-[#c3e88d] py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-[#343437] hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
       >
         프로필 저장하기
       </button>

@@ -86,8 +86,9 @@ body {
 
   /* button - square */
   .square-button {
-    @apply bg-fillLight text-labelNormal w-[80px] h-[80px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
+    @apply bg-fillLight text-labelNormal w-[101px]  h-[101px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
   }
+
   .square-button:hover {
     @apply text-labelAlternative;
   }
