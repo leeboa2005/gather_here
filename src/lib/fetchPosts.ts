@@ -146,6 +146,13 @@ export const fetchPosts = async (
   if (filters.duration !== null && filters.duration !== undefined) {
     query.eq("duration", filters.duration);
   }
+  if (filters.user_id) {
+    query.eq("user_id", filters.user_id);
+  }
+  if (options.order) {
+    query.order(options.order.column, { ascending: options.order.ascending });
+  }
+
   const { data, error } = await query.throwOnError();
   if (error) throw error;
   return data as PostWithUser[];
