@@ -68,7 +68,7 @@ const Calender: React.FC = () => {
   }
 
   return (
-    <div className="custom_calender">
+    <>
       <h4>HOT한 IT 행사 놓치지 마세요</h4>
       <FullCalendar
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
@@ -122,7 +122,7 @@ const Calender: React.FC = () => {
         }}
         locale="ko"
       />
-    </div>
+    </>
   );
 };
 
