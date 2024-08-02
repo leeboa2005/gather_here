@@ -21,8 +21,10 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [deletedMessageId, setDeletedMessageId] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const [isHidden, setIsHidden] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>("");
+  const [shouldScroll, setShouldScroll] = useState<boolean>(false);
+  const chatContentDiv = useRef<HTMLDivElement>(null);
+
   const supabase = createClient();
 
   // customHook 으로 따로 빼서 코드 정리?
@@ -89,6 +91,14 @@ const Chat = () => {
       .subscribe();
   }, [supabase, messages]);
 
+  useEffect(() => {
+    if (chatContentDiv.current && shouldScroll) {
+      chatContentDiv.current.scrollTop = chatContentDiv.current.scrollHeight;
+
+      setShouldScroll(false);
+    }
+  }, [messages]);
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -108,6 +118,7 @@ const Chat = () => {
     }
 
     setInputValue("");
+    setShouldScroll(true);
   };
 
   const handleDelete = async (message_id: string) => {
@@ -154,6 +165,7 @@ const Chat = () => {
           <div
             id="message"
             className="self-stretch h-[454px] py-5 bg-[#141415] flex-col justify-start items-start gap-3 flex overflow-y-scroll scrollbar-hide"
+            ref={chatContentDiv}
           >
             {messages.map((message) => {
               return (
@@ -269,7 +281,10 @@ const Chat = () => {
                 <div className="justify-center items-center flex">
                   <div className="w-5 h-5 p-1 justify-center items-center flex">
                     <button
-                      onClick={() => setIsOpen(true)}
+                      onClick={() => {
+                        setIsOpen(true);
+                        setShouldScroll(true);
+                      }}
                       className="flex-col justify-center items-center inline-flex"
                     >
                       토글 버튼
