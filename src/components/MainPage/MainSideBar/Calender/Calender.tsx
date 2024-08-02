@@ -108,11 +108,12 @@ const Calender: NextPage = () => {
           return date.date.year + ". " + String(date.date.month + 1).padStart(2, "0");
         }}
         // Grid View 옵션
-        firstDay={1}
         dayMaxEventRows={0}
         dayCellContent={(cellContent) => {
           return cellContent.dayNumberText.replace("일", "");
         }}
+        firstDay={1}
+        fixedWeekCount={false}
         moreLinkContent={(arg) => {
           return arg.shortText;
         }}

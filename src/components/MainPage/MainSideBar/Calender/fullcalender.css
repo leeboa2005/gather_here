@@ -3,7 +3,7 @@
   background-color: #141415;
   padding: 20px;
   border-radius: 20px;
-  margin: 20px;
+  height: 335px;
 }
 
 /* 헤더 영역에 대한 설정 */
@@ -61,16 +61,14 @@
   justify-content: center;
 }
 
-.fc table .fc-daygrid-day-events {
-  top: 0;
-}
-
 .fc .fc-daygrid-day-bottom {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 6px;
+  height: 25px;
   background-color: #96d738;
+  color: transparent;
+  border-radius: 6px;
 }
 
 .fc table.fc-col-header {
@@ -78,7 +76,7 @@
 }
 
 .fc .fc-day-today.fc-daygrid-day {
-  color: #b0db43;
+  color: blue;
   background-color: transparent;
 }
 
@@ -114,13 +112,14 @@
 
 /* 커스텀 캘린더 설정 */
 .custom_calender .fc .fc-scrollgrid-section-body table {
-  height: 100px !important;
+  height: 250px !important;
 }
 
 .custom_calender .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-  background: green;
+  background: transparent;
   position: absolute;
-  top: 0;
+  top: 3px;
+  right: 8px;
 }
 
 .custom_calender .fc .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
