@@ -31,10 +31,7 @@ export default function RootLayout({
       <body className="font-main bg-background text-fontWhite">
         <CombinedProviders>
           <Header />
-          <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
-            <NavTabs />
-            <main>{children}</main>
-          </div>
+          {children}
         </CombinedProviders>
       </body>
     </html>
