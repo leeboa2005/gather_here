@@ -13,8 +13,8 @@ interface ReactQuillEditorProps {
 }
 
 const FORMATS = [
-  "header",
-  "font",
+  // "header",
+  // "font",
   "size",
   "bold",
   "italic",

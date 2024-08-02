@@ -76,10 +76,10 @@ const EventDetailPage = () => {
       });
       if (error) {
         console.error("Error liking event:", error);
-        toast.error("좋아요를 추가하는 데 실패했습니다.");
+        // toast.error("좋아요를 추가하는 데 실패했습니다.");
       } else {
         setLiked(true);
-        toast.success("좋아요를 눌렀습니다!");
+        // toast.success("좋아요를 눌렀습니다!");
       }
     } else {
       const { error } = await supabase
@@ -89,22 +89,51 @@ const EventDetailPage = () => {
         .eq("event_id", eventId);
       if (error) {
         console.error("Error unliking event:", error);
-        toast.error("좋아요를 취소하는 데 실패했습니다.");
+        // toast.error("좋아요를 취소하는 데 실패했습니다.");
       } else {
         setLiked(false);
-        toast.success("좋아요를 취소했습니다!");
+        // toast.success("좋아요를 취소했습니다!");
       }
     }
+  };
+
+  const handleShare = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast.success("URL이 클립보드에 복사되었습니다!");
+      })
+      .catch(() => {
+        toast.error("URL 복사에 실패했습니다.");
+      });
   };
 
   if (loading) return <div>Loading...</div>;
   if (!event) return <div>Event not found.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
       <ToastContainer />
-      <h1 className="text-2xl font-bold mb-4">{event.title}</h1>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
+      <button onClick={() => router.push("/")} className="text-labelNeutral mb-4 flex items-center space-x-2">
+        <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+        <span>목록으로 돌아가기</span>
+      </button>
+      <h1 className="text-title font-title mb-4">{event.title}</h1>
+      <div className="flex justify-end items-center mb-4 space-x-2">
+        <button type="button" onClick={handleShare} className="flex items-center">
+          <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
+        </button>
+        <button type="button" onClick={handleLike} className="flex items-center">
+          <Image
+            src={liked ? "/Main/liked_button.png" : "/Main/unliked_button.png"}
+            alt="좋아요"
+            width={16}
+            height={16}
+          />
+        </button>
+      </div>
+      <div className="bg-fillLight p-4 rounded-lg mb-4">
         {event.img_url && (
           <img src={event.img_url} alt={event.title} className="w-full h-64 object-cover mb-4 rounded-lg" />
         )}
@@ -143,23 +172,13 @@ const EventDetailPage = () => {
         href={event.link_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block bg-blue-500 text-white text-center py-2 rounded-lg mb-4"
+        className="block bg-accentMint text-white text-center py-2 rounded-lg mb-4"
       >
         신청하러 가기
       </a>
-      <div className="bg-white p-4 rounded-lg shadow-md">
+      <div className="bg-fillNormal p-4 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-2">행사 상세</h2>
         <p>{event.description}</p>
-      </div>
-      <div className="flex items-center mt-4">
-        <button type="button" onClick={handleLike} className="flex items-center">
-          <Image
-            src={liked ? "/Main/liked_button.png" : "/Main/unliked_button.png"}
-            alt="좋아요"
-            width={24}
-            height={24}
-          />
-        </button>
       </div>
     </div>
   );
