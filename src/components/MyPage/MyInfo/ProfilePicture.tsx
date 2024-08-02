@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import ProfileLoader from "@/components/Common/Skeleton/ProfileLoader";
