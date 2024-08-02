@@ -1,6 +1,6 @@
-import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NavTabs from "@/components/MainPage/NavTab/NavTabs";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
 import type { Metadata } from "next";
@@ -31,7 +31,10 @@ export default function RootLayout({
       <body className="font-main bg-background text-fontWhite">
         <CombinedProviders>
           <Header />
-          {children}
+          <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
+            <NavTabs />
+            <main>{children}</main>
+          </div>
         </CombinedProviders>
       </body>
     </html>
