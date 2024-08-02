@@ -16,6 +16,7 @@ const config: Config = {
         "container-l": "1048px",
         "container-m": "744px",
         "container-s": "335px",
+
       },
       fontFamily: {
         main: ['"Pretendard"', "sans-serif"],

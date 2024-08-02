@@ -102,10 +102,10 @@ interface FetchPostsFilters {
   duration?: number | null;
   user_id?: string;
 }
-
 interface FetchPostsOptions {
   order?: { column: string; ascending: boolean };
 }
+
 export const fetchPosts = async (
   page: number,
   category?: string,
