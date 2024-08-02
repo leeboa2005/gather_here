@@ -86,8 +86,9 @@ body {
 
   /* button - square */
   .square-button {
-    @apply bg-fillLight text-labelNormal w-[80px] h-[80px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
+    @apply bg-fillLight text-labelNormal s:w-[101px] s:h-[101px] w-[111px] h-[111px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 s:m-1 m-2;
   }
+
   .square-button:hover {
     @apply text-labelAlternative;
   }
@@ -163,7 +164,6 @@ body {
 .modal-content {
   pointer-events: auto;
   user-select: auto;
-  background: white;
   padding: 20px;
   border-radius: 8px;
   position: fixed;

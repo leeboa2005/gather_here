@@ -18,7 +18,7 @@ const ModalTest: React.FC = () => {
   };
   // 페이지 레이아웃
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen">
+    <div className="flex flex-col bg-black items-center justify-center w-full h-screen">
       <h1 className="mb-3">모달 테스트</h1>
       <button
         onClick={handleOpenModal}

@@ -7,14 +7,14 @@ import Image from "next/image";
 import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
 import { useUser } from "@/provider/UserContextProvider";
-import useSignupStore from "@/store/useSignupStore";
 import { createClient } from "@/utils/supabase/client";
+import  useSignupStore  from '@/store/useSignupStore';
 
 const supabase = createClient();
 
 const Header: React.FC = () => {
   const { user, userData, fetchUserData, initializationUser } = useUser();
-  const { resetUser } = useSignupStore();
+  const { resetAuthUser } = useSignupStore();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,20 +27,19 @@ const Header: React.FC = () => {
       console.error("Error logging out:", error);
       return;
     }
-
-    resetUser();
+    // 상태 초기화 및 리디렉션
+    resetAuthUser();
     initializationUser();
     router.push("/");
   };
-
+  // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
-
+  // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
   const handleOpenLoginModal = () => {
     openModal(<LoginForm />);
   };
@@ -48,9 +47,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     fetchUserData();
   }, [user]);
-
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
-
   return (
     <header className="bg-background shadow-md relative">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
@@ -176,5 +173,4 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
 export default Header;

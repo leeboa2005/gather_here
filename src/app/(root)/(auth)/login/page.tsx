@@ -1,6 +1,8 @@
+'use client';
+
 import LoginForm from '@/components/Login/LoginForm';
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   return (
     <div>
       <LoginForm />
