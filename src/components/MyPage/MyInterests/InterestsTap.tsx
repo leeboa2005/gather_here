@@ -9,7 +9,7 @@ import Pagination from "@/components/MyPage/Common/Pagination";
 
 type Tab = "전체" | "스터디" | "프로젝트" | "IT 행사";
 
-const MyPagePosts: React.FC = () => {
+const InterestsTap: React.FC = () => {
   const { user } = useUser();
   const [selectedTab, setSelectedTab] = useState<Tab>("전체");
   const [posts, setPosts] = useState<any[]>([]);
@@ -80,19 +80,19 @@ const MyPagePosts: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-grow w-[744px] m:w-[492px] s:w-full mt-5 grid grid-cols-1 m:grid-cols-2 s:grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="flex-grow w-full mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading ? (
-          Array(3)
+          Array(9)
             .fill(0)
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <div key={post.post_id || post.event_id} className="w-[237px] s:w-full">
+            <div key={post.post_id || post.event_id} className="s:w-full">
               <PostCardShort post={post} />
             </div>
           ))
         ) : (
-          <p className="mt-5  text-center text-labelNeutral col-span-full">좋아요 누른 글이 없어요. 🥺</p>
+          <p className="mt-5 text-center text-labelNeutral col-span-full">좋아요 누른 글이 없어요. 🥺</p>
         )}
       </div>
       <div className="flex justify-center mt-4">
@@ -102,4 +102,4 @@ const MyPagePosts: React.FC = () => {
   );
 };
 
-export default MyPagePosts;
+export default InterestsTap;
