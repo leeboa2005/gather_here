@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { openModal } = useModal();
   const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
@@ -45,12 +44,12 @@ const Header: React.FC = () => {
 
   // 모달 열기
   const handleOpenLoginModal = () => {
-    setIsModalOpen(true); // 모달 열기
+    setIsModalOpen(true);
   };
 
   // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -139,9 +138,9 @@ const Header: React.FC = () => {
       {isModalOpen && (
         <>
           {/* 백드롭 추가 */}
-          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={handleCloseLoginModal}></div>
+          <div className="fixed inset-0 bg-black opacity-80 z-40" onClick={handleCloseLoginModal}></div>
           {/* 모달 추가 */}
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-fillStrong rounded-lg p-4 z-50">
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background rounded-lg p-4 z-50">
           <button onClick={handleCloseLoginModal} className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]">
               &times;
           </button>

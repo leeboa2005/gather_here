@@ -39,7 +39,7 @@ const Signup02: React.FC = () => {
       <div className="text-center text-[#9a9a9a] mt-2">
         경력에 맞게 닮고 싶은 시니어, <br /> 챙겨 주고 싶은 주니어를 소개해 드려요.
       </div>
-      <div className="grid grid-cols-3 gap-1 mt-3 s:w-[335px] w-[370px] mx-auto">
+      <div className="grid grid-cols-3 gap-1 s:mt-4 mt-8 s:w-[335px] w-[370px] mx-auto">
         {['1년 미만', '1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년 이상'].map((experience) => (
           <button
           key={experience}

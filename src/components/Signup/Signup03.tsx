@@ -196,7 +196,7 @@ const Signup03: React.FC = () => {
     placeholder="닉네임을 입력해주세요"
     value={nickname}
     onChange={handleNicknameChange}
-    className="block w-full s:mt-1 mt-3 h-19 p-2 bg-background rounded-md border-2 border-fillLight"
+    className="block w-full s:mt-1 mt-3 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
   />
   <p className="text-xs text-gray-500 mt-2">닉네임은 2 ~ 11자 내로 작성해주세요.</p>
   {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1">이미 사용 중인 닉네임입니다.</p>}
@@ -204,23 +204,23 @@ const Signup03: React.FC = () => {
   {error && <p className="text-xs text-red-500 s:mt-1 mt-1">{error}</p>}
 </div>
 
-<div className="s:mt-6 mt-10">
+<div className="s:mt-6 mt-8">
   <label className="block text-sm font-medium text-[#bebec1]">URL </label>
   <input
     type="text"
     placeholder="URL을 입력해주세요"
     value={blog}
     onChange={handleBlogChange}
-    className="block w-full s:mt-1 mt-3 h-19 p-2 bg-background rounded-md border-2 border-fillLight"
+    className="block w-full s:mt-1 mt-3 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
   />
-  <p className="text-xs text-gray-500 mt-2">blog / github / notion / tistory / velog / figma / etc</p>
+  <p className="text-xs text-gray-500 mt-2">Blog / Github / Notion / Tistory / Velog / Figma / Etc </p>
   {blogError && <p className="text-xs text-red-500 s:mt-1 mt-1">{blogError}</p>}
 </div>
 
-    <div className="absolute s:bottom-12 bottom-10 left-1/2 transform -translate-x-1/2 w-full px-4">
+    <div className="absolute s:bottom-8 bottom-10 left-1/2 transform -translate-x-1/2 w-full px-4">
       <button
         onClick={handleNext}
-        className="w-full h-19 bg-[#343437] text-[#c3e88d] py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-[#343437] hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
+        className="w-full h-[45px] bg-[#343437] text-[#c3e88d] py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-[#343437] hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
       >
         프로필 저장하기
       </button>
