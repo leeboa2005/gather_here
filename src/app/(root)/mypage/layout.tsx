@@ -1,5 +1,5 @@
 import React from "react";
-import MyPageNav from "@/components/MyPage/LeftNav";
+import MyPageNav from "@/components/MyPage/Common/LeftNav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
