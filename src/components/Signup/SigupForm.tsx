@@ -7,8 +7,9 @@ import Signup03 from './Signup03';
 import Signup04 from './Signup04';
 import useSignupStore from '@/store/useSignupStore';
 
+
 const SignupForm: React.FC = () => {
-  const { step, user } = useSignupStore();
+  const { step } = useSignupStore();
 
   switch (step) {
     case 1:

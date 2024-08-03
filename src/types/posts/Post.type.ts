@@ -4,7 +4,7 @@ export type Post = {
   created_at: string;
   category: string;
   duration: number;
-  location: string;
+  location: string | null;
   total_members: number;
   personal_link?: string | null;
   target_position: string[];
@@ -19,7 +19,7 @@ export type Post = {
 export type User = {
   email: string;
   nickname: string;
-  profile_image_url: string;
+  profile_image_url: string | null;
 };
 
 export type PostWithUser = Post & {

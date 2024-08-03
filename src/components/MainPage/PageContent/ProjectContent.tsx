@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { PostWithUser } from "@/types/posts/Post.type";
-import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
-import AdCard from "@/components/MainPage/AdCard/AdCard";
 import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import Image from "next/image";
 import run from "@/../public/Main/run.png";
+import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
+import dynamic from "next/dynamic";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -21,21 +20,27 @@ interface ProjectContentProps {
 const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
+  const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // 마감임박 캐러셀, 게시물
+  const [selectedPosition, setSelectedPosition] = useState<string>("");
+  const [selectedPlace, setSelectedPlace] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+
   useEffect(() => {
     const loadCarouselData = async () => {
-      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트"); // D-일수이내것만 보여지게
+      setIsLoadingCarousel(true);
+      const carouselData = await fetchPostsWithDeadLine(15, "프로젝트"); // D-일수이내
       setCarouselPosts(carouselData);
+      setIsLoadingCarousel(false);
     };
     loadCarouselData();
   }, []);
 
-  // 모바일 및 중간 크기 판별
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1068);
@@ -46,9 +51,27 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 하단 게시물리스트
-  const loadMorePosts = async () => {
-    const newPosts: PostWithUser[] = await fetchPosts(page, "프로젝트");
+  useEffect(() => {
+    const loadInitialPosts = async () => {
+      setPage(1);
+      setPosts([]);
+      setHasMore(true);
+      await loadMorePosts(true);
+    };
+    loadInitialPosts();
+  }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
+
+  const loadMorePosts = async (isInitialLoad = false) => {
+    const currentPage = isInitialLoad ? 1 : page;
+    console.log(`Loading page: ${currentPage}`);
+    const newPosts: PostWithUser[] = await fetchPosts(currentPage, "프로젝트", {
+      targetPosition: selectedPosition ? [selectedPosition] : undefined,
+      place: selectedPlace,
+      location: selectedLocation,
+      duration: selectedDuration,
+    });
+
+    console.log("Fetched posts:", newPosts);
 
     if (!newPosts || newPosts.length === 0) {
       setHasMore(false);
@@ -56,14 +79,22 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     }
 
     setPosts((prevPosts) => {
-      const allPosts = [...prevPosts, ...newPosts];
-      const uniquePosts = allPosts.filter(
-        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-      );
+      const postMap = new Map<string, PostWithUser>();
+      prevPosts.forEach((post) => postMap.set(post.post_id, post));
+      newPosts.forEach((post) => postMap.set(post.post_id, post));
+
+      const uniquePosts = Array.from(postMap.values());
+      console.log("Updated posts:", uniquePosts);
       return uniquePosts;
     });
 
-    setPage((prevPage) => prevPage + 1);
+    if (!isInitialLoad) {
+      setPage((prevPage) => {
+        const newPage = prevPage + 1;
+        console.log(`Updated page: ${newPage}`);
+        return newPage;
+      });
+    }
   };
 
   const openModal = () => {
@@ -74,30 +105,38 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     setIsModalOpen(false);
   };
 
+  const handleFilterChange = (position: string, place: string, location: string, duration: number | null) => {
+    setSelectedPosition(position);
+    setSelectedPlace(place);
+    setSelectedLocation(location);
+    setSelectedDuration(duration);
+  };
+
   return (
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center">
-            <Image src={run} alt="run" width={20} />
-            <h1 className="text-subtitle font-base ml-3">모집이 곧 종료돼요</h1>
+            <Image src={run} alt="run" width={17} />
+            <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
           </div>
-          <Carousel posts={carouselPosts} />
-          <FilterBar />
-          <InfiniteScroll
-            dataLength={posts.length}
-            next={loadMorePosts}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={<p style={{ textAlign: "center" }}>모든 포스트를 불러왔습니다.</p>}
-          >
-            {posts.map((post, index) => (
-              <React.Fragment key={`${post.post_id}_${index}`}>
-                <PostCardLong post={post} />
-                {(index + 1) % 5 === 0 && <AdCard key={`ad_${index}`} />}
-              </React.Fragment>
-            ))}
-          </InfiniteScroll>
+          {isLoadingCarousel ? (
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {Array.from({ length: isMobile ? 1 : 3 }).map((_, index) => (
+                <CarouselLoader key={index} />
+              ))}
+            </div>
+          ) : (
+            <Carousel posts={carouselPosts} />
+          )}
+          <FilterBar
+            selectedPosition={selectedPosition}
+            selectedPlace={selectedPlace}
+            selectedLocation={selectedLocation}
+            selectedDuration={selectedDuration}
+            onChange={handleFilterChange}
+          />
+          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={() => loadMorePosts(false)} />
         </div>
         {!isMobile && (
           <div className="col-span-1">
@@ -124,7 +163,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
             </div>
           </div>
         )}
-      </div>{" "}
+      </div>
       {isMobile && (
         <button
           onClick={openModal}
@@ -136,7 +175,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Calender />
       </CommonModal>
-    </div> // 캘린더→채팅컴포넌트로 바뀔예정
+    </div>
   );
 };
 

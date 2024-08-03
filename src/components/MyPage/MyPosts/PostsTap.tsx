@@ -5,14 +5,17 @@ import { useUser } from "@/provider/UserContextProvider";
 import { fetchPosts } from "@/lib/fetchPosts";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
 import MypageList from "@/components/Common/Skeleton/MypageList";
+import Pagination from "@/components/MyPage/Common/Pagination";
 
 type Tab = "전체" | "스터디" | "프로젝트";
 
-const MyPagePosts: React.FC = () => {
+const PostsTap: React.FC = () => {
   const { user } = useUser();
   const [selectedTab, setSelectedTab] = useState<Tab>("전체");
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -27,6 +30,7 @@ const MyPagePosts: React.FC = () => {
             { order: { column: "created_at", ascending: false } },
           );
           setPosts(userPosts);
+          setTotalPages(Math.ceil(userPosts.length / 9)); // Assuming 9 posts per page
         } catch (error) {
           console.error("포스트 불러오는 중 오류 발생:", error);
         } finally {
@@ -39,10 +43,18 @@ const MyPagePosts: React.FC = () => {
 
   const handleTabClick = (tab: Tab) => {
     setSelectedTab(tab);
+    setCurrentPage(1);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * 9;
+  const currentPosts = posts.slice(startIndex, startIndex + 9);
+
   return (
-    <div className="relative">
+    <div className="relative min-h-screen flex flex-col">
       <div className="sticky z-10 s:relative s:top-auto">
         <div className="flex space-x-4 sm:space-x-2">
           <button
@@ -52,7 +64,7 @@ const MyPagePosts: React.FC = () => {
             전체
           </button>
           <button
-            className={`text-baseS min-w-[64px]  ${selectedTab === "스터디" ? "tab-button" : ""}`}
+            className={`text-baseS min-w-[64px] ${selectedTab === "스터디" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("스터디")}
           >
             스터디
@@ -65,23 +77,26 @@ const MyPagePosts: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="w-[744px] m:w-[492px] s:w-full mt-5 grid grid-cols-1 m:grid-cols-2 s:grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="flex-grow w-full mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading ? (
           Array(3)
             .fill(0)
             .map((_, index) => <MypageList key={index} />)
         ) : posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.post_id} className="w-[237px] s:w-full">
+          currentPosts.map((post) => (
+            <div key={post.post_id} className="s:w-full">
               <PostCardShort post={post} />
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">작성된 글이 없습니다.</p>
+          <p className="mt-5 text-center text-labelNeutral col-span-full">작성된 글이 없어요. 🥺</p>
         )}
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );
 };
 
-export default MyPagePosts;
+export default PostsTap;

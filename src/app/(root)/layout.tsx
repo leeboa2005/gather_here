@@ -1,6 +1,6 @@
-import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NavTabs from "@/components/MainPage/NavTab/NavTabs";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
 import type { Metadata } from "next";
