@@ -2,7 +2,7 @@ import React from "react";
 
 const MypageList: React.FC = () => {
   return (
-    <div className="w-[237px] s:w-full p-8 h-72 m-2 bg-fillAssistive rounded-2xl animate-pulse">
+    <div className="w-[232px] s:w-full p-8 h-64 m-2 bg-fillAssistive rounded-2xl animate-pulse">
       <div className="flex justify-between items-center mb-4">
         <div className="h-6 w-16 bg-fillLight rounded-full"></div>
         <div className="h-6 w-5 bg-fillLight rounded-full"></div>

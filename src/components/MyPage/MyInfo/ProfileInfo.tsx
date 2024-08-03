@@ -91,7 +91,7 @@ const ProfileInfo: React.FC = () => {
     }
   };
 
-  // 회원 탈퇴 모달
+  // 회원 탈퇴 모달 (mvp 이후)
   const handleOpenModal = () => {
     const onRequestClose = () => {
       closeModal();
@@ -239,9 +239,10 @@ const ProfileInfo: React.FC = () => {
             </div>
           </div>
           <div className="mt-6 mb-12">
-            <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
+            {/* mvp 이후 */}
+            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
               탈퇴하기
-            </button>
+            </button> */}
             <div className="flex justify-end gap-2">
               <button type="button" aria-label="회원 정보 취소" className="shared-button-gray">
                 취소

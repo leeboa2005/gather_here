@@ -186,3 +186,48 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
   if (error) throw error;
   return data as PostWithUser[];
 };
+
+export const fetchLikedPosts = async (userId: string): Promise<PostWithUser[]> => {
+  const supabase = createClient();
+  const { data: interestsData, error: interestsError } = await supabase
+    .from("Interests")
+    .select("post_id, category")
+    .eq("user_id", userId);
+
+  if (interestsError) {
+    console.error("Error fetching interests:", interestsError);
+    return [];
+  }
+
+  const { data: itInterestsData, error: itInterestsError } = await supabase
+    .from("IT_Interests")
+    .select("event_id")
+    .eq("user_id", userId);
+
+  if (itInterestsError) {
+    console.error("Error fetching IT interests:", itInterestsError);
+    return [];
+  }
+
+  const postIds = interestsData.map((interest) => interest.post_id);
+  const eventIds = itInterestsData.map((interest) => interest.event_id);
+
+  const { data: postsData, error: postsError } = await supabase.from("Posts").select("*").in("post_id", postIds);
+
+  if (postsError) {
+    console.error("Error fetching posts:", postsError);
+    return [];
+  }
+
+  const { data: eventsData, error: eventsError } = await supabase
+    .from("IT_Events")
+    .select("*")
+    .in("event_id", eventIds);
+
+  if (eventsError) {
+    console.error("Error fetching events:", eventsError);
+    return [];
+  }
+
+  return [...postsData, ...eventsData] as PostWithUser[];
+};
