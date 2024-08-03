@@ -16,7 +16,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   const { userData } = useUser();
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
+
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
     year: "2-digit",
     month: "2-digit",
@@ -49,7 +51,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         <div>
-          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
+          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
           <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
         </div>
         <div onClick={handleInterestClick} className="cursor-pointer">

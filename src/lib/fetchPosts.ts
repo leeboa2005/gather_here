@@ -35,7 +35,7 @@ export const fetchPosts = async (
       )
     `,
     )
-    .gt("deadline", today);
+    .gte("deadline", today);
 
   if (category) {
     query.eq("category", category);
@@ -85,9 +85,10 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
       )
     `,
     )
-    .gt("deadline", formattedToday)
+    .gte("deadline", formattedToday)
     .lte("deadline", formattedFutureDate)
     .order("created_at", { ascending: false });
+
   if (category) {
     query.eq("category", category);
   }
