@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
 import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
@@ -18,6 +17,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
   const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
@@ -38,17 +38,20 @@ const Header: React.FC = () => {
   };
 
   // 마이페이지 모달 토글
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleMypageModal = () => {
+    setIsMypageModalOpen(!isMypageModalOpen);
   };
 
   // 모달 열기
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
+    setIsMypageModalOpen(false);
+    setIsModalOpen(true);
   };
 
   // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
+    setIsModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -65,6 +68,7 @@ const Header: React.FC = () => {
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
         <nav className="flex items-center gap-2">
+          {/* 검색창 데스크탑 */}
           <form className="relative s:hidden items-center overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
@@ -95,7 +99,7 @@ const Header: React.FC = () => {
             {user ? (
               <div className="flex items-center">
                 <button
-                  onClick={toggleModal}
+                  onClick={toggleMypageModal}
                   className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
                   <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
@@ -118,6 +122,7 @@ const Header: React.FC = () => {
           </div>
         </nav>
       </div>
+      {/* 검색창 모바일 */}
       {isSearchOpen && (
         <div className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
           <label htmlFor="search" className="sr-only">
@@ -148,7 +153,7 @@ const Header: React.FC = () => {
           </div>
         </>
       )}
-      {isModalOpen && user && (
+      {isMypageModalOpen && user && (
         <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-5 z-50 s:block hidden">
           <div className="flex items-center mb-4 pb-4 border-b-[1px]">
             <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
@@ -186,7 +191,7 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <button onClick={signOut} className="block w-full text-left text-fillNormal hover:text-black ">
+              <button onClick={signOut} className="block w-full text-left text-fillNormal hover:text-black">
                 로그아웃
               </button>
             </li>
