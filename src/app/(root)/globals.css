@@ -9,6 +9,8 @@ body {
   font-family: "Pretendard", sans-serif;
   line-height: 1.5;
   word-break: keep-all;
+  background: #212121;
+  font-color: #f7f7f7;
 }
 
 /* input styles  */
