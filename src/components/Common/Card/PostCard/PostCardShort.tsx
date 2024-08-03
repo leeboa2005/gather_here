@@ -53,7 +53,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
           <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
           <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
             {post.content}
-          </p>{" "}
+          </p>
           <div className="mt-1">
             <div className="flex items-center mb-4">
               {post.user?.profile_image_url && (
@@ -69,7 +69,6 @@ const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
               )}
               <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
             </div>
-
             <div className="text-base flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
                 {post.target_position.length > 0 && (
