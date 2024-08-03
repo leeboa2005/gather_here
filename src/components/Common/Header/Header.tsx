@@ -8,7 +8,7 @@ import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
 import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
-import  useSignupStore  from '@/store/useSignupStore';
+import useSignupStore from "@/store/useSignupStore";
 
 const supabase = createClient();
 
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   }, [user]);
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
   return (
-    <header className="bg-background shadow-md relative">
+    <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
           <h1 className="text-lg font-bold">@gather_here</h1>

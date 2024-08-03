@@ -92,7 +92,7 @@ const MyPagePosts: React.FC = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-full">좋아요 누른 글이 없습니다.</p>
+          <p className="mt-5  text-center text-labelNeutral col-span-full">좋아요 누른 글이 없어요. 🥺</p>
         )}
       </div>
       <div className="flex justify-center mt-4">
