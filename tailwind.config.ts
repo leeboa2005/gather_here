@@ -16,7 +16,6 @@ const config: Config = {
         "container-l": "1048px",
         "container-m": "744px",
         "container-s": "335px",
-
       },
       fontFamily: {
         main: ['"Pretendard"', "sans-serif"],
@@ -68,6 +67,11 @@ const config: Config = {
         accentColumbia: "#88DDFF",
         accentPink: "#FAA6C9",
         accentYellow: "#FFE350",
+      },
+      /* box shadow */
+      boxShadow: {
+        custom:
+          "0px 2px 8px 0px rgba(0, 0, 0, 0.12), 0px 1px 4px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)",
       },
     },
   },
