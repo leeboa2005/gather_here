@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { PostWithUser } from "@/types/posts/Post.type";
-import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
+import { fetchPosts, fetchPostsWithDeadLine, FetchPostsFilters } from "@/lib/fetchPosts";
 import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
@@ -53,15 +53,24 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
   }, []);
 
   const loadMorePosts = async () => {
-    const newPosts = await fetchPosts(page, "프로젝트", {
+    const filterOptions: FetchPostsFilters = {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
       place: selectedPlace,
       location: selectedLocation,
-      duration: selectedDuration,
-    });
+      duration: null,
+    };
+
+    if (selectedDuration !== null) {
+      if (selectedDuration === 7) {
+        filterOptions.duration = { gt: 6 };
+      } else {
+        filterOptions.duration = { lte: selectedDuration };
+      }
+    }
+
+    const newPosts = await fetchPosts(page, "프로젝트", filterOptions);
 
     setPosts((prevPosts) => {
-      // 중복 게시물 제거
       const uniqueNewPosts = newPosts.filter((newPost) => !prevPosts.some((post) => post.post_id === newPost.post_id));
       return [...prevPosts, ...uniqueNewPosts];
     });
@@ -81,34 +90,49 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
     setIsModalOpen(false);
   };
 
-  const handleFilterChange = async (position: string, place: string, location: string, duration: number | null) => {
-    setSelectedPosition(position);
-    setSelectedPlace(place);
-    setSelectedLocation(location);
-    setSelectedDuration(duration);
+  const handleFilterChange = useCallback(
+    async (position: string, place: string, location: string, duration: number | null) => {
+      setSelectedPosition(position);
+      setSelectedPlace(place);
+      setSelectedLocation(location);
+      setSelectedDuration(duration);
 
-    // 필터가 변경될 때 페이지 번호와 게시물 리스트를 초기화
-    setPage(1);
-    const filteredPosts = await fetchPosts(1, "프로젝트", {
-      targetPosition: position ? [position] : undefined,
-      place: place,
-      location: location,
-      duration: duration,
-    });
+      const isDefaultFilter = !position && !place && !location && duration === null;
 
-    setPosts(filteredPosts);
-    setHasMore(filteredPosts.length === 5);
-  };
+      if (isDefaultFilter) {
+        const allPosts = await fetchPosts(1, "프로젝트", {});
+        setPosts(allPosts);
+        setPage(2);
+        setHasMore(allPosts.length === 5);
+      } else {
+        const filterOptions: FetchPostsFilters = {
+          targetPosition: position ? [position] : undefined,
+          place: place,
+          location: location,
+          duration: null,
+        };
+
+        if (duration !== null) {
+          if (duration === 7) {
+            filterOptions.duration = { gt: 6 };
+          } else {
+            filterOptions.duration = { lte: duration };
+          }
+        }
+
+        const filteredPosts = await fetchPosts(1, "프로젝트", filterOptions);
+
+        setPosts(filteredPosts);
+        setPage(2);
+        setHasMore(filteredPosts.length === 5);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     const initialLoad = async () => {
-      const initialPosts = await fetchPosts(1, "프로젝트", {
-        targetPosition: selectedPosition ? [selectedPosition] : undefined,
-        place: selectedPlace,
-        location: selectedLocation,
-        duration: selectedDuration,
-      });
-
+      const initialPosts = await fetchPosts(1, "프로젝트", {});
       setPosts(initialPosts);
       setPage(2);
       setHasMore(initialPosts.length === 5);

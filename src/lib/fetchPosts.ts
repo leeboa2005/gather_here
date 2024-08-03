@@ -1,11 +1,11 @@
 import { createClient } from "@/utils/supabase/client";
 import { PostWithUser } from "@/types/posts/Post.type";
 
-interface FetchPostsFilters {
+export interface FetchPostsFilters {
   targetPosition?: string[];
   place?: string;
   location?: string;
-  duration?: number | null;
+  duration?: { gt?: number; lte?: number } | null;
   user_id?: string;
 }
 interface FetchPostsOptions {
@@ -50,7 +50,12 @@ export const fetchPosts = async (
     query.eq("location", filters.location);
   }
   if (filters.duration !== null && filters.duration !== undefined) {
-    query.eq("duration", filters.duration);
+    if (filters.duration.gt !== undefined) {
+      query.gt("duration", filters.duration.gt);
+    }
+    if (filters.duration.lte !== undefined) {
+      query.lte("duration", filters.duration.lte);
+    }
   }
   if (filters.user_id) {
     query.eq("user_id", filters.user_id);
