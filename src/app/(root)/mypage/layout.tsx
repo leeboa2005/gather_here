@@ -1,5 +1,5 @@
 import React from "react";
-import MyPageNav from "@/components/MyPage/LeftNav";
+import MyPageNav from "@/components/MyPage/Common/LeftNav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +9,9 @@ const MyPageLayout = ({ children }: { children: React.ReactNode }) => {
       <MyPageNav />
       <main className="flex-1 h-screen">
         <ToastContainer />
+        <h1 className="hidden s:block border-b-[1px] border-labelAssistive pb-4 mb-5 text-subtitle font-subtitle text-labelStrong">
+          마이페이지
+        </h1>
         {children}
       </main>
     </div>
