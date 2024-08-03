@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMypageModalOpen, setIsMypageModalOpen] = useState(false); // 마이페이지 모달 상태 추가
+  const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
   const { openModal } = useModal();
   const defaultImage = "/Common/Icons/user.png";
 
@@ -68,6 +68,7 @@ const Header: React.FC = () => {
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
         <nav className="flex items-center gap-2">
+          {/* 검색창 데스크탑 */}
           <form className="relative s:hidden items-center overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
@@ -121,6 +122,7 @@ const Header: React.FC = () => {
           </div>
         </nav>
       </div>
+      {/* 검색창 모바일 */}
       {isSearchOpen && (
         <div className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
           <label htmlFor="search" className="sr-only">
