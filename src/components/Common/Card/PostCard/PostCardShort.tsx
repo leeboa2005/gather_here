@@ -6,15 +6,13 @@ import interest_active from "@/../public/Main/interest_active.png";
 import arrow from "@/../public/Main/arrow.png";
 import Link from "next/link";
 import DOMPurify from "dompurify";
-import { useUser } from "@/provider/UserContextProvider";
 
 interface PostCardProps {
   post: PostWithUser;
   style?: React.CSSProperties;
 }
 
-const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
-  const { userData } = useUser();
+const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
@@ -64,10 +62,10 @@ const PostCardShort: React.FC<PostCardProps> = ({ post, style }) => {
           </p>
           <div className="mt-1">
             <div className="flex items-center mb-4">
-              {userData?.profile_image_url && (
+              {post.user?.profile_image_url && (
                 <div className="relative w-7 h-7 mr-2">
                   <Image
-                    src={getProfileImageUrl(userData?.profile_image_url)}
+                    src={getProfileImageUrl(post.user.profile_image_url)}
                     alt="User profile"
                     fill
                     sizes="40px"

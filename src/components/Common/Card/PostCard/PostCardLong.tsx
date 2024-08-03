@@ -64,10 +64,10 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           {cleanContent}
         </p>
         <div className="flex items-center mb-4">
-          {userData?.profile_image_url && (
+          {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
               <Image
-                src={getProfileImageUrl(userData?.profile_image_url)}
+                src={getProfileImageUrl(post.user.profile_image_url)}
                 alt="User profile"
                 fill
                 sizes="40px"
