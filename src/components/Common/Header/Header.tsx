@@ -32,22 +32,33 @@ const Header: React.FC = () => {
     initializationUser();
     router.push("/");
   };
+
   // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
+
   // 마이페이지 모달 토글
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  // 모달 열기
   const handleOpenLoginModal = () => {
-    openModal(<LoginForm />);
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  // 모달 닫기 함수 추가
+  const handleCloseLoginModal = () => {
+    setIsModalOpen(false); // 모달 닫기
   };
 
   useEffect(() => {
     fetchUserData();
   }, [user]);
+
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
+
   return (
     <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
@@ -125,6 +136,19 @@ const Header: React.FC = () => {
           </button>
         </div>
       )}
+      {isModalOpen && (
+        <>
+          {/* 백드롭 추가 */}
+          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={handleCloseLoginModal}></div>
+          {/* 모달 추가 */}
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-fillStrong rounded-lg p-4 z-50">
+          <button onClick={handleCloseLoginModal} className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]">
+              &times;
+          </button>
+            <LoginForm />
+          </div>
+        </>
+      )}
       {isModalOpen && user && (
         <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-5 z-50 s:block hidden">
           <div className="flex items-center mb-4 pb-4 border-b-[1px]">
@@ -163,7 +187,7 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <button onClick={signOut} className="block w-full text-left text-fillNormal hover:text-black">
+              <button onClick={signOut} className="block w-full text-left text-fillNormal hover:text-black ">
                 로그아웃
               </button>
             </li>

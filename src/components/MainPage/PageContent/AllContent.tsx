@@ -70,6 +70,9 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`flex ${isMobile ? "flex-col" : "space-x-4"}`}>
         <div className={`w-full ${!isMobile ? "md:w-2/3" : ""}`}>
+          <div className={`${isMobile ? "" : "hidden"}`}>
+            <Calender />
+          </div>
           <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
         </div>
         {!isMobile && (

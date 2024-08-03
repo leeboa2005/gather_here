@@ -1,8 +1,18 @@
 import { create } from "zustand";
 
+interface User {
+  id: string;
+  email?: string;
+  user_metadata?: {
+    avatar_url?: string;
+    [key: string]: any;
+  };
+  [key: string]: any;
+}
+
 interface AuthState {
-  user: any;
-  setUser: (user: any) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
   resetAuthUser: () => void;
 }
 
@@ -25,7 +35,7 @@ interface SignupState {
 
 interface StoreState extends AuthState, SignupState {}
 
-const useUserStore = create<StoreState>((set) => ({
+const useSignupStore = create<StoreState>((set) => ({
   // AuthState 초기값 및 메서드
   user: null,
   setUser: (user) => set({ user }),
@@ -33,7 +43,6 @@ const useUserStore = create<StoreState>((set) => ({
 
   // SignupState 초기값 및 메서드
   step: 1,
-
   job_title: '',
   experience: '',
   nickname: '',
@@ -58,5 +67,4 @@ const useUserStore = create<StoreState>((set) => ({
   }),
 }));
 
-export default useUserStore;
-
+export default useSignupStore;
