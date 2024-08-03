@@ -17,10 +17,11 @@ interface ProjectContentProps {
   initialPosts: PostWithUser[];
 }
 
-const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
+const ProjectContent: React.FC<ProjectContentProps> = () => {
+  const [posts, setPosts] = useState<PostWithUser[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
   const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,49 +52,24 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const loadInitialPosts = async () => {
-      setPage(1);
-      setPosts([]);
-      setHasMore(true);
-      await loadMorePosts(true);
-    };
-    loadInitialPosts();
-  }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
-
-  const loadMorePosts = async (isInitialLoad = false) => {
-    const currentPage = isInitialLoad ? 1 : page;
-    console.log(`Loading page: ${currentPage}`);
-    const newPosts: PostWithUser[] = await fetchPosts(currentPage, "프로젝트", {
+  const loadMorePosts = async () => {
+    const newPosts = await fetchPosts(page, "프로젝트", {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
       place: selectedPlace,
       location: selectedLocation,
       duration: selectedDuration,
     });
 
-    console.log("Fetched posts:", newPosts);
-
-    if (!newPosts || newPosts.length === 0) {
-      setHasMore(false);
-      return;
-    }
-
     setPosts((prevPosts) => {
-      const postMap = new Map<string, PostWithUser>();
-      prevPosts.forEach((post) => postMap.set(post.post_id, post));
-      newPosts.forEach((post) => postMap.set(post.post_id, post));
-
-      const uniquePosts = Array.from(postMap.values());
-      console.log("Updated posts:", uniquePosts);
-      return uniquePosts;
+      // 중복 게시물 제거
+      const uniqueNewPosts = newPosts.filter((newPost) => !prevPosts.some((post) => post.post_id === newPost.post_id));
+      return [...prevPosts, ...uniqueNewPosts];
     });
 
-    if (!isInitialLoad) {
-      setPage((prevPage) => {
-        const newPage = prevPage + 1;
-        console.log(`Updated page: ${newPage}`);
-        return newPage;
-      });
+    setPage((prevPage) => prevPage + 1);
+
+    if (newPosts.length < 5) {
+      setHasMore(false);
     }
   };
 
@@ -105,12 +81,41 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
     setIsModalOpen(false);
   };
 
-  const handleFilterChange = (position: string, place: string, location: string, duration: number | null) => {
+  const handleFilterChange = async (position: string, place: string, location: string, duration: number | null) => {
     setSelectedPosition(position);
     setSelectedPlace(place);
     setSelectedLocation(location);
     setSelectedDuration(duration);
+
+    // 필터가 변경될 때 페이지 번호와 게시물 리스트를 초기화
+    setPage(1);
+    const filteredPosts = await fetchPosts(1, "프로젝트", {
+      targetPosition: position ? [position] : undefined,
+      place: place,
+      location: location,
+      duration: duration,
+    });
+
+    setPosts(filteredPosts);
+    setHasMore(filteredPosts.length === 5);
   };
+
+  useEffect(() => {
+    const initialLoad = async () => {
+      const initialPosts = await fetchPosts(1, "프로젝트", {
+        targetPosition: selectedPosition ? [selectedPosition] : undefined,
+        place: selectedPlace,
+        location: selectedLocation,
+        duration: selectedDuration,
+      });
+
+      setPosts(initialPosts);
+      setPage(2);
+      setHasMore(initialPosts.length === 5);
+    };
+
+    initialLoad();
+  }, []);
 
   return (
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
@@ -136,7 +141,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({ initialPosts }) => {
             selectedDuration={selectedDuration}
             onChange={handleFilterChange}
           />
-          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={() => loadMorePosts(false)} />
+          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
         </div>
         {!isMobile && (
           <div className="col-span-1">
