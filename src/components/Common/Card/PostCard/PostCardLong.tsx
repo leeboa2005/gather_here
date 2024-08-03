@@ -5,15 +5,20 @@ import arrow from "@/../public/Main/arrow.png";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
+import DOMPurify from "dompurify";
+import { useUser } from "@/provider/UserContextProvider";
 
 interface PostCardProps {
   post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
+  const { userData } = useUser();
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
+
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
     year: "2-digit",
     month: "2-digit",
@@ -23,6 +28,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   const handleInterestClick = () => {
     setIsActive(!isActive);
   };
+
+  // 캐시 방지용 URL 생성 함수
+  const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   const jobTitleClassMap: { [key: string]: string } = {
     프론트엔드: "text-primary",
@@ -36,12 +44,14 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     데브옵스: "text-accentMint",
   };
 
+  const cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+
   return (
     <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         <div>
-          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">D-{daysLeft}</span>
+          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
           <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
         </div>
         <div onClick={handleInterestClick} className="cursor-pointer">
@@ -51,13 +61,13 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
         <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
-          {post.content}
+          {cleanContent}
         </p>
         <div className="flex items-center mb-4">
-          {post.user?.profile_image_url && (
+          {userData?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
               <Image
-                src={post.user.profile_image_url}
+                src={getProfileImageUrl(userData?.profile_image_url)}
                 alt="User profile"
                 fill
                 sizes="40px"
