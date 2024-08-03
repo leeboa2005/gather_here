@@ -42,7 +42,7 @@ const SignupPage = () => {
       }
 
       if (!modalOpened) {
-        openModal(<SignupForm />, true); // 페이지 비활성화 설정
+        openModal(<SignupForm />, true);
         setModalOpened(true);
       }
     };
