@@ -17,7 +17,7 @@ const CommonModal: FC<CommonModalProps> = ({ isOpen, onRequestClose, children })
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer z-10"
       contentLabel="모달"
     >
-      <div className="relative bg-black rounded-lg p-8 max-w-lg mx-auto">
+      <div className="relative bg-fillStrong rounded-lg p-8 max-w-lg mx-auto">
         {/* 모달 닫기 버튼 */}
         <button
           onClick={onRequestClose}
