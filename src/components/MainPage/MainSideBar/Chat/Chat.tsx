@@ -132,7 +132,7 @@ const Chat = () => {
 
   return (
     <>
-      <h4 className="ml-2 mb-4">실시간 채팅에 참여해보세요.</h4>
+      <h4 className="ml-2 mb-4 text-fontWhite">실시간 채팅에 참여해보세요.</h4>
       {isOpen ? (
         <div id="container" className="h-[663px] w-full flex-col justify-start items-start inline-flex">
           <div
