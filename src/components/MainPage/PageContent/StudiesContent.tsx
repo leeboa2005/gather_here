@@ -1,16 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React, { useCallback, useEffect, useState } from "react";
+import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { PostWithUser } from "@/types/posts/Post.type";
-import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
-import AdCard from "@/components/MainPage/AdCard/AdCard";
-import { fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
+import { FetchPostsFilters, fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import Image from "next/image";
 import run from "@/../public/Main/run.png";
+import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
+import dynamic from "next/dynamic";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -18,11 +17,13 @@ interface StudiesContentProps {
   initialPosts: PostWithUser[];
 }
 
-const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
+const StudiesContent: React.FC<StudiesContentProps> = () => {
+  const [posts, setPosts] = useState<PostWithUser[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
+
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
+  const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -33,8 +34,10 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
 
   useEffect(() => {
     const loadCarouselData = async () => {
+      setIsLoadingCarousel(true);
       const carouselData = await fetchPostsWithDeadLine(15, "스터디"); // D-일수이내
       setCarouselPosts(carouselData);
+      setIsLoadingCarousel(false);
     };
     loadCarouselData();
   }, []);
@@ -49,36 +52,34 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    setPage(1);
-    setPosts([]);
-    setHasMore(true);
-    loadMorePosts();
-  }, [selectedPosition, selectedPlace, selectedLocation, selectedDuration]);
-
-  // 하단 게시물리스트
   const loadMorePosts = async () => {
-    const newPosts: PostWithUser[] = await fetchPosts(page, "스터디", {
+    const filterOptions: FetchPostsFilters = {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
       place: selectedPlace,
       location: selectedLocation,
-      duration: selectedDuration,
-    });
+      duration: null,
+    };
 
-    if (!newPosts || newPosts.length === 0) {
-      setHasMore(false);
-      return;
+    if (selectedDuration !== null) {
+      if (selectedDuration === 7) {
+        filterOptions.duration = { gt: 6 };
+      } else {
+        filterOptions.duration = { lte: selectedDuration };
+      }
     }
 
+    const newPosts = await fetchPosts(page, "스터디", filterOptions);
+
     setPosts((prevPosts) => {
-      const allPosts = [...prevPosts, ...newPosts];
-      const uniquePosts = allPosts.filter(
-        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-      );
-      return uniquePosts;
+      const uniqueNewPosts = newPosts.filter((newPost) => !prevPosts.some((post) => post.post_id === newPost.post_id));
+      return [...prevPosts, ...uniqueNewPosts];
     });
 
     setPage((prevPage) => prevPage + 1);
+
+    if (newPosts.length < 5) {
+      setHasMore(false);
+    }
   };
 
   const openModal = () => {
@@ -89,22 +90,74 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
     setIsModalOpen(false);
   };
 
-  const handleFilterChange = (position: string, place: string, location: string, duration: number | null) => {
-    setSelectedPosition(position);
-    setSelectedPlace(place);
-    setSelectedLocation(location);
-    setSelectedDuration(duration);
-  };
+  const handleFilterChange = useCallback(
+    async (position: string, place: string, location: string, duration: number | null) => {
+      setSelectedPosition(position);
+      setSelectedPlace(place);
+      setSelectedLocation(location);
+      setSelectedDuration(duration);
+
+      const isDefaultFilter = !position && !place && !location && duration === null;
+
+      if (isDefaultFilter) {
+        const allPosts = await fetchPosts(1, "스터디", {});
+        setPosts(allPosts);
+        setPage(2);
+        setHasMore(allPosts.length === 5);
+      } else {
+        const filterOptions: FetchPostsFilters = {
+          targetPosition: position ? [position] : undefined,
+          place: place,
+          location: location,
+          duration: null,
+        };
+
+        if (duration !== null) {
+          if (duration === 7) {
+            filterOptions.duration = { gt: 6 };
+          } else {
+            filterOptions.duration = { lte: duration };
+          }
+        }
+
+        const filteredPosts = await fetchPosts(1, "스터디", filterOptions);
+
+        setPosts(filteredPosts);
+        setPage(2);
+        setHasMore(filteredPosts.length === 5);
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const initialLoad = async () => {
+      const initialPosts = await fetchPosts(1, "스터디", {});
+      setPosts(initialPosts);
+      setPage(2);
+      setHasMore(initialPosts.length === 5);
+    };
+
+    initialLoad();
+  }, []);
 
   return (
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center">
+          <div className="flex items-center mb-3">
             <Image src={run} alt="run" width={17} />
             <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
           </div>
-          <Carousel posts={carouselPosts} />
+          {isLoadingCarousel ? (
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {Array.from({ length: isMobile ? 1 : 3 }).map((_, index) => (
+                <CarouselLoader key={index} />
+              ))}
+            </div>
+          ) : (
+            <Carousel posts={carouselPosts} />
+          )}
           <FilterBar
             selectedPosition={selectedPosition}
             selectedPlace={selectedPlace}
@@ -112,20 +165,7 @@ const StudiesContent: React.FC<StudiesContentProps> = ({ initialPosts }) => {
             selectedDuration={selectedDuration}
             onChange={handleFilterChange}
           />
-          <InfiniteScroll
-            dataLength={posts.length}
-            next={loadMorePosts}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={<p style={{ textAlign: "center" }}>모든 포스트를 불러왔습니다.</p>}
-          >
-            {posts.map((post, index) => (
-              <React.Fragment key={`${post.post_id}_${index}`}>
-                <PostCardLong post={post} />
-                {(index + 1) % 5 === 0 && <AdCard key={`ad_${index}`} />}
-              </React.Fragment>
-            ))}
-          </InfiniteScroll>
+          <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
         </div>
         {!isMobile && (
           <div className="col-span-1">

@@ -1,6 +1,14 @@
 import React from "react";
-import MainPage from "./(mainpage)/page";
+import AllPage from "./(mainpage)/all/page";
+import NavTabs from "@/components/MainPage/NavTab/NavTabs";
 
-export default function Home() {
-  return <MainPage />;
-}
+const MainPage = async () => {
+  return (
+    <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
+      <NavTabs />
+      <AllPage />
+    </div>
+  );
+};
+
+export default MainPage;
