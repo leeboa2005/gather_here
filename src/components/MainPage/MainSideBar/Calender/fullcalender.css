@@ -3,7 +3,22 @@
   background-color: #141415;
   padding: 20px;
   border-radius: 20px;
-  height: 335px;
+  height: 345px;
+}
+
+/* M */
+@media only screen and (max-width: 1068px) {
+  .fc {
+    margin-left: 8px;
+    width: 696px;
+  }
+}
+
+/* S */
+@media only screen and (max-width: 734px) {
+  .fc {
+    width: 287px;
+  }
 }
 
 /* 헤더 영역에 대한 설정 */
@@ -12,7 +27,7 @@
 }
 
 .fc-viewChanger-button.fc-button.fc-button-primary {
-  background-image: url("../../../../../public/Calender/Change.png");
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='21' viewBox='0 0 20 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3333 8.5H4L6.66667 4.5M6.66667 12.5H16L13.3333 16.5' stroke='%23919191' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E ");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -76,13 +91,33 @@
 }
 
 .fc .fc-day-today.fc-daygrid-day {
-  color: blue;
+  color: #f7f7f7;
   background-color: transparent;
 }
 
 /* Popover 창에 대한 설정 */
 .fc .fc-popover.fc-more-popover.fc-day {
-  background-color: #323334;
+  background-color: #141415;
+}
+
+.fc .fc-event-description {
+  display: flex;
+  align-items: center;
+}
+
+.fc .fc-popover-header {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.fc .fc-popover.fc-more-popover.fc-day {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.fc .fc-popover-close.fc-icon.fc-icon-x {
+  color: #f7f7f7;
 }
 
 /* list View 에 대한 설정 */
@@ -97,6 +132,7 @@
 }
 
 .fc .fc-listMonth-view.fc-view.fc-list.fc-list-sticky,
+.fc .fc-list-view.fc-view.fc-list.fc-list-sticky,
 .fc table.fc-list-table {
   border: 0;
 }
@@ -111,9 +147,6 @@
 }
 
 /* 커스텀 캘린더 설정 */
-.custom_calender .fc .fc-scrollgrid-section-body table {
-  height: 250px !important;
-}
 
 .custom_calender .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
   background: transparent;
