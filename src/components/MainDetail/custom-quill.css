@@ -1,3 +1,7 @@
+.ql-container.ql-snow .ql-editor::before {
+  color: #919191;
+}
+
 .ql-toolbar .ql-header .ql-picker-label[data-value="1"]::before {
   content: "H1";
 }
@@ -33,7 +37,6 @@
   content: "Normal";
 }
 
-/* Color Picker */
 .ql-toolbar .ql-color .ql-picker-item[data-value="#e60000"]::before,
 .ql-toolbar .ql-background .ql-picker-item[data-value="#e60000"]::before {
   background-color: #e60000;
