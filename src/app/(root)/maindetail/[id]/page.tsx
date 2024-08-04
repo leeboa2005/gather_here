@@ -204,7 +204,7 @@ const MainDetailPage = () => {
         <div>
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
         </div>
-        <div className="flex mb-4">
+        <div className="flex mb-4 flex-wrap">
           <div className="w-1/2 p-3">
             <p className="mb-3">
               <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
@@ -253,6 +253,25 @@ const MainDetailPage = () => {
           <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </div>
       </div>
+      <style jsx>{`
+        @media only screen and (max-width: 1068px) {
+          .max-w-container-l {
+            max-width: 744px;
+          }
+        }
+        @media only screen and (max-width: 768px) {
+          .max-w-container-m {
+            max-width: 335px;
+          }
+          .w-1/2 {
+            width: 100%;
+          }
+          p span {
+            display: block;
+            margin-left: 0;
+          }
+        }
+      `}</style>
     </>
   );
 };
