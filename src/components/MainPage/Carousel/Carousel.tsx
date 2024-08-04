@@ -25,6 +25,9 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         className="w-full"
         style={{ height: "17rem" }}
         breakpoints={{
+          280: {
+            slidesPerView: 1,
+          },
           336: {
             slidesPerView: 1,
           },
@@ -42,7 +45,6 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      _
     </div>
   );
 };
