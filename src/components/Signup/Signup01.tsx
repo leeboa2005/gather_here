@@ -46,7 +46,7 @@ const Signup01: React.FC = () => {
     <div className="text-center text-[#9a9a9a] mt-2">
       직무와 관련된 스터디 및 프로젝트, <br /> 다양한 IT행사를 추천해 드려요.
     </div>
-    <div className="grid grid-cols-3 gap-1 mt-3 s:w-[335px] w-[370px] mx-auto">
+    <div className="grid grid-cols-3 gap-1 s:mt-4 mt-8 s:w-[335px] w-[370px] mx-auto">
       {['프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', '기획자', '디자인', '마케팅', 'PM'].map((job) => (
         <button
           key={job}

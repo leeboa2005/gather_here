@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useModal } from "@/provider/ContextProvider";
 import LoginForm from "@/components/Login/LoginForm";
 import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
@@ -19,7 +18,6 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
-  const { openModal } = useModal();
   const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
@@ -48,10 +46,12 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
     setIsMypageModalOpen(false);
+    setIsModalOpen(true);
   };
 
   // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
+    setIsModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -143,15 +143,12 @@ const Header: React.FC = () => {
       {isModalOpen && (
         <>
           {/* 백드롭 추가 */}
-          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={handleCloseLoginModal}></div>
+          <div className="fixed inset-0 bg-black opacity-80 z-40" onClick={handleCloseLoginModal}></div>
           {/* 모달 추가 */}
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-fillStrong rounded-lg p-4 z-50">
-            <button
-              onClick={handleCloseLoginModal}
-              className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]"
-            >
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background rounded-[20px] p-4 z-50">
+          <button onClick={handleCloseLoginModal} className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]">
               &times;
-            </button>
+          </button>
             <LoginForm />
           </div>
         </>
