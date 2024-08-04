@@ -10,13 +10,12 @@
 /* M */
 @media only screen and (max-width: 1068px) {
   .fc {
-    margin-left: 8px;
-    width: 696px;
+    margin: 8px;
   }
 }
 
 /* S */
-@media only screen and (max-width: 734px) {
+@media only screen and (max-width: 768px) {
   .fc {
     width: 287px;
   }
@@ -123,9 +122,9 @@
 
 /* list View 에 대한 설정 */
 .fc .fc-list-event-dot {
-  border-color: #b0db43;
-  margin-top: 3px;
-  border-width: 25px 1.5px;
+  border-color: #b0db43 !important;
+  margin-top: 3px !important;
+  border-width: 25px 1.5px !important;
 }
 
 .fc .fc-list-day-cushion.fc-cell-shaded {
@@ -138,13 +137,16 @@
   border: 0;
 }
 
-.fc .fc-scroller.fc-scroller-liquid:-webkt-scrollbar {
-  display: none;
-}
-
+.fc .fc-scroller,
 .fc .fc-scroller.fc-scroller-liquid {
+  overflow-y: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
+}
+
+.fc .fc-scroller::--webkit-scrollbar,
+.fc .fc-scroller.fc-scroller-liquid::-webkit-scrollbar {
+  display: none;
 }
 
 /* 커스텀 캘린더 설정 */
@@ -153,9 +155,18 @@
   background: transparent;
   position: absolute;
   top: 3px;
-  right: 8px;
+  right: 7px;
 }
 
 .custom_calender .fc .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
   height: 40px;
+}
+
+:root {
+  --fc-list-event-hover-bg-color: none !important;
+}
+
+.custom_calender .fc .fc-dayGridMonth-view.fc-view.fc-daygrid {
+  display: flex;
+  justify-content: center;
 }

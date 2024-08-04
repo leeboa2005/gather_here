@@ -47,12 +47,12 @@ const LoginForm = () => {
   };
 
   return (
-      <div className="s:w-[370px] s:h-[550px] w-[430px] h-[580px] relative bg-fillStrong rounded-[20px] p-4 select-none">
-        <div className="s:left-[140px] s:top-[50px] left-[170px] top-[50px] absolute text-center  #ffffff text-2xl font-medium font-['Pretendard JP'] leading-9">
+      <div className="s:w-[370px] s:h-[550px] w-[430px] h-[580px] relative bg-background rounded-[20px] p-4 select-none">
+        <div className="s:left-[120px] s:top-[40px] left-[150px] top-[30px] absolute text-center  #ffffff text-4xl font-medium font-['Pretendard JP'] leading-9">
           가입하기
         </div>
 
-        <div className="s:left-[70px] s:top-[90px] left-[110px] top-[90px] absolute text-center  #c4c4c4 text-base  font-normal font-['Pretendard'] leading-relaxed">
+        <div className="s:left-[70px] s:top-[90px] left-[100px] top-[90px] absolute text-center  text-[#9a9a9a] text-l  font-normal font-['Pretendard'] leading-relaxed">
           1분만에 SNS로 가입하고 <br /> 나에게 꼭 맞는 동료들을 만나보세요!
         </div>
 
