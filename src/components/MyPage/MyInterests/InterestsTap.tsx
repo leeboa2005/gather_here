@@ -80,7 +80,7 @@ const InterestsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-grow s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
+      <div className="s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
         {loading ? (
           Array(3)
             .fill(0)

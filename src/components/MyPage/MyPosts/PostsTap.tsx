@@ -54,7 +54,7 @@ const PostsTap: React.FC = () => {
   const currentPosts = posts.slice(startIndex, startIndex + 9);
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="flex-1 flex flex-col">
       <div className="sticky z-10 s:relative s:top-auto">
         <div className="flex space-x-4 sm:space-x-2">
           <button
@@ -77,20 +77,22 @@ const PostsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-grow s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
-        {loading ? (
-          Array(3)
-            .fill(0)
-            .map((_, index) => <MypageList key={index} />)
-        ) : posts.length > 0 ? (
-          currentPosts.map((post) => (
-            <div key={post.post_id} className="s:w-full">
-              <PostCardShort post={post} />
-            </div>
-          ))
-        ) : (
-          <p className="mt-5 text-center text-labelNeutral col-span-full">작성된 글이 없어요. 🥺</p>
-        )}
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 s:w-full mt-5 grid s:grid-cols-1 m:grid-cols-2 grid-cols-3 gap-6">
+          {loading ? (
+            Array(3)
+              .fill(0)
+              .map((_, index) => <MypageList key={index} />)
+          ) : posts.length > 0 ? (
+            currentPosts.map((post) => (
+              <div key={post.post_id} className="s:w-full">
+                <PostCardShort post={post} />
+              </div>
+            ))
+          ) : (
+            <p className="mt-5 text-center text-labelNeutral col-span-full">작성된 글이 없어요. 🥺</p>
+          )}
+        </div>
       </div>
       <div className="flex justify-center mt-4">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
