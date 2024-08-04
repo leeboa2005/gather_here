@@ -42,7 +42,6 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      _
     </div>
   );
 };
