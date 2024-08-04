@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LikeButton from "@/components/EventsDetail/ITLikeButton";
 
 const supabase = createClient();
 
@@ -16,7 +17,6 @@ const EventDetailPage = () => {
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -40,20 +40,6 @@ const EventDetailPage = () => {
           console.error("Error fetching current user:", currentUserError);
         } else {
           setCurrentUser(currentUserData?.user);
-
-          const { data: likeData, error: likeError } = await supabase
-            .from("IT_Interests")
-            .select("*")
-            .eq("user_id", currentUserData?.user?.id)
-            .eq("event_id", eventId)
-            .single();
-
-          if (likeData) {
-            setLiked(true);
-          }
-          if (likeError) {
-            console.error("Error checking like status:", likeError);
-          }
         }
 
         setLoading(false);
@@ -62,40 +48,6 @@ const EventDetailPage = () => {
 
     fetchEvent();
   }, [eventId]);
-
-  const handleLike = async () => {
-    if (!currentUser) {
-      toast.error("로그인이 필요합니다!");
-      return;
-    }
-
-    if (!liked) {
-      const { error } = await supabase.from("IT_Interests").insert({
-        user_id: currentUser.id,
-        event_id: eventId,
-      });
-      if (error) {
-        console.error("Error liking event:", error);
-        // toast.error("좋아요를 추가하는 데 실패했습니다.");
-      } else {
-        setLiked(true);
-        // toast.success("좋아요를 눌렀습니다!");
-      }
-    } else {
-      const { error } = await supabase
-        .from("IT_Interests")
-        .delete()
-        .eq("user_id", currentUser.id)
-        .eq("event_id", eventId);
-      if (error) {
-        console.error("Error unliking event:", error);
-        // toast.error("좋아요를 취소하는 데 실패했습니다.");
-      } else {
-        setLiked(false);
-        // toast.success("좋아요를 취소했습니다!");
-      }
-    }
-  };
 
   const handleShare = () => {
     const url = window.location.href;
@@ -124,14 +76,7 @@ const EventDetailPage = () => {
         <button type="button" onClick={handleShare} className="flex items-center">
           <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
         </button>
-        <button type="button" onClick={handleLike} className="flex items-center">
-          <Image
-            src={liked ? "/Main/liked_button.png" : "/Main/unliked_button.png"}
-            alt="좋아요"
-            width={16}
-            height={16}
-          />
-        </button>
+        <LikeButton eventId={eventId} currentUser={currentUser} />
       </div>
       <div className="bg-fillLight p-4 rounded-lg mb-4">
         {event.img_url && (
