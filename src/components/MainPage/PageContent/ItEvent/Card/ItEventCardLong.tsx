@@ -1,9 +1,12 @@
+import LikeButton from "@/components/EventsDetail/ITLikeButton";
+import { useUser } from "@/provider/UserContextProvider";
 import { Tables } from "@/types/supabase";
+import { createClient } from "@/utils/supabase/client";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface EventsCardProps {
   post: Tables<"IT_Events">;
@@ -11,8 +14,8 @@ interface EventsCardProps {
 
 const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
+  const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.date_done);
-
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
@@ -24,6 +27,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
   const handleInterestClick = () => {
     setIsActive(!isActive);
   };
+
   return (
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3">
@@ -35,7 +39,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
             <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY-MM-DD")}</time>
           </li>
         </ul>
-        <button aria-label="북마크">북마크 버튼</button>
+        <LikeButton eventId={post.event_id} currentUser={currentUser} />
       </div>
       <Link href={`/eventsdetail/${post.event_id}`}>
         <section>
@@ -58,7 +62,13 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
             <p className="text-baseS text-labelNeutral">{post.location}</p>
           </div>
           <div className="w-full h-[125px] bg-fillNeutral shadow-custom rounded-2xl">
-            <img src={post.img_url} alt="행사 이미지" className="w-full h-full object-cover rounded-2xl" />
+            <Image
+              src={post.img_url}
+              alt="행사 이미지"
+              className="w-full h-full object-cover rounded-2xl"
+              width={616}
+              height={125}
+            />
           </div>
         </section>
       </Link>

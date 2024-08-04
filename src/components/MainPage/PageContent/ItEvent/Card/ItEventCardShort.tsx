@@ -1,3 +1,5 @@
+import LikeButton from "@/components/EventsDetail/ITLikeButton";
+import { useUser } from "@/provider/UserContextProvider";
 import { Tables } from "@/types/supabase";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -11,6 +13,7 @@ interface EventsCardProps {
 
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
+  const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.date_done);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
@@ -34,7 +37,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
           <li>
             <time dateTime="YYYY-MM-DD" className="text-baseS text-labelNormal">{`~${setDeadlines}`}</time>
           </li>
-          <button aria-label="북마크">북마크</button>
+          <LikeButton eventId={post.event_id} currentUser={currentUser} />
         </ul>
         <Link href={`/eventsdetail/${post.event_id}`}>
           <section>
@@ -57,7 +60,13 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
               <p className="text-baseS text-labelNeutral">{post.location}</p>
             </div>
             <div className="w-full h-[125px] bg-fillNeutral shadow-custom rounded-2xl">
-              <img src={post.img_url} alt="행사 이미지" className="w-full h-full object-cover rounded-2xl" />
+              <Image
+                src={post.img_url}
+                alt="행사 이미지"
+                className="w-full h-full object-cover rounded-2xl"
+                width={184}
+                height={125}
+              />
             </div>
           </section>
         </Link>
