@@ -27,8 +27,11 @@ const FormDropdown: React.FC<FormDropdownProps> = ({
         onChange={onChange}
         multiple={multiple}
         className={`shared-select-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className}`}
+        style={{ color: value === "" ? "#919191" : undefined }}
       >
-        <option value="">{placeholder}</option>
+        <option value="" style={{ color: "#919191" }}>
+          {placeholder}
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

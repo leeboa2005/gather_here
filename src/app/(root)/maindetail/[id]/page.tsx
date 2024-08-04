@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import DOMPurify from "dompurify";
@@ -30,6 +30,7 @@ const MainDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
+  const optionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
@@ -86,14 +87,15 @@ const MainDetailPage = () => {
     } else {
       toast.success("게시물이 삭제되었습니다.");
       router.push("/");
+      router.refresh();
     }
   };
 
   const confirmDelete = () => {
     toast(
-      <div className="bg-fillAlternative p-4 rounded-lg shadow-md text-fontWhite">
+      <div className="bg-fillAlternative p-4 ml-6 rounded-lg shadow-md text-fontWhite flex flex-col items-center">
         <p className="text-xl font-semibold mb-2">정말 삭제하시겠어요?</p>
-        <p className="text-sm text-labelNeutral mb-4">삭제하면 다시 복구할 수 없어요.</p>
+        <p className="text-sm text-labelNeutral mb-4 text-center">삭제하면 다시 복구할 수 없어요.</p>
         <div className="flex justify-end space-x-4">
           <button
             onClick={() => toast.dismiss()}
@@ -106,7 +108,7 @@ const MainDetailPage = () => {
               handleDelete();
               toast.dismiss();
             }}
-            className="bg-primary hover:bg-primaryStrong text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-primaryStrong hover:bg-primary text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             삭제할래요
           </button>
@@ -125,6 +127,19 @@ const MainDetailPage = () => {
   const handleMoreOptions = () => {
     setShowOptions(!showOptions);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [optionsRef]);
 
   const timeAgo = (timestamp: string): string => {
     const now: Date = new Date();
@@ -154,10 +169,16 @@ const MainDetailPage = () => {
     ALLOWED_ATTR: ["href", "target", "style", "class"],
   });
 
+  const renderTechStackIcons = (techStack: string[]) => {
+    return techStack.map((tech) => (
+      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={24} height={24} className="inline-block mr-2" />
+    ));
+  };
+
   return (
     <>
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-6 mb-4 flex items-center space-x-2">
+        <button onClick={() => router.back()} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
@@ -174,10 +195,10 @@ const MainDetailPage = () => {
           closeOnClick
           pauseOnHover
         />
-        <div className="mb-4">
+        <div className="mb-4 p-3">
           <h1 className="text-title font-title">{post.title}</h1>
         </div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 pl-3 pr-3">
           <div className="flex items-center space-x-2">
             {user?.profile_image_url && (
               <Image src={user.profile_image_url} alt={user.nickname} width={24} height={24} className="rounded-full" />
@@ -188,29 +209,31 @@ const MainDetailPage = () => {
           <div className="flex items-center space-x-4">
             <ShareButton />
             <LikeButton postId={id} currentUser={currentUser} category={post.category} />
-            <div className="relative">
-              <button onClick={handleMoreOptions} className="flex items-center">
-                <Image src="/Detail/edit-delete_button.png" alt="더보기" width={28} height={28} />
-              </button>
-              {showOptions && currentUser?.id === post.user_id && (
-                <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg py-2">
-                  <button
-                    className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
-                    onClick={() => router.push(`/post/${id}`)}
-                  >
-                    <Image src="/Detail/edit_button.png" alt="수정하기" width={16} height={16} className="mr-2" />
-                    수정하기
-                  </button>
-                  <button
-                    className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
-                    onClick={confirmDelete}
-                  >
-                    <Image src="/Detail/delete_button.png" alt="삭제하기" width={16} height={16} className="mr-2" />
-                    삭제하기
-                  </button>
-                </div>
-              )}
-            </div>
+            {currentUser?.id === post.user_id && (
+              <div className="relative" ref={optionsRef}>
+                <button onClick={handleMoreOptions} className="flex items-center">
+                  <Image src="/Detail/edit-delete_button.png" alt="더보기" width={28} height={28} />
+                </button>
+                {showOptions && (
+                  <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg py-2">
+                    <button
+                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      onClick={() => router.push(`/post/${id}`)}
+                    >
+                      <Image src="/Detail/edit_button.png" alt="수정하기" width={16} height={16} className="mr-2" />
+                      수정하기
+                    </button>
+                    <button
+                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      onClick={confirmDelete}
+                    >
+                      <Image src="/Detail/delete_button.png" alt="삭제하기" width={16} height={16} className="mr-2" />
+                      삭제하기
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
@@ -218,7 +241,7 @@ const MainDetailPage = () => {
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
         </div>
         <div className="flex mb-4 flex-wrap">
-          <div className="w-1/2 p-3">
+          <div className="w-1/2 p-4">
             <p className="mb-3">
               <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
             </p>
@@ -247,7 +270,8 @@ const MainDetailPage = () => {
               <span className="ml-5">{post.recruitments}명</span>
             </p>
             <p className="mb-3">
-              <strong className="text-labelNeutral">기술 스택</strong> <span className="ml-5">{post.tech_stack}</span>
+              <strong className="text-labelNeutral">기술 스택</strong>
+              <span className="ml-5">{renderTechStackIcons(post.tech_stack)}</span>
             </p>
             <p className="mb-3">
               <strong className="text-labelNeutral">마감일</strong>{" "}

@@ -7,7 +7,7 @@ const NavTabs = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex space-x-4">
+    <nav className="flex space-x-4 mt-5">
       <Link
         href="/all"
         className={`px-4 py-2 rounded-full ${

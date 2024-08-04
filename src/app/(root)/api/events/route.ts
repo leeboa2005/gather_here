@@ -9,5 +9,5 @@ export const GET = async () => {
     .select("*")
     .order("date_start", { ascending: false });
 
-  return NextResponse.json(IT_Events);
+  return NextResponse.json({ data: IT_Events });
 };

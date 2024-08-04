@@ -69,19 +69,32 @@ const EventDetailPage = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const calculateDeadlineBadge = (deadline: string): string => {
+    const today = new Date();
+    const deadlineDate = new Date(deadline);
+    const diffTime = deadlineDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays === 0 ? "D-day" : `D-${diffDays}`;
+  };
+
+  const deadlineBadge = calculateDeadlineBadge(event.date_done);
+
   return (
     <>
-      <div className="mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+        <button
+          onClick={() => router.push("/events")}
+          className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2"
+        >
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-      <div className="mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillStrong text-fontWhite rounded-lg shadow-md">
         <ToastContainer />
-        <h1 className="text-title font-title mb-4">{event.title}</h1>
-        <div className="flex justify-end items-center mb-4 space-x-2">
-          <button type="button" onClick={handleShare} className="flex items-center">
+        <h1 className="text-title font-title mb-4 p-2">{event.title}</h1>
+        <div className="flex justify-end items-center mb-4 mr-4 space-x-2">
+          <button type="button" onClick={handleShare} className="flex items-center mr-3">
             <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
           </button>
           <LikeButton eventId={eventId} currentUser={currentUser} />
@@ -90,49 +103,49 @@ const EventDetailPage = () => {
           {event.img_url && (
             <img src={event.img_url} alt={event.title} className="w-full h-64 object-cover mb-4 rounded-lg" />
           )}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p>
-                <strong className="text-labelNeutral">주최</strong> <span className="ml-5">{event.host}</span>
-              </p>
-              <p>
+          <div className="flex flex-wrap">
+            <div className="w-1/2 p-3">
+              <p className="mb-3">
                 <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{event.category}</span>
               </p>
-              <p>
+              <p className="mb-3">
+                <strong className="text-labelNeutral">주최</strong> <span className="ml-5">{event.host}</span>
+              </p>
+              <p className="mb-3">
                 <strong className="text-labelNeutral">일시</strong>{" "}
                 <span className="ml-5">
-                  {formatDate(event.date_start)} - {formatDate(event.date_done)}
+                  {formatDate(event.date_start)} - {formatDate(event.date_done)}{" "}
+                  <span className="ml-2 text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">
+                    {deadlineBadge}
+                  </span>
                 </span>
               </p>
-              <p>
+              <p className="mb-3">
                 <strong className="text-labelNeutral">장소</strong> <span className="ml-5">{event.location}</span>
               </p>
             </div>
-            <div>
-              <p>
-                <strong className="text-labelNeutral">신청 기간</strong>{" "}
-                <span className="ml-5">
-                  {formatDate(event.apply_start)} - {formatDate(event.apply_done)}
-                </span>
-              </p>
-              <p>
-                <strong className="text-labelNeutral">가격</strong>
-              </p>
-              <ul className="ml-4">
-                <li>일반 구매자 - {event.price?.regular || "N/A"}원</li>
-                <li>강의 구매자 - {event.price?.student || "N/A"}원</li>
-              </ul>
+            <div className="w-1/2 p-3 flex flex-col justify-between">
+              <div>
+                <p className="mb-3">
+                  <strong className="text-labelNeutral">신청 기간</strong>{" "}
+                  <span className="ml-4">
+                    {formatDate(event.apply_start)} - {formatDate(event.apply_done)}
+                  </span>
+                </p>
+                <p className="mb-3 flex items-start">
+                  <strong className="text-labelNeutral">입장 정보</strong>
+                  <span className="ml-5 flex flex-col">
+                    <span>일반 구매자 - {event.price?.regular || "N/A"}원</span>
+                    <span>강의 구매자 - {event.price?.student || "N/A"}원</span>
+                  </span>
+                </p>
+              </div>
+              <a href={event.link_url} target="_blank" rel="noopener noreferrer" className="self-end ml-5">
+                <Image src="/Detail/application_button.png" alt="신청하러 가기" width={120} height={30} />
+              </a>
             </div>
           </div>
         </div>
-        <a
-          href={event.link_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block bg-accentMint text-white text-center py-2 rounded-lg mb-4"
-        >
-          신청하러 가기
-        </a>
         <hr className="border-fillNeutral mb-4" />
         <h2 className="text-lg text-labelAssistive font-semibold mb-5">행사 상세</h2>
         <div className="bg-fillNormal p-4 rounded-lg shadow-md">

@@ -13,16 +13,11 @@ interface EventsCardProps {
 }
 
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
   const { user: currentUser } = useUser();
   const deadlineDate = dayjs(post.date_done);
   const daysLeft = deadlineDate.diff(dayjs(), "day");
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.format("YY.MM.DD");
-
-  const handleInterestClick = () => {
-    setIsActive(!isActive);
-  };
 
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
