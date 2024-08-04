@@ -10,11 +10,12 @@ import { useEffect, useRef, useState } from "react";
 import "./fullcalender.css";
 import { NextPage } from "next";
 import { Tables } from "@/types/supabase";
+import CalenderLoader from "@/components/Common/Skeleton/CalenderLoader";
 
 const detectMobileDevice = () => {
-  const mobileWidth = 1068;
+  const width = 1068;
 
-  return innerWidth <= mobileWidth;
+  return window.innerWidth < width;
 }; // UserAgent 이용해야할지 ?
 
 const Calender: NextPage = () => {
@@ -67,27 +68,19 @@ const Calender: NextPage = () => {
     queryFn: getEvents,
   });
 
-  useEffect(() => {
-    // FullCalendar가 렌더링된 후에 실행됩니다.
-    if (calenderRef) {
-      const aElements = document.querySelectorAll(".fc-daygrid-day-bottom");
-      console.log(aElements);
-      aElements.forEach((aEl) => {
-        // 예를 들어, 클릭 이벤트를 추가할 수 있습니다.
-        aEl.addEventListener("click", () => {
-          console.log("Anchor clicked!");
-        });
-      });
-    }
-  }, [calenderRef]);
+  if (isPending) {
+    return <CalenderLoader />;
+  } else if (isError) {
+    return <div>로딩 실패했습니다..</div>;
+  }
 
   return (
     <div className="custom_calender mb-6">
       <h4 className="flex ml-1 mb-4 m:ml-3 s:ml-3 text-fontWhite">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M12.0864 3.84971C11.3373 4.39033 10.7273 5.10113 10.3066 5.92361C9.88593 6.74609 9.66662 7.65672 9.66672 8.58054V8.61787C9.67139 9.31787 9.79972 9.98987 10.0296 10.6117C10.2162 11.111 9.79155 11.6734 9.31789 11.4284C8.43688 10.9721 7.6868 10.2988 7.13855 9.47187C6.90289 9.11721 6.38255 9.04837 6.14922 9.40421C5.3798 10.5756 4.97972 11.951 5.00079 13.3524C5.02186 14.7538 5.4631 16.1165 6.26739 17.2643C7.07168 18.412 8.20199 19.2919 9.51199 19.7901C10.822 20.2882 12.2514 20.3817 13.6151 20.0583C14.9788 19.7349 16.214 19.0097 17.1609 17.9764C18.1077 16.9431 18.7226 15.6494 18.9259 14.2627C19.1293 12.876 18.9116 11.4602 18.3013 10.1986C17.6909 8.93696 16.7159 7.88761 15.5024 7.18637L15.4977 7.17821C14.3264 6.50354 13.427 5.44159 12.9544 4.17521C12.8191 3.81354 12.3979 3.62571 12.0864 3.84971ZM12.9964 11.0562C13.5466 11.2194 14.0483 11.5153 14.4573 11.918C14.8663 12.3206 15.17 12.8177 15.3417 13.3653C15.5134 13.9129 15.5479 14.4944 15.4421 15.0585C15.3362 15.6225 15.0934 16.152 14.7348 16.6001C14.3763 17.0483 13.9131 17.4014 13.386 17.6284C12.8589 17.8555 12.284 17.9495 11.712 17.9021C11.1401 17.8547 10.5885 17.6675 10.1059 17.3569C9.62333 17.0462 9.22451 16.6217 8.94455 16.1207C8.70539 15.6949 9.19539 15.311 9.66789 15.4324C10.3832 15.6168 11.1322 15.6288 11.8531 15.4674C12.1891 15.3915 12.3349 15.017 12.2276 14.6904C12.0763 14.2239 11.9995 13.7364 12.0001 13.246C12.0001 12.5635 12.1471 11.916 12.4096 11.3315C12.4573 11.2223 12.5432 11.1341 12.6512 11.0837C12.7592 11.0332 12.882 11.0227 12.9964 11.0562Z"
             fill="#C3E88D"
           />
@@ -112,7 +105,7 @@ const Calender: NextPage = () => {
         }}
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         ref={calenderRef}
-        initialView={`${isMobileDevice ? "list" : "dayGridMonth"}`}
+        initialView={`${isMobileDevice ? "listMonth" : "dayGridMonth"}`}
         locale="ko"
         events={IT_Events}
         headerToolbar={
@@ -139,7 +132,7 @@ const Calender: NextPage = () => {
         }}
         windowResize={() => {
           if (isMobileDevice) {
-            calenderRef.current?.getApi().changeView("list");
+            calenderRef.current?.getApi().changeView("listMonth");
           } else {
             calenderRef.current?.getApi().changeView("dayGridMonth");
           }

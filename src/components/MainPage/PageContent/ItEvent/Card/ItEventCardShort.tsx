@@ -6,19 +6,19 @@ const ItEventCardShort = () => {
       <div className="flex justify-between items-center mb-3">
         <ul className="flex items-center">
           <li>
-            <span className="label-secondary rounded-full px-3 py-1.5 mr-1 bg-green-500 text-white">D-3</span>
+            <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">D-3</span>
           </li>
-          <li className="text-sm text-labelNormal ml-2">
+          <li className="text-baseS  text-labelNormal ml-2">
             <time dateTime="YYYY-MM-DD">YY.MM.DD</time>
           </li>
         </ul>
-        <button aria-label="북마크 자리">북마크</button>
+        <button aria-label="북마크">북마크</button>
       </div>
       <section>
-        <h2 className="text-left text-subtitle font-base truncate mt-5 text-labelStrong">행사제목행사제목행사제목</h2>
+        <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">행사제목</h2>
         <div className="flex items-center justify-start mb-2 text-left">
           <Image src="/Common/Icons/Location.png" alt="Location icon" width={20} height={20} className="mr-2" />
-          <p className="text-sm text-labelNeutral">코엑스 그랜드볼룸&아셈볼룸</p>
+          <p className="text-baseS  text-labelNeutral">코엑스 그랜드볼룸&아셈볼룸</p>
         </div>
         <div className="w-full h-[125px] bg-fillNeutral shadow-custom rounded-2xl">
           <Image src="" alt="행사 이미지" width={20} height={20} className="mr-2" />
