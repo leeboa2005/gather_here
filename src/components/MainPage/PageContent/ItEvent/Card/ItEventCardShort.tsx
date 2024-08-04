@@ -12,7 +12,6 @@ interface EventsCardProps {
 }
 
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
   const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.date_done);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
@@ -22,10 +21,6 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
     month: "2-digit",
     day: "2-digit",
   });
-
-  const handleInterestClick = () => {
-    setIsActive(!isActive);
-  };
 
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
