@@ -10,11 +10,12 @@ import { useEffect, useRef, useState } from "react";
 import "./fullcalender.css";
 import { NextPage } from "next";
 import { Tables } from "@/types/supabase";
+import CalenderLoader from "@/components/Common/Skeleton/CalenderLoader";
 
 const detectMobileDevice = () => {
-  const mobileWidth = 1068;
+  const width = 1068;
 
-  return innerWidth <= mobileWidth;
+  return window.innerWidth < width;
 }; // UserAgent 이용해야할지 ?
 
 const Calender: NextPage = () => {
@@ -67,19 +68,11 @@ const Calender: NextPage = () => {
     queryFn: getEvents,
   });
 
-  useEffect(() => {
-    // FullCalendar가 렌더링된 후에 실행됩니다.
-    if (calenderRef) {
-      const aElements = document.querySelectorAll(".fc-daygrid-day-bottom");
-      console.log(aElements);
-      aElements.forEach((aEl) => {
-        // 예를 들어, 클릭 이벤트를 추가할 수 있습니다.
-        aEl.addEventListener("click", () => {
-          console.log("Anchor clicked!");
-        });
-      });
-    }
-  }, [calenderRef]);
+  if (isPending) {
+    return <CalenderLoader />;
+  } else if (isError) {
+    return <div>로딩 실패했습니다..</div>;
+  }
 
   return (
     <div className="custom_calender mb-6">
@@ -112,7 +105,7 @@ const Calender: NextPage = () => {
         }}
         plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
         ref={calenderRef}
-        initialView={`${isMobileDevice ? "list" : "dayGridMonth"}`}
+        initialView={`${isMobileDevice ? "listMonth" : "dayGridMonth"}`}
         locale="ko"
         events={IT_Events}
         headerToolbar={
@@ -139,7 +132,7 @@ const Calender: NextPage = () => {
         }}
         windowResize={() => {
           if (isMobileDevice) {
-            calenderRef.current?.getApi().changeView("list");
+            calenderRef.current?.getApi().changeView("listMonth");
           } else {
             calenderRef.current?.getApi().changeView("dayGridMonth");
           }
