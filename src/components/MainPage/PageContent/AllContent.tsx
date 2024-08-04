@@ -79,7 +79,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
           <div className="w-1/3">
             <div className="sticky top-4">
               <Calender />
-              <h4 className="flex items-center ml-2 mb-4">
+              <h4 className="flex items-center ml-2 mb-4 text-labelStrong">
                 <svg
                   width="16"
                   height="16"

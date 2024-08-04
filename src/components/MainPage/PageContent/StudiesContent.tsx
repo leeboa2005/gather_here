@@ -10,6 +10,7 @@ import Image from "next/image";
 import run from "@/../public/Main/run.png";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
 import dynamic from "next/dynamic";
+import Chat from "../MainSideBar/Chat/Chat";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -145,6 +146,9 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
     <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">
+          <div className={`${isMobile ? "" : "hidden"}`}>
+            <Calender />
+          </div>
           <div className="flex items-center mb-3">
             <Image src={run} alt="run" width={17} />
             <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
@@ -171,7 +175,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
           <div className="col-span-1">
             <div className="sticky top-4">
               <Calender />
-              <h4 className="flex items-center ml-2 mb-4">
+              <h4 className="flex items-center ml-2 mb-4 text-labelStrong">
                 <svg
                   width="16"
                   height="16"
@@ -189,6 +193,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
                 </svg>
                 실시간 채팅에 참여해보세요.
               </h4>
+              <Chat />
             </div>
           </div>
         )}
@@ -198,11 +203,11 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
           onClick={openModal}
           className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-full shadow-lg z-50"
         >
-          캘린더
+          채팅
         </button>
       )}
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <Calender />
+        <Chat />
       </CommonModal>
     </div>
   );

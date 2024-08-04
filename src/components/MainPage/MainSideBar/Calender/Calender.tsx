@@ -41,21 +41,26 @@ const Calender: NextPage = () => {
   }, []);
 
   const getEvents = async () => {
-    const response = await fetch("/api/events");
+    try {
+      const response = await fetch("/api/events");
 
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+
       const { data } = await response.json(); // 캘린더에 표기하기 위해 가져온 행사 일정의 날짜 형식을 바꿔줘야 할 수도 있음. start, end => yyyy-mm-dd 로만 바꾸면 될 듯
 
       const events = data.map((event: Tables<"IT_Events">) => ({
         title: event.title,
-        start: dayjs(event.date_start).format("YYYY-MM-DD"), // yyyy-mm-dd 로 바꿔줘야함
+        start: dayjs(event.date_start).format("YYYY-MM-DD"),
         end: dayjs(event.date_done).format("YYYY-MM-DD"),
         description: event.location,
       }));
 
       return events;
-    } else {
-      throw new Error("Something went wrong while fetching events");
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+      throw new Error("이벤트를 불러오는 데 문제가 발생했습니다.");
     }
   };
 
@@ -63,6 +68,7 @@ const Calender: NextPage = () => {
     data: IT_Events,
     isPending,
     isError,
+    error,
   } = useQuery({
     queryKey: ["IT_Events"],
     queryFn: getEvents,
@@ -71,6 +77,7 @@ const Calender: NextPage = () => {
   if (isPending) {
     return <CalenderLoader />;
   } else if (isError) {
+    console.error(error);
     return <div>로딩 실패했습니다..</div>;
   }
 
@@ -126,7 +133,6 @@ const Calender: NextPage = () => {
           return cellContent.dayNumberText.replace("일", "");
         }}
         firstDay={1}
-        fixedWeekCount={false}
         moreLinkContent={(arg) => {
           return arg.shortText;
         }}
@@ -151,7 +157,7 @@ const Calender: NextPage = () => {
           description.classList.add("fc-event-description");
           description.innerHTML = `<svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4.99996 0C6.30978 0 7.56595 0.520324 8.49213 1.44651C9.41831 2.37269 9.93864 3.62886 9.93864 4.93868C9.93864 7.02559 8.47223 9.29991 5.5774 11.786C5.41644 11.9242 5.21121 12.0002 4.99901 12C4.78681 11.9998 4.58172 11.9235 4.42099 11.785L4.22952 11.6188C1.46285 9.19759 0.0612793 6.97899 0.0612793 4.93868C0.0612793 3.62886 0.581603 2.37269 1.50778 1.44651C2.43397 0.520324 3.69014 0 4.99996 0ZM4.99996 3.03919C4.49618 3.03919 4.01304 3.23931 3.65681 3.59554C3.30059 3.95176 3.10047 4.4349 3.10047 4.93868C3.10047 5.44245 3.30059 5.9256 3.65681 6.28182C4.01304 6.63805 4.49618 6.83817 4.99996 6.83817C5.50374 6.83817 5.98688 6.63805 6.3431 6.28182C6.69933 5.9256 6.89945 5.44245 6.89945 4.93868C6.89945 4.4349 6.69933 3.95176 6.3431 3.59554C5.98688 3.23931 5.50374 3.03919 4.99996 3.03919Z" fill="#919191" fill-opacity="0.32"/>
-          </svg> &nbsp ${arg.event.extendedProps.description}`;
+          </svg> ${arg.event.extendedProps.description}`;
 
           const arrayOfDomNodes = [title, description];
 
