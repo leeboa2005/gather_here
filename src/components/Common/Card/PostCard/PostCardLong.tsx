@@ -6,17 +6,17 @@ import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
 import DOMPurify from "dompurify";
-import { useUser } from "@/provider/UserContextProvider";
 
 interface PostCardProps {
   post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
-  const { userData } = useUser();
   const [isActive, setIsActive] = useState(false);
   const deadlineDate = new Date(post.deadline);
-
+  deadlineDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {

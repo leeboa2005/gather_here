@@ -14,7 +14,12 @@ interface PostCardProps {
 
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
+  // deadline 날짜를 오늘 날짜의 00:00:00으로 설정
   const deadlineDate = new Date(post.deadline);
+  deadlineDate.setHours(0, 0, 0, 0);
+  // 현재 날짜도 00:00:00으로 설정하여 비교
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
