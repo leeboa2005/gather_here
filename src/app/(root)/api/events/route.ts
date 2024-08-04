@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
   const supabase = createClient();
 
-  let { data, error } = await supabase.from("IT_Events").select("*");
-  if (error) {
-    console.log(error);
-  }
+  let { data: IT_Events, error } = await supabase
+    .from("IT_Events")
+    .select("*")
+    .order("date_start", { ascending: false });
 
-  return NextResponse.json({ data });
+  return NextResponse.json(IT_Events);
 };
