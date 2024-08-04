@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavTabs from "@/components/MainPage/NavTab/NavTabs";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
 import type { Metadata } from "next";
@@ -19,6 +18,23 @@ export const metadata: Metadata = {
     { name: "김성준" },
     { name: "이보아" },
   ],
+  icons: {
+    icon: "/Favicon/favicon.png",
+  },
+  openGraph: {
+    title: "@gather_here",
+    description: "스터디나 사이드 프로젝트 팀원을 오픈 채팅으로 빠르고 쉽게 찾을 수 있는 gather_here.",
+    url: "https://gather-here-cyan.vercel.app",
+    type: "website",
+    images: [
+      {
+        url: "https://yrmjrxuealdugqizqtjg.supabase.co/storage/v1/object/public/images/og/og_image.png",
+        width: 516,
+        height: 504,
+        alt: "9개의 직군이 퍼즐 조각처럼 모여 서로 필요한 부분을 채워주는 gather_here.",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
