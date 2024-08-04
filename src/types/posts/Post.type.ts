@@ -25,3 +25,19 @@ export type User = {
 export type PostWithUser = Post & {
   user: User;
 };
+
+export type ITEvent = {
+  event_id: string;
+  category: string;
+  img_url: string | null;
+  title: string;
+  apply_done: string | null;
+  apply_start: string | null;
+  location: string;
+  host: string;
+  description: string;
+  link_url: string;
+  date_start: string;
+  date_done: string;
+  price: { regular: number; student: number };
+};

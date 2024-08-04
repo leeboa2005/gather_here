@@ -29,15 +29,36 @@ body {
 
   /* select styles */
   .shared-select {
-    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong  p-2 rounded-md  focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("/Main/down.png");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 1.5rem;
   }
 
   .shared-select-gray {
-    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md focus:outline-fontWhite;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("/Main/down.png");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 1.5rem;
   }
 
   .shared-select-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md focus:outline-fontWhite;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("/Main/down.png");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 1.5rem;
   }
 }
 

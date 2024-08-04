@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/client";
-import { PostWithUser, ITEvent } from "@/types/posts/Post.type";
+import { PostWithUser, ITEvent } from "@/types/posts/Post.type"; // 수정
 import { Tables } from "@/types/supabase";
 
 export interface FetchPostsFilters {
@@ -106,6 +106,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
 
 // 좋아요한 포스트를 가져오는 함수
 export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUser | ITEvent>> => {
+  // 수정
   const supabase = createClient();
 
   // 관심 있는 스터디,프로젝트 가져오기
@@ -151,7 +152,7 @@ export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUse
     return [];
   }
 
-  return [...postsData, ...eventsData] as Array<PostWithUser | ITEvent>;
+  return [...postsData, ...eventsData] as Array<PostWithUser | ITEvent>; // 수정
 };
 
 export const fetchEventsPostsWithDeadLine = async (

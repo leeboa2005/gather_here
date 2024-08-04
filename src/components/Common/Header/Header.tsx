@@ -65,7 +65,7 @@ const Header: React.FC = () => {
     <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
-          <h1 className="text-lg font-bold">@gather_here</h1>
+          <Image src="/logos/logo.png" alt="@gather_here 로고" width={151} height={24} />
         </Link>
         <nav className="flex items-center gap-2">
           {/* 검색창 데스크탑 */}
@@ -146,9 +146,12 @@ const Header: React.FC = () => {
           <div className="fixed inset-0 bg-black opacity-80 z-40" onClick={handleCloseLoginModal}></div>
           {/* 모달 추가 */}
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background rounded-[20px] p-4 z-50">
-          <button onClick={handleCloseLoginModal} className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]">
+            <button
+              onClick={handleCloseLoginModal}
+              className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]"
+            >
               &times;
-          </button>
+            </button>
             <LoginForm />
           </div>
         </>

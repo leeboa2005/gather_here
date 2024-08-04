@@ -67,7 +67,7 @@ const LeftNav: React.FC = () => {
           </ol>
         </div>
       ) : (
-        <div className="text-red-500">사용자 정보를 불러올 수 없습니다.</div>
+        <div className="text-fillStrong">사용자 정보 없음.</div>
       )}
       <nav>
         <ul className="w-full">
