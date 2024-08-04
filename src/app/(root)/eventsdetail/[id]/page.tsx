@@ -82,7 +82,10 @@ const EventDetailPage = () => {
   return (
     <>
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+        <button
+          onClick={() => router.push("/events")}
+          className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2"
+        >
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
@@ -125,7 +128,7 @@ const EventDetailPage = () => {
               <div>
                 <p className="mb-3">
                   <strong className="text-labelNeutral">신청 기간</strong>{" "}
-                  <span className="ml-5">
+                  <span className="ml-4">
                     {formatDate(event.apply_start)} - {formatDate(event.apply_done)}
                   </span>
                 </p>

@@ -81,6 +81,7 @@ const MainDetailPage = () => {
     } else {
       toast.success("게시물이 삭제되었습니다.");
       router.push("/");
+      router.refresh();
     }
   };
 
@@ -157,7 +158,7 @@ const MainDetailPage = () => {
 
   const renderTechStackIcons = (techStack: string[]) => {
     return techStack.map((tech) => (
-      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={16} height={16} className="inline-block mr-2" />
+      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={24} height={24} className="inline-block mr-2" />
     ));
   };
 
@@ -181,10 +182,10 @@ const MainDetailPage = () => {
           closeOnClick
           pauseOnHover
         />
-        <div className="mb-4">
+        <div className="mb-4 p-3">
           <h1 className="text-title font-title">{post.title}</h1>
         </div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 pl-3 pr-3">
           <div className="flex items-center space-x-2">
             {user?.profile_image_url && (
               <Image src={user.profile_image_url} alt={user.nickname} width={24} height={24} className="rounded-full" />
@@ -227,7 +228,7 @@ const MainDetailPage = () => {
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
         </div>
         <div className="flex mb-4 flex-wrap">
-          <div className="w-1/2 p-3">
+          <div className="w-1/2 p-4">
             <p className="mb-3">
               <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
             </p>
