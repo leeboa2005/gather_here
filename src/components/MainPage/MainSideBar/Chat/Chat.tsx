@@ -132,9 +132,8 @@ const Chat = () => {
 
   return (
     <>
-      <h4 className="ml-2 mb-4 text-fontWhite">실시간 채팅에 참여해보세요.</h4>
       {isOpen ? (
-        <div id="container" className="h-[663px] w-full flex-col justify-start items-start inline-flex">
+        <div id="container" className="h-[493px] w-full flex-col justify-start items-start inline-flex">
           <div
             id="header"
             className="self-stretch h-16 p-5 bg-[#141415] rounded-tl-[20px] rounded-tr-[20px] flex-col justify-center items-center flex"
