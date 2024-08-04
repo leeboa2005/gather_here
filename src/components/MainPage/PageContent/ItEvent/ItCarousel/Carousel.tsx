@@ -6,16 +6,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
-import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
-import { PostWithUser } from "@/types/posts/Post.type";
+import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardShort";
 
-interface CarouselProps {
-  posts: PostWithUser[];
-}
-
-const Carousel: React.FC<CarouselProps> = ({ posts }) => {
+const Carousel: React.FC = () => {
   return (
-    <div className="relative z-0">
+    <div className="relative z-0 w-full flex justify-center">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         spaceBetween={12}
@@ -23,11 +18,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         navigation
         pagination={{ clickable: true }}
         className="w-full"
-        style={{ height: "17rem" }}
         breakpoints={{
-          280: {
-            slidesPerView: 1,
-          },
           336: {
             slidesPerView: 1,
           },
@@ -39,13 +30,14 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           },
         }}
       >
-        {posts.map((post, index) => (
-          <SwiperSlide key={`${post.post_id}_${index}`} className="flex justify-center items-center">
-            <PostCardShort post={post} />
+        {Array.from({ length: 6 }).map((_, index) => (
+          <SwiperSlide key={index} className="flex justify-center items-center">
+            <div className="w-[237px]">
+              <ItEventCardShort />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
-      _
     </div>
   );
 };

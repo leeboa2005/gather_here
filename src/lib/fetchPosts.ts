@@ -102,45 +102,50 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
   return data as PostWithUser[];
 };
 
+// 좋아요한 포스트를 가져오는 함수
 export const fetchLikedPosts = async (userId: string): Promise<PostWithUser[]> => {
   const supabase = createClient();
+
+  // 관심 있는 스터디,프로젝트 가져오기
   const { data: interestsData, error: interestsError } = await supabase
     .from("Interests")
     .select("post_id, category")
     .eq("user_id", userId);
 
   if (interestsError) {
-    console.error("Error fetching interests:", interestsError);
+    console.error("내 관심 글 정보 불러오는 중 오류 발생:", interestsError);
     return [];
   }
 
+  // IT 행사 관심 정보 가져오기
   const { data: itInterestsData, error: itInterestsError } = await supabase
     .from("IT_Interests")
     .select("event_id")
     .eq("user_id", userId);
 
   if (itInterestsError) {
-    console.error("Error fetching IT interests:", itInterestsError);
+    console.error("내 관심 글 IT 행사 정보 불러오는 중 오류 발생:", itInterestsError);
     return [];
   }
 
+  // 포스트 ID와 이벤트 ID 추출
   const postIds = interestsData.map((interest) => interest.post_id);
   const eventIds = itInterestsData.map((interest) => interest.event_id);
 
+  // 포스트 데이터 가져오기
   const { data: postsData, error: postsError } = await supabase.from("Posts").select("*").in("post_id", postIds);
-
   if (postsError) {
-    console.error("Error fetching posts:", postsError);
+    console.error("포스트 불러오는 중 오류 발생:", postsError);
     return [];
   }
 
+  // 이벤트 데이터 가져오기
   const { data: eventsData, error: eventsError } = await supabase
     .from("IT_Events")
     .select("*")
     .in("event_id", eventIds);
-
   if (eventsError) {
-    console.error("Error fetching events:", eventsError);
+    console.error("IT 행사 정보 불러오는 중 오류 발생:", eventsError);
     return [];
   }
 

@@ -80,7 +80,6 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
               )}
               <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
             </div>
-
             <div className="text-base flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
                 {post.target_position.length > 0 && (
@@ -96,10 +95,10 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
                   </>
                 )}
               </div>
-              <div className="flex items-center flex-none">
-                <div className="mr-2">{post.recruitments}명</div>
-                <Image src={arrow} alt="interest_basic" width={11} />
+              <div className={`mr-2 ${jobTitleClassMap[post.target_position[0]] || "text-default"}`}>
+                {post.recruitments}명
               </div>
+              <Image src={arrow} alt="interest_basic" width={11} />
             </div>
           </div>
         </Link>

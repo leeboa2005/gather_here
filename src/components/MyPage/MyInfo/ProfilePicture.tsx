@@ -19,11 +19,13 @@ const ProfilePicture: React.FC = () => {
   const { user, userData, setUserData } = useUser();
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
-  const defaultImage = "/Mypage/default-profile.png";
+  const defaultImage = "/MyPage/default-profile.png";
   const supabase = createClient();
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
+
   const iconImages = Array.from(
     { length: 9 },
-    (_, index) => `/Mypage/ProfileIcon/profileicon_${String(index + 1).padStart(2, "0")}.jpg`,
+    (_, index) => `${imageBaseUrl}/profileicon_${String(index + 1).padStart(2, "0")}.jpg`,
   );
 
   const occupations = ["프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스", "PM", "기획자", "마케팅"];

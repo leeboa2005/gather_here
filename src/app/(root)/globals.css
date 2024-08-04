@@ -157,6 +157,13 @@ body {
   }
 }
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0; /* 로딩 애니메이션 위아래 패딩 조절 */
+}
+
 /* Disabled-Modal */
 .page-disabled {
   pointer-events: none;
@@ -183,4 +190,26 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* custom scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #d0d0d0;
+}
+
+/* custom scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* custom scrollbar (Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(208, 208, 208, 0.3) transparent;
 }

@@ -95,7 +95,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
             ))}
           </div>
           <div className="flex items-center flex-none">
-            <div className="mr-2">{post.recruitments}명</div>
+            <div className={`mr-2 ${jobTitleClassMap[post.target_position[0]] || "text-default"}`}>
+              {post.recruitments}명
+            </div>
             <Image src={arrow} alt="interest_basic" width={11} />
           </div>
         </div>

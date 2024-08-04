@@ -83,7 +83,7 @@ const Calender: NextPage = () => {
 
   return (
     <div className="custom_calender mb-6">
-      <h4 className="flex ml-1 mb-4 m:ml-3 s:ml-3">
+      <h4 className="flex ml-1 mb-4 m:ml-3 s:ml-3 text-fontWhite">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
           <path
             fill-rule="evenodd"
