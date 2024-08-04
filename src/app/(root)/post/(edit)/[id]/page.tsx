@@ -198,111 +198,124 @@ const PostEditPage = () => {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8 space-y-6">
+    <>
       <ToastContainer />
-      <div className="space-y-4">
-        <FormInput
-          label="제목"
-          value={title}
-          onChange={handleInputChange(setTitle)}
-          maxLength={30}
-          placeholder="제목을 입력해주세요"
-        />
-      </div>
-
-      <div className="bg-gray-100 p-6 rounded-lg shadow-md space-y-4">
-        <h2 className="text-lg font-semibold mb-2">기본 정보</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <FormDropdown
-            label="분류"
-            options={categoryOptions}
-            value={category}
-            onChange={handleInputChange(setCategory)}
-            placeholder="분류를 선택해주세요"
-          />
-          <FormDropdown
-            label="방식"
-            options={placeOptions}
-            value={place}
-            onChange={handleInputChange(setPlace)}
-            placeholder="진행 방식을 선택해주세요"
-          />
-          <FormDropdown
-            label="지역"
-            options={locationOptions}
-            value={location}
-            onChange={handleInputChange(setLocation)}
-            placeholder="지역을 선택해주세요"
-          />
-          <FormDropdown
-            label="기간"
-            options={durationOptions}
-            value={duration}
-            onChange={handleInputChange(setDuration)}
-            placeholder="기간을 선택해주세요"
-          />
-          <FormDropdown
-            label="총 인원"
-            options={totalMembersOptions}
-            value={totalMembers}
-            onChange={handleInputChange(setTotalMembers)}
-            placeholder="총 참여 인원을 선택해주세요"
-          />
-          <FormInput
-            label="연락 방법"
-            value={personalLink}
-            onChange={handleInputChange(setPersonalLink)}
-            placeholder="연락 받을 링크 또는 이메일을 입력해주세요"
-          />
-        </div>
-      </div>
-
-      <div className="bg-gray-100 p-6 rounded-lg shadow-md space-y-4">
-        <h2 className="text-lg font-semibold mb-2">모집 정보</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <FormMultiSelect
-            label="모집 대상"
-            options={targetPositionOptions}
-            value={targetPosition}
-            onChange={handleMultiSelectChange(setTargetPosition)}
-          />
-          <FormDropdown
-            label="모집 인원"
-            options={recruitmentsOptions}
-            value={recruitments}
-            onChange={handleInputChange(setRecruitments)}
-            placeholder="모집 인원을 선택해주세요"
-          />
-          <FormMultiSelect
-            label="기술 스택"
-            options={techStackOptions}
-            value={techStack}
-            onChange={handleMultiSelectChange(setTechStack)}
-          />
-          <FormInput
-            label="마감일"
-            type="date"
-            value={deadline || ""}
-            onChange={handleInputChange(setDeadline)}
-            placeholder="마감일을 선택해주세요"
-          />
-        </div>
-      </div>
-
-      <div className="bg-gray-100 p-6 rounded-lg shadow-md space-y-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">내용</label>
-        <ReactQuillEditor value={content} onChange={setContent} />
-      </div>
-
-      <div className="flex justify-end space-x-4">
-        <button type="button" className="shared-button-gray-full mt-3" onClick={() => router.push("/")}>
-          취소
-        </button>
-        <button type="submit" className="shared-button-green mt-3">
-          수정
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+          <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-    </form>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-fillStrong w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
+      >
+        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+          <div className="space-y-4">
+            <h2 className="text-lg text-labelNeutral font-semibold mb-2">제목</h2>
+            <FormInput
+              label=""
+              value={title}
+              onChange={handleInputChange(setTitle)}
+              maxLength={30}
+              placeholder="제목을 입력해주세요"
+            />
+          </div>
+          <hr className="border-fillNeutral mb-4" />
+          <h2 className="text-lg text-labelNeutral font-semibold mb-2">기본 정보</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <FormDropdown
+              label="분류"
+              options={categoryOptions}
+              value={category}
+              onChange={handleInputChange(setCategory)}
+              placeholder="분류를 선택해주세요"
+            />
+            <FormDropdown
+              label="방식"
+              options={placeOptions}
+              value={place}
+              onChange={handleInputChange(setPlace)}
+              placeholder="진행 방식을 선택해주세요"
+            />
+            <FormDropdown
+              label="지역"
+              options={locationOptions}
+              value={location}
+              onChange={handleInputChange(setLocation)}
+              placeholder="지역을 선택해주세요"
+            />
+            <FormDropdown
+              label="기간"
+              options={durationOptions}
+              value={duration}
+              onChange={handleInputChange(setDuration)}
+              placeholder="기간을 선택해주세요"
+            />
+            <FormDropdown
+              label="총 인원"
+              options={totalMembersOptions}
+              value={totalMembers}
+              onChange={handleInputChange(setTotalMembers)}
+              placeholder="총 참여 인원을 선택해주세요"
+            />
+            <FormInput
+              label="연락 방법"
+              value={personalLink}
+              onChange={handleInputChange(setPersonalLink)}
+              placeholder="연락 받을 링크 또는 이메일을 입력해주세요"
+            />
+          </div>
+        </div>
+        <hr className="border-fillNeutral mb-4" />
+
+        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+          <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <FormMultiSelect
+              label="모집 대상"
+              options={targetPositionOptions}
+              value={targetPosition}
+              onChange={handleMultiSelectChange(setTargetPosition)}
+            />
+            <FormDropdown
+              label="모집 인원"
+              options={recruitmentsOptions}
+              value={recruitments}
+              onChange={handleInputChange(setRecruitments)}
+              placeholder="모집 인원을 선택해주세요"
+            />
+            <FormMultiSelect
+              label="기술 스택"
+              options={techStackOptions}
+              value={techStack}
+              onChange={handleMultiSelectChange(setTechStack)}
+            />
+            <FormInput
+              label="마감일"
+              type="date"
+              value={deadline || ""}
+              onChange={handleInputChange(setDeadline)}
+              placeholder="마감일을 선택해주세요"
+            />
+          </div>
+        </div>
+        <hr className="border-fillNeutral mb-4" />
+        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+          <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
+          <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
+        </div>
+
+        <div className="flex justify-end space-x-4">
+          <button type="button" className="shared-button-gray mt-3" onClick={() => router.push("/")}>
+            취소
+          </button>
+          <button type="submit" className="shared-button-green mt-3">
+            수정
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

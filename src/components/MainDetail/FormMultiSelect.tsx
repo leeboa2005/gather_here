@@ -18,21 +18,21 @@ interface FormMultiSelectProps {
 const customStyles = {
   control: (provided: any, state: any) => ({
     ...provided,
-    backgroundColor: "#28282A",
-    border: state.isFocused ? "1px solid #919191" : "1px solid #28282A",
+    backgroundColor: "#3B3D3F",
+    border: state.isFocused ? "1px solid #3B3D3F" : "1px solid #3B3D3F",
     color: "#919191",
     padding: "2px 12px",
-    borderRadius: "4px",
+    borderRadius: "7px",
     boxShadow: "none",
-    minHeight: "36px", // 여기서 세로 크기를 조정
+    minHeight: "45px",
     "&:hover": {
       borderColor: "#919191",
     },
   }),
   menu: (provided: any) => ({
     ...provided,
-    backgroundColor: "#28282A",
-    borderColor: "#28282A",
+    backgroundColor: "#3B3D3F",
+    borderColor: "#3B3D3F",
     color: "#ffffff",
   }),
   multiValue: (provided: any) => ({
@@ -54,6 +54,14 @@ const customStyles = {
   input: (provided: any) => ({
     ...provided,
     color: "#ffffff",
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? "#19191A" : "#3B3D3F",
+    color: state.isFocused ? "#ffffff" : "#ffffff",
+    "&:hover": {
+      backgroundColor: "#28282A",
+    },
   }),
 };
 
@@ -77,6 +85,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value
         classNamePrefix="select"
         instanceId={instanceId}
         placeholder="선택..."
+        components={{ IndicatorSeparator: () => null }}
       />
     </div>
   );
