@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
-import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/ItEventCardShort";
+import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardShort";
 
 const Carousel: React.FC = () => {
   return (
