@@ -91,7 +91,7 @@ const MainDetailPage = () => {
         <div className="flex justify-end space-x-4">
           <button
             onClick={() => toast.dismiss()}
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-fillLight hover:bg-fillNormal text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             취소할래요
           </button>
@@ -100,7 +100,7 @@ const MainDetailPage = () => {
               handleDelete();
               toast.dismiss();
             }}
-            className="bg-primary hover:bg-primaryStrong text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-primary hover:bg-primaryStrong text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             삭제할래요
           </button>
@@ -142,100 +142,118 @@ const MainDetailPage = () => {
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
-      <ToastContainer
-        toastClassName={() =>
-          "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-fillAlternative"
-        }
-        bodyClassName={() => "text-sm font-white font-med block p-3"}
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar
-        closeOnClick
-        pauseOnHover
-      />
-      <button onClick={() => router.push("/")} className="text-labelNeutral mb-4 flex items-center space-x-2">
-        <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
-        <span>목록으로 돌아가기</span>
-      </button>
-      <div className="mb-4">
-        <h1 className="text-title font-title">{post.title}</h1>
+    <>
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+          <span>목록으로 돌아갈게요</span>
+        </button>
       </div>
-      <div className="flex mb-4">
-        <div className="w-1/2 p-2">
-          <p>
-            <strong>분류:</strong> {post.category}
-          </p>
-          <p>
-            <strong>지역:</strong> {post.location}
-          </p>
-          <p>
-            <strong>기간:</strong> {post.duration}개월
-          </p>
-          <p>
-            <strong>총 인원:</strong> {post.total_members}명
-          </p>
-          <p>
-            <strong>연락 방법:</strong> {post.personal_link}
-          </p>
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
+        <ToastContainer
+          toastClassName={() =>
+            "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-fillAlternative"
+          }
+          bodyClassName={() => "text-sm font-white font-med block p-3"}
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar
+          closeOnClick
+          pauseOnHover
+        />
+        <div className="mb-4">
+          <h1 className="text-title font-title">{post.title}</h1>
         </div>
-        <div className="w-1/2 p-2">
-          <p>
-            <strong>모집 대상:</strong> {post.target_position.join(", ")}
-          </p>
-          <p>
-            <strong>모집 인원:</strong> {post.recruitments}명
-          </p>
-          <p>
-            <strong>기술 스택:</strong> {post.tech_stack}
-          </p>
-          <p>
-            <strong>마감일:</strong> {new Date(post.deadline).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>장소:</strong> {post.place}
-          </p>
-        </div>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center space-x-2">
-          {user?.profile_image_url && (
-            <Image src={user.profile_image_url} alt={user.nickname} width={24} height={24} className="rounded-full" />
-          )}
-          <span className="text-base font-medium">{user?.nickname}</span>
-          <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
-        </div>
-        <div className="flex items-center space-x-4">
-          <ShareButton />
-          <LikeButton postId={id} currentUser={currentUser} category={post.category} />
-          <div className="relative">
-            <button onClick={handleMoreOptions} className="flex items-center">
-              <Image src="/Detail/edit-delete_button.png" alt="더보기" width={24} height={24} />
-            </button>
-            {showOptions && currentUser?.id === post.user_id && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
-                <button
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => router.push(`/post/${id}`)}
-                >
-                  수정하기
-                </button>
-                <button
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={confirmDelete}
-                >
-                  삭제하기
-                </button>
-              </div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-2">
+            {user?.profile_image_url && (
+              <Image src={user.profile_image_url} alt={user.nickname} width={24} height={24} className="rounded-full" />
             )}
+            <span className="text-base font-medium">{user?.nickname}</span>
+            <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <ShareButton />
+            <LikeButton postId={id} currentUser={currentUser} category={post.category} />
+            <div className="relative">
+              <button onClick={handleMoreOptions} className="flex items-center">
+                <Image src="/Detail/edit-delete_button.png" alt="더보기" width={28} height={28} />
+              </button>
+              {showOptions && currentUser?.id === post.user_id && (
+                <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg py-2">
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                    onClick={() => router.push(`/post/${id}`)}
+                  >
+                    <Image src="/Detail/edit_button.png" alt="수정하기" width={16} height={16} className="mr-2" />
+                    수정하기
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                    onClick={confirmDelete}
+                  >
+                    <Image src="/Detail/delete_button.png" alt="삭제하기" width={16} height={16} className="mr-2" />
+                    삭제하기
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <hr className="border-fillNeutral mb-4" />
+        <div>
+          <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
+        </div>
+        <div className="flex mb-4">
+          <div className="w-1/2 p-3">
+            <p className="mb-3">
+              <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">지역</strong> <span className="ml-5">{post.location}</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">기간</strong> <span className="ml-5">{post.duration}개월</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">총 인원</strong>{" "}
+              <span className="ml-5">{post.total_members}명</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">지원 방법</strong>{" "}
+              <span className="ml-5">{post.personal_link}</span>
+            </p>
+          </div>
+          <div className="w-1/2 p-3">
+            <p className="mb-3">
+              <strong className="text-labelNeutral">모집 대상</strong>{" "}
+              <span className="ml-5">{post.target_position.join(", ")}</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">모집 인원</strong>{" "}
+              <span className="ml-5">{post.recruitments}명</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">기술 스택</strong> <span className="ml-5">{post.tech_stack}</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">마감일</strong>{" "}
+              <span className="ml-5">{new Date(post.deadline).toLocaleDateString()}</span>
+            </p>
+            <p className="mb-3">
+              <strong className="text-labelNeutral">장소</strong> <span className="ml-5">{post.place}</span>
+            </p>
+          </div>
+        </div>
+        <hr className="border-fillNeutral mb-4" />
+        <div>
+          <h2 className="text-lg text-labelAssistive font-semibold mb-5">모집 내용</h2>
+        </div>
+        <div className="bg-fillLight p-4 rounded-lg shadow-md">
+          <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+        </div>
       </div>
-      <div className="bg-fillLight p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-2">내용</h2>
-        <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
-      </div>
-    </div>
+    </>
   );
 };
 

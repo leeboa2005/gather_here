@@ -16,8 +16,8 @@ const ShareButton: React.FC = () => {
   };
 
   return (
-    <button type="button" onClick={handleShare} className="flex items-center">
-      <Image src="/Main/share_button.png" alt="공유하기" width={24} height={24} />
+    <button type="button" onClick={handleShare} className="flex items-center mr-2">
+      <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
     </button>
   );
 };
