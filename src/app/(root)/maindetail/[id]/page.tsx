@@ -12,6 +12,12 @@ import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
+import dynamic from "next/dynamic";
+import animationData from "@/assets/loadingBar.json";
+
+const LottiAnimation = dynamic(() => import("@/components/Loading/LottiAnimation"), {
+  ssr: false,
+});
 
 const supabase = createClient();
 
@@ -133,7 +139,14 @@ const MainDetailPage = () => {
     return `${days}일 전`;
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-background">
+        <LottiAnimation animationData={animationData} size="200px" />
+      </div>
+    );
+  }
+
   if (!post) return <div>글 없음</div>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
@@ -144,7 +157,7 @@ const MainDetailPage = () => {
   return (
     <>
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+        <button onClick={() => router.push("/")} className="text-labelNeutral mt-6 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
@@ -253,25 +266,6 @@ const MainDetailPage = () => {
           <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </div>
       </div>
-      <style jsx>{`
-        @media only screen and (max-width: 1068px) {
-          .max-w-container-l {
-            max-width: 744px;
-          }
-        }
-        @media only screen and (max-width: 768px) {
-          .max-w-container-m {
-            max-width: 335px;
-          }
-          .w-1/2 {
-            width: 100%;
-          }
-          p span {
-            display: block;
-            margin-left: 0;
-          }
-        }
-      `}</style>
     </>
   );
 };

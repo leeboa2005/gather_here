@@ -71,13 +71,13 @@ const EventDetailPage = () => {
 
   return (
     <>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+      <div className="mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
         <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
+      <div className="mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
         <ToastContainer />
         <h1 className="text-title font-title mb-4">{event.title}</h1>
         <div className="flex justify-end items-center mb-4 space-x-2">
