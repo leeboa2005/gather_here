@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ItEventCardLong from "@/components/MainPage/PageContent/ItEvent/ItEventCardLong";
+import ItEventCardLong from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardLong";
 import Image from "next/image";
 import run from "@/../public/Main/run.png";
 import Carousel from "@/components/MainPage/PageContent/ItEvent/ItCarousel/Carousel";
