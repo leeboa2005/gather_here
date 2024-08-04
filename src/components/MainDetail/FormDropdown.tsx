@@ -7,6 +7,7 @@ interface FormDropdownProps {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   multiple?: boolean;
   placeholder?: string;
+  className?: string;
 }
 
 const FormDropdown: React.FC<FormDropdownProps> = ({
@@ -16,15 +17,16 @@ const FormDropdown: React.FC<FormDropdownProps> = ({
   onChange,
   multiple = false,
   placeholder,
+  className,
 }) => {
   return (
     <div className="mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2">{label}</label>
+      <label className="block text-labelNeutral text-sm font-bold mb-2">{label}</label>
       <select
         value={value}
         onChange={onChange}
         multiple={multiple}
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className={`shared-select-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className}`}
       >
         <option value="">{placeholder}</option>
         {options.map((option) => (
