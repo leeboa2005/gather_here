@@ -4,15 +4,17 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { fetchLikedPosts } from "@/lib/fetchPosts";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
+import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardShort";
 import MypageList from "@/components/Common/Skeleton/MypageList";
 import Pagination from "@/components/MyPage/Common/Pagination";
+import { PostWithUser, ITEvent } from "@/types/posts/Post.type";
 
 type Tab = "전체" | "스터디" | "프로젝트" | "IT 행사";
 
 const InterestsTap: React.FC = () => {
   const { user } = useUser();
   const [selectedTab, setSelectedTab] = useState<Tab>("전체");
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<(PostWithUser | ITEvent)[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -24,7 +26,14 @@ const InterestsTap: React.FC = () => {
         setLoading(true);
         try {
           const likedPosts = await fetchLikedPosts(user.id);
-          const filteredPosts = likedPosts.filter((post) => selectedTab === "전체" || post.category === selectedTab);
+
+          // 선택된 탭에 따라 포스트 필터링
+          const filteredPosts = likedPosts.filter((post: PostWithUser | ITEvent) => {
+            if (selectedTab === "전체") return true;
+            if (selectedTab === "IT 행사" && "event_id" in post) return true;
+            if (selectedTab !== "IT 행사" && "category" in post && post.category === selectedTab) return true;
+            return false;
+          });
 
           setPosts(filteredPosts);
           setTotalPages(Math.ceil(filteredPosts.length / postsPerPage));
@@ -87,8 +96,12 @@ const InterestsTap: React.FC = () => {
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <div key={post.post_id || post.event_id} className="s:w-full">
-              <PostCardShort post={post} />
+            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full">
+              {"event_id" in post ? (
+                <ItEventCardShort post={post as ITEvent} />
+              ) : (
+                <PostCardShort post={post as PostWithUser} />
+              )}
             </div>
           ))
         ) : (
