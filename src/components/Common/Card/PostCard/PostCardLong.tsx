@@ -1,22 +1,22 @@
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import arrow from "@/../public/Main/arrow.png";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
-import DOMPurify from "dompurify";
-import { useUser } from "@/provider/UserContextProvider";
 
 interface PostCardProps {
   post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
-  const { userData } = useUser();
   const [isActive, setIsActive] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const deadlineDate = new Date(post.deadline);
-
+  deadlineDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
   const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
@@ -29,7 +29,16 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     setIsActive(!isActive);
   };
 
-  // 캐시 방지용 URL 생성 함수
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  let cleanContent = post.content;
+  if (typeof window !== "undefined" && isMounted) {
+    const DOMPurify = require("dompurify");
+    cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+  }
+
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   const jobTitleClassMap: { [key: string]: string } = {
@@ -43,8 +52,6 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",
   };
-
-  const cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
 
   return (
     <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
@@ -64,10 +71,10 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           {cleanContent}
         </p>
         <div className="flex items-center mb-4">
-          {userData?.profile_image_url && (
+          {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
               <Image
-                src={getProfileImageUrl(userData?.profile_image_url)}
+                src={getProfileImageUrl(post.user.profile_image_url)}
                 alt="User profile"
                 fill
                 sizes="40px"
