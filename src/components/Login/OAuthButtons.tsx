@@ -32,7 +32,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ handleLogin }) => {
     <div className="w-[34.84px] h-[34.84px] rounded-full flex justify-center items-center">
       <Image
         className="w-[34.84px] h-[34.84px]"
-        src="/logos/kakao_logo.png"
+        src="/logos/kakao-logo.png"
         alt="Kakao Logo"
         width={24}
         height={24}

@@ -10,6 +10,7 @@ import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
 import "react-quill/dist/quill.snow.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 interface Option {
   value: string;
