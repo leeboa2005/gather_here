@@ -10,6 +10,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ReactQuillEditorProps {
   value: string;
   onChange: (content: string) => void;
+  className?: string;
 }
 
 const FORMATS = [
@@ -30,7 +31,7 @@ const FORMATS = [
   "align",
 ];
 
-const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange }) => {
+const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, className }) => {
   return (
     <ReactQuill
       value={value}
@@ -49,6 +50,7 @@ const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange }) 
       }}
       formats={FORMATS}
       placeholder="내용을 입력해주세요"
+      className={className}
     />
   );
 };
