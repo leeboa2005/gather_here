@@ -1,16 +1,12 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Provider from "@/provider/Provider";
-import ContextProvider from "@/provider/ContextProvider";
+import NavTabs from "@/components/MainPage/NavTab/NavTabs";
+import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
+import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const queryClient = new QueryClient();
-
-// 로고 제작되면 추후에 og img, 파비콘 추가 예정
 export const metadata: Metadata = {
   title: "@gather_here",
   description: "스터디나 사이드 프로젝트 팀원을 오픈 채팅으로 빠르고 쉽게 찾을 수 있는 gather_here.",
@@ -32,11 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
-        <Header />
-        <ContextProvider>
-          <Provider>{children}</Provider>
-        </ContextProvider>
+      <body className="font-main bg-background text-fontWhite">
+        <CombinedProviders>
+          <Header />
+          {children}
+        </CombinedProviders>
       </body>
     </html>
   );

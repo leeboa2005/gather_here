@@ -14,10 +14,10 @@ const CommonModal: FC<CommonModalProps> = ({ isOpen, onRequestClose, children })
       onRequestClose={onRequestClose} // 모달 닫는 함수
       shouldCloseOnOverlayClick={true} // 바깥 영역 클릭시 닫힘모드
       className="flex items-center justify-center z-100"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer z-10"
       contentLabel="모달"
     >
-      <div className="relative bg-white rounded-lg p-8 max-w-lg mx-auto">
+      <div className="relative bg-fillStrong rounded-lg p-8 max-w-lg mx-auto">
         {/* 모달 닫기 버튼 */}
         <button
           onClick={onRequestClose}

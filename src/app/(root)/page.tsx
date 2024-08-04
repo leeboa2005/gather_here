@@ -1,11 +1,14 @@
-import Calender from "@/components/MainPage/MainSideBar/Calender/Calender";
-import Chat from "@/components/MainPage/MainSideBar/Chat/Chat";
+import React from "react";
+import AllPage from "./(mainpage)/all/page";
+import NavTabs from "@/components/MainPage/NavTab/NavTabs";
 
-export default function Home() {
+const MainPage = async () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Calender />
-      <Chat />
-    </main>
+    <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s">
+      <NavTabs />
+      <AllPage />
+    </div>
   );
-}
+};
+
+export default MainPage;

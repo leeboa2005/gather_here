@@ -4,12 +4,21 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "encrypted-tbn2.gstatic.com",
-        port: "",
-        pathname: "/images**",
+        hostname: "yrmjrxuealdugqizqtjg.supabase.co",
+      },
+      {
+        protocol: "http",
+        hostname: "k.kakaocdn.net",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
       },
     ],
   },
 };
-
 export default nextConfig;

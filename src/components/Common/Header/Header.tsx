@@ -1,45 +1,75 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
-import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useModal } from "@/provider/ContextProvider";
+import LoginForm from "@/components/Login/LoginForm";
+import { useUser } from "@/provider/UserContextProvider";
+import { createClient } from "@/utils/supabase/client";
+import useSignupStore from "@/store/useSignupStore";
 
 const supabase = createClient();
 
 const Header: React.FC = () => {
-  const { user, setUser, resetUser } = useAuthStore();
+  const { user, userData, fetchUserData, initializationUser } = useUser();
+  const { resetAuthUser } = useSignupStore();
   const router = useRouter();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
-        setUser(data.user);
-      }
-    };
-    getUser();
-  }, [setUser]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
+  const { openModal } = useModal();
+  const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (!error) {
-      resetUser();
-      router.push("/");
-    } else {
-      console.error("Error logout:", error);
+    if (error) {
+      console.error("Error logging out:", error);
+      return;
     }
+    // 상태 초기화 및 리디렉션
+    resetAuthUser();
+    initializationUser();
+    router.push("/");
   };
 
+  // 검색창 토글
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
+  // 마이페이지 모달 토글
+  const toggleMypageModal = () => {
+    setIsMypageModalOpen(!isMypageModalOpen);
+  };
+
+  // 모달 열기
+  const handleOpenLoginModal = () => {
+    setIsModalOpen(true);
+    setIsMypageModalOpen(false);
+  };
+
+  // 모달 닫기 함수 추가
+  const handleCloseLoginModal = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [user]);
+
+  const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
+
   return (
-    <header className="bg-[#1A1B1E] shadow-md">
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center pt-4 pb-4 text-white">
+    <header className="bg-background shadow-md relative text-fontWhite">
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
           <h1 className="text-lg font-bold">@gather_here</h1>
         </Link>
-        <nav className="flex items-center space-x-4">
-          <form className="flex s:hidden items-center border rounded border-white overflow-hidden">
+        <nav className="flex items-center gap-2">
+          {/* 검색창 데스크탑 */}
+          <form className="relative s:hidden items-center overflow-hidden">
             <label htmlFor="search" className="sr-only">
               검색창
             </label>
@@ -48,44 +78,130 @@ const Header: React.FC = () => {
               id="search"
               name="search"
               placeholder="검색어를 입력해 주세요."
-              className="px-2 py-1 bg-[#1A1B1E] text-white outline-none"
+              className="shared-input-gray rounded-lg"
             />
-            <button type="submit" className="px-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-6 h-6 text-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-4.35-4.35M17.65 10.65a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+            <button className="absolute top-[10px] right-[8px]" type="submit">
+              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
             </button>
           </form>
-          {user ? (
-            <div className="flex items-center space-x-2">
-              <Link href="/mypage">프로필</Link>
-              <button onClick={signOut} className="text-white">
-                로그아웃
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleSearch}
+              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+            >
+              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
+            </button>
+            <Link href="/post" passHref>
+              <button className="flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+                <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
               </button>
-            </div>
-          ) : (
-            <Link href="/login">로그인</Link>
-          )}
+            </Link>
+            {user ? (
+              <div className="flex items-center">
+                <button
+                  onClick={toggleMypageModal}
+                  className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                >
+                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                </button>
+                <Link
+                  href="/mypage"
+                  className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                >
+                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                </Link>
+                <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
+                  로그아웃
+                </button>
+              </div>
+            ) : (
+              <button onClick={handleOpenLoginModal} className="shared-button-gray">
+                로그인
+              </button>
+            )}
+          </div>
         </nav>
       </div>
+      {/* 검색창 모바일 */}
+      {isSearchOpen && (
+        <div className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
+          <label htmlFor="search" className="sr-only">
+            검색창
+          </label>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="검색어를 입력해 주세요."
+            className="shared-input-gray w-full"
+          />
+          <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <Image src="/Common/Icons/close.png" alt="닫기 버튼" width={21} height={21} />
+          </button>
+        </div>
+      )}
+      {isModalOpen && (
+        <>
+          {/* 백드롭 추가 */}
+          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={handleCloseLoginModal}></div>
+          {/* 모달 추가 */}
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-fillStrong rounded-lg p-4 z-50">
+            <button
+              onClick={handleCloseLoginModal}
+              className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]"
+            >
+              &times;
+            </button>
+            <LoginForm />
+          </div>
+        </>
+      )}
+      {isMypageModalOpen && user && (
+        <div className="absolute top-12 right-0 w-full max-w-[250px] bg-white shadow-lg rounded-lg p-5 z-50 s:block hidden">
+          <div className="flex items-center mb-4 pb-4 border-b-[1px]">
+            <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
+              <div className="relative w-full h-full rounded-[12px]">
+                <Image
+                  src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
+                  alt="프로필 이미지"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-[12px]"
+                />
+              </div>
+            </div>
+            <div className="ml-4">
+              <p className="text-fillStrong text-baseS font-subtitle">{userData?.nickname}</p>
+              <p className="text-baseXs text-fillNeutral">
+                {userData?.job_title} {userData?.experience}
+              </p>
+            </div>
+          </div>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/mypage" className="block text-fillNormal hover:text-black">
+                프로필 수정
+              </Link>
+            </li>
+            <li>
+              <Link href="/mypage/myinterests" className="block text-fillNormal hover:text-black">
+                내 관심글
+              </Link>
+            </li>
+            <li>
+              <Link href="/mypage/myposts" className="block text-fillNormal hover:text-black">
+                내 작성글
+              </Link>
+            </li>
+            <li>
+              <button onClick={signOut} className="block w-full text-left text-fillNormal hover:text-black">
+                로그아웃
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 };
-
 export default Header;
-
-// 1. user : null
-// 2. user : user있음
-// 3. user : null
-// 4. user : user있음
