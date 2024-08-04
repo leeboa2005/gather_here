@@ -5,6 +5,8 @@ import arrow from "@/../public/Main/arrow.png";
 import interest_basic from "@/../public/Main/interest_basic.png";
 import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
+import { useUser } from "@/provider/UserContextProvider";
+import LikeButton from "@/components/MainDetail/LikeButton";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -12,6 +14,7 @@ interface PostCardProps {
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
+  const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState(false);
   const deadlineDate = new Date(post.deadline);
   deadlineDate.setHours(0, 0, 0, 0);
@@ -24,10 +27,6 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     month: "2-digit",
     day: "2-digit",
   });
-
-  const handleInterestClick = () => {
-    setIsActive(!isActive);
-  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -61,9 +60,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
           <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
         </div>
-        <div onClick={handleInterestClick} className="cursor-pointer">
-          <Image src={isActive ? interest_active : interest_basic} alt="interest_basic" width={15} />
-        </div>
+        <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>

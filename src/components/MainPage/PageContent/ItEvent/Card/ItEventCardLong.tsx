@@ -13,20 +13,10 @@ interface EventsCardProps {
 }
 
 const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
   const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.date_done);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  });
-
-  const handleInterestClick = () => {
-    setIsActive(!isActive);
-  };
 
   return (
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">

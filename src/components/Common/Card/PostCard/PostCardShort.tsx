@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
-import interest_basic from "@/../public/Main/interest_basic.png";
-import interest_active from "@/../public/Main/interest_active.png";
 import arrow from "@/../public/Main/arrow.png";
 import Link from "next/link";
 import DOMPurify from "dompurify";
+import LikeButton from "@/components/MainDetail/LikeButton";
+import { useUser } from "@/provider/UserContextProvider";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -15,6 +15,7 @@ interface PostCardProps {
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
   // deadline 날짜를 오늘 날짜의 00:00:00으로 설정
+  const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.deadline);
   deadlineDate.setHours(0, 0, 0, 0);
   // 현재 날짜도 00:00:00으로 설정하여 비교
@@ -27,10 +28,6 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     month: "2-digit",
     day: "2-digit",
   });
-
-  const handleInterestClick = () => {
-    setIsActive(!isActive);
-  };
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
@@ -56,9 +53,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
             <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
             <span className="text-baseS text-labelNormal ml-2">~{setDeadlines}</span>
           </div>
-          <div onClick={handleInterestClick} className="cursor-pointer">
-            <Image src={isActive ? interest_active : interest_basic} alt="interest_basic" width={15} />
-          </div>
+          <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
           <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
