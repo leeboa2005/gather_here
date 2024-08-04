@@ -12,12 +12,10 @@ const ItEventCardShort = () => {
             <time dateTime="YYYY-MM-DD">YY.MM.DD</time>
           </li>
         </ul>
-        <button aria-label="북마크 자리">북마크</button>
+        <button aria-label="북마크">북마크</button>
       </div>
       <section>
-        <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">
-          행사제목행사제목행사제목
-        </h2>
+        <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">행사제목</h2>
         <div className="flex items-center justify-start mb-2 text-left">
           <Image src="/Common/Icons/Location.png" alt="Location icon" width={20} height={20} className="mr-2" />
           <p className="text-baseS  text-labelNeutral">코엑스 그랜드볼룸&아셈볼룸</p>

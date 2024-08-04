@@ -12,7 +12,7 @@ const ItEventCardLong = () => {
             <time dateTime="YYYY-MM-DD">YY.MM.DD</time>
           </li>
         </ul>
-        <button aria-label="북마크 자리">북마크</button>
+        <button aria-label="북마크">북마크</button>
       </div>
       <section>
         <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">행사제목</h2>
