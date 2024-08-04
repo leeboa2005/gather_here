@@ -144,7 +144,7 @@ const ProfileInfo: React.FC = () => {
       <form className="space-y-6" onSubmit={handleSubmit}>
         <fieldset className="p-6 s:p-0 ">
           <h1 className="text-subtitle font-baseBold text-labelNeutral mb-5">기본 정보</h1>
-          <div className="grid grid-cols-2 s:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
+          <div className="grid grid-cols-2 m:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
             <div>
               <label htmlFor="email" className="block text-sm text-labelDisabled font-medium mb-1">
                 이메일

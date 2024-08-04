@@ -30,7 +30,7 @@ const PostsTap: React.FC = () => {
             { order: { column: "created_at", ascending: false } },
           );
           setPosts(userPosts);
-          setTotalPages(Math.ceil(userPosts.length / 9)); // Assuming 9 posts per page
+          setTotalPages(Math.ceil(userPosts.length / 9));
         } catch (error) {
           console.error("포스트 불러오는 중 오류 발생:", error);
         } finally {
@@ -77,7 +77,7 @@ const PostsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-grow w-full mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex-grow s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
         {loading ? (
           Array(3)
             .fill(0)

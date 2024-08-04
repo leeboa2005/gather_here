@@ -1,6 +1,7 @@
 /* 전체 캘린더 영역에 대한 설정 */
 .fc {
   background-color: #141415;
+  color: #f7f7f7;
   padding: 20px;
   border-radius: 20px;
   height: 345px;
@@ -62,7 +63,7 @@
 .fc table.fc-scrollgrid,
 .fc td,
 .fc th {
-  border: 0;
+  border: 0 !important;
 }
 
 .fc table div.fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
@@ -90,7 +91,7 @@
   margin-bottom: 14px;
 }
 
-.fc .fc-day-today.fc-daygrid-day {
+.fc td.fc-day.fc-day-today.fc-daygrid-day {
   color: #f7f7f7;
   background-color: transparent;
 }
