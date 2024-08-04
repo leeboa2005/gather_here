@@ -80,9 +80,9 @@ const InterestsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-grow w-full mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex-grow s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
         {loading ? (
-          Array(9)
+          Array(3)
             .fill(0)
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
