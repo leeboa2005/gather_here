@@ -87,6 +87,7 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleSearch}
+              type="submit"
               className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
               <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
