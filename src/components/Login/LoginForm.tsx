@@ -20,10 +20,7 @@ const LoginForm = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo:
-          `${process?.env?.NEXT_PUBLIC_SITE_URL}/api/auth/callback` ?? // Set this to your site URL in production env.
-          `${process?.env?.NEXT_PUBLIC_VERCEL_URL}/api/auth/callback` ?? // Automatically set by Vercel.
-          "http://localhost:3000/api/auth/callback",
+        redirectTo: `${process?.env?.NEXT_PUBLIC_VERCEL_URL}/api/auth/callback`,
       },
     });
 
