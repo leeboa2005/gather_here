@@ -28,7 +28,9 @@ const FormInput: React.FC<FormInputProps> = ({
         onChange={onChange}
         maxLength={maxLength}
         placeholder={placeholder}
-        className={`shared-input-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className}`}
+        className={`shared-input-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className} ${
+          type === "date" ? "date-input" : ""
+        }`}
         style={{ color: value === "" ? "#919191" : undefined }}
       />
     </div>

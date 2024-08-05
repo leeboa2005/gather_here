@@ -151,7 +151,7 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
           </div>
           <div className="flex items-center mb-3">
             <Image src={run} alt="run" width={17} />
-            <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
+            <h1 className="text-base font-base ml-2 text-fontWhite">모집이 곧 종료돼요</h1>
           </div>
           {isLoadingCarousel ? (
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">

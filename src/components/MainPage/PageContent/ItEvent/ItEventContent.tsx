@@ -26,7 +26,7 @@ const ItEventContent: React.FC = () => {
           <div className="max-w-[744px] mx-auto mb-8">
             <div className="flex items-center">
               <Image src={run} alt="run" width={17} />
-              <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
+              <h1 className="text-base font-base ml-2 text-fontWhite">모집이 곧 종료돼요</h1>
             </div>
             <div className="flex justify-center">
               <Carousel posts={[]} />

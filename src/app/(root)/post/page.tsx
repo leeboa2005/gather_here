@@ -199,7 +199,7 @@ const PostPage = () => {
       </CommonModal>
       <ToastContainer />
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+        <button onClick={() => router.push("/")} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
@@ -221,7 +221,7 @@ const PostPage = () => {
           </div>
           <hr className="border-fillNeutral mb-4" />
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">기본 정보</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <FormDropdown
               label="분류"
               options={categoryOptions}
@@ -269,7 +269,7 @@ const PostPage = () => {
 
         <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <FormMultiSelect
               label="모집 대상"
               options={targetPositionOptions}

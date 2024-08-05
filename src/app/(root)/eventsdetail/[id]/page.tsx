@@ -7,6 +7,12 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
+import dynamic from "next/dynamic"; // Ensure dynamic import is from next/dynamic
+import animationData from "@/assets/loadingBar.json";
+
+const LottiAnimation = dynamic(() => import("@/components/Loading/LottiAnimation"), {
+  ssr: false,
+});
 
 const supabase = createClient();
 
@@ -61,7 +67,12 @@ const EventDetailPage = () => {
       });
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-background">
+        <LottiAnimation animationData={animationData} size="200px" />
+      </div>
+    );
   if (!event) return <div>Event not found.</div>;
 
   const formatDate = (dateString: string) => {
@@ -84,7 +95,7 @@ const EventDetailPage = () => {
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
         <button
           onClick={() => router.push("/events")}
-          className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2"
+          className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2"
         >
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
