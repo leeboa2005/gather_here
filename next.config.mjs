@@ -29,5 +29,6 @@ const nextConfig = {
       },
     ];
   },
+  rewrites: [{}],
 };
 export default nextConfig;
