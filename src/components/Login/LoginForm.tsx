@@ -20,10 +20,7 @@ const LoginForm = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo:
-          `${process?.env?.NEXT_PUBLIC_SITE_URL}/api/auth/callback` ?? // Set this to your site URL in production env.
-          `${process?.env?.NEXT_PUBLIC_VERCEL_URL}/api/auth/callback` ?? // Automatically set by Vercel.
-          "http://localhost:3000/api/auth/callback",
+        redirectTo: "http://localhost:3000/api/auth/callback",
       },
     });
 
@@ -63,7 +60,7 @@ const LoginForm = () => {
 
       {loading ? (
         <div className="left-[40px] top-[150px] absolute text-center">
-          <span className="text-blue-500">로그인 중...</span>
+          <span className="text-[#212121]">로그인 중...</span>
         </div>
       ) : (
         <OAuthButtons handleLogin={handleLogin} />
