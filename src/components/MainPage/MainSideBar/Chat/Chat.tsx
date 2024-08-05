@@ -5,6 +5,7 @@ import { Tables } from "@/types/supabase";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { useUser } from "@/provider/UserContextProvider";
 
 type ChatUserInfo = {
   Users: {
@@ -15,7 +16,7 @@ type ChatUserInfo = {
 type MessageRow = Tables<"Messages"> & ChatUserInfo;
 
 const Chat = () => {
-  const [userInfo, setUserInfo] = useState<UserRow>();
+  const { user } = useUser();
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [deletedMessageId, setDeletedMessageId] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -26,17 +27,6 @@ const Chat = () => {
   const supabase = createClient();
 
   // customHook 으로 따로 빼서 코드 정리?
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      setUserInfo(user as UserRow);
-    };
-
-    getUserInfo();
-  }, [userInfo]);
 
   useEffect(() => {
     // 채팅 내역 불러오기
@@ -55,39 +45,40 @@ const Chat = () => {
     };
 
     getAllMessages();
-    // INSERT 이벤트 감지
-    const openTalkSubscription = supabase
-      .channel("openTalk") // realtime 이라는 명칭만 아니면 아무 문자열이나 가능함
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "Messages",
-        },
-        (payload) => {
-          setMessages((prevMessages) => {
-            return [...prevMessages, payload.new as MessageRow];
-          });
-          // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
-          // 따라서, 함수형으로 작성하고 데이터가 존재하는 것이 확실히 보장된 payload 객체를 이용하자!
-        },
-      )
-      .on(
-        "postgres_changes",
-        {
-          event: "DELETE",
-          schema: "public",
-          table: "Messages",
-        },
-        () => {
-          setMessages((prevMessages) => {
-            return prevMessages.filter((prevMessage) => prevMessage.message_id !== deletedMessageId);
-          });
-        },
-      )
-      .subscribe();
-  }, [supabase, messages]);
+  }, []);
+
+  // INSERT 이벤트 감지
+  const openTalkSubscription = supabase
+    .channel("openTalk") // realtime 이라는 명칭만 아니면 아무 문자열이나 가능함
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "Messages",
+      },
+      (payload) => {
+        setMessages((prevMessages) => {
+          return [...prevMessages, payload.new as MessageRow];
+        });
+        // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
+        // 따라서, 함수형으로 작성하고 데이터가 존재하는 것이 확실히 보장된 payload 객체를 이용하자!
+      },
+    )
+    .on(
+      "postgres_changes",
+      {
+        event: "DELETE",
+        schema: "public",
+        table: "Messages",
+      },
+      () => {
+        setMessages((prevMessages) => {
+          return prevMessages.filter((prevMessage) => prevMessage.message_id !== deletedMessageId);
+        });
+      },
+    )
+    .subscribe();
 
   useEffect(() => {
     if (chatContentDiv.current && shouldScroll) {
@@ -105,7 +96,7 @@ const Chat = () => {
       .insert({
         // channel_id 하드코딩 할 필요 없도록 해야함
         channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675",
-        user_id: `${userInfo?.id}`,
+        user_id: `${user?.id}`,
         content: `${inputValue}`,
       })
       .select("*");
@@ -176,7 +167,7 @@ const Chat = () => {
             {messages.map((message) => {
               return (
                 <div key={`${message.message_id}`} className="w-full mb-3">
-                  {message.user_id === userInfo?.id ? (
+                  {message.user_id === user?.id ? (
                     <div id="mine" className="self-stretch px-3 flex-col justify-center items-end flex">
                       <div className="flex-col justify-center items-end gap-1 flex">
                         <div className="flex items-end">
@@ -231,7 +222,7 @@ const Chat = () => {
             })}
           </div>
           <form action="" className="w-full" onSubmit={(evt) => handleSubmit(evt)}>
-            {userInfo ? (
+            {user ? (
               <div
                 id="input"
                 className="self-stretch h-[115px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex"
