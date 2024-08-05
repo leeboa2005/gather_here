@@ -7,7 +7,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
-import dynamic from "next/dynamic"; // Ensure dynamic import is from next/dynamic
+import dynamic from "next/dynamic";
 import animationData from "@/assets/loadingBar.json";
 
 const LottiAnimation = dynamic(() => import("@/components/Loading/LottiAnimation"), {
