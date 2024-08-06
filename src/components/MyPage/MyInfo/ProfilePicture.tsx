@@ -18,7 +18,6 @@ const ProfilePicture: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const { user, userData, setUserData } = useUser();
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string | null>(null);
   const defaultImage = "/MyPage/default-profile.png";
   const supabase = createClient();
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
@@ -101,19 +100,21 @@ const ProfilePicture: React.FC = () => {
   // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
-  // 로그인 여부 확인 아닐시 로그인창으로
+  // 로그인 여부 확인 및 사용자 데이터 가져오기
   useEffect(() => {
     const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (data?.user) {
-        setUserId(data.user.id);
+        setUserData(data.user);
       } else {
         toast.error("로그인이 필요합니다!");
         setShowLoginModal(true);
       }
     };
-    getUser();
-  }, [router]);
+    if (!user) {
+      getUser();
+    }
+  }, [router, user]);
 
   // 사용자 데이터에 따라 프로필 이미지를 설정하는 훅
   useEffect(() => {

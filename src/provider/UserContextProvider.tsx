@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
+
 interface UserContextType {
   user: User | null;
   userData: any;
@@ -12,12 +13,14 @@ interface UserContextType {
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
+
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   const supabase = createClient();
+
   // 사용자 객체 가져옴
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,10 +29,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } = await supabase.auth.getUser();
       setUser(user);
       setLoading(false);
-      setLoading(false);
     };
     fetchUser();
-  }, [setUser]);
+  }, []);
 
   // 사용자 데이터를 가져옴
   const fetchUserData = async () => {
@@ -43,14 +45,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setLoading(false);
   };
+
   const initializationUser = () => {
-    setUserData(null), setUser(null);
+    setUserData(null);
+    setUser(null);
   };
+
   // 사용자 객체가 변경될 때마다 사용자 데이터를 가져옴
   useEffect(() => {
-    if (user) {
-      fetchUserData();
-    }
     if (user) {
       fetchUserData();
     }
@@ -62,6 +64,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     </UserContext.Provider>
   );
 };
+
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {

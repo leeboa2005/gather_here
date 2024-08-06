@@ -30,6 +30,9 @@ const LeftNav: React.FC = () => {
 
   // 직군에 따라 클래스명을 동적으로 설정
   const getJobTitleClass = (jobTitle: string) => {
+    if (!jobTitle) {
+      return "";
+    }
     const lowerJobTitle = jobTitle.toLowerCase();
     for (const [key, value] of Object.entries(jobTitleClassMap)) {
       if (lowerJobTitle.includes(key.toLowerCase())) {
