@@ -16,21 +16,6 @@ interface InfiniteScrollComponentProps {
 }
 
 const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ posts = [], hasMore, loadMorePosts }) => {
-  const [initialLoading, setInitialLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setInitialLoading(false);
-    }, 2000); // Simulating a loading time, adjust as needed
-  }, []);
-
-  if (initialLoading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-background z-50">
-        <LottiAnimation animationData={loadingBar} size="200px" />
-      </div>
-    );
-  }
 
   return (
     <InfiniteScroll
