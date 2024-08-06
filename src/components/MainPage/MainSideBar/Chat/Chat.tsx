@@ -40,7 +40,7 @@ const Chat = () => {
         console.error(error);
         return;
       }
-
+      console.log("채팅 내역 불러오기 ==>");
       setMessages(data as MessageRow[]);
     };
 
@@ -58,6 +58,7 @@ const Chat = () => {
         },
         (payload) => {
           setMessages((prevMessages) => {
+            console.log("INSERT EVENT ==>");
             return [...prevMessages, payload.new as MessageRow];
           });
           // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
@@ -94,7 +95,7 @@ const Chat = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
+    console.log("chat onsubmit");
     const { data, error } = await supabase
       .from("Messages")
       .insert({
