@@ -2,7 +2,7 @@
 name: "✅UPDATE"
 about: 기존의 기능을 개선하거나 업데이트
 title: "[UPDATE] "
-labels: "[UPDATE]"
+labels: "[Update]"
 assignees: ""
 ---
 

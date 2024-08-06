@@ -2,7 +2,7 @@
 name: "\U0001F41EBUG"
 about: 버그를 수정하는 작업
 title: "[BUG] "
-labels: "[BUG]"
+labels: "[Bug]"
 assignees: ""
 ---
 
