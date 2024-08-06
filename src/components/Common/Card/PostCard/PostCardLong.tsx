@@ -95,7 +95,15 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
             <div className={`mr-2 ${jobTitleClassMap[post.target_position[0]] || "text-default"}`}>
               {post.recruitments}명
             </div>
-            <Image src={arrow} alt="interest_basic" width={11} />
+            <div className="flex items-center">
+              <Image
+                src="/assets/cardarrow.svg"
+                alt="Puzzle Icon"
+                width={10}
+                height={10}
+                style={{ width: "auto", height: "auto" }}
+              />
+            </div>
           </div>
         </div>
       </Link>

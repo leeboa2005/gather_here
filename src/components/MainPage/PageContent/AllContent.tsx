@@ -6,6 +6,7 @@ import { PostWithUser } from "@/types/posts/Post.type";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import Chat from "../MainSideBar/Chat/Chat";
+import Image from "next/image";
 
 interface AllContentProps {
   initialPosts: PostWithUser[];
@@ -72,6 +73,10 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
         <div className={`w-full ${!isMobile ? "md:w-2/3" : ""}`}>
           <div className={`${isMobile ? "" : "hidden"}`}>
             <Calender />
+          </div>
+          <div className="flex items-center">
+            <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
+            <p className="m-2">나에게 꼭 맞는 동료들을 찾아보세요</p>
           </div>
           <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
         </div>

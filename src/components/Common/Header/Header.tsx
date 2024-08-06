@@ -65,7 +65,7 @@ const Header: React.FC = () => {
     <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
-          <Image src="/logos/logo.png" alt="@gather_here 로고" width={151} height={24} />
+          <Image src="/logos/logo.png" alt="@gather_here 로고" width={151} height={24} priority />
         </Link>
         <nav className="flex items-center gap-2">
           {/* 검색창 데스크탑 */}
