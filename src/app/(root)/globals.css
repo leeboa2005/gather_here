@@ -27,6 +27,11 @@ body {
     @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
   }
 
+  /* input icon*/
+  .date-input::-webkit-calendar-picker-indicator {
+    filter: invert(56%) sepia(4%) saturate(4%) hue-rotate(175deg) brightness(94%) contrast(85%);
+  }
+
   /* select styles */
   .shared-select {
     @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
@@ -182,7 +187,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem 0; /* 로딩 애니메이션 위아래 패딩 조절 */
+  padding: 1rem 0;
 }
 
 /* Disabled-Modal */
@@ -211,6 +216,11 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+/* textarea */
+.ql-editor.ql-blank {
+  height: 167px;
 }
 
 /* custom scrollbar */

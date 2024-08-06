@@ -151,7 +151,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
           </div>
           <div className="flex items-center mb-3">
             <Image src={run} alt="run" width={17} />
-            <h1 className="text-base font-base ml-2">모집이 곧 종료돼요</h1>
+            <h1 className="text-base font-base ml-2 text-fontWhite">모집이 곧 종료돼요</h1>
           </div>
           {isLoadingCarousel ? (
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
@@ -193,7 +193,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
                 </svg>
                 실시간 채팅에 참여해보세요.
               </h4>
-              <Chat />
+              {/* <Chat /> */}
             </div>
           </div>
         )}
@@ -206,9 +206,9 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
           채팅
         </button>
       )}
-      <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <Chat />
-      </CommonModal>
+      {/* <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}> */}
+      {/* <Chat /> */}
+      {/* </CommonModal> */}
     </div>
   );
 };

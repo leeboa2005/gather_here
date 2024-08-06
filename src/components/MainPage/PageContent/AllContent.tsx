@@ -97,7 +97,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
                 </svg>
                 실시간 채팅에 참여해보세요.
               </h4>
-              <Chat />
+              {/* <Chat /> */}
             </div>
           </div>
         )}
@@ -110,9 +110,9 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
           채팅
         </button>
       )}
-      <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <Chat />
-      </CommonModal>
+      {/* <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
+         <Chat /> 
+      </CommonModal> */}
     </div>
   );
 };

@@ -60,7 +60,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
           <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
         </div>
-        <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+        {/* <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} /> */}
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>

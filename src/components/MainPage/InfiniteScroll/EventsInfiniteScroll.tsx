@@ -16,7 +16,11 @@ interface InfiniteScrollComponentProps {
   loadMorePosts: () => Promise<void>;
 }
 
-const EventsInfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ posts = [], hasMore, loadMorePosts }) => {
+const EventsInfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({
+  posts = [],
+  hasMore,
+  loadMorePosts,
+}) => {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +47,7 @@ const EventsInfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({
           <LottiAnimation animationData={loadingSpinner} size="50px" />
         </div>
       }
-      endMessage={<p style={{ textAlign: "center" }}>모든 포스트를 불러왔습니다.</p>}
+      endMessage={<p style={{ textAlign: "center", color: "white" }}>모든 포스트를 불러왔습니다.</p>}
     >
       {posts.map((post, index) => (
         <React.Fragment key={`${post.event_id}_${index}`}>

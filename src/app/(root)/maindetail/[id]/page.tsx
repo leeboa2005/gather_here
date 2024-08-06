@@ -178,7 +178,7 @@ const MainDetailPage = () => {
   return (
     <>
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.back()} className="text-labelNeutral mt-2 mb-4 flex items-center space-x-2">
+        <button onClick={() => router.back()} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
@@ -208,7 +208,7 @@ const MainDetailPage = () => {
           </div>
           <div className="flex items-center space-x-4">
             <ShareButton />
-            <LikeButton postId={id} currentUser={currentUser} category={post.category} />
+            {/* <LikeButton postId={id} currentUser={currentUser} category={post.category} /> */}
             {currentUser?.id === post.user_id && (
               <div className="relative" ref={optionsRef}>
                 <button onClick={handleMoreOptions} className="flex items-center">

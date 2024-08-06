@@ -20,5 +20,14 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/all",
+        permanent: true,
+      },
+    ];
+  },
 };
 export default nextConfig;

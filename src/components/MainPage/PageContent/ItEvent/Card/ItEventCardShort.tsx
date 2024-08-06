@@ -29,7 +29,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
           <li>
             <time dateTime={post.date_done} className="text-baseS text-labelNormal">{`~${setDeadlines}`}</time>
           </li>
-          <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
         </ul>
         <Link href={`/eventsdetail/${post.event_id}`}>
           <section>
