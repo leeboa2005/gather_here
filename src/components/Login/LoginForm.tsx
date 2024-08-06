@@ -17,7 +17,6 @@ const LoginForm = () => {
     setLoading(true);
     setError(null);
 
-
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
