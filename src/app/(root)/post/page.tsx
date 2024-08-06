@@ -112,6 +112,15 @@ const PostPage = () => {
     { value: "대구", label: "대구" },
     { value: "부산", label: "부산" },
     { value: "울산", label: "울산" },
+    { value: "세종", label: "세종" },
+    { value: "경기", label: "경기" },
+    { value: "강원", label: "강원" },
+    { value: "충북", label: "충북" },
+    { value: "충남", label: "충남" },
+    { value: "전북", label: "전북" },
+    { value: "전남", label: "전남" },
+    { value: "경북", label: "경북" },
+    { value: "경남", label: "경남" },
     { value: "제주", label: "제주" },
   ];
 
@@ -119,6 +128,8 @@ const PostPage = () => {
     { value: "1", label: "1개월" },
     { value: "2", label: "2개월" },
     { value: "3", label: "3개월" },
+    { value: "4", label: "4개월" },
+    { value: "5", label: "5개월" },
     { value: "6", label: "6개월" },
     { value: "7", label: "6개월 이상" },
   ];
@@ -128,7 +139,8 @@ const PostPage = () => {
     { value: "4", label: "4명" },
     { value: "5", label: "5명" },
     { value: "6", label: "6명" },
-    { value: "7", label: "7명 이상" },
+    { value: "7", label: "7명" },
+    { value: "8", label: "8명 이상" },
   ];
 
   const targetPositionOptions: Option[] = [
