@@ -195,13 +195,14 @@ const Chat = () => {
                       <div id="others" className="self-stretch px-3 justify-start items-start gap-3 inline-flex">
                         <div className="w-8 h-8 bg-[#3b3d3f] rounded-[9px] justify-center items-center flex">
                           <div className="justify-center items-center flex">
-                            <div className="relative">
+                            <div className="relative" style={{ width: "32px", height: "32px" }}>
                               <Image
                                 className="rounded-xl"
                                 src={message.Users.profile_image_url}
-                                width={32}
-                                height={32}
                                 alt="profile image"
+                                fill
+                                sizes="(max-width: 32px) 100vw, 32px"
+                                style={{ objectFit: "cover" }}
                               />
                             </div>
                           </div>
