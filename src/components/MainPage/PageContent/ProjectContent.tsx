@@ -7,7 +7,6 @@ import FilterBar from "../FilterBar/FilterBar";
 import Calender from "../MainSideBar/Calender/Calender";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import Image from "next/image";
-import run from "@/../public/Main/run.png";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
 import dynamic from "next/dynamic";
 import Chat from "../MainSideBar/Chat/Chat";

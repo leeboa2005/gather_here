@@ -20,13 +20,16 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const uniquePosts = initialPosts.filter(
-      (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-    );
-    setPosts(uniquePosts);
-  }, [initialPosts]);
+    const fetchInitialPosts = async () => {
+      const latestPosts: PostWithUser[] = await fetchPosts(1);
+      const uniquePosts = latestPosts.filter(
+        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
+      );
+      setPosts(uniquePosts);
+    };
+    fetchInitialPosts();
+  }, []);
 
-  // 모바일 및 중간 크기 판별
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1068);
@@ -37,7 +40,6 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 게시물
   const loadMorePosts = async () => {
     const newPosts: PostWithUser[] = await fetchPosts(page);
 
