@@ -29,7 +29,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
             <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY-MM-DD")}</time>
           </li>
         </ul>
-        <LikeButton eventId={post.event_id} currentUser={currentUser} />
+        {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
       </div>
       <Link href={`/eventsdetail/${post.event_id}`}>
         <section>
