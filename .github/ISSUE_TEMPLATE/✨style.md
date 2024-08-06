@@ -2,7 +2,7 @@
 name: "✨STYLE"
 about: 스타일 요소
 title: "[STYLE] "
-labels: "[STYLE]"
+labels: "[Style]"
 assignees: ""
 ---
 
