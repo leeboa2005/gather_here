@@ -208,7 +208,7 @@ const MainDetailPage = () => {
           </div>
           <div className="flex items-center space-x-4">
             <ShareButton />
-            <LikeButton postId={id} currentUser={currentUser} category={post.category} />
+            {/* <LikeButton postId={id} currentUser={currentUser} category={post.category} /> */}
             {currentUser?.id === post.user_id && (
               <div className="relative" ref={optionsRef}>
                 <button onClick={handleMoreOptions} className="flex items-center">

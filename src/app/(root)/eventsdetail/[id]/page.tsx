@@ -108,7 +108,7 @@ const EventDetailPage = () => {
           <button type="button" onClick={handleShare} className="flex items-center mr-3">
             <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
           </button>
-          <LikeButton eventId={eventId} currentUser={currentUser} />
+          {/* <LikeButton eventId={eventId} currentUser={currentUser} /> */}
         </div>
         <div className="bg-fillStrong p-4 rounded-lg mb-4">
           {event.img_url && (
