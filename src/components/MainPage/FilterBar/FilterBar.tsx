@@ -43,7 +43,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
     appearance: "none",
     WebkitAppearance: "none",
     MozAppearance: "none",
-    backgroundImage: `url(${down.src})`,
+    backgroundImage: `url('/assets/down.svg')`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right 10px center",
     paddingRight: "1.5rem",
