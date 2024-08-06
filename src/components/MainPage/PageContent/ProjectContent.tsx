@@ -193,7 +193,7 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
                 </svg>
                 실시간 채팅에 참여해보세요.
               </h4>
-              {/* <Chat /> */}
+              <Chat />
             </div>
           </div>
         )}
@@ -206,9 +206,9 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
           채팅
         </button>
       )}
-      {/* <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
+      <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Chat />
-      </CommonModal> */}
+      </CommonModal>
     </div>
   );
 };
