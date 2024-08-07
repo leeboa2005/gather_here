@@ -16,9 +16,11 @@ interface PostCardProps {
 
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const [daysLeft, setDaysLeft] = useState<string>();
+
   useEffect(() => {
-    const deadlineDate = new Date(post.deadline);
-    const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const now = dayjs();
+    const deadlineDate = dayjs(post.deadline);
+    const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
     const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
 
     setDaysLeft(displayDaysLeft);
