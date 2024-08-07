@@ -13,13 +13,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ handleLogin }) => {
     className="shared-button-google flex items-center space-x-4"
   >
     <div className="w-[34.84px] h-[34.84px] rounded-full flex justify-center items-center">
-      <Image
-        className="w-[34.84px] h-[34.84px]"
-        src="/logos/google-logo.png"
-        alt="Google Logo"
-        width={24}
-        height={24}
-      />
+      <Image src="/logos/goggle.svg" alt="Goggle Icon" width={24} height={24} />
     </div>
     <span className="font-semibold text-[#2b2b2b]">Google로 시작하기</span>
   </button>
@@ -30,13 +24,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ handleLogin }) => {
     className="shared-button-kakao flex items-center space-x-4"
   >
     <div className="w-[34.84px] h-[34.84px] rounded-full flex justify-center items-center">
-      <Image
-        className="w-[34.84px] h-[34.84px]"
-        src="/logos/kakao-logo.png"
-        alt="Kakao Logo"
-        width={24}
-        height={24}
-      />
+      <Image src="/logos/kakao.svg" alt="Kakao Icon" width={44} height={44} />
     </div>
     <span className="font-semibold text-[#2b2b2b]">Kakao로 시작하기</span>
   </button>
@@ -47,13 +35,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ handleLogin }) => {
     className="shared-button-github flex items-center space-x-4"
   >
     <div className="w-[34.84px] h-[34.84px] rounded-full flex justify-center items-center">
-      <Image
-        className="w-[34.84px] h-[34.84px]"
-        src="/logos/github-logo-white.png"
-        alt="Github Logo"
-        width={24}
-        height={24}
-      />
+      <Image src="/logos/github.svg" alt="Github Icon" width={44} height={44} />
     </div>
     <span className="font-semibold text-[#f7f7f7]">Github로 시작하기</span>
   </button>
