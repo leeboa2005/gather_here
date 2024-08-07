@@ -7,29 +7,24 @@ import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
 import { useUser } from "@/provider/UserContextProvider";
 import LikeButton from "@/components/MainDetail/LikeButton";
+import dayjs from "dayjs";
 
 interface PostCardProps {
   post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
-  const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState(false);
-  const deadlineDate = new Date(post.deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  const [daysLeft, setDaysLeft] = useState<string>();
 
   useEffect(() => {
     setIsMounted(true);
+
+    const deadlineDate = new Date(post.deadline);
+    const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+
+    setDaysLeft(displayDaysLeft);
   }, []);
 
   let cleanContent = post.content;
@@ -57,8 +52,8 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         <div>
-          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
-          <span className="text-sm text-labelNormal ml-2">~{setDeadlines}</span>
+          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{daysLeft}</span>
+          <span className="text-sm text-labelNormal ml-2">~{dayjs(post.deadline).format("YYYY-MM-DD")}</span>
         </div>
         {/* <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} /> */}
       </div>

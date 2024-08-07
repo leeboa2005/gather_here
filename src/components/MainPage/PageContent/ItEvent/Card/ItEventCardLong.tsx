@@ -1,3 +1,4 @@
+"use client";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
 import { useUser } from "@/provider/UserContextProvider";
 import { Tables } from "@/types/supabase";
@@ -13,24 +14,28 @@ interface EventsCardProps {
 }
 
 const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
-  const { user: currentUser } = useUser();
-  const deadlineDate = new Date(post.date_done);
-  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+  const [daysLeft, setDaysLeft] = useState<string>();
+
+  useEffect(() => {
+    const deadlineDate = new Date(post.date_done);
+    const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+
+    setDaysLeft(displayDaysLeft);
+  }, []);
 
   return (
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
-      <div className="flex justify-between items-center mb-3">
-        <ul className="flex items-center">
-          <li>
-            <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
-          </li>
-          <li className="text-baseS  text-labelNormal ml-2">
-            <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY-MM-DD")}</time>
-          </li>
-        </ul>
-        {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
-      </div>
+      <div className="flex justify-between items-center mb-3"></div>
+      <ul className="flex items-center">
+        <li>
+          <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{daysLeft}</span>
+        </li>
+        <li className="text-baseS  text-labelNormal ml-2">
+          <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY-MM-DD")}</time>
+        </li>
+      </ul>
+      {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
       <Link href={`/eventsdetail/${post.event_id}`}>
         <section>
           <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">{post.title}</h2>

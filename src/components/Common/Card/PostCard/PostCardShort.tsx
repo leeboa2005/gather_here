@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
 import arrow from "@/../public/Main/arrow.png";
@@ -6,6 +7,7 @@ import Link from "next/link";
 import DOMPurify from "dompurify";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import { useUser } from "@/provider/UserContextProvider";
+import dayjs from "dayjs";
 
 interface PostCardProps {
   post: PostWithUser;
@@ -13,21 +15,14 @@ interface PostCardProps {
 }
 
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
-  // deadline 날짜를 오늘 날짜의 00:00:00으로 설정
-  const { user: currentUser } = useUser();
-  const deadlineDate = new Date(post.deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
-  // 현재 날짜도 00:00:00으로 설정하여 비교
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  const [daysLeft, setDaysLeft] = useState<string>();
+  useEffect(() => {
+    const deadlineDate = new Date(post.deadline);
+    const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+
+    setDaysLeft(displayDaysLeft);
+  }, []);
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
@@ -50,8 +45,8 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
       <div className="p-5 h-64 text-center bg-fillStrong rounded-2xl">
         <div className="flex justify-between items-center">
           <div>
-            <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">{displayDaysLeft}</span>
-            <span className="text-baseS text-labelNormal ml-2">~{setDeadlines}</span>
+            <span className="text-baseS bg-fillLight text-primary rounded-full px-3 py-1.5">{daysLeft}</span>
+            <span className="text-baseS text-labelNormal ml-2">~{dayjs(post.deadline).format("YYYY-MM-DD")}</span>
           </div>
           {/* <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} /> */}
         </div>

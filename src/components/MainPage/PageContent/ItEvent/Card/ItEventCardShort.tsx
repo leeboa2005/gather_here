@@ -4,7 +4,7 @@ import { Tables } from "@/types/supabase";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 interface EventsCardProps {
@@ -13,21 +13,25 @@ interface EventsCardProps {
 }
 
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
-  const { user: currentUser } = useUser();
-  const deadlineDate = dayjs(post.date_done);
-  const daysLeft = deadlineDate.diff(dayjs(), "day");
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.format("YY.MM.DD");
+  const [daysLeft, setDaysLeft] = useState<string>();
+  useEffect(() => {
+    const deadlineDate = new Date(post.date_done);
+    const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
 
+    setDaysLeft(displayDaysLeft);
+  }, []);
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
       <div className="p-4 h-64 text-center bg-fillStrong rounded-2xl">
         <ul className="flex justify-between items-center">
           <li>
-            <span className="label-secondary rounded-full text-baseS px-3 py-1.5">{displayDaysLeft}</span>
+            <span className="label-secondary rounded-full text-baseS px-3 py-1.5">{daysLeft}</span>
           </li>
           <li>
-            <time dateTime={post.date_done} className="text-baseS text-labelNormal">{`~${setDeadlines}`}</time>
+            <time dateTime={post.date_done} className="text-baseS text-labelNormal">
+              {dayjs(post.date_done).format("YYYY-MM-DD")}
+            </time>
           </li>
           {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
         </ul>
