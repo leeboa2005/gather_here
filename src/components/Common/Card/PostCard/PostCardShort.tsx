@@ -14,11 +14,9 @@ interface PostCardProps {
 
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const [isActive, setIsActive] = useState(false);
-  // deadline 날짜를 오늘 날짜의 00:00:00으로 설정
   const { user: currentUser } = useUser();
   const deadlineDate = new Date(post.deadline);
   deadlineDate.setHours(0, 0, 0, 0);
-  // 현재 날짜도 00:00:00으로 설정하여 비교
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
@@ -57,7 +55,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
           <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
-          <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
+          <p className="mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
             {cleanContent}
           </p>
           <div className="mt-1">
@@ -75,7 +73,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
               )}
               <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
             </div>
-            <div className="text-base flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
+            <div className="text-subtitle flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
                 {post.target_position?.length > 0 && (
                   <>
