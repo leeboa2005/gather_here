@@ -19,7 +19,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
 
   return (
-    <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
+    <article className="w-auto p-5 bg-fillStrong rounded-2xl mb-4">
       <div className="flex justify-between items-center mb-3">
         <ul className="flex items-center">
           <li>
