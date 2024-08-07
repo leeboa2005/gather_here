@@ -1,5 +1,3 @@
-import NavTabs from "@/components/MainPage/NavTab/NavTabs";
-
 const layout = ({
   children,
 }: Readonly<{
