@@ -17,7 +17,6 @@ interface InfiniteScrollComponentProps {
 }
 
 const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ posts = [], hasMore, loadMorePosts }) => {
-
   return (
     <InitialLoadingWrapper>
       <InfiniteScroll
