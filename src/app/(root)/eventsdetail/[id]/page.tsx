@@ -7,7 +7,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
-import ShareButton from "@/components/MainDetail/ShareButton"; // ShareButton을 적절한 경로에서 import합니다.
+import ShareButton from "@/components/MainDetail/ShareButton";
 
 
 const supabase = createClient();
@@ -62,7 +62,6 @@ const EventDetailPage = () => {
         toast.error("URL 복사에 실패했습니다.");
       });
   };
-
 
   if (!event) return <></>;
 

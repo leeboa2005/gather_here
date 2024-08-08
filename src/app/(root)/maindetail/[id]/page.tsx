@@ -148,8 +148,6 @@ const MainDetailPage = () => {
     return `${days}일 전`;
   };
 
-
-
   if (!post) return <></>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
