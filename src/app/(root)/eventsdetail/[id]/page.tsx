@@ -7,6 +7,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
+import ShareButton from "@/components/MainDetail/ShareButton"; 
 
 const supabase = createClient();
 
