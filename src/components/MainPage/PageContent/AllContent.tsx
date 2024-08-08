@@ -18,8 +18,8 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
 
   useEffect(() => {
     const fetchInitialPosts = async () => {
-      // const latestPosts: PostWithUser[] = await fetchPosts(1);
-      const uniquePosts = initialPosts.filter(
+      const latestPosts: PostWithUser[] = await fetchPosts(1);
+      const uniquePosts = latestPosts.filter(
         (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
       );
       setPosts(uniquePosts);
