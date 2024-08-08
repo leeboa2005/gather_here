@@ -74,7 +74,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value
 
   return (
     <div className="mb-4">
-      <label className="block text-labelNeutral text-sm font-bold mb-2">
+      <label className="block text-labelNormal text-sm font-bold mb-2">
         {label}
         <span className="text-red-500 ml-1">*</span>
       </label>

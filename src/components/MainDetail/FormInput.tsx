@@ -21,7 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
 }) => {
   return (
     <div className="mb-4">
-      <label className="block text-labelNeutral text-sm font-bold mb-2">{label}</label>
+      <label className="block text-labelNormal text-sm font-bold mb-2">{label}</label>
       <input
         type={type}
         value={value}

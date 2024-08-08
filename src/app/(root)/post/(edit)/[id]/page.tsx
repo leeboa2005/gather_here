@@ -278,7 +278,12 @@ const PostEditPage = () => {
               placeholder="총 참여 인원을 선택해주세요"
             />
             <FormInput
-              label="연락 방법"
+              label={
+                <>
+                  <span>연락 방법</span>
+                  <span className="text-labelNeutral ml-1">(선택)</span>
+                </>
+              }
               value={personalLink}
               onChange={handleInputChange(setPersonalLink)}
               placeholder="연락 받을 링크 또는 이메일을 입력해주세요"
