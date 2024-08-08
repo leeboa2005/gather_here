@@ -14,29 +14,37 @@ interface EventsCardProps {
 }
 
 const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
-  const [daysLeft, setDaysLeft] = useState<string>();
+  const { user: currentUser } = useUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const today = dayjs();
+  const deadlineDate = dayjs(post.date_done);
+  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
+  const daysLeft = today.diff(deadlineDate, "d", true);
+  const displayDaysLeft =
+    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
 
   useEffect(() => {
-    const now = dayjs();
-    const deadlineDate = dayjs(post.date_done);
-    const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
-    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+    setIsMounted(true);
 
-    setDaysLeft(displayDaysLeft);
+    return () => {
+      setIsMounted(false);
+    };
   }, []);
 
   return (
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3"></div>
-      <ul className="flex items-center">
-        <li>
-          <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{daysLeft}</span>
-        </li>
-        <li className="text-baseS  text-labelNormal ml-2">
-          <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY-MM-DD")}</time>
-        </li>
-      </ul>
-      {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
+      {isMounted ? (
+        <ul className="flex items-center">
+          <li>
+            <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
+          </li>
+          <li className="text-baseS  text-labelNormal ml-2">
+            <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY-MM-DD")}</time>
+          </li>
+          <LikeButton eventId={post.event_id} currentUser={currentUser} />
+        </ul>
+      ) : null}
       <Link href={`/eventsdetail/${post.event_id}`}>
         <section>
           <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">{post.title}</h2>

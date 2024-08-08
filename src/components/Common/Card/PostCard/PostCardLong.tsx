@@ -1,29 +1,31 @@
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import arrow from "@/../public/Main/arrow.png";
-import interest_basic from "@/../public/Main/interest_basic.png";
-import interest_active from "@/../public/Main/interest_active.png";
 import Link from "next/link";
+import dayjs from "dayjs";
 import { useUser } from "@/provider/UserContextProvider";
 import LikeButton from "@/components/MainDetail/LikeButton";
-import dayjs from "dayjs";
 
 interface PostCardProps {
   post: PostWithUser;
 }
 
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [daysLeft, setDaysLeft] = useState<string>();
+  const { user: currentUser } = useUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const today = dayjs();
+  const deadlineDate = dayjs(post.deadline);
+  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
+  const daysLeft = today.diff(deadlineDate, "d", true);
+  const displayDaysLeft =
+    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
 
   useEffect(() => {
-    const now = dayjs();
-    const deadlineDate = dayjs(post.deadline);
-    const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
-    const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
+    setIsMounted(true);
 
-    setDaysLeft(displayDaysLeft);
+    return () => {
+      setIsMounted(false);
+    };
   }, []);
 
   let cleanContent = post.content;
@@ -50,11 +52,17 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
     <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
-        <div>
-          <span className="text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">{daysLeft}</span>
-          <span className="text-sm text-labelNormal ml-2">~{dayjs(post.deadline).format("YYYY-MM-DD")}</span>
-        </div>
-        {/* <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} /> */}
+        {isMounted ? (
+          <ul className="flex items-center">
+            <li>
+              <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
+            </li>
+            <li className="text-baseS  text-labelNormal ml-2">
+              <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
+            </li>
+            <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+          </ul>
+        ) : null}
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
