@@ -6,7 +6,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { useUser } from "@/provider/UserContextProvider";
-import { useRouter } from "next/navigation";
 import LoginForm from "@/components/Login/LoginForm";
 
 type ChatUserInfo = {
@@ -26,6 +25,7 @@ const Chat = () => {
   const [shouldScroll, setShouldScroll] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const chatContentDiv = useRef<HTMLDivElement>(null);
+  const defaultImage = "/assets/heder/user.svg";
 
   const supabase = createClient();
 
@@ -60,7 +60,6 @@ const Chat = () => {
         },
         (payload) => {
           setMessages((prevMessages) => {
-            console.log("INSERT EVENT ==>");
             return [...prevMessages, payload.new as MessageRow];
           });
           // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
@@ -97,7 +96,6 @@ const Chat = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log("chat onsubmit");
     const { data, error } = await supabase
       .from("Messages")
       .insert({
@@ -200,7 +198,7 @@ const Chat = () => {
                             <div className="relative" style={{ width: "32px", height: "32px" }}>
                               <Image
                                 className="rounded-xl"
-                                src={message.Users.profile_image_url}
+                                src={message.Users.profile_image_url ?? defaultImage}
                                 alt="profile image"
                                 fill
                                 sizes="(max-width: 32px) 100vw, 32px"
