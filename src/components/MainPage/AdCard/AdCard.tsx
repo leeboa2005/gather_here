@@ -74,7 +74,7 @@ const AdCard: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-auto h-auto mr-2 ml-2 mb-4">
+    <div className="w-auto h-auto my-3">
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index}>

@@ -22,7 +22,12 @@ export const fetchPosts = async (
 ): Promise<PostWithUser[]> => {
   const supabase = createClient();
   const postsPerPage = 5;
-  const today = new Date().toISOString().split("T")[0];
+
+  // 오늘 날짜를 ISO 8601 형식의 문자열로 변환
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 오늘의 00:00:00로 설정
+  const formattedToday = today.toISOString();
+
   const start = (page - 1) * postsPerPage;
 
   const query = supabase
@@ -37,7 +42,7 @@ export const fetchPosts = async (
       )
     `,
     )
-    .gte("deadline", today);
+    .gte("deadline", formattedToday); // 오늘 포함 이후의 게시물만 불러오기
 
   if (category) {
     query.eq("category", category);
