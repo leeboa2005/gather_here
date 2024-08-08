@@ -8,6 +8,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import "dayjs/locale/ko"; // 한국어 로케일 임포트
 
 interface EventsCardProps {
   post: Tables<"IT_Events">;
@@ -31,6 +32,9 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
     };
   }, []);
 
+  // dayjs 로케일을 한국어로 설정
+  dayjs.locale("ko");
+
   return (
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3"></div>
@@ -40,7 +44,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
             <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
           </li>
           <li className="text-baseS  text-labelNormal ml-2">
-            <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY-MM-DD")}</time>
+            <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY.MM.DD (ddd)")}</time>
           </li>
           <li className="absolute right-0">
             <LikeButton eventId={post.event_id} currentUser={currentUser} />

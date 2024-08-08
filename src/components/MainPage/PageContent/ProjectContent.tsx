@@ -146,9 +146,9 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
         ) : (
           <Carousel posts={carouselPosts} />
         )}
-        <div className="flex items-center mt-7 mb-4">
-          <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
-          <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
+        <div className="flex items-center mt-7">
+          <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} className="mb-3" />
+          <p className="ml-2 mb-3 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>
         <FilterBar
           selectedPosition={selectedPosition}
