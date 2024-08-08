@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 import loadingSpinner from "../../../assets/loadingSpinner.json";
 import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
-import ItEventCardLong from "../PageContent/ItEvent/Card/ItEventCardLong";
+import ItEventCardLong from "../../Common/Card/PostCard/ItEventCardLong";
 import { Tables } from "@/types/supabase";
 
 interface InfiniteScrollComponentProps {
