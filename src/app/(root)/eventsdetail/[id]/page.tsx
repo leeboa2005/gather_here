@@ -10,7 +10,7 @@ import LikeButton from "@/components/EventsDetail/ITLikeButton";
 import dynamic from "next/dynamic";
 import animationData from "@/assets/loadingBar.json";
 
-const LottiAnimation = dynamic(() => import("@/components/Loading/LottiAnimation"), {
+const LottiAnimation = dynamic(() => import("@/components/Common/Loading/LottiAnimation"), {
   ssr: false,
 });
 

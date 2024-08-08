@@ -6,6 +6,8 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { useUser } from "@/provider/UserContextProvider";
+import { useRouter } from "next/navigation";
+import LoginForm from "@/components/Login/LoginForm";
 
 type ChatUserInfo = {
   Users: {
@@ -22,6 +24,7 @@ const Chat = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>("");
   const [shouldScroll, setShouldScroll] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const chatContentDiv = useRef<HTMLDivElement>(null);
 
   const supabase = createClient();
@@ -40,7 +43,7 @@ const Chat = () => {
         console.error(error);
         return;
       }
-
+      console.log("채팅 내역 불러오기 ==>");
       setMessages(data as MessageRow[]);
     };
 
@@ -58,6 +61,7 @@ const Chat = () => {
         },
         (payload) => {
           setMessages((prevMessages) => {
+            console.log("INSERT EVENT ==>");
             return [...prevMessages, payload.new as MessageRow];
           });
           // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
@@ -94,7 +98,7 @@ const Chat = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
+    console.log("chat onsubmit");
     const { data, error } = await supabase
       .from("Messages")
       .insert({
@@ -194,13 +198,14 @@ const Chat = () => {
                       <div id="others" className="self-stretch px-3 justify-start items-start gap-3 inline-flex">
                         <div className="w-8 h-8 bg-[#3b3d3f] rounded-[9px] justify-center items-center flex">
                           <div className="justify-center items-center flex">
-                            <div className="relative">
+                            <div className="relative" style={{ width: "32px", height: "32px" }}>
                               <Image
                                 className="rounded-xl"
                                 src={message.Users.profile_image_url}
-                                width={32}
-                                height={32}
                                 alt="profile image"
+                                fill
+                                sizes="(max-width: 32px) 100vw, 32px"
+                                style={{ objectFit: "cover" }}
                               />
                             </div>
                           </div>
@@ -265,7 +270,10 @@ const Chat = () => {
             ) : (
               <div
                 id="input"
-                className="self-stretch h-[145px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex"
+                className="self-stretch h-[145px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex cursor-pointer"
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
               >
                 <div className="w-full h-full self-stretch justify-between items-start inline-flex">
                   <div className="w-full h-full grow shrink basis-0 text-[#5e5e5e] text-sm font-normal mr-2 font-['Pretendard'] leading-[21px] break-all overflow-y-hidden whitespace-pre-wrap break-words">
@@ -278,6 +286,22 @@ const Chat = () => {
                   </div>
                 </div>
               </div>
+            )}
+            {isModalOpen && (
+              <>
+                {/* 백드롭 추가 */}
+                <div className="fixed inset-0 bg-black opacity-80 z-40" onClick={() => setIsModalOpen(false)}></div>
+                {/* 모달 추가 */}
+                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background rounded-[20px] p-4 z-50">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="ml-auto mt-1 mr-1 block text-right p-1 text-3xl text-[fontWhite] hover:text-[#777]"
+                  >
+                    &times;
+                  </button>
+                  <LoginForm />
+                </div>
+              </>
             )}
           </form>
         </div>
