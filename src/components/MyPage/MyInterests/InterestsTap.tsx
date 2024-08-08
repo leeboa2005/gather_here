@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { fetchLikedPosts } from "@/lib/fetchPosts";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
-import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardShort";
+import ItEventCardShort from "@/components/Common/Card/PostCard/ItEventCardShort";
 import MypageList from "@/components/Common/Skeleton/MypageList";
 import Pagination from "@/components/MyPage/Common/Pagination";
 import { PostWithUser, ITEvent } from "@/types/posts/Post.type";

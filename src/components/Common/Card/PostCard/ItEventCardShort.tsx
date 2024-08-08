@@ -15,12 +15,12 @@ interface EventsCardProps {
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const today = dayjs();
-  const deadlineDate = dayjs(post.date_done);
-  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
-  const daysLeft = today.diff(deadlineDate, "d", true);
-  const displayDaysLeft =
-    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
+  const deadlineDate = new Date(post.date_done);
+  deadlineDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
 
   useEffect(() => {
     setIsMounted(true);
