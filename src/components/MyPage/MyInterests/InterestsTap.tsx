@@ -105,7 +105,7 @@ const InterestsTap: React.FC = () => {
             </div>
           ))
         ) : (
-          <p className="mt-5 text-center text-labelNeutral col-span-full">아직 개발중이에요..🥺</p>
+          <p className="mt-5 text-center text-labelNeutral col-span-full">북마크 한 글이 아직 없어요.🥺</p>
         )}
       </div>
       <div className="flex justify-center mt-4">
