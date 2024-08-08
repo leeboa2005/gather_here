@@ -35,14 +35,16 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3"></div>
       {isMounted ? (
-        <ul className="flex items-center">
+        <ul className="flex items-center relative">
           <li>
             <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
           </li>
           <li className="text-baseS  text-labelNormal ml-2">
             <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY-MM-DD")}</time>
           </li>
-          <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          <li className="absolute right-0">
+            <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          </li>
         </ul>
       ) : null}
       <Link href={`/eventsdetail/${post.event_id}`}>
