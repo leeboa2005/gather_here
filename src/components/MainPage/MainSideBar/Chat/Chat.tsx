@@ -40,7 +40,7 @@ const Chat = () => {
         console.error(error);
         return;
       }
-
+      console.log("채팅 내역 불러오기 ==>");
       setMessages(data as MessageRow[]);
     };
 
@@ -58,6 +58,7 @@ const Chat = () => {
         },
         (payload) => {
           setMessages((prevMessages) => {
+            console.log("INSERT EVENT ==>");
             return [...prevMessages, payload.new as MessageRow];
           });
           // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
@@ -94,7 +95,7 @@ const Chat = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
+    console.log("chat onsubmit");
     const { data, error } = await supabase
       .from("Messages")
       .insert({
@@ -194,13 +195,14 @@ const Chat = () => {
                       <div id="others" className="self-stretch px-3 justify-start items-start gap-3 inline-flex">
                         <div className="w-8 h-8 bg-[#3b3d3f] rounded-[9px] justify-center items-center flex">
                           <div className="justify-center items-center flex">
-                            <div className="relative">
+                            <div className="relative" style={{ width: "32px", height: "32px" }}>
                               <Image
                                 className="rounded-xl"
                                 src={message.Users.profile_image_url}
-                                width={32}
-                                height={32}
                                 alt="profile image"
+                                fill
+                                sizes="(max-width: 32px) 100vw, 32px"
+                                style={{ objectFit: "cover" }}
                               />
                             </div>
                           </div>

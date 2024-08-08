@@ -11,11 +11,11 @@ const queryClient = new QueryClient();
 const CombinedProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ContextProvider>
-        <UserProvider>
+      <UserProvider>
+        <ContextProvider>
           <Provider>{children}</Provider>
-        </UserProvider>
-      </ContextProvider>
+        </ContextProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 };

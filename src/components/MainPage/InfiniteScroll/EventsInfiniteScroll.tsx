@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import AdCard from "@/components/MainPage/AdCard/AdCard";
-import loadingBar from "../../../assets/loadingBar.json";
 import loadingSpinner from "../../../assets/loadingSpinner.json";
 import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
 import ItEventCardLong from "../PageContent/ItEvent/Card/ItEventCardLong";
@@ -21,22 +20,6 @@ const EventsInfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({
   hasMore,
   loadMorePosts,
 }) => {
-  const [initialLoading, setInitialLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setInitialLoading(false);
-    }, 2000); // Simulating a loading time, adjust as needed
-  }, []);
-
-  if (initialLoading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-background z-50">
-        <LottiAnimation animationData={loadingBar} size="200px" />
-      </div>
-    );
-  }
-
   return (
     <InfiniteScroll
       dataLength={posts.length}
