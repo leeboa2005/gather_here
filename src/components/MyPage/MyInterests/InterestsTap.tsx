@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { fetchLikedPosts } from "@/lib/fetchPosts";
 import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
-import ItEventCardShort from "@/components/MainPage/PageContent/ItEvent/Card/ItEventCardShort";
+import ItEventCardShort from "@/components/Common/Card/PostCard/ItEventCardShort";
 import MypageList from "@/components/Common/Skeleton/MypageList";
 import Pagination from "@/components/MyPage/Common/Pagination";
 import { PostWithUser, ITEvent } from "@/types/posts/Post.type";
@@ -105,7 +105,7 @@ const InterestsTap: React.FC = () => {
             </div>
           ))
         ) : (
-          <p className="mt-5 text-center text-labelNeutral col-span-full">아직 개발중이에요.🥺</p>
+          <p className="mt-5 text-center text-labelNeutral col-span-full">북마크 한 글이 아직 없어요.🥺</p>
         )}
       </div>
       <div className="flex justify-center mt-4">

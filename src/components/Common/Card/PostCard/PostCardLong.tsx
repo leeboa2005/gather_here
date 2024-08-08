@@ -13,12 +13,12 @@ interface PostCardProps {
 const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const today = dayjs();
-  const deadlineDate = dayjs(post.deadline);
-  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
-  const daysLeft = today.diff(deadlineDate, "d", true);
-  const displayDaysLeft =
-    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
+  const deadlineDate = new Date(post.deadline);
+  deadlineDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
 
   useEffect(() => {
     setIsMounted(true);
@@ -53,22 +53,22 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         {isMounted ? (
-          <ul className="flex items-center">
+          <ul className="flex items-center relative w-full">
             <li>
-              <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
+              <span className="label-secondary rounded-full text-baseS px-3 py-1.5 mr-1">{displayDaysLeft}</span>
             </li>
             <li className="text-baseS  text-labelNormal ml-2">
               <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
             </li>
-            <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+            <li className="absolute right-0">
+              <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+            </li>
           </ul>
         ) : null}
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
-        <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
-          {cleanContent}
-        </p>
+        <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">{cleanContent}</p>
         <div className="flex items-center mb-4">
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">

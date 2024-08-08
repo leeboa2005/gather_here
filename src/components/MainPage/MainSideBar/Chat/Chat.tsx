@@ -43,7 +43,6 @@ const Chat = () => {
         console.error(error);
         return;
       }
-      console.log("채팅 내역 불러오기 ==>");
       setMessages(data as MessageRow[]);
     };
 

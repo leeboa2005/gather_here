@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
-  const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -46,12 +45,10 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
     setIsMypageModalOpen(false);
-    setIsModalOpen(true);
   };
 
   // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
-    setIsModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -72,7 +69,22 @@ const Header: React.FC = () => {
     <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
-          <Image src="/logos/logo.png" alt="@gather_here 로고" priority width={151} height={24} />
+          <Image
+            src="/assets/header/logo.svg"
+            alt="@gather_here 로고"
+            priority
+            width={183}
+            height={28}
+            className="s:hidden"
+          />
+          <Image
+            src="/assets/header/logo.svg"
+            alt="@gather_here 로고"
+            priority
+            width={153}
+            height={23}
+            className="hidden s:block"
+          />
         </Link>
         <nav className="flex items-center gap-2">
           {/* 검색창 데스크탑 */}
@@ -84,38 +96,51 @@ const Header: React.FC = () => {
               type="text"
               id="search"
               name="search"
-              placeholder="검색어를 입력해 주세요."
+              placeholder="준비 중입니다."
               className="shared-input-gray rounded-lg"
+              disabled
             />
             <button className="absolute top-[10px] right-[8px]" type="submit">
-              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
+              <img src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
             </button>
           </form>
           <div className="flex items-center gap-2">
             <button
               onClick={toggleSearch}
-              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              className="hidden s:flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] pt-[10px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
-              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
+              <img src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘"></img>
             </button>
             <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
-              <button className="flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
-                <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
+              <button className="flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+                <img src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
               </button>
             </Link>
             {user ? (
               <div className="flex items-center">
                 <button
                   onClick={toggleMypageModal}
-                  className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="hidden s:flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                  <Image
+                    src="/assets/header/user.svg"
+                    alt="마이페이지 아이콘"
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
                 </button>
                 <Link
                   href="/mypage"
                   className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                  <Image
+                    src="/assets/header/user.svg"
+                    alt="마이페이지 아이콘"
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
                 </Link>
                 <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
                   로그아웃
@@ -139,11 +164,12 @@ const Header: React.FC = () => {
             type="text"
             id="search"
             name="search"
-            placeholder="검색어를 입력해 주세요."
+            placeholder="준비 중입니다."
             className="shared-input-gray w-full"
+            disabled
           />
           <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <Image src="/Common/Icons/close.png" alt="닫기 버튼" width={21} height={21} />
+            <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
           </button>
         </div>
       )}
@@ -169,7 +195,7 @@ const Header: React.FC = () => {
             <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
               <div className="relative w-full h-full rounded-[12px]">
                 <Image
-                  src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
+                  src={getProfileImageUrl(userData.profile_image_url)}
                   alt="프로필 이미지"
                   layout="fill"
                   objectFit="cover"
@@ -211,4 +237,5 @@ const Header: React.FC = () => {
     </header>
   );
 };
+
 export default Header;

@@ -37,7 +37,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } = await supabase.auth.getUser();
 
       if (error) {
-        console.error("사용자 정보 불러오기 실패:", error.message);
+        // console.error("사용자 정보 불러오기 실패:", error.message);
         return;
       }
 
@@ -52,13 +52,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .single();
 
         if (dataError) {
-          console.error("사용자 데이터 불러오기 실패:", dataError.message);
+          // console.error("사용자 데이터 불러오기 실패:", dataError.message);
         } else {
           setUserData(data || null);
         }
       }
     } catch (error) {
-      console.error("사용자 정보 불러오기 실패:", error);
+      // console.error("사용자 정보 불러오기 실패:", error);
     } finally {
       setLoading(false);
     }
@@ -74,12 +74,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data, error } = await supabase.from("Users").select("*").eq("user_id", user.id).limit(1).single();
 
       if (error) {
-        console.error("사용자 데이터 불러오기 실패:", error.message);
+        // console.error("사용자 데이터 불러오기 실패:", error.message);
       } else {
         setUserData(data || null);
       }
     } catch (error) {
-      console.error("사용자 데이터 불러오기 중 예외 발생:", error);
+      // console.error("사용자 데이터 불러오기 중 예외 발생:", error);
     } finally {
       setLoading(false);
     }

@@ -7,7 +7,7 @@ const NavTabs = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex space-x-4 mt-5 mb-3">
+    <nav className="flex space-x-4 mt-5 mb-7">
       <Link
         href="/all"
         className={`px-4 py-2 rounded-xl ${pathname === "/all" ? "bg-fillStrong text-primary" : "text-labelNeutral"}`}

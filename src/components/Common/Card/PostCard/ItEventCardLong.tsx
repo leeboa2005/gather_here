@@ -16,12 +16,12 @@ interface EventsCardProps {
 const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const today = dayjs();
-  const deadlineDate = dayjs(post.date_done);
-  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
-  const daysLeft = today.diff(deadlineDate, "d", true);
-  const displayDaysLeft =
-    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
+  const deadlineDate = new Date(post.date_done);
+  deadlineDate.setHours(0, 0, 0, 0);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
 
   useEffect(() => {
     setIsMounted(true);
@@ -35,14 +35,16 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
     <article className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
       <div className="flex justify-between items-center mb-3"></div>
       {isMounted ? (
-        <ul className="flex items-center">
+        <ul className="flex items-center relative">
           <li>
             <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
           </li>
           <li className="text-baseS  text-labelNormal ml-2">
             <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY-MM-DD")}</time>
           </li>
-          <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          <li className="absolute right-0">
+            <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          </li>
         </ul>
       ) : null}
       <Link href={`/eventsdetail/${post.event_id}`}>
@@ -71,7 +73,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
               alt="행사 이미지"
               className="w-full h-full object-cover rounded-2xl"
               width={616}
-              height={125}
+              height={175}
             />
           </div>
         </section>
