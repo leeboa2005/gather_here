@@ -171,7 +171,7 @@ const MainDetailPage = () => {
 
   const renderTechStackIcons = (techStack: string[]) => {
     return techStack.map((tech) => (
-      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={24} height={24} className="inline-block mr-2" />
+      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={32} height={32} className="inline-block mr-2" />
     ));
   };
 
@@ -208,7 +208,7 @@ const MainDetailPage = () => {
           </div>
           <div className="flex items-center space-x-4">
             <ShareButton />
-            {/* <LikeButton postId={id} currentUser={currentUser} category={post.category} /> */}
+            <LikeButton postId={id} currentUser={currentUser} category={post.category} />
             {currentUser?.id === post.user_id && (
               <div className="relative" ref={optionsRef}>
                 <button onClick={handleMoreOptions} className="flex items-center">
@@ -287,7 +287,7 @@ const MainDetailPage = () => {
           <h2 className="text-lg text-labelAssistive font-semibold mb-5">모집 내용</h2>
         </div>
         <div className="bg-fillLight p-4 rounded-lg shadow-md">
-          <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+          <div className="ql-editor" dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </div>
       </div>
     </>

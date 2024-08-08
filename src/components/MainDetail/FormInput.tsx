@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 
 interface FormInputProps {
-  label: string;
+  label: string | JSX.Element;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;

@@ -220,14 +220,17 @@ const PostPage = () => {
       >
         <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
           <div className="space-y-4">
-            <h2 className="text-lg text-labelNeutral font-semibold mb-2">제목</h2>
+            <h2 className="text-lg text-labelNeutral font-semibold mb-2">
+              제목 <span className="text-red-500">*</span>
+            </h2>
             <FormInput
               label=""
               value={title}
               onChange={handleInputChange(setTitle)}
-              maxLength={30}
+              maxLength={50}
               placeholder="제목을 입력해주세요"
             />
+            <p className="text-sm text-labelNeutral">제목은 50자 내로 작성해주세요. ({title.length}/50)</p>
           </div>
           <hr className="border-fillNeutral mb-4" />
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">기본 정보</h2>
@@ -300,7 +303,12 @@ const PostPage = () => {
               onChange={handleMultiSelectChange(setTechStack)}
             />
             <FormInput
-              label="마감일"
+              label={
+                <>
+                  <span>마감일</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </>
+              }
               type="date"
               value={deadline || ""}
               onChange={handleInputChange(setDeadline)}

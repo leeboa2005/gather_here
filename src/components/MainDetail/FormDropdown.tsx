@@ -21,7 +21,10 @@ const FormDropdown: React.FC<FormDropdownProps> = ({
 }) => {
   return (
     <div className="mb-4">
-      <label className="block text-labelNeutral text-sm font-bold mb-2">{label}</label>
+      <label className="block text-labelNeutral text-sm font-bold mb-2">
+        {label}
+        <span className="text-red-500 ml-1">*</span>
+      </label>
       <select
         value={value}
         onChange={onChange}
