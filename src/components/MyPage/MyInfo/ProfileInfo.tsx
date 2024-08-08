@@ -1,18 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import { useModal } from "@/provider/ContextProvider";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@/provider/UserContextProvider";
+// import Image from "next/image";
+// import { useModal } from "@/provider/ContextProvider";
+// import { useRouter } from "next/navigation";
 
 const ProfileInfo: React.FC = () => {
-  const { openModal, closeModal } = useModal();
+  // const { openModal, closeModal } = useModal();
+  // const router = useRouter();
   const supabase = createClient();
-  const router = useRouter();
 
   const { user, userData, fetchUserData } = useUser();
   const [nickname, setNickname] = useState("");
@@ -73,71 +73,72 @@ const ProfileInfo: React.FC = () => {
     }
   };
 
-  const handleDeleteAccount = async () => {
-    if (!user) return;
+  // 회원 탈퇴 기능 (추후 작업예정)
+  // const handleDeleteAccount = async () => {
+  //   if (!user) return;
 
-    try {
-      const { error: deleteError } = await supabase.from("Users").delete().eq("user_id", user.id);
-      if (deleteError) throw deleteError;
+  //   try {
+  //     const { error: deleteError } = await supabase.from("Users").delete().eq("user_id", user.id);
+  //     if (deleteError) throw deleteError;
 
-      const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
-      if (authError) throw authError;
+  //     const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
+  //     if (authError) throw authError;
 
-      await supabase.auth.signOut();
-      router.push("/");
-    } catch (error) {
-      console.error("회원 탈퇴 중 오류 발생:", error);
-      toast.error("회원 탈퇴 중 오류가 발생했습니다.");
-    }
-  };
+  //     await supabase.auth.signOut();
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error("회원 탈퇴 중 오류 발생:", error);
+  //     toast.error("회원 탈퇴 중 오류가 발생했습니다.");
+  //   }
+  // };
 
   // 회원 탈퇴 모달 (mvp 이후)
-  const handleOpenModal = () => {
-    const onRequestClose = () => {
-      closeModal();
-    };
+  // const handleOpenModal = () => {
+  //   const onRequestClose = () => {
+  //     closeModal();
+  //   };
 
-    openModal(
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
-        <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg ">
-          <button
-            onClick={onRequestClose}
-            className="absolute top-2 right-2 text-gray-500 hover:"
-            aria-label="모달 닫기"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="mb-4 w-auto flex justify-center">
-            <Image src="/Common/Icons/caution_icon.png" alt="Profile Image" width={70} height={70} />
-          </div>
-          <h2 className="mb-2 text-lg font-semibold text-fillStrong">정말 탈퇴하시겠어요?</h2>
-          <div className="mb-5">
-            <p className="text-gray-500 text-sm">
-              회원 탈퇴 시 계정은 삭제되며
-              <br /> 복구되지 않습니다.
-            </p>
-          </div>
-          <div className="flex justify-center space-x-2">
-            <button onClick={onRequestClose} className="shared-button-gray w-1/2" aria-label="회원 탈퇴 취소">
-              취소
-            </button>
-            <button onClick={handleDeleteAccount} className="shared-button-black w-1/2" aria-label="회원 탈퇴">
-              탈퇴
-            </button>
-          </div>
-        </div>
-      </div>,
-    );
-  };
+  //   openModal(
+  //     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
+  //       <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg ">
+  //         <button
+  //           onClick={onRequestClose}
+  //           className="absolute top-2 right-2 text-gray-500 hover:"
+  //           aria-label="모달 닫기"
+  //         >
+  //           <svg
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             fill="none"
+  //             viewBox="0 0 24 24"
+  //             strokeWidth={2}
+  //             stroke="currentColor"
+  //             className="w-6 h-6"
+  //           >
+  //             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  //           </svg>
+  //         </button>
+  //         <div className="mb-4 w-auto flex justify-center">
+  //           <Image src="/Common/Icons/caution_icon.png" alt="Profile Image" width={70} height={70} />
+  //         </div>
+  //         <h2 className="mb-2 text-lg font-semibold text-fillStrong">정말 탈퇴하시겠어요?</h2>
+  //         <div className="mb-5">
+  //           <p className="text-gray-500 text-sm">
+  //             회원 탈퇴 시 계정은 삭제되며
+  //             <br /> 복구되지 않습니다.
+  //           </p>
+  //         </div>
+  //         <div className="flex justify-center space-x-2">
+  //           <button onClick={onRequestClose} className="shared-button-gray w-1/2" aria-label="회원 탈퇴 취소">
+  //             취소
+  //           </button>
+  //           <button onClick={handleDeleteAccount} className="shared-button-black w-1/2" aria-label="회원 탈퇴">
+  //             탈퇴
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>,
+  //   );
+  // };
 
   return (
     <section>
@@ -235,7 +236,7 @@ const ProfileInfo: React.FC = () => {
                 placeholder="링크를 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              <p className="text-labelAssistive text-baseXs mt-1">노션이나 포트폴리오, 깃허브도 좋아요.</p>
+              <p className="text-labelAssistive text-baseXs mt-1">자신을 나타낼 수 있는 포트폴리오 링크를 알려주세요.</p>
             </div>
           </div>
           <div className="mt-6 mb-12">

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import down from "@/../public/Main/down.png";
 
 interface FilterBarProps {
   selectedPosition: string;
@@ -43,18 +42,20 @@ const FilterBar: React.FC<FilterBarProps> = ({
     appearance: "none",
     WebkitAppearance: "none",
     MozAppearance: "none",
-    backgroundImage: `url('/assets/down.svg')`,
+    backgroundImage: "url('/assets/down.svg')",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right 10px center",
     paddingRight: "1.5rem",
+    height: "35px",
+    lineHeight: "18px",
   };
 
   return (
-    <div className="flex justify-between items-center mt-5 mb-3 px-4">
+    <div className="flex justify-between items-center mt-3 mb-3">
       <div className="grid grid-cols-1 gap-2 w-full s:grid-cols-2 md:grid-cols-4 md:gap-3">
         <select
           className={`w-full p-2 rounded-lg border-0 outline-none ${
-            selectedPosition ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+            selectedPosition ? "bg-fillAlternative text-labelNormal" : "bg-fillNormal text-labelNormal"
           }`}
           value={selectedPosition}
           onChange={handlePositionChange}
@@ -73,7 +74,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         </select>
         <select
           className={`w-full p-2 rounded-lg border-0 outline-none ${
-            selectedPlace ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+            selectedPlace ? "bg-fillAlternative text-labelNormal" : "bg-fillNormal text-labelNormal"
           }`}
           value={selectedPlace}
           onChange={handlePlaceChange}
@@ -86,7 +87,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         </select>
         <select
           className={`w-full p-2 rounded-lg border-0 outline-none ${
-            selectedLocation ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+            selectedLocation ? "bg-fillAlternative text-labelNormal" : "bg-fillNormal text-labelNormal"
           }`}
           value={selectedLocation}
           onChange={handleLocationChange}
@@ -104,7 +105,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         </select>
         <select
           className={`w-full p-2 rounded-lg border-0 outline-none ${
-            selectedDuration ? "bg-fillAlternative text-labelNeutral" : "bg-fillLight text-labelAssistive"
+            selectedDuration ? "bg-fillAlternative text-labelNormal" : "bg-fillNormal text-labelNormal"
           }`}
           value={selectedDuration !== null ? selectedDuration.toString() : ""}
           onChange={handleDurationChange}

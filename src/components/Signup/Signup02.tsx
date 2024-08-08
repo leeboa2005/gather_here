@@ -3,7 +3,6 @@
 import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
 
-// 경력 목록을 상수로 분리
 const experienceLevels = [
   '1년 미만', '1년', '2년', '3년', '4년', 
   '5년', '6년', '7년', '8년 이상'

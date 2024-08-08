@@ -1,36 +1,32 @@
-// import { useState, useEffect } from 'react';
-// import { createClient } from '@/utils/supabase/client';
+import { useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
 
-// const supabase = createClient();
+const supabase = createClient();
 
-// const useCheckNickname = (nickname: string) => {
-//   const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
+const useCheckNickname = (nickname: string) => {
+  const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
 
-//   useEffect(() => {
-//     const checkNicknameAvailability = async (nickname: string) => {
-//       const { data, error } = await supabase
-//         .from('Users')
-//         .select('nickname')
-//         .eq('nickname', nickname);
+  useEffect(() => {
+    const checkNicknameAvailability = async () => {
+      if (!nickname || typeof nickname !== 'string' || nickname.length < 2 || nickname.length > 11) {
+        setNicknameAvailable(null);
+        return;
+      }
 
-//       if (error) {
-//         console.error('Error checking nickname availability:', error);
-//         return;
-//       }
+      const { data, error } = await supabase.from("Users").select("nickname").eq("nickname", nickname);
 
-//       setNicknameAvailable(data.length === 0);
-//     };
+      if (error) {
+        console.error("Error checking nickname availability:", error);
+        return;
+      }
 
-//     if (nickname) {
-//       if (nickname.length >= 2 && nickname.length <= 10) {
-//         checkNicknameAvailability(nickname);
-//       } else {
-//         setNicknameAvailable(null);
-//       }
-//     }
-//   }, [nickname]);
+      setNicknameAvailable(data.length === 0);
+    };
 
-//   return nicknameAvailable;
-// };
+    checkNicknameAvailability();
+  }, [nickname]);
 
-// export default useCheckNickname;
+  return nicknameAvailable;
+};
+
+export default useCheckNickname;
