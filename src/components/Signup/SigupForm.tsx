@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Signup01 from './Signup01';
-import Signup02 from './Signup02';
-import Signup03 from './Signup03';
-import Signup04 from './Signup04';
-import useSignupStore from '@/store/useSignupStore';
-
+import React from "react";
+import Signup01 from "./Signup01";
+import Signup02 from "./Signup02";
+import Signup03 from "./Signup03";
+import Signup04 from "./Signup04";
+import useSignupStore from "@/store/useSignupStore";
+import { useUser } from "@/provider/UserContextProvider";
 
 const SignupForm: React.FC = () => {
+  const { setUserData } = useUser();
   const { step } = useSignupStore();
 
   switch (step) {
@@ -17,7 +18,7 @@ const SignupForm: React.FC = () => {
     case 2:
       return <Signup02 />;
     case 3:
-      return <Signup03 />;
+      return <Signup03 setUserData={setUserData} />;
     case 4:
       return <Signup04 />;
     default:
