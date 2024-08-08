@@ -7,6 +7,8 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
+import ShareButton from "@/components/MainDetail/ShareButton";
+
 
 const supabase = createClient();
 
@@ -93,10 +95,8 @@ const EventDetailPage = () => {
         <ToastContainer />
         <h1 className="text-title font-title mb-4 p-2">{event.title}</h1>
         <div className="flex justify-end items-center mb-4 mr-4 space-x-2">
-          <button type="button" onClick={handleShare} className="flex items-center mr-3">
-            <Image src="/Main/share_button.png" alt="공유하기" width={20} height={20} />
-          </button>
-          {/* <LikeButton eventId={eventId} currentUser={currentUser} /> */}
+          <ShareButton />
+          <LikeButton eventId={eventId} currentUser={currentUser} />
         </div>
         <div className="bg-fillStrong p-4 rounded-lg mb-4">
           {event.img_url && (
@@ -113,7 +113,9 @@ const EventDetailPage = () => {
               <p className="mb-3">
                 <strong className="text-labelNeutral">일시</strong>{" "}
                 <span className="ml-5">
-                  {formatDate(event.date_start)} - {formatDate(event.date_done)}{" "}
+                  {event.date_start === event.date_done
+                    ? formatDate(event.date_start)
+                    : `${formatDate(event.date_start)} - ${formatDate(event.date_done)}`}
                   <span className="ml-2 text-sm bg-fillLight text-primary rounded-full px-3 py-1.5">
                     {deadlineBadge}
                   </span>
@@ -135,7 +137,7 @@ const EventDetailPage = () => {
                   <strong className="text-labelNeutral">입장 정보</strong>
                   <span className="ml-5 flex flex-col">
                     <span>일반 구매자 - {event.price?.regular || "N/A"}원</span>
-                    <span>강의 구매자 - {event.price?.student || "N/A"}원</span>
+                    <span>사전 구매자 - {event.price?.student || "N/A"}원</span>
                   </span>
                 </p>
               </div>
