@@ -9,7 +9,6 @@ import { PostWithUser } from "@/types/posts/Post.type";
 import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
 import InitialLoadingWrapper from "@/components/Common/Loading/InitialLoadingWrapper";
 
-
 interface InfiniteScrollComponentProps {
   posts: PostWithUser[];
   hasMore: boolean;
@@ -28,7 +27,7 @@ const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({ posts
             <LottiAnimation animationData={loadingSpinner} size="50px" />
           </div>
         }
-        endMessage={<p style={{ textAlign: "center" }}>모든 포스트를 불러왔습니다.</p>}
+        endMessage={<p style={{ textAlign: "center", color: "white" }}>모든 포스트를 불러왔습니다.</p>}
       >
         {posts.map((post, index) => (
           <React.Fragment key={`${post.post_id}_${index}`}>

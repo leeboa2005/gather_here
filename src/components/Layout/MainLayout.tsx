@@ -32,7 +32,7 @@ const MainLayout = ({
   };
 
   return (
-    <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s px-4 mt-6">
+    <div className="w-full max-w-container-l m:max-w-container-m s:max-w-container-s mt-6">
       <NavTabs />
       <div className={`grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
         <div className="col-span-1 md:col-span-2">{children}</div>

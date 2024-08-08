@@ -65,7 +65,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
           <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
-          <p className="mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
+          <p className="mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
             {cleanContent}
           </p>
           <div className="mt-1">
