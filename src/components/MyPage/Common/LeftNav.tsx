@@ -1,15 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/provider/UserContextProvider";
 import Image from "next/image";
 import LeftNavLoader from "@/components/Common/Skeleton/LeftNavLoader";
+import { createClient } from "@/utils/supabase/client";
 
 const LeftNav: React.FC = () => {
   const pathname = usePathname();
-  const { userData, loading } = useUser();
+  const { user, userData, setUserData, loading } = useUser();
   const defaultImage = "/Mypage/default-profile.png";
 
   // 캐시 방지용 URL 생성 함수
@@ -30,6 +31,9 @@ const LeftNav: React.FC = () => {
 
   // 직군에 따라 클래스명을 동적으로 설정
   const getJobTitleClass = (jobTitle: string) => {
+    if (!jobTitle) {
+      return "";
+    }
     const lowerJobTitle = jobTitle.toLowerCase();
     for (const [key, value] of Object.entries(jobTitleClassMap)) {
       if (lowerJobTitle.includes(key.toLowerCase())) {
@@ -41,12 +45,27 @@ const LeftNav: React.FC = () => {
 
   const jobTitleClass = userData ? getJobTitleClass(userData.job_title) : "";
 
+  useEffect(() => {
+    const supabase = createClient();
+    const getUserData = async () => {
+      if (user) {
+        const { data, error } = await supabase.from("Users").select("*").eq("user_id", user.id).limit(1).single();
+        if (data) {
+          setUserData(data);
+        } else {
+          console.error("Users 테이블 데이터 에러:", error);
+        }
+      }
+    };
+    getUserData();
+  }, [user, setUserData]);
+
   return (
-    <aside className="sticky top-0 p-6 s:p-0 w-[250px]  max-h-[257px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
+    <aside className="sticky top-0 p-6 s:p-0 w-[250px] max-h-[257px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
       {loading ? (
         <LeftNavLoader />
       ) : userData ? (
-        <div className="flex items-center gap-3 mb-1 pb-5  w-full border-b-[1px] border-labelAssistive">
+        <div className="flex items-center gap-3 mb-1 pb-5 w-full border-b-[1px] border-labelAssistive">
           <div className="w-12 h-12 rounded-[12px] bg-fillLight flex justify-center items-center relative">
             <Image
               src={getProfileImageUrl(userData?.profile_image_url || defaultImage)}
@@ -67,7 +86,7 @@ const LeftNav: React.FC = () => {
           </ol>
         </div>
       ) : (
-        <div className="text-fillStrong">사용자 정보 없음.</div>
+        <div className="text-fillStrong">사용자 정보 없음</div>
       )}
       <nav>
         <ul className="w-full">

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
-import arrow from "@/../public/Main/arrow.png";
 import Link from "next/link";
 import DOMPurify from "dompurify";
 import LikeButton from "@/components/MainDetail/LikeButton";

@@ -12,15 +12,12 @@ import CommonModal from "@/components/Common/Modal/CommonModal";
 import LoginForm from "@/components/Login/LoginForm";
 
 const ProfilePicture: React.FC = () => {
+  const supabase = createClient();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [profileAlt, setProfileAlt] = useState<string>("프로필 이미지");
-  const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const { user, userData, setUserData } = useUser();
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string | null>(null);
-  const defaultImage = "/MyPage/default-profile.png";
-  const supabase = createClient();
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
   const router = useRouter();
 
@@ -87,7 +84,7 @@ const ProfilePicture: React.FC = () => {
 
   // 이미지 로드 에러 핸들러
   const handleImageError = () => {
-    setProfileImage(defaultImage);
+    setProfileImage(null);
     setProfileAlt("프로필 이미지");
   };
 
@@ -103,29 +100,12 @@ const ProfilePicture: React.FC = () => {
   // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
-  // 로그인 여부 확인 아닐시 로그인창으로
-  useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data?.user) {
-        setUserId(data.user.id);
-      } else {
-        toast.error("로그인이 필요합니다!");
-        setShowLoginModal(true);
-      }
-    };
-    getUser();
-  }, [router]);
-
   // 사용자 데이터에 따라 프로필 이미지를 설정하는 훅
   useEffect(() => {
-    if (userData && !profileImage) {
+    if (userData) {
       if (userData.profile_image_url) {
         setProfileImage(userData.profile_image_url);
-      } else {
-        setProfileImage(defaultImage);
       }
-      setLoading(false);
     }
   }, [userData, profileImage]);
 
@@ -149,11 +129,11 @@ const ProfilePicture: React.FC = () => {
         <label className="block text-subtitle font-baseBold text-labelNeutral mb-5">프로필 사진</label>
         <div className="flex items-center s:flex-col s:items-start s:mb-3 gap-5">
           <div className="w-36 h-36 rounded-[20px] overflow-hidden bg-fillLight flex items-center justify-center s:mb-3 relative group">
-            {loading || uploading ? (
+            {uploading ? (
               <ProfileLoader className="w-full h-full rounded-[20px]" />
-            ) : (
+            ) : profileImage ? (
               <Image
-                src={profileImage ? getProfileImageUrl(profileImage) : defaultImage}
+                src={getProfileImageUrl(profileImage)}
                 alt={profileAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1068px) 50vw, 33vw"
@@ -162,6 +142,8 @@ const ProfilePicture: React.FC = () => {
                 onError={handleImageError}
                 priority
               />
+            ) : (
+              <ProfileLoader className="w-full h-full rounded-[20px]" />
             )}
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity z-10">
               <img src="/assets/mypage/hover_plus.svg" width={24} height={24} alt="플러스 버튼 아이콘" />
