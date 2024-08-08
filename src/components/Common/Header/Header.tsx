@@ -46,12 +46,10 @@ const Header: React.FC = () => {
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
     setIsMypageModalOpen(false);
-    setIsModalOpen(true);
   };
 
   // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
-    setIsModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -81,7 +79,7 @@ const Header: React.FC = () => {
               className="shared-input-gray rounded-lg"
             />
             <button className="absolute top-[10px] right-[8px]" type="submit">
-              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
+              <img src="/assets/header/search.svg" width={24} height={24} alt="검색 버튼 아이콘" />
             </button>
           </form>
           <div className="flex items-center gap-2">
@@ -89,11 +87,11 @@ const Header: React.FC = () => {
               onClick={toggleSearch}
               className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
-              <Image src="/Common/Icons/search.png" alt="검색 아이콘" width={24} height={24} />
+              <img src="" width={24} height={24} alt="검색 버튼 아이콘"></img>
             </button>
             <Link href="/post" passHref>
               <button className="flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
-                <Image src="/Common/Icons/write.png" alt="글작성 버튼 아이콘" width={21} height={21} />
+                <img src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
               </button>
             </Link>
             {user ? (
@@ -204,4 +202,5 @@ const Header: React.FC = () => {
     </header>
   );
 };
+
 export default Header;
