@@ -53,14 +53,16 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         {isMounted ? (
-          <ul className="flex items-center">
+          <ul className="flex items-center relative w-full">
             <li>
-              <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
+              <span className="label-secondary rounded-full text-baseS px-3 py-1.5 mr-1">{displayDaysLeft}</span>
             </li>
             <li className="text-baseS  text-labelNormal ml-2">
               <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
             </li>
-            <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+            <li className="absolute right-0">
+              <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+            </li>
           </ul>
         ) : null}
       </div>

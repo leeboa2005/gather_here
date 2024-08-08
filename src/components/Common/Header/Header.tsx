@@ -69,7 +69,22 @@ const Header: React.FC = () => {
     <header className="bg-background shadow-md relative text-fontWhite">
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
         <Link href="/">
-          <Image src="/logos/logo.png" alt="@gather_here 로고" priority width={151} height={24} />
+          <Image
+            src="/assets/header/logo.svg"
+            alt="@gather_here 로고"
+            priority
+            width={183}
+            height={28}
+            className="s:hidden"
+          />
+          <Image
+            src="/assets/header/logo.svg"
+            alt="@gather_here 로고"
+            priority
+            width={153}
+            height={23}
+            className="hidden s:block"
+          />
         </Link>
         <nav className="flex items-center gap-2">
           {/* 검색창 데스크탑 */}
@@ -81,8 +96,9 @@ const Header: React.FC = () => {
               type="text"
               id="search"
               name="search"
-              placeholder="검색어를 입력해 주세요."
+              placeholder="준비 중입니다."
               className="shared-input-gray rounded-lg"
+              disabled
             />
             <button className="absolute top-[10px] right-[8px]" type="submit">
               <img src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
@@ -148,8 +164,9 @@ const Header: React.FC = () => {
             type="text"
             id="search"
             name="search"
-            placeholder="검색어를 입력해 주세요."
+            placeholder="준비 중입니다."
             className="shared-input-gray w-full"
+            disabled
           />
           <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
             <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />

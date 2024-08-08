@@ -71,7 +71,7 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
               alt="행사 이미지"
               className="w-full h-full object-cover rounded-2xl"
               width={616}
-              height={125}
+              height={175}
             />
           </div>
         </section>
