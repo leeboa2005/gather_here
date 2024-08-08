@@ -4,7 +4,7 @@ import { Tables } from "@/types/supabase";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 interface EventsCardProps {
@@ -14,23 +14,39 @@ interface EventsCardProps {
 
 const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
   const { user: currentUser } = useUser();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const today = dayjs();
   const deadlineDate = dayjs(post.date_done);
-  const daysLeft = deadlineDate.diff(dayjs(), "day");
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.format("YY.MM.DD");
+  // const daysLeft = Math.ceil((deadlineDate.unix() - now.unix()) / (1000 * 60 * 60 * 24));
+  const daysLeft = today.diff(deadlineDate, "d", true);
+  const displayDaysLeft =
+    daysLeft === 0 ? "D-day" : daysLeft < 0 ? `D${daysLeft.toFixed(0)}` : `D+${Math.ceil(daysLeft)}`;
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
 
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
       <div className="p-4 h-64 text-center bg-fillStrong rounded-2xl">
-        <ul className="flex justify-between items-center">
-          <li>
-            <span className="label-secondary rounded-full text-baseS px-3 py-1.5">{displayDaysLeft}</span>
-          </li>
-          <li>
-            <time dateTime={post.date_done} className="text-baseS text-labelNormal">{`~${setDeadlines}`}</time>
-          </li>
-          {/* <LikeButton eventId={post.event_id} currentUser={currentUser} /> */}
-        </ul>
+        {isMounted ? (
+          <ul className="flex justify-between items-center">
+            <li>
+              <span className="label-secondary rounded-full text-baseS px-3 py-1.5">{displayDaysLeft}</span>
+            </li>
+            <li>
+              <time dateTime={post.date_done} className="text-baseS text-labelNormal">
+                {dayjs(post.date_done).format("YYYY-MM-DD")}
+              </time>
+            </li>
+
+            <LikeButton eventId={post.event_id} currentUser={currentUser} />
+          </ul>
+        ) : null}
         <Link href={`/eventsdetail/${post.event_id}`}>
           <section>
             <h2 className="text-left text-subtitle font-base truncate mt-5 mb-1 text-labelStrong">{post.title}</h2>
