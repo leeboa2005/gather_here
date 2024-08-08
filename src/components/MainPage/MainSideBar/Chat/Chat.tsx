@@ -36,7 +36,7 @@ const Chat = () => {
     const getAllMessages = async () => {
       const { data, error } = await supabase
         .from("Messages")
-        .select(`*, Users (nickname, profile_image_url)`) // user_id 를 통해 관계가 맺어져 있어서 참조가 가능한 듯?
+        .select(`*, Users (nickname, profile_image_url)`)
         .order("sent_at", { ascending: true });
 
       if (error) {
@@ -44,6 +44,13 @@ const Chat = () => {
         return;
       }
       setMessages(data as MessageRow[]);
+
+      // 메시지 로드 후 스크롤을 최하단으로 이동
+      if (chatContentDiv.current) {
+        requestAnimationFrame(() => {
+          chatContentDiv.current!.scrollTop = chatContentDiv.current!.scrollHeight;
+        });
+      }
     };
 
     getAllMessages();
