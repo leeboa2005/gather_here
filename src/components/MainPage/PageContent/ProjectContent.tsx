@@ -134,8 +134,8 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
     <MainLayout>
       <div className="w-full">
         <div className="flex items-center">
-          <Image src="/assets/run.svg" alt="Run Icon" width={20} height={20} className="w-5 h-5" priority />
-          <p className="m-2 text-labelNormal">모집이 곧 종료돼요</p>
+          <Image src="/assets/run.svg" alt="Run Icon" width={20} height={20} className="w-5 h-5 mb-2" priority />
+          <p className="m-2 mb-4 text-labelNormal">모집이 곧 종료돼요</p>
         </div>
         {isLoadingCarousel ? (
           <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
@@ -146,7 +146,7 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
         ) : (
           <Carousel posts={carouselPosts} />
         )}
-        <div className="flex items-center mt-3">
+        <div className="flex items-center mt-7 mb-4">
           <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
           <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>

@@ -131,7 +131,7 @@ const EventsContent: NextPage = () => {
 
   return (
     <MainLayout>
-      <div className="w-full">
+      <div className="w-full mb-4">
         <div className="flex items-center">
           <Image src="/assets/run.svg" alt="Run Icon" width={20} height={20} className="w-5 h-5" priority />
           <p className="m-2 text-labelNormal">모집이 곧 종료돼요</p>
@@ -152,7 +152,7 @@ const EventsContent: NextPage = () => {
             selectedDuration={selectedDuration}
             onChange={handleFilterChange}
           /> */}
-        <div className="flex items-center mb-3 ">
+        <div className="flex items-center mt-7 mb-4">
           <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
           <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>
