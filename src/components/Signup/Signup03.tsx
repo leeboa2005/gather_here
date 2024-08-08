@@ -1,18 +1,24 @@
 'use client';
 import { createClient } from '@/utils/supabase/client';
 import useSignupStore from '@/store/useSignupStore';
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 const supabase = createClient();
 
+interface FormValues {
+  nickname: string;
+  blog: string;
+}
+
 const Signup03: React.FC = () => {
   const { nextStep, prevStep, setNickname, setBlog, setProfileImageUrl, user, job_title, experience, profile_image_url, setUser } = useSignupStore();
-  const [nickname, setLocalNickname] = useState<string>('');
-  const [blog, setLocalBlog] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormValues>();
   const [nicknameAvailable, setNicknameAvailable] = useState<boolean | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [blogError, setBlogError] = useState<string | null>(null);
-  const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
+  const watchNickname = watch('nickname');
+  const watchBlog = watch('blog');
 
   useEffect(() => {
     if (user?.user_metadata?.avatar_url) {
@@ -45,14 +51,19 @@ const Signup03: React.FC = () => {
     setNicknameAvailable(data.length === 0);
   };
 
-  const handleNext = async () => {    
+  useEffect(() => {
+    if (watchNickname) {
+      if (watchNickname.length >= 2 && watchNickname.length <= 10) {
+        checkNicknameAvailability(watchNickname);
+      } else {
+        setNicknameAvailable(null);
+      }
+    }
+  }, [watchNickname]);
+
+  const onSubmit: SubmitHandler<FormValues> = async data => {
     if (!user?.email) {
       setError('유효한 이메일을 확인할 수 없습니다.');
-      return;
-    }
-
-    if (nickname.length < 2 || nickname.length > 11) {
-      setError('닉네임은 2 ~ 11자 사이여야 합니다.');
       return;
     }
 
@@ -61,13 +72,11 @@ const Signup03: React.FC = () => {
       return;
     }
 
-    // URL에 프로토콜이 없으면 추가
-    let formattedBlog = blog;
-    if (!/^https?:\/\//i.test(blog)) {
-      formattedBlog = 'http://' + blog;
+    let formattedBlog = data.blog;
+    if (!/^https?:\/\//i.test(data.blog)) {
+      formattedBlog = 'http://' + data.blog;
     }
 
-    // URL 유효성 검사
     const urlPattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})' + // domain name with minimum two letters TLD
@@ -85,7 +94,7 @@ const Signup03: React.FC = () => {
     setBlogError('');
 
     try {
-      const { data, error: fetchError } = await supabase
+      const { data: userData, error: fetchError } = await supabase
         .from('Users')
         .select('user_id')
         .eq('user_id', user.id);
@@ -96,13 +105,13 @@ const Signup03: React.FC = () => {
         return;
       }
 
-      if (data && data.length > 0) {
+      if (userData && userData.length > 0) {
         const { error: updateError } = await supabase
           .from('Users')
           .update({
             job_title,
             experience,
-            nickname,
+            nickname: data.nickname,
             blog: formattedBlog,
             email: user.email,
             profile_image_url,
@@ -115,14 +124,14 @@ const Signup03: React.FC = () => {
           return;
         }
 
-        setNickname(nickname);
+        setNickname(data.nickname);
         setBlog(formattedBlog);
       } else {
         const { error: insertError } = await supabase.from('Users').insert({
           user_id: user.id,
           job_title,
           experience,
-          nickname,
+          nickname: data.nickname,
           blog: formattedBlog,
           email: user.email,
           profile_image_url,
@@ -134,7 +143,7 @@ const Signup03: React.FC = () => {
           return;
         }
 
-        setNickname(nickname);
+        setNickname(data.nickname);
         setBlog(formattedBlog);
       }
 
@@ -144,33 +153,6 @@ const Signup03: React.FC = () => {
       setError('An unexpected error occurred. Please try again.');
     }
   };
-
-  const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newNickname = e.target.value;
-    setLocalNickname(newNickname);
-    setError(null);
-
-    if (newNickname.length >= 2 && newNickname.length <= 10) {
-      checkNicknameAvailability(newNickname);
-    } else {
-      setNicknameAvailable(null);
-    }
-  };
-
-  const handleBlogChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLocalBlog(e.target.value);
-    setBlogError(null);
-  };
-
-  useEffect(() => {
-    if (nickname && blog) {
-      setIsFormComplete(true);
-    } else {
-      setIsFormComplete(false);
-    }
-  }, [nickname, blog]);
-
-
   return (
     <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (
@@ -199,46 +181,46 @@ const Signup03: React.FC = () => {
         자신을 나타낼 수 있는 포트폴리오 링크를 알려주시면 <br /> 함께 할 동료를 만나는 데 큰 도움이 될거예요.
       </div>
   
-      <div className="s:mt-6 mt-9">
-        <label className="block text-sm ml-5 font-medium text-[#bebec1]"> 닉네임 </label>
-        <input
-          type="text"
-          placeholder="닉네임을 입력해주세요"
-          value={nickname}
-          onChange={handleNicknameChange}
-          className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
-        />
-        <p className="text-xs text-gray-500 mt-2 ml-5">닉네임은 2 ~ 11자 내로 작성해주세요.</p>
-        {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>}
-        {nicknameAvailable === true && <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>}
-        {error && <p className="text-xs text-red-500 s:mt-1 mt-1">{error}</p>}
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="s:mt-6 mt-9">
+          <label className="block text-sm ml-5 font-medium text-[#bebec1]"> 닉네임 </label>
+          <input
+            type="text"
+            placeholder="닉네임을 입력해주세요"
+            {...register('nickname', { required: '닉네임을 입력해주세요.', minLength: { value: 2, message: '닉네임은 2 ~ 11자 사이여야 합니다.' }, maxLength: { value: 11, message: '닉네임은 2 ~ 11자 사이여야 합니다.' } })}
+            className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
+          />
+          <p className="text-xs text-gray-500 mt-2 ml-5">닉네임은 2 ~ 11자 내로 작성해주세요.</p>
+          {errors.nickname && <p className="text-xs text-red-500 mt-1 ml-5">{errors.nickname.message}</p>}
+          {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>}
+          {nicknameAvailable === true && <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>}
+        </div>
   
-      <div className="s:mt-4 mt-9">
-        <label className="block text-sm ml-5 font-medium text-[#bebec1]">URL </label>
-        <input
-          type="text"
-          placeholder="URL을 입력해주세요"
-          value={blog}
-          onChange={handleBlogChange}
-          className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
-        />
-        <p className="text-xs text-gray-500 ml-5 mt-2">Blog / Github / Notion / Tistory / Velog / Figma / Etc </p>
-        {blogError && <p className="text-xs text-red-500 s:mt-1 mt-1 ml-5 ">{blogError}</p>}
-      </div>
+        <div className="s:mt-4 mt-9">
+          <label className="block text-sm ml-5 font-medium text-[#bebec1]">URL </label>
+          <input
+            type="text"
+            placeholder="URL을 입력해주세요"
+            {...register('blog')}
+            className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
+          />
+          <p className="text-xs text-gray-500 ml-5 mt-2">Blog / Github / Notion / Tistory / Velog / Figma / Etc </p>
+          {blogError && <p className="text-xs text-red-500 s:mt-1 mt-1 ml-5 ">{blogError}</p>}
+        </div>
   
-      <div className="absolute s:bottom-8 bottom-9 left-1/2 transform -translate-x-1/2 w-full px-4">
-        <button
-          onClick={handleNext}
-          className={`s:w-[300px] w-[350px] h-[40px] ml-5 py-2 rounded-md transition-transform transform hover:scale-105 active:scale-95 active:bg-gray-800 active:text-gray-200 ${
-            isFormComplete ? 'bg-[#c3e88d] text-[#343437] hover:bg-[#c3e88d] hover:text-[#343437]' : 'bg-[#343437] text-[#ffffff]'
-          }`}
-        >
-          프로필 저장하기
-        </button>
-      </div>
+        <div className="absolute s:bottom-8 bottom-9 left-1/2 transform -translate-x-1/2 w-full px-4">
+          <button
+            type="submit"
+            className={`s:w-[300px] w-[350px] h-[40px] ml-5 py-2 rounded-md transition-transform transform hover:scale-105 active:scale-95 active:bg-gray-800 active:text-gray-200 ${
+              watchNickname && watchBlog ? 'bg-[#c3e88d] text-[#343437] hover:bg-[#c3e88d] hover:text-[#343437]' : 'bg-[#343437] text-[#ffffff]'
+            }`}
+          >
+            프로필 저장하기
+          </button>
+        </div>
+      </form>
     </div>
   );
-}; 
+};
 
 export default Signup03;

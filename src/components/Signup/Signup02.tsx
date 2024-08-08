@@ -3,6 +3,12 @@
 import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
 
+// 경력 목록을 상수로 분리
+const experienceLevels = [
+  '1년 미만', '1년', '2년', '3년', '4년', 
+  '5년', '6년', '7년', '8년 이상'
+];
+
 const Signup02: React.FC = () => {
   const { nextStep, prevStep, setExperience } = useSignupStore();
   const [selectedExperience, setSelectedExperience] = useState<string>('');
@@ -11,6 +17,12 @@ const Signup02: React.FC = () => {
     setSelectedExperience(experience);
     setExperience(experience);
     nextStep();
+  };
+
+  const getButtonClass = (experience: string) => {
+    const baseClass = 'square-button square-button-default bg-[#343437] text-[#c4c4c4]';
+    const selectedClass = selectedExperience === experience ? 'bg-[#ffffff] text-[#343437] font-medium shadow-lg' : '';
+    return `${baseClass} ${selectedClass}`;
   };
 
   return (
@@ -33,23 +45,21 @@ const Signup02: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="text-center text-2xl font-medium text-[#ffffff] leading-9  s:mt-16 mt-20">
+      <div className="text-center text-2xl font-medium text-[#ffffff] leading-9 s:mt-16 mt-20">
         얼마나 오래 하셨나요?
       </div>
       <div className="text-center text-[#9a9a9a] mt-2">
         경력에 맞게 닮고 싶은 시니어, <br /> 챙겨 주고 싶은 주니어를 소개해 드려요.
       </div>
       <div className="grid grid-cols-3 gap-1 s:mt-4 mt-6 s:w-[335px] w-[370px] mx-auto">
-        {['1년 미만', '1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년 이상'].map((experience) => (
+        {experienceLevels.map((experience) => (
           <button
-          key={experience}
-          onClick={() => handleExperienceSelection(experience)}
-          className={`square-button square-button-default ${
-            selectedExperience === experience ? 'bg-[#ffffff] text-[#c4c4c4] font-medium shadow-lg' : 'bg-[#343437] text-[#c4c4c4]'
-          }`}
-        >
-          {experience}
-        </button>
+            key={experience}
+            onClick={() => handleExperienceSelection(experience)}
+            className={getButtonClass(experience)}
+          >
+            {experience}
+          </button>
         ))}
       </div>
     </div>
