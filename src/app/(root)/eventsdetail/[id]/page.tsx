@@ -7,12 +7,6 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
-import dynamic from "next/dynamic";
-import animationData from "@/assets/loadingBar.json";
-
-const LottiAnimation = dynamic(() => import("@/components/Common/Loading/LottiAnimation"), {
-  ssr: false,
-});
 
 const supabase = createClient();
 
@@ -67,13 +61,8 @@ const EventDetailPage = () => {
       });
   };
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-background">
-        <LottiAnimation animationData={animationData} size="200px" />
-      </div>
-    );
-  if (!event) return <div>Event not found.</div>;
+
+  if (!event) return <></>;
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };

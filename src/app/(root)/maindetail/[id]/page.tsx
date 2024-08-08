@@ -12,12 +12,6 @@ import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
-import dynamic from "next/dynamic";
-import animationData from "@/assets/loadingBar.json";
-
-const LottiAnimation = dynamic(() => import("@/components/Common/Loading/LottiAnimation"), {
-  ssr: false,
-});
 
 const supabase = createClient();
 
@@ -154,15 +148,9 @@ const MainDetailPage = () => {
     return `${days}일 전`;
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-background">
-        <LottiAnimation animationData={animationData} size="200px" />
-      </div>
-    );
-  }
 
-  if (!post) return <div>글 없음</div>;
+
+  if (!post) return <></>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
     ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "h1", "h2", "h3", "p", "span", "ul", "ol", "li"],
