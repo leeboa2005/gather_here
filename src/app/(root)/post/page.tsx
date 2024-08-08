@@ -191,7 +191,7 @@ const PostPage = () => {
     { value: "Spring", label: "Spring" },
     { value: "Svelte", label: "Svelte" },
     { value: "Swift", label: "Swift" },
-    { value: "TypeScript", label: "TypeScript" },
+    { value: "Typescript", label: "Typescript" },
     { value: "Unity", label: "Unity" },
     { value: "Vue", label: "Vue" },
     { value: "Zeplin", label: "Zeplin" },
