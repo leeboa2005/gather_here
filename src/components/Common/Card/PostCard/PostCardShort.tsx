@@ -14,19 +14,7 @@ interface PostCardProps {
 }
 
 const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
-  const [isActive, setIsActive] = useState(false);
   const { user: currentUser } = useUser();
-  const deadlineDate = new Date(post.deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-  const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft}`;
-  const setDeadlines = deadlineDate.toLocaleDateString("ko-KR", {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  });
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const today = dayjs();
   const deadlineDate = dayjs(post.deadline);
