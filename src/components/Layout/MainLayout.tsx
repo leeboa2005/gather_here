@@ -4,6 +4,7 @@ import Calender from "@/components/MainPage/MainSideBar/Calender/Calender";
 import Chat from "@/components/MainPage/MainSideBar/Chat/Chat";
 import { useState, useEffect } from "react";
 import CommonModal from "@/components/Common/Modal/CommonModal";
+import Image from "next/image";
 
 const MainLayout = ({
   children,
@@ -64,11 +65,15 @@ const MainLayout = ({
         )}
       </div>
       {isMobile && (
-        <button
-          onClick={openModal}
-          className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-full shadow-lg z-50"
-        >
-          채팅
+        <button onClick={openModal} className="fixed bottom-4 right-1 z-10 hover:animate-bounce">
+          <Image
+            src="/assets/chat.svg"
+            alt="Chat icon"
+            width={90}
+            height={60}
+            priority
+            style={{ width: "auto", height: "auto" }}
+          />
         </button>
       )}
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>

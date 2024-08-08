@@ -228,30 +228,37 @@ const Chat = () => {
                 className="self-stretch h-[115px] w-full p-5 bg-[#141415] rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex"
               >
                 <div className="w-full h-full self-stretch justify-between items-start inline-flex">
+                  <style jsx>{`
+                    .custom-textarea:focus {
+                      outline: none;
+                      border-color: #c3e88d; /* 인풋아웃라인컬러 */
+                    }
+                  `}</style>
                   <textarea
                     onChange={(evt) => setInputValue(evt.target.value)}
                     value={inputValue}
                     placeholder="메시지를 입력해보세요"
-                    className="border mr-4 self-stretch w-full h-full p-5 bg-[#141415] text-fontWhite rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex overflow-auto scrollbar-hide resize-none"
+                    className="custom-textarea border mr-4 self-stretch w-full h-full p-5 bg-[#141415] text-fontWhite rounded-bl-[20px] rounded-br-[20px] flex-col justify-center items-center flex overflow-auto scrollbar-hide resize-none"
                   />
+
                   <div className="justify-center items-center flex">
                     <div className="w-5 h-5 p-1 justify-center items-center flex">
                       <div className="justify-center items-center flex">
-                        <button className={`ml-1 text-fontWhite ${!inputValue ? "hidden" : ""}`}>
-                          <svg
-                            width="12"
-                            height="14"
-                            viewBox="0 0 12 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <button
+                          className={`ml-1 text-fontWhite ${!inputValue ? "hidden" : ""}`}
+                          style={{ width: "19px", height: "19px" }}
+                        >
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
                           >
-                            <path
-                              d="M0.600098 6.4L6.0001 1M6.0001 1L11.4001 6.4M6.0001 1V13"
-                              stroke="#919191"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
+                            <Image src="/assets/send.svg" alt="Send icon" width={30} height={30} />
+                          </div>
                         </button>
                       </div>
                     </div>
