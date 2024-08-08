@@ -19,6 +19,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
+  const defaultImage = "/assets/heder/user.svg";
 
   useEffect(() => {
     setIsMounted(true);
@@ -73,7 +74,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
               <Image
-                src={getProfileImageUrl(post.user.profile_image_url)}
+                src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
                 alt="User profile"
                 fill
                 sizes="40px"
