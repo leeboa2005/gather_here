@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
-  const defaultImage = "/assets/heder/user.svg";
+  const defaultImage = "/assets/header/user.svg";
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();

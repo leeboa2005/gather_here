@@ -25,7 +25,7 @@ const Chat = () => {
   const [shouldScroll, setShouldScroll] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const chatContentDiv = useRef<HTMLDivElement>(null);
-  const defaultImage = "/assets/heder/user.svg";
+  const defaultImage = "/assets/header/user.svg";
 
   const supabase = createClient();
 
@@ -58,10 +58,8 @@ const Chat = () => {
           schema: "public",
           table: "Messages",
         },
-        (payload) => {
-          setMessages((prevMessages) => {
-            return [...prevMessages, payload.new as MessageRow];
-          });
+        () => {
+          getAllMessages();
           // setState 자체가 비동기적으로 동작해서 handleSubmit 함수 내부에서 동작하는 setNewMessages() 가 제대로 실행될 거라고 보장할 수 없다.
           // 따라서, 함수형으로 작성하고 데이터가 존재하는 것이 확실히 보장된 payload 객체를 이용하자!
         },
@@ -74,9 +72,7 @@ const Chat = () => {
           table: "Messages",
         },
         () => {
-          setMessages((prevMessages) => {
-            return prevMessages.filter((prevMessage) => prevMessage.message_id !== deletedMessageId);
-          });
+          getAllMessages();
         },
       )
       .subscribe();
@@ -170,6 +166,7 @@ const Chat = () => {
             ref={chatContentDiv}
           >
             {messages.map((message) => {
+              console.log("img ==> ", message.Users?.profile_image_url ?? defaultImage);
               return (
                 <div key={`${message.message_id}`} className="w-full mb-3">
                   {message.user_id === user?.id ? (
@@ -198,7 +195,7 @@ const Chat = () => {
                             <div className="relative" style={{ width: "32px", height: "32px" }}>
                               <Image
                                 className="rounded-xl"
-                                src={message.Users.profile_image_url ?? defaultImage}
+                                src={message.Users?.profile_image_url ?? defaultImage}
                                 alt="profile image"
                                 fill
                                 sizes="(max-width: 32px) 100vw, 32px"
@@ -209,7 +206,7 @@ const Chat = () => {
                         </div>
                         <div className="max-w-[190px] flex-col justify-start items-start gap-1 inline-flex">
                           <div className="self-stretch text-[#f7f7f7] text-base font-normal font-['Pretendard'] leading-relaxed">
-                            {message.Users.nickname}
+                            {message.Users?.nickname}
                           </div>
                           <div className="w-full p-3 bg-[#323334] rounded-tl rounded-tr-[20px] rounded-bl-[20px] rounded-br-[20px] justify-center items-center gap-2.5 inline-flex">
                             <div className="w-full text-[#f7f7f7] text-sm font-normal font-['Pretendard'] leading-snug whitespace-pre-wrap break-words overflow-hidden">

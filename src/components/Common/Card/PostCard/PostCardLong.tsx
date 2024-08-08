@@ -19,7 +19,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
-  const defaultImage = "/assets/heder/user.svg";
+  const defaultImage = "/assets/header/user.svg";
 
   useEffect(() => {
     setIsMounted(true);

@@ -20,7 +20,7 @@ const ProfilePicture: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
   const router = useRouter();
-  const defaultImage = "/assets/heder/user.svg";
+  const defaultImage = "/assets/header/user.svg";
 
   const iconImages = useMemo(() => {
     return Array.from(
