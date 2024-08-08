@@ -20,6 +20,7 @@ const ProfilePicture: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
   const router = useRouter();
+  const defaultImage = "/assets/heder/user.svg";
 
   const iconImages = useMemo(() => {
     return Array.from(
@@ -103,7 +104,7 @@ const ProfilePicture: React.FC = () => {
   // 사용자 데이터에 따라 프로필 이미지를 설정하는 훅
   useEffect(() => {
     if (userData) {
-      setProfileImage(userData.profile_image_url);
+      setProfileImage(userData.profile_image_url || defaultImage);
     }
   }, [userData]);
 

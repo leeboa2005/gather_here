@@ -201,7 +201,13 @@ const MainDetailPage = () => {
         <div className="flex items-center justify-between mb-4 pl-3 pr-3">
           <div className="flex items-center space-x-2">
             {user?.profile_image_url && (
-              <Image src={user.profile_image_url} alt={user.nickname} width={28} height={28} className="rounded-full" />
+              <Image
+                src={user.profile_image_url ?? "/assets/header/user.svg"}
+                alt={user.nickname}
+                width={28}
+                height={28}
+                className="rounded-full"
+              />
             )}
             <span className="text-base font-medium">{user?.nickname}</span>
             <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>

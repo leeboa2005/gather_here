@@ -18,6 +18,7 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
+  const defaultImage = "/assets/heder/user.svg";
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -195,7 +196,7 @@ const Header: React.FC = () => {
             <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
               <div className="relative w-full h-full rounded-[12px]">
                 <Image
-                  src={getProfileImageUrl(userData.profile_image_url)}
+                  src={getProfileImageUrl(userData?.profile_image_url || defaultImage)}
                   alt="프로필 이미지"
                   layout="fill"
                   objectFit="cover"
