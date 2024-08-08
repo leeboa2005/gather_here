@@ -49,7 +49,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <div className="w-auto p-5 bg-fillStrong rounded-2xl m-2 mb-4">
+    <div className="w-auto p-5 bg-fillStrong rounded-2xl mb-4">
       <div className="flex justify-between items-center"></div>
       <div className="flex justify-between items-center">
         {isMounted ? (

@@ -199,7 +199,7 @@ const Signup03: React.FC = () => {
         자신을 나타낼 수 있는 포트폴리오 링크를 알려주시면 <br /> 함께 할 동료를 만나는 데 큰 도움이 될거예요.
       </div>
   
-      <div className="s:mt-6 mt-8">
+      <div className="s:mt-6 mt-9">
         <label className="block text-sm ml-5 font-medium text-[#bebec1]"> 닉네임 </label>
         <input
           type="text"
@@ -214,7 +214,7 @@ const Signup03: React.FC = () => {
         {error && <p className="text-xs text-red-500 s:mt-1 mt-1">{error}</p>}
       </div>
   
-      <div className="s:mt-4 mt-8">
+      <div className="s:mt-4 mt-9">
         <label className="block text-sm ml-5 font-medium text-[#bebec1]">URL </label>
         <input
           type="text"
@@ -227,10 +227,10 @@ const Signup03: React.FC = () => {
         {blogError && <p className="text-xs text-red-500 s:mt-1 mt-1 ml-5 ">{blogError}</p>}
       </div>
   
-      <div className="absolute s:bottom-8 bottom-10 left-1/2 transform -translate-x-1/2 w-full px-4">
+      <div className="absolute s:bottom-8 bottom-9 left-1/2 transform -translate-x-1/2 w-full px-4">
         <button
           onClick={handleNext}
-          className={`s:w-[300px] w-[350px] h-[45px] ml-5 py-2 rounded-md transition-transform transform hover:scale-105 active:scale-95 active:bg-gray-800 active:text-gray-200 ${
+          className={`s:w-[300px] w-[350px] h-[40px] ml-5 py-2 rounded-md transition-transform transform hover:scale-105 active:scale-95 active:bg-gray-800 active:text-gray-200 ${
             isFormComplete ? 'bg-[#c3e88d] text-[#343437] hover:bg-[#c3e88d] hover:text-[#343437]' : 'bg-[#343437] text-[#ffffff]'
           }`}
         >
