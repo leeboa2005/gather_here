@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
-  const defaultImage = "/Common/Icons/user.png";
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -79,18 +78,18 @@ const Header: React.FC = () => {
               className="shared-input-gray rounded-lg"
             />
             <button className="absolute top-[10px] right-[8px]" type="submit">
-              <img src="/assets/header/search.svg" width={24} height={24} alt="검색 버튼 아이콘" />
+              <img src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
             </button>
           </form>
           <div className="flex items-center gap-2">
             <button
               onClick={toggleSearch}
-              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              className="hidden s:flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] pt-[10px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
-              <img src="" width={24} height={24} alt="검색 버튼 아이콘"></img>
+              <img src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘"></img>
             </button>
             <Link href="/post" passHref>
-              <button className="flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
+              <button className="flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
                 <img src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
               </button>
             </Link>
@@ -98,15 +97,27 @@ const Header: React.FC = () => {
               <div className="flex items-center">
                 <button
                   onClick={toggleMypageModal}
-                  className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+                  className="hidden s:flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                  <Image
+                    src="/assets/header/user.svg"
+                    alt="마이페이지 아이콘"
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
                 </button>
                 <Link
                   href="/mypage"
                   className="flex s:hidden items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
                 >
-                  <Image src={defaultImage} alt="마이페이지 아이콘" width={28} height={28} className="rounded-full" />
+                  <Image
+                    src="/assets/header/user.svg"
+                    alt="마이페이지 아이콘"
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
                 </Link>
                 <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
                   로그아웃
@@ -134,7 +145,7 @@ const Header: React.FC = () => {
             className="shared-input-gray w-full"
           />
           <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <Image src="/Common/Icons/close.png" alt="닫기 버튼" width={21} height={21} />
+            <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
           </button>
         </div>
       )}
@@ -160,7 +171,7 @@ const Header: React.FC = () => {
             <div className="w-12 h-12 bg-slate-100 rounded-[12px] flex items-center justify-center overflow-hidden">
               <div className="relative w-full h-full rounded-[12px]">
                 <Image
-                  src={userData?.profile_image_url ? getProfileImageUrl(userData.profile_image_url) : defaultImage}
+                  src={getProfileImageUrl(userData.profile_image_url)}
                   alt="프로필 이미지"
                   layout="fill"
                   objectFit="cover"

@@ -146,7 +146,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
         ) : (
           <Carousel posts={carouselPosts} />
         )}
-        <div className="flex items-center mt-3">
+        <div className="flex items-center mt-7">
           <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
           <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>

@@ -152,7 +152,7 @@ const EventsContent: NextPage = () => {
             selectedDuration={selectedDuration}
             onChange={handleFilterChange}
           /> */}
-        <div className="flex items-center mb-3 ">
+        <div className="flex items-center mt-7 mb-2">
           <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
           <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>
