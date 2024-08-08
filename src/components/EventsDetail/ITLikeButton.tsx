@@ -21,19 +21,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({ eventId, currentUser }) => {
           data: likeData,
           error: likeError,
           status,
-        } = await supabase
-          .from("IT_Interests")
-          .select("*")
-          .eq("user_id", currentUser.id)
-          .eq("event_id", eventId)
-          .single();
+        } = await supabase.from("IT_Interests").select("*").eq("user_id", currentUser.id).eq("event_id", eventId);
 
-        if (likeError && status !== 406) {
-          console.error("Error checking like status:", likeError.message);
-        } else if (likeData) {
+        if (likeError) {
+          if (status !== 406) {
+            console.error("Error checking like status:", likeError.message);
+          }
+        } else if (likeData && likeData.length > 0) {
           setLiked(true);
-        } else if (status === 406) {
-          console.error("Not acceptable:", likeError?.message);
         }
       }
     };
@@ -48,27 +43,23 @@ const LikeButton: React.FC<LikeButtonProps> = ({ eventId, currentUser }) => {
     }
 
     if (!liked) {
-      const { error, status } = await supabase.from("IT_Interests").insert({
+      const { error } = await supabase.from("IT_Interests").insert({
         user_id: currentUser.id,
         event_id: eventId,
       });
-      if (error && status !== 406) {
+      if (error) {
         console.error("Error liking event:", error.message);
-      } else if (status === 406) {
-        console.error("Not acceptable:", error?.message);
       } else {
         setLiked(true);
       }
     } else {
-      const { error, status } = await supabase
+      const { error } = await supabase
         .from("IT_Interests")
         .delete()
         .eq("user_id", currentUser.id)
         .eq("event_id", eventId);
-      if (error && status !== 406) {
+      if (error) {
         console.error("Error unliking event:", error.message);
-      } else if (status === 406) {
-        console.error("Not acceptable:", error?.message);
       } else {
         setLiked(false);
       }

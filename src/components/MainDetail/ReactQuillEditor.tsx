@@ -13,21 +13,7 @@ interface ReactQuillEditorProps {
   className?: string;
 }
 
-const FORMATS = [
-  "size",
-  "bold",
-  "italic",
-  // "underline",
-  // "strike",
-  // "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "color",
-  "background",
-  "align",
-];
+const FORMATS = ["size", "bold", "italic", "list", "bullet", "indent", "link", "color", "background", "align"];
 
 const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, className }) => {
   const handleChange = (content: string) => {
