@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "@/components/MainPage/Carousel/Carousel.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Tables } from "@/types/supabase";
-import ItEventCardShort from "../PageContent/ItEvent/Card/ItEventCardShort";
+import ItEventCardShort from "../../Common/Card/PostCard/ItEventCardShort";
 
 interface CarouselProps {
   posts: Tables<"IT_Events">[];
