@@ -56,6 +56,13 @@ const Header: React.FC = () => {
     fetchUserData();
   }, [user]);
 
+  const handleClickPost = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (!user) {
+      evt.preventDefault();
+      handleOpenLoginModal();
+    }
+  };
+
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   return (
@@ -88,7 +95,7 @@ const Header: React.FC = () => {
             >
               <img src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘"></img>
             </button>
-            <Link href="/post" passHref>
+            <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
               <button className="flex items-center justify-center w-[45px] s:w-[42px] h-[45px] s:h-[42px] rounded-lg bg-fillLight hover:bg-fillLight text-white">
                 <img src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
               </button>

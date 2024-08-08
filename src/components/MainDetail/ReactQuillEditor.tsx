@@ -14,14 +14,12 @@ interface ReactQuillEditorProps {
 }
 
 const FORMATS = [
-  // "header",
-  // "font",
   "size",
   "bold",
   "italic",
-  "underline",
-  "strike",
-  "blockquote",
+  // "underline",
+  // "strike",
+  // "blockquote",
   "list",
   "bullet",
   "indent",
@@ -32,16 +30,19 @@ const FORMATS = [
 ];
 
 const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, className }) => {
+  const handleChange = (content: string) => {
+    const modifiedContent = content.replace(/<a href="(www\.[^"]+)"/g, '<a href="http://$1"');
+    onChange(modifiedContent);
+  };
+
   return (
     <ReactQuill
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
       modules={{
         toolbar: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
           [{ size: ["small", false, "large", "huge"] }],
-          ["bold", "italic", "underline", "strike"],
+          ["bold", "italic"],
           [{ align: [] }, { color: [] }, { background: [] }],
           [{ list: "ordered" }, { list: "bullet" }],
           ["link"],
@@ -49,7 +50,7 @@ const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, cl
         ],
       }}
       formats={FORMATS}
-      placeholder="내용을 입력해주세요"
+      placeholder="상세 내용을 입력해주세요"
       className={className}
     />
   );

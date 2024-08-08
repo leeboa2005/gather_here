@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import OAuthButtons from "./OAuthButtons";
-import { useModal } from "@/provider/ContextProvider";
-import useSignupStore from "@/store/useSignupStore";
 
 const LoginForm = () => {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setUser } = useSignupStore();
-  const { closeModal } = useModal();
 
   const handleLogin = async (provider: "google" | "kakao" | "github") => {
     setLoading(true);
@@ -39,11 +35,6 @@ const LoginForm = () => {
     }
 
     setLoading(false);
-  };
-
-  const handleClose = () => {
-    closeModal();
-    router.push("/");
   };
 
   return (
