@@ -22,14 +22,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }
           data: likeData,
           error: likeError,
           status,
-        } = await supabase.from("Interests").select("*").eq("user_id", currentUser.id).eq("post_id", postId).single();
+        } = await supabase.from("Interests").select("*").eq("user_id", currentUser.id).eq("post_id", postId);
 
-        if (likeError && status !== 406) {
-          console.error("Error checking like status:", likeError.message);
-        } else if (likeData) {
+        if (likeError) {
+          if (status !== 406) {
+            console.error("Error checking like status:", likeError.message);
+          }
+        } else if (likeData && likeData.length > 0) {
           setLiked(true);
-        } else if (status === 406) {
-          console.error("Not acceptable:", likeError?.message);
         }
       }
     };
@@ -49,10 +49,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }
         post_id: postId,
         category,
       });
-      if (error && status !== 406) {
-        console.error("Error liking post:", error.message);
-      } else if (status === 406) {
-        console.error("Not acceptable:", error?.message);
+      if (error) {
+        if (status !== 406) {
+          console.error("Error liking post:", error.message);
+        }
       } else {
         setLiked(true);
       }
@@ -62,10 +62,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }
         .delete()
         .eq("user_id", currentUser.id)
         .eq("post_id", postId);
-      if (error && status !== 406) {
-        console.error("Error unliking post:", error.message);
-      } else if (status === 406) {
-        console.error("Not acceptable:", error?.message);
+      if (error) {
+        if (status !== 406) {
+          console.error("Error unliking post:", error.message);
+        }
       } else {
         setLiked(false);
       }
