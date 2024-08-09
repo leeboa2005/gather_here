@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 const jobTitles = [
   '프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', 
-  '기획자', '디자인', '마케팅', '기타'
+  '기획', '디자인', '마케팅', 'PM'
 ];
 
 const jobClasses: { [key: string]: string } = {
@@ -14,10 +14,10 @@ const jobClasses: { [key: string]: string } = {
   'IOS': 'button-ios',
   '안드로이드': 'button-android',
   '데브옵스': 'button-devops',
-  '기획자': 'button-pm',
+  '기획': 'button-pm',
   '디자인': 'button-designer',
   '마케팅': 'button-marketer',
-  '기타': 'button-default',
+  'PM': 'button-project',
 };
 
 const Signup01: React.FC = () => {
