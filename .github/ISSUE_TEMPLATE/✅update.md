@@ -1,8 +1,8 @@
 ---
 name: "✅UPDATE"
-about: 기존의 기능을 개선하거나 업데이트
+about: 기존의 기능 개선
 title: "[UPDATE] "
-labels: "[Update]"
+labels: update
 assignees: ""
 ---
 

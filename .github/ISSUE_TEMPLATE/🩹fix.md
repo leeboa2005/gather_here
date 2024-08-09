@@ -2,7 +2,7 @@
 name: "\U0001FA79FIX"
 about: 버그 수정, 문제 해결
 title: "[FIX] "
-labels: "[Fix]"
+labels: fix
 assignees: ""
 ---
 
