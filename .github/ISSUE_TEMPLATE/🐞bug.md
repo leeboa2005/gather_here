@@ -1,19 +1,14 @@
 ---
 name: "\U0001F41EBUG"
-about: 버그를 수정하는 작업
+about: 현재 존재하는 버그
 title: "[BUG] "
-labels: "[Bug]"
+labels: bug
 assignees: ""
 ---
 
 ## Description
 
 <!-- 어떤 버그인지 작성해주세요. -->
-
-## To-Do
-
-- [ ] todo1
-- [ ] todo2
 
 ## ETC
 
