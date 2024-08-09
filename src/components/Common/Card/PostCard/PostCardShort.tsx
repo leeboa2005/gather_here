@@ -49,7 +49,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   const cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
 
   return (
-    <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
+    <div className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s post-card">
       <div className="p-5 h-64 text-center bg-fillStrong rounded-2xl">
         <div className="flex justify-between items-center">
           {isMounted ? (
@@ -58,7 +58,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
                 <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
               </li>
               <li className="text-baseS  text-labelNormal ml-2">
-                <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
+                <time dateTime="YYYY-MM-DD">~{dayjs(post.deadline).format("YY.MM.DD")}</time>
               </li>
             </ul>
           ) : null}
@@ -66,23 +66,25 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
           <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
-          <p className="mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
+          <p className="hidden sm:block mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
             {cleanContent}
           </p>
           <div className="mt-1">
             <div className="flex items-center mb-4">
-              {post.user?.profile_image_url && (
-                <div className="relative w-7 h-7 mr-2">
-                  <Image
-                    src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
-                    alt="User profile"
-                    fill
-                    sizes="40px"
-                    className="rounded-md object-cover"
-                  />
-                </div>
-              )}
-              <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
+              <div className="hidden sm:flex items-center">
+                {post.user?.profile_image_url && (
+                  <div className="relative w-7 h-7 mr-2">
+                    <Image
+                      src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
+                      alt="User profile"
+                      fill
+                      sizes="40px"
+                      className="rounded-md object-cover"
+                    />
+                  </div>
+                )}
+                <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
+              </div>
             </div>
             <div className="text-subtitle flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
               <div className="flex-1 text-left truncate">

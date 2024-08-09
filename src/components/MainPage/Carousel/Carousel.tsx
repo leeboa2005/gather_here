@@ -14,6 +14,16 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ posts }) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // D--과거 게시물 필터링
+  const filteredPosts = posts.filter((post) => {
+    const deadlineDate = new Date(post.deadline);
+    deadlineDate.setHours(0, 0, 0, 0);
+    return deadlineDate >= today;
+  });
+
   return (
     <div className="relative z-0">
       <Swiper
@@ -22,8 +32,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         slidesPerView={2}
         navigation
         pagination={{ clickable: true }}
-        className="w-full"
-        style={{ height: "17rem" }}
+        className="w-full swiper"
         breakpoints={{
           280: {
             slidesPerView: 1,
@@ -39,7 +48,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           },
         }}
       >
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <SwiperSlide key={`${post.post_id}_${index}`} className="flex justify-center items-center">
             <PostCardShort post={post} />
           </SwiperSlide>

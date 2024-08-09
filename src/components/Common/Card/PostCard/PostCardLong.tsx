@@ -59,7 +59,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
               <span className="label-secondary rounded-full text-baseS px-3 py-1.5 mr-1">{displayDaysLeft}</span>
             </li>
             <li className="text-baseS  text-labelNormal ml-2">
-              <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
+              <time dateTime="YYYY-MM-DD">~{dayjs(post.deadline).format("YY.MM.DD")}</time>
             </li>
             <li className="absolute right-0">
               <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />

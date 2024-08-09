@@ -31,3 +31,23 @@
 .swiper-button-disabled {
   display: none !important;
 }
+
+@media (min-width: 0px) and (max-width: 639px) {
+  .post-card .p-5 {
+    height: 10.5rem; /* sm 이하일 때 카드 높이  */
+  }
+
+  .swiper {
+    height: 11.5rem; /* sm 이하일 때 페이지네이션 높이 */
+  }
+}
+
+@media (min-width: 640px) {
+  .swiper {
+    height: 17.5rem; /* 페이지네이션 높이 */
+  }
+
+  .post-card .p-5 {
+    height: 16rem; /* 기본 카드 높이 */
+  }
+}

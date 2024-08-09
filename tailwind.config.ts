@@ -73,8 +73,23 @@ const config: Config = {
         custom:
           "0px 2px 8px 0px rgba(0, 0, 0, 0.12), 0px 1px 4px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)",
       },
+      keyframes: {
+        bounce: {
+          "0%, 100%": { transform: "translateY(-10%)" },
+          "50%": { transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        bounce: "bounce 0.5s infinite",
+      },
     },
   },
+  variants: {
+    extend: {
+      animation: ["hover"],
+    },
+  },
+
   plugins: [require("tailwind-scrollbar-hide")],
 };
 
