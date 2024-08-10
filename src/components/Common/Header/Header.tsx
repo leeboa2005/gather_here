@@ -170,9 +170,7 @@ const Header: React.FC = () => {
       )}
       {isModalOpen && (
         <>
-          {/* 백드롭 추가 */}
           <div className="fixed inset-0 bg-black opacity-80 z-40" onClick={handleCloseLoginModal}></div>
-          {/* 모달 추가 */}
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background rounded-[20px] p-4 z-50">
             <button
               onClick={handleCloseLoginModal}
@@ -186,7 +184,6 @@ const Header: React.FC = () => {
       )}
       {isMypageModalOpen && user && (
         <>
-          {/* 백드롭 추가 */}
           <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleMypageModal}></div>
           {/* 마이페이지 모달 */}
           <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-full max-w-[80%] border-[1px] border-fillLight bg-fillStrong shadow-lg rounded-lg p-5 z-50 s:block hidden">
