@@ -139,7 +139,6 @@ const ProfilePicture: React.FC = () => {
                 style={{ objectFit: "cover" }}
                 className="rounded-[20px]"
                 onError={handleImageError}
-                priority
               />
             ) : (
               <ProfileLoader className="w-full h-full rounded-[20px]" />
@@ -189,7 +188,6 @@ const ProfilePicture: React.FC = () => {
                       sizes="(max-width: 768px) 100vw, (max-width: 1068px) 100vw"
                       style={{ objectFit: "cover" }}
                       className="rounded-full m:rounded-[9px]"
-                      priority
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                       <img src="/assets/mypage/hover_plus.svg" width={24} height={24} alt="호버시 플러스 버튼 아이콘" />

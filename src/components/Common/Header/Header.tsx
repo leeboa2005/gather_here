@@ -82,8 +82,8 @@ const Header: React.FC = () => {
             src="/assets/header/mobile_logo.svg"
             alt="@gather_here 로고"
             priority
-            width={24}
-            height={28}
+            width={20}
+            height={24}
             className="hidden s:block"
           />
         </Link>
