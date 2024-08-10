@@ -4,7 +4,7 @@ import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/Infini
 import { fetchPosts } from "@/lib/fetchPosts";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
-import MainLayout from "@/components/Layout/MainLayout";
+import Calender from "../MainSideBar/Calender/Calender";
 
 interface AllContentProps {
   initialPosts: PostWithUser[];
@@ -60,6 +60,9 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
 
   return (
     <>
+      <div className="hidden m:block">
+        <Calender />
+      </div>
       <div className="flex items-center">
         <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} className="mb-3" />
         <p className="m-2 mb-4 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
