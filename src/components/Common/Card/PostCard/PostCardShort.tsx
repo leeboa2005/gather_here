@@ -28,9 +28,6 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   useEffect(() => {
     setIsMounted(true);
 
-    // 추가된 콘솔 로그
-    console.log("PostCardShort received post data:", post);
-
     return () => {
       setIsMounted(false);
     };
