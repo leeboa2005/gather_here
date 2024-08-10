@@ -246,12 +246,12 @@ const ProfileInfo: React.FC = () => {
             {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
               탈퇴하기
             </button> */}
-            <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-black s:z-10">
+            <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-background s:z-10">
               <div className="flex justify-end s:justify-center gap-2 w-full s:max-w-container-s">
-                <button type="button" aria-label="회원 정보 취소" className="shared-button-gray  s:w-1/2">
+                <button type="button" aria-label="회원 정보 취소" className="shared-button-gray w-[65px] s:w-1/2">
                   취소
                 </button>
-                <button type="submit" aria-label="회원 정보 저장" className="shared-button-green  s:w-1/2">
+                <button type="submit" aria-label="회원 정보 저장" className="shared-button-green w-[65px] s:w-1/2">
                   저장
                 </button>
               </div>
