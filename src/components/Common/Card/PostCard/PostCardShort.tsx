@@ -77,9 +77,8 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
                   <div className="relative w-7 h-7 mr-2">
                     <Image
                       src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
-                      alt="User profile"
+                      alt="프로필 사진"
                       fill
-                      sizes="40px"
                       className="rounded-md object-cover"
                     />
                   </div>

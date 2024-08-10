@@ -31,6 +31,7 @@ const ProfilePicture: React.FC = () => {
 
   const occupations = ["프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스", "PM", "기획자", "마케팅"];
 
+  // 프로필 이미지 업로드 및 업데이트 함수
   const uploadProfileImage = async (file: File | Blob, altText: string) => {
     if (!user) return;
     setUploading(true);
@@ -69,22 +70,26 @@ const ProfilePicture: React.FC = () => {
     }
   };
 
+  // 파일 입력 이벤트 핸들러
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) await uploadProfileImage(file, "프로필 이미지");
   };
 
+  // 직군 아이콘 클릭 이벤트 핸들러
   const handleIconClick = async (iconUrl: string, altText: string) => {
     const response = await fetch(iconUrl);
     const blob = await response.blob();
     await uploadProfileImage(blob, altText);
   };
 
+  // 이미지 로드 에러 핸들러
   const handleImageError = () => {
     setProfileImage(null);
     setProfileAlt("프로필 이미지");
   };
 
+  // 프로필 수정 버튼 클릭 핸들러
   const handleFileUploadClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
@@ -93,14 +98,17 @@ const ProfilePicture: React.FC = () => {
     }
   };
 
+  // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
+  // 사용자 데이터에 따라 프로필 이미지를 설정하는 훅
   useEffect(() => {
     if (userData) {
       setProfileImage(userData.profile_image_url || defaultImage);
     }
   }, [userData]);
 
+  // 문자열을 base64로 인코딩하는 함수
   const base64Encode = (str: string) => {
     return Buffer.from(str).toString("base64");
   };
