@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
@@ -27,10 +28,13 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
   useEffect(() => {
     setIsMounted(true);
 
+    // 추가된 콘솔 로그
+    console.log("PostCardShort received post data:", post);
+
     return () => {
       setIsMounted(false);
     };
-  }, []);
+  }, [post]);
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 

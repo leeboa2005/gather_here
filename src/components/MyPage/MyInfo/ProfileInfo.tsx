@@ -225,7 +225,7 @@ const ProfileInfo: React.FC = () => {
             </div>
             <div>
               <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
-                블로그
+                URL&nbsp;<span className="text-labelAssistive text-baseXs">(선택)</span>
               </label>
               <input
                 type="url"
@@ -236,7 +236,9 @@ const ProfileInfo: React.FC = () => {
                 placeholder="링크를 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              <p className="text-labelAssistive text-baseXs mt-1">자신을 나타낼 수 있는 포트폴리오 링크를 알려주세요.</p>
+              <p className="text-labelAssistive text-baseXs mt-1">
+                자신을 나타낼 수 있는 포트폴리오 링크를 알려주세요.
+              </p>
             </div>
           </div>
           <div className="mt-6 mb-12">
@@ -244,13 +246,15 @@ const ProfileInfo: React.FC = () => {
             {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
               탈퇴하기
             </button> */}
-            <div className="flex justify-end gap-2">
-              <button type="button" aria-label="회원 정보 취소" className="shared-button-gray">
-                취소
-              </button>
-              <button type="submit" aria-label="회원 정보 저장" className="shared-button-green">
-                저장
-              </button>
+            <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-black s:z-10">
+              <div className="flex justify-end s:justify-center gap-2 w-full s:max-w-container-s">
+                <button type="button" aria-label="회원 정보 취소" className="shared-button-gray  s:w-1/2">
+                  취소
+                </button>
+                <button type="submit" aria-label="회원 정보 저장" className="shared-button-green  s:w-1/2">
+                  저장
+                </button>
+              </div>
             </div>
           </div>
         </fieldset>
