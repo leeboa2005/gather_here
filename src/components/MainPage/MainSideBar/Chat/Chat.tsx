@@ -32,6 +32,7 @@ const Chat = () => {
   // customHook 으로 따로 빼서 코드 정리?
 
   useEffect(() => {
+    console.log("chat mount");
     // 채팅 내역 불러오기
     const getAllMessages = async () => {
       const { data, error } = await supabase
