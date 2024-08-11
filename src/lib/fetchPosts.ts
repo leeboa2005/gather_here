@@ -103,7 +103,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
     )
     .gte("deadline", formattedToday)
     .lte("deadline", formattedFutureDate)
-    .order("created_at", { ascending: false });
+    .order("deadline", { ascending: true }); // 마감일이 가까운 순서대로 정렬
 
   if (category) {
     query.eq("category", category);
