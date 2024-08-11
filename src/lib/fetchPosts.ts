@@ -67,12 +67,16 @@ export const fetchPosts = async (
   if (filters.user_id) {
     query.eq("user_id", filters.user_id);
   }
-  if (options.order) {
-    query.order(options.order.column, { ascending: options.order.ascending });
-  }
+  // if (options.order) {
+  //   query.order(options.order.column, { ascending: options.order.ascending });
+  // }
+
+  // 최신 글 순으로 정렬
+  query.order(options.order?.column || "created_at", { ascending: options.order?.ascending ?? false });
 
   query.range(start, start + postsPerPage - 1);
   const { data, error } = await query.throwOnError();
+  console.log("Fetched Posts:", data);
   if (error) throw error;
 
   return data as PostWithUser[];
