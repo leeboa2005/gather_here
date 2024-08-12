@@ -17,9 +17,6 @@ const config: Config = {
         "container-m": "744px",
         "container-s": "335px",
       },
-      fontFamily: {
-        main: ['"Pretendard"', "sans-serif"],
-      },
       // ex) className : text-title
       fontSize: {
         title: ["28px", "1.2"],
