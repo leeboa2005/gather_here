@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        pretendard: ["__pretendard_15dc0f", "sans-serif"],
+      },
       screens: {
         m: { max: "1068px" },
         s: { max: "768px" },
