@@ -25,7 +25,7 @@ const ProfilePicture: React.FC = () => {
   const iconImages = useMemo(() => {
     return Array.from(
       { length: 9 },
-      (_, index) => `${imageBaseUrl}/profileicon_${String(index + 1).padStart(2, "0")}.jpg`,
+      (_, index) => `${imageBaseUrl}/profileicon_dark_${String(index + 1).padStart(2, "0")}.png`,
     );
   }, [imageBaseUrl]);
 
@@ -126,8 +126,8 @@ const ProfilePicture: React.FC = () => {
       </CommonModal>
       <div className="px-6 pt-6 pb-10 s:p-0 s:pb-4 border-b-[1px] border-fillNormal">
         <label className="block text-subtitle font-baseBold text-labelNeutral mb-5">프로필 사진</label>
-        <div className="flex items-center s:flex-col s:items-start s:mb-3 gap-5">
-          <div className="w-36 h-36 rounded-[20px] overflow-hidden bg-fillLight flex items-center justify-center s:mb-3 relative">
+        <div className="flex items-center flex-wrap s:mb-3 gap-5">
+          <div className="w-36 h-36  m:w-40 m:h-40 s:w-36 s:h-36 rounded-[20px] overflow-hidden bg-fillLight flex items-center justify-center s:mb-3 relative group">
             {uploading ? (
               <ProfileLoader className="w-full h-full rounded-[20px]" />
             ) : profileImage ? (
@@ -139,18 +139,32 @@ const ProfilePicture: React.FC = () => {
                 style={{ objectFit: "cover" }}
                 className="rounded-[20px]"
                 onError={handleImageError}
-                priority
               />
             ) : (
               <ProfileLoader className="w-full h-full rounded-[20px]" />
             )}
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-              <img src="/assets/mypage/hover_plus.svg" width={24} height={24} alt="플러스 버튼 아이콘" />
-            </div>
+            {!uploading && (
+              <div className="relative group">
+                <div className="absolute inset-0 bg-black bg-opacity-50 m:group-hover:opacity-100 transition-opacity z-10"></div>
+                <button
+                  type="button"
+                  className="hidden m:block absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[48px] h-[48px] bg-fillLight opacity-0 group-hover:opacity-100 z-20 rounded-[20px]"
+                  onClick={handleFileUploadClick}
+                >
+                  <img
+                    src="/assets/mypage/image_upload.svg"
+                    width={24}
+                    height={24}
+                    alt="이미지 업로드 아이콘"
+                    className="mx-auto"
+                  />
+                </button>
+              </div>
+            )}
           </div>
           <input id="fileInput" type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
-          <div className="grid grid-cols-5 gap-2 s:mb-4">
-            <div className="relative">
+          <div className="grid grid-cols-5 m:grid-cols-3 gap-2 s:mb-4">
+            <div className="relative m:hidden">
               <button
                 type="button"
                 className="w-[52px] h-[52px] m:w-[48px] m:h-[48px] rounded-full overflow-hidden bg-fillLight flex items-center justify-center"
@@ -163,7 +177,7 @@ const ProfilePicture: React.FC = () => {
               <div key={index} className="relative group">
                 <button
                   type="button"
-                  className="w-[52px] h-[52px] m:w-[48px] m:h-[48px] rounded-full overflow-hidden bg-fillLight flex items-center justify-center"
+                  className="w-[52px] h-[52px] m:w-[48px] m:h-[48px] rounded-full m:rounded-[9px] overflow-hidden bg-fillNeutral flex items-center justify-center"
                   onClick={() => handleIconClick(icon, `${occupations[index]} 프로필 이미지`)}
                 >
                   <div className="w-full h-full relative">
@@ -173,8 +187,7 @@ const ProfilePicture: React.FC = () => {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1068px) 100vw"
                       style={{ objectFit: "cover" }}
-                      className="rounded-full"
-                      priority
+                      className="rounded-full m:rounded-[9px]"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                       <img src="/assets/mypage/hover_plus.svg" width={24} height={24} alt="호버시 플러스 버튼 아이콘" />
@@ -182,11 +195,13 @@ const ProfilePicture: React.FC = () => {
                   </div>
                 </button>
                 <div
-                  className={`absolute whitespace-nowrap ${
+                  className={`absolute z-20 whitespace-nowrap py-1 px-2 min-h-6 ${
                     index < 4 ? "bottom-full mb-2" : "top-full mt-2"
                   } left-1/2 transform -translate-x-1/2 ${
                     index === 0 ? "s:-translate-x-1/4" : ""
-                  } bg-fillStrong text-fontWhite text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100`}
+                  } bg-fillStrong text-fontWhite text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                    index < 4 ? "bottom-full mb-2" : "top-full mt-2"
+                  } m:top-full m:mt-2`}
                 >
                   {occupations[index]}
                 </div>
