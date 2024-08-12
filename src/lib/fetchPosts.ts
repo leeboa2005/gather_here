@@ -76,7 +76,6 @@ export const fetchPosts = async (
 
   query.range(start, start + postsPerPage - 1);
   const { data, error } = await query.throwOnError();
-  console.log("Fetched Posts:", data);
   if (error) throw error;
 
   return data as PostWithUser[];

@@ -13,6 +13,7 @@ const MainLayout = ({
 }>) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,12 +25,31 @@ const MainLayout = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // 스크롤 이벤트를 감지하여 스크롤 위치에 따라 버튼을 표시
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // 최상단으로 스크롤
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (
@@ -74,6 +94,21 @@ const MainLayout = ({
             priority
             style={{ width: "auto", height: "auto" }}
           />
+        </button>
+      )}
+      {!isMobile && showScrollToTop && (
+        <button onClick={scrollToTop} className="fixed flex bottom-8 right-3 p-5 hover:animate-bounce">
+          {" "}
+          <Image
+            src="/assets/send.svg"
+            alt="Chat icon"
+            width={20}
+            height={20}
+            style={{ width: "auto", height: "auto" }}
+          />
+          <p className="ml-1 relative" style={{ top: "-4px" }}>
+            TOP
+          </p>
         </button>
       )}
       <CommonModal isOpen={isModalOpen} onRequestClose={closeModal}>
