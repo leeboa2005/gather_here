@@ -136,7 +136,7 @@ const Chat = () => {
                         style={{ width: "19px", height: "19px" }}
                       >
                         <div className="flex w-full h-full justify-center items-center">
-                          <Image src="/assets/send.svg" alt="전송 버튼" width={30} height={30} />
+                          <Image src="/Chat/send.svg" alt="전송 버튼" width={30} height={30} />
                         </div>
                       </button>
                     </div>

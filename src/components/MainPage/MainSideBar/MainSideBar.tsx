@@ -2,12 +2,14 @@
 
 import Calender from "@/components/MainPage/MainSideBar/Calender/Calender";
 import Chat from "@/components/MainPage/MainSideBar/Chat/Chat";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import ChatModal from "./Chat/ChatModal";
 
 const MainSideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -16,6 +18,34 @@ const MainSideBar = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1068);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200 && !isMobile) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
   return (
     <>
       <div className="col-span-1 m:hidden">
@@ -53,6 +83,14 @@ const MainSideBar = () => {
       <ChatModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Chat />
       </ChatModal>
+      {!isMobile && showScrollToTop && (
+        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 p-5 hover:animate-bounce">
+          <Image src="/Chat/send.svg" alt="Top icon" width={20} height={20} style={{ width: "auto", height: "auto" }} />
+          <p className="ml-1 relative" style={{ top: "-4px" }}>
+            TOP
+          </p>
+        </button>
+      )}
     </>
   );
 };
