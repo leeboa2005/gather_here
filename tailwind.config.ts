@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ["__pretendard_15dc0f", "sans-serif"],
+        pretendard: ["var(--font-pretendard)", "sans-serif"],
       },
       screens: {
         m: { max: "1068px" },
