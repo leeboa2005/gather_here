@@ -17,7 +17,9 @@ const Chat = () => {
     handleSubmit,
     handleDelete,
   } = useChat();
-
+  {
+    /* TODO: 채팅창 내부 디자인 시안 반영하기 */
+  }
   return (
     <>
       <div id="container" className="h-[453px] w-full flex-col justify-start items-start inline-flex">
@@ -29,7 +31,7 @@ const Chat = () => {
             <div className="justify-center items-center gap-1 flex">
               <div className="w-6 h-6 p-1 justify-center items-center flex">
                 <div className="flex-col justify-center items-center inline-flex text-fontWhite">
-                  <Image src="/chat/people.svg" width={16} height={12} alt="사람 모양 아이콘" />
+                  <Image src="/Chat/people.svg" width={16} height={12} alt="사람 모양 아이콘" />
                 </div>
               </div>
               <div className="text-fontWhite text-base font-normal font-['Pretendard'] leading-[21px]">
@@ -65,7 +67,7 @@ const Chat = () => {
                         </div>
                       </div>
                       <div className="mt-1 self-stretch text-right text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
-                        {dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}
+                        {dayjs(message.sent_at).format("YY.MM.DD HH:mm")}
                       </div>
                     </div>
                   </div>
@@ -96,7 +98,7 @@ const Chat = () => {
                           </div>
                         </div>
                         <div className="mt-1 self-stretch text-[#919191] text-xs font-normal font-['Pretendard'] leading-none">
-                          {dayjs(message.sent_at).format("YYYY-MM-DD HH:mm")}
+                          {dayjs(message.sent_at).format("YY.MM.DD HH:mm")}
                         </div>
                       </div>
                     </div>
