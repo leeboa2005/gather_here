@@ -244,3 +244,12 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgba(208, 208, 208, 0.3) transparent;
 }
+
+/* mypage tooltip style*/
+.custom-tooltip-top-6 {
+  @apply bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-fillStrong text-fontWhite text-xs rounded py-1 px-2;
+}
+
+.custom-tooltip-bottom-3 {
+  @apply top-full mt-2 left-1/2 transform -translate-x-1/2 bg-fillStrong text-fontWhite text-xs rounded py-1 px-2;
+}

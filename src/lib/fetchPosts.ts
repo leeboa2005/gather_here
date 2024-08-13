@@ -113,7 +113,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
 export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUser | ITEvent>> => {
   const supabase = createClient();
 
-  // 관심 있는 스터디,프로젝트 가져오기
+  // 관심 있는 스터디, 프로젝트 가져오기
   const { data: interestsData, error: interestsError } = await supabase
     .from("Interests")
     .select("post_id, category")
@@ -140,7 +140,20 @@ export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUse
   const eventIds = itInterestsData.map((interest) => interest.event_id);
 
   // 포스트 데이터 가져오기
-  const { data: postsData, error: postsError } = await supabase.from("Posts").select("*").in("post_id", postIds);
+  const { data: postsData, error: postsError } = await supabase
+    .from("Posts")
+    .select(
+      `
+      *,
+      user:Users!Posts_user_id_fkey (
+        nickname,
+        email,
+        profile_image_url
+      )
+    `,
+    )
+    .in("post_id", postIds);
+
   if (postsError) {
     console.error("포스트 불러오는 중 오류 발생:", postsError);
     return [];
@@ -151,6 +164,7 @@ export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUse
     .from("IT_Events")
     .select("*")
     .in("event_id", eventIds);
+
   if (eventsError) {
     console.error("IT 행사 정보 불러오는 중 오류 발생:", eventsError);
     return [];

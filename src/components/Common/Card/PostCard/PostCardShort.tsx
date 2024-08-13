@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
@@ -30,7 +31,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     return () => {
       setIsMounted(false);
     };
-  }, []);
+  }, [post]);
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
@@ -76,9 +77,8 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
                   <div className="relative w-7 h-7 mr-2">
                     <Image
                       src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
-                      alt="User profile"
+                      alt="프로필 사진"
                       fill
-                      sizes="40px"
                       className="rounded-md object-cover"
                     />
                   </div>
