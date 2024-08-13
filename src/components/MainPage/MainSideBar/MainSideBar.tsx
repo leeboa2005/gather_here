@@ -84,11 +84,14 @@ const MainSideBar = () => {
         <Chat />
       </ChatModal>
       {!isMobile && showScrollToTop && (
-        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 p-5 hover:animate-bounce">
-          <Image src="/Chat/send.svg" alt="Top icon" width={20} height={20} style={{ width: "auto", height: "auto" }} />
-          <p className="ml-1 relative" style={{ top: "-4px" }}>
-            TOP
-          </p>
+        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 hover:animate-bounce">
+          <Image
+            src="/assets/top.svg"
+            alt="Top icon"
+            width={20}
+            height={20}
+            style={{ width: "auto", height: "auto" }}
+          />
         </button>
       )}
     </>
