@@ -52,7 +52,6 @@ const SignupPage = () => {
       if (confirmLeave) {
         router.push("/");
       } else {
-        // 사용자 동작을 취소했을 때, 뒤로가기 동작을 무효화하여 페이지에 그대로 머물게 합니다.
         history.pushState(null, "", location.href);
       }
     };
