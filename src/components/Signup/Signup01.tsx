@@ -2,6 +2,8 @@
 
 import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/provider/ContextProvider';
 
 const jobTitles = [
   '프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', 
@@ -14,20 +16,32 @@ const jobClasses: { [key: string]: string } = {
   'IOS': 'button-ios',
   '안드로이드': 'button-android',
   '데브옵스': 'button-devops',
-  '기획': 'button-pm',
+  '기획': 'button-planner',
   '디자인': 'button-designer',
   '마케팅': 'button-marketer',
-  'PM': 'button-project',
+  'PM': 'button-pm',
 };
 
 const Signup01: React.FC = () => {
   const { nextStep, setJob } = useSignupStore();
   const [selectedJob, setSelectedJob] = useState<string>('');
+  const router = useRouter();
+  const { closeModal } = useModal();
 
   const handleJobSelection = (job_title: string) => {
     setSelectedJob(job_title);
     setJob(job_title);
     nextStep();
+  };
+
+  const handleSkip = () => {
+    // 사용자에게 확인 메시지를 표시
+    const confirmSkip = window.confirm("기본정보는 마이페이지에서 수정할 수 있습니다. 계속하시겠습니까?");
+    
+    if (confirmSkip) {
+      closeModal();
+      router.push('/');
+    }
   };
 
   const getButtonClass = (job: string) => {
@@ -38,6 +52,13 @@ const Signup01: React.FC = () => {
 
   return (
     <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
+      <button 
+        onClick={handleSkip} 
+        className="absolute top-4 right-4 text-[#c4c4c4] text-sm font-medium"
+      >
+        건너뛰기
+      </button>
+
       <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
         <div className="w-[136px] s:h-18 h-20 justify-start items-center gap-2 inline-flex">
           <div className="w-10 h-10 p-2.5 rounded-[11px] border border-[#c3e88d] flex-col justify-center items-center gap-2.5 inline-flex">

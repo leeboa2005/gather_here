@@ -124,10 +124,10 @@ body {
     @apply bg-primary;
   }
   .square-button.button-ios:hover {
-    @apply bg-accentPurple;
+    @apply bg-accentMaya;
   }
   .square-button.button-android:hover {
-    @apply bg-accentRed;
+    @apply bg-accentPurple;
   }
   .square-button.button-pm:hover {
     @apply bg-accentColumbia;
@@ -145,10 +145,10 @@ body {
     @apply bg-accentOrange;
   }
   .square-button.button-designer:hover {
-    @apply bg-accentMaya;
+    @apply bg-accentMint;
   }
   .square-button.button-devops:hover {
-    @apply bg-accentMint;
+    @apply bg-accentRed;
   }
 
   /* button - google  */
