@@ -83,7 +83,7 @@ const Calender: NextPage = () => {
 
   return (
     <div className="custom_calender mb-6">
-      <h4 className="flex ml-1 mb-4 m:ml-3 s:ml-3 text-fontWhite">
+      <h4 className="flex  text-fontWhite">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
           <path
             fillRule="evenodd"
@@ -92,7 +92,7 @@ const Calender: NextPage = () => {
             fill="#C3E88D"
           />
         </svg>
-        HOT한 IT 행사 놓치지 마세요
+        <p className="mb-4">HOT한 IT 행사 놓치지 마세요</p>
       </h4>
       <FullCalendar
         // 공통 옵션
