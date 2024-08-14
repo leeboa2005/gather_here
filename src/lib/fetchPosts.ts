@@ -67,9 +67,12 @@ export const fetchPosts = async (
   if (filters.user_id) {
     query.eq("user_id", filters.user_id);
   }
-  if (options.order) {
-    query.order(options.order.column, { ascending: options.order.ascending });
-  }
+  // if (options.order) {
+  //   query.order(options.order.column, { ascending: options.order.ascending });
+  // }
+
+  // 최신 글 순으로 정렬
+  query.order(options.order?.column || "created_at", { ascending: options.order?.ascending ?? false });
 
   query.range(start, start + postsPerPage - 1);
   const { data, error } = await query.throwOnError();
@@ -99,7 +102,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
     )
     .gte("deadline", formattedToday)
     .lte("deadline", formattedFutureDate)
-    .order("created_at", { ascending: false });
+    .order("deadline", { ascending: true }); // 마감일이 가까운 순서대로 정렬
 
   if (category) {
     query.eq("category", category);
