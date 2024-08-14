@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        pretendard: ["var(--font-pretendard)", "sans-serif"],
+      },
       screens: {
         m: { max: "1068px" },
         s: { max: "768px" },
@@ -16,9 +19,6 @@ const config: Config = {
         "container-l": "1048px",
         "container-m": "744px",
         "container-s": "335px",
-      },
-      fontFamily: {
-        main: ['"Pretendard"', "sans-serif"],
       },
       // ex) className : text-title
       fontSize: {
@@ -73,8 +73,23 @@ const config: Config = {
         custom:
           "0px 2px 8px 0px rgba(0, 0, 0, 0.12), 0px 1px 4px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)",
       },
+      keyframes: {
+        bounce: {
+          "0%, 100%": { transform: "translateY(-10%)" },
+          "50%": { transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        bounce: "bounce 0.5s infinite",
+      },
     },
   },
+  variants: {
+    extend: {
+      animation: ["hover"],
+    },
+  },
+
   plugins: [require("tailwind-scrollbar-hide")],
 };
 

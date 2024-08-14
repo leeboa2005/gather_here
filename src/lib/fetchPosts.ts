@@ -22,7 +22,12 @@ export const fetchPosts = async (
 ): Promise<PostWithUser[]> => {
   const supabase = createClient();
   const postsPerPage = 5;
-  const today = new Date().toISOString().split("T")[0];
+
+  // 오늘 날짜를 ISO 8601 형식의 문자열로 변환
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 오늘의 00:00:00로 설정
+  const formattedToday = today.toISOString();
+
   const start = (page - 1) * postsPerPage;
 
   const query = supabase
@@ -37,7 +42,7 @@ export const fetchPosts = async (
       )
     `,
     )
-    .gte("deadline", today);
+    .gte("deadline", formattedToday); // 오늘 포함 이후의 게시물만 불러오기
 
   if (category) {
     query.eq("category", category);
@@ -62,9 +67,12 @@ export const fetchPosts = async (
   if (filters.user_id) {
     query.eq("user_id", filters.user_id);
   }
-  if (options.order) {
-    query.order(options.order.column, { ascending: options.order.ascending });
-  }
+  // if (options.order) {
+  //   query.order(options.order.column, { ascending: options.order.ascending });
+  // }
+
+  // 최신 글 순으로 정렬
+  query.order(options.order?.column || "created_at", { ascending: options.order?.ascending ?? false });
 
   query.range(start, start + postsPerPage - 1);
   const { data, error } = await query.throwOnError();
@@ -94,7 +102,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
     )
     .gte("deadline", formattedToday)
     .lte("deadline", formattedFutureDate)
-    .order("created_at", { ascending: false });
+    .order("deadline", { ascending: true }); // 마감일이 가까운 순서대로 정렬
 
   if (category) {
     query.eq("category", category);
@@ -108,7 +116,7 @@ export const fetchPostsWithDeadLine = async (days: number, category?: string): P
 export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUser | ITEvent>> => {
   const supabase = createClient();
 
-  // 관심 있는 스터디,프로젝트 가져오기
+  // 관심 있는 스터디, 프로젝트 가져오기
   const { data: interestsData, error: interestsError } = await supabase
     .from("Interests")
     .select("post_id, category")
@@ -135,7 +143,20 @@ export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUse
   const eventIds = itInterestsData.map((interest) => interest.event_id);
 
   // 포스트 데이터 가져오기
-  const { data: postsData, error: postsError } = await supabase.from("Posts").select("*").in("post_id", postIds);
+  const { data: postsData, error: postsError } = await supabase
+    .from("Posts")
+    .select(
+      `
+      *,
+      user:Users!Posts_user_id_fkey (
+        nickname,
+        email,
+        profile_image_url
+      )
+    `,
+    )
+    .in("post_id", postIds);
+
   if (postsError) {
     console.error("포스트 불러오는 중 오류 발생:", postsError);
     return [];
@@ -146,6 +167,7 @@ export const fetchLikedPosts = async (userId: string): Promise<Array<PostWithUse
     .from("IT_Events")
     .select("*")
     .in("event_id", eventIds);
+
   if (eventsError) {
     console.error("IT 행사 정보 불러오는 중 오류 발생:", eventsError);
     return [];

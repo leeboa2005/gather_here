@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import "dayjs/locale/ko"; // 한국어 로케일 임포트
 
 interface EventsCardProps {
   post: Tables<"IT_Events">;
@@ -30,6 +31,9 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
     };
   }, []);
 
+  // dayjs 로케일을 한국어로 설정
+  dayjs.locale("ko");
+
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
       <div className="p-4 h-64 text-center bg-fillStrong rounded-2xl">
@@ -40,7 +44,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
             </li>
             <li>
               <time dateTime={post.date_done} className="text-baseS text-labelNormal">
-                {dayjs(post.date_done).format("YYYY-MM-DD")}
+                {dayjs(post.date_done).format("YY.MM.DD (ddd)")}
               </time>
             </li>
 

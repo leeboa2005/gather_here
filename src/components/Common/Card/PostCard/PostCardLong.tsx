@@ -19,6 +19,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
   currentDate.setHours(0, 0, 0, 0);
   const daysLeft = Math.ceil((deadlineDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
   const displayDaysLeft = daysLeft === 0 ? "D-day" : `D-${daysLeft.toFixed(0)}`;
+  const defaultImage = "/assets/header/user.svg";
 
   useEffect(() => {
     setIsMounted(true);
@@ -58,7 +59,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
               <span className="label-secondary rounded-full text-baseS px-3 py-1.5 mr-1">{displayDaysLeft}</span>
             </li>
             <li className="text-baseS  text-labelNormal ml-2">
-              <time dateTime="YYYY-MM-DD">{dayjs(post.deadline).format("YYYY-MM-DD")}</time>
+              <time dateTime="YYYY-MM-DD">~{dayjs(post.deadline).format("YY.MM.DD")}</time>
             </li>
             <li className="absolute right-0">
               <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
@@ -73,10 +74,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
               <Image
-                src={getProfileImageUrl(post.user.profile_image_url)}
-                alt="User profile"
+                src={getProfileImageUrl(post.user?.profile_image_url ?? defaultImage)}
+                alt="프로필 사진"
                 fill
-                sizes="40px"
                 className="rounded-md object-cover"
               />
             </div>

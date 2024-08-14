@@ -8,6 +8,7 @@ import { Tables } from "@/types/supabase";
 import { fetchEventsPosts, fetchEventsPostsWithDeadLine, FetchPostsFilters } from "@/lib/fetchPosts";
 import EventsInfiniteScrollComponent from "../InfiniteScroll/EventsInfiniteScroll";
 import MainLayout from "@/components/Layout/MainLayout";
+import Calender from "../MainSideBar/Calender/Calender";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/EventsCarousel"), { ssr: false });
 
@@ -130,7 +131,10 @@ const EventsContent: NextPage = () => {
   }, []);
 
   return (
-    <MainLayout>
+    <>
+      <div className="hidden m:block">
+        <Calender />
+      </div>
       <div className="w-full mb-4">
         <div className="flex items-center">
           <Image src="/assets/run.svg" alt="Run Icon" width={20} height={20} className="w-5 h-5" priority />
@@ -158,7 +162,7 @@ const EventsContent: NextPage = () => {
         </div>
         <EventsInfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
       </div>
-    </MainLayout>
+    </>
   );
 };
 

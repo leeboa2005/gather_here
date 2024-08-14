@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { fetchLikedPosts } from "@/lib/fetchPosts";
-import PostCardShort from "@/components/Common/Card/PostCard/PostCardShort";
+import PostCardLong from "@/components/Common/Card/PostCard/PostCardLong";
 import ItEventCardShort from "@/components/Common/Card/PostCard/ItEventCardShort";
 import MypageList from "@/components/Common/Skeleton/MypageList";
 import Pagination from "@/components/MyPage/Common/Pagination";
@@ -62,7 +62,7 @@ const InterestsTap: React.FC = () => {
   return (
     <div className="relative min-h-screen flex flex-col">
       <div className="sticky z-10 s:relative s:top-auto">
-        <div className="flex space-x-4 sm:space-x-2">
+        <div className="flex space-x-4 s:space-x-6">
           <button
             className={`text-baseS min-w-[64px] ${selectedTab === "전체" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("전체")}
@@ -96,11 +96,11 @@ const InterestsTap: React.FC = () => {
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full">
+            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full h-[260px]">
               {"event_id" in post ? (
                 <ItEventCardShort post={post as ITEvent} />
               ) : (
-                <PostCardShort post={post as PostWithUser} />
+                <PostCardLong post={post as PostWithUser} />
               )}
             </div>
           ))

@@ -2,7 +2,7 @@
 name: "\U0001F525DEL"
 about: 불필요한 코드나 파일 삭제
 title: "[DEL] "
-labels: "[Del]"
+labels: del
 assignees: ""
 ---
 

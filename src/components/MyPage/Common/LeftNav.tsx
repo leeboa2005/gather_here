@@ -11,7 +11,7 @@ import { createClient } from "@/utils/supabase/client";
 const LeftNav: React.FC = () => {
   const pathname = usePathname();
   const { user, userData, setUserData, loading } = useUser();
-  const defaultImage = "/Mypage/default-profile.png";
+  const defaultImage = "/assets/header/user.svg";
 
   // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;

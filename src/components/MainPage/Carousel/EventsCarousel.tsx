@@ -14,6 +14,16 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ posts }) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // 과거 이벤트 필터링
+  const filteredPosts = posts.filter((post) => {
+    const eventDate = new Date(post.date_done);
+    eventDate.setHours(0, 0, 0, 0);
+    return eventDate >= today;
+  });
+
   return (
     <div className="relative z-0">
       <Swiper
@@ -21,10 +31,14 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         spaceBetween={12}
         slidesPerView={2}
         navigation
+        loop={true}
         pagination={{ clickable: true }}
         className="w-full"
         style={{ height: "17rem" }}
         breakpoints={{
+          280: {
+            slidesPerView: 1,
+          },
           336: {
             slidesPerView: 1,
           },
@@ -36,7 +50,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
           },
         }}
       >
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <SwiperSlide key={`${post.event_id}_${index}`} className="flex justify-center items-center">
             <ItEventCardShort post={post} />
           </SwiperSlide>

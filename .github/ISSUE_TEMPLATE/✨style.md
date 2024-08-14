@@ -1,8 +1,8 @@
 ---
 name: "✨STYLE"
-about: 스타일 요소
+about: CSS, 스타일 요소
 title: "[STYLE] "
-labels: "[Style]"
+labels: Style
 assignees: ""
 ---
 
