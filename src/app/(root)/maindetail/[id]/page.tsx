@@ -171,7 +171,7 @@ const MainDetailPage = () => {
 
   const renderTechStackIcons = (techStack: string[]) => {
     return techStack.map((tech) => (
-      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={24} height={24} className="inline-block mr-2" />
+      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={40} height={40} className="inline-block mr-2" />
     ));
   };
 
