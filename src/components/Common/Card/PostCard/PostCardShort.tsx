@@ -41,7 +41,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     안드로이드: "text-accentRed",
     PM: "text-accentColumbia",
     기획자: "text-accentPink",
-    마케팅: "text-accentYellow",
+    마케터: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",

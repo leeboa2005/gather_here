@@ -157,19 +157,33 @@ const MainDetailPage = () => {
 
   const renderTechStackIcons = (techStack: string[]) => {
     return techStack.map((tech) => (
-      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={24} height={24} className="inline-block mr-2" />
+      <div key={tech} className="inline-flex items-center mr-1">
+        <div className="flex items-center my-1 bg-fillNormal px-2.5 py-1 rounded-full">
+          <div className="flex items-center">
+            <Image
+              src={`/Stacks/${tech}.svg`}
+              alt={tech}
+              width={20}
+              height={20}
+              className="mr-1"
+              style={{ width: "20px", height: "20px" }}
+            />
+          </div>
+          <span className="text-baseS text-labelNeutral">{tech}</span>
+        </div>
+      </div>
     ));
   };
 
   return (
     <>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
         <button onClick={() => router.back()} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s p-5 bg-fillAlternative text-fontWhite rounded-lg">
         <ToastContainer
           toastClassName={() =>
             "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-fillAlternative"
@@ -181,10 +195,10 @@ const MainDetailPage = () => {
           closeOnClick
           pauseOnHover
         />
-        <div className="mb-4 p-3">
+        <div className="mb-4">
           <h1 className="text-title font-title">{post.title}</h1>
         </div>
-        <div className="flex items-center justify-between mb-4 pl-3 pr-3">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             {user?.profile_image_url && (
               <Image
@@ -220,9 +234,9 @@ const MainDetailPage = () => {
                   </svg>
                 </button>
                 {showOptions && (
-                  <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg py-2">
+                  <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg">
                     <button
-                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
                       onClick={() => router.push(`/post/${id}`)}
                     >
                       <svg
@@ -243,7 +257,7 @@ const MainDetailPage = () => {
                       수정하기
                     </button>
                     <button
-                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
                       onClick={confirmDelete}
                     >
                       <svg
@@ -272,50 +286,54 @@ const MainDetailPage = () => {
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
         </div>
         <div className="flex mb-4 flex-wrap">
-          <div className="w-1/2 p-4">
-            <p className="mb-3">
-              <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
+          <div className="w-1/2 s:w-full">
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">분류</strong> <span className="ml-5">{post.category}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">지역</strong> <span className="ml-5">{post.location}</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">지역</strong> <span className="ml-5">{post.location}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">기간</strong> <span className="ml-5">{post.duration}개월</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">기간</strong> <span className="ml-5">{post.duration}개월</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">총 인원</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">총 인원</strong>
               <span className="ml-5">{post.total_members}명</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">지원 방법</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">지원 방법</strong>
               <span className="ml-5">{post.personal_link}</span>
             </p>
           </div>
-          <div className="w-1/2 p-3">
-            <p className="mb-3">
-              <strong className="text-labelNeutral">모집 대상</strong>{" "}
-              <span className="ml-5">{post.target_position.join(", ")}</span>
+          <div className="w-1/2 s:w-full">
+            <hr className="hidden s:block border-fillNeutral my-5" />
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">모집 대상</strong>
+              <span className="ml-8">{post.target_position.join(", ")}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">모집 인원</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">모집 인원</strong>
               <span className="ml-5">{post.recruitments}명</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">기술 스택</strong>
-              <span className="ml-5">{renderTechStackIcons(post.tech_stack)}</span>
-            </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">마감일</strong>{" "}
+
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">마감일</strong>
               <span className="ml-5">{new Date(post.deadline).toLocaleDateString()}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">장소</strong> <span className="ml-5">{post.place}</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">장소</strong> <span className="ml-5">{post.place}</span>
+            </p>
+            <p className="mb-3 flex items-start">
+              <strong className="text-labelNeutral w-20 flex-shrink-0">기술 스택</strong>
+              <span className="ml-4 flex flex-wrap justify-start items-center flex-grow">
+                {renderTechStackIcons(post.tech_stack)}
+              </span>
             </p>
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
         <div>
-          <h2 className="text-lg text-labelAssistive font-semibold mb-5">모집 내용</h2>
+          <h2 className="text-lg text-labelAssistive font-semibold mb-5 w-w-20">모집 내용</h2>
         </div>
         <div className="bg-fillLight p-4 rounded-lg shadow-md">
           <div className="ql-editor" dangerouslySetInnerHTML={{ __html: cleanContent }} />

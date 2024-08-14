@@ -181,7 +181,7 @@ const PostEditPage = () => {
     { value: "Go", label: "Go" },
     { value: "GraphQL", label: "GraphQL" },
     { value: "Java", label: "Java" },
-    { value: "Javascript", label: "Javascript" },
+    { value: "JavaScript", label: "JavaScript" },
     { value: "Jest", label: "Jest" },
     { value: "Kotlin", label: "Kotlin" },
     { value: "Kubernetes", label: "Kubernetes" },
@@ -197,7 +197,7 @@ const PostEditPage = () => {
     { value: "Spring", label: "Spring" },
     { value: "Svelte", label: "Svelte" },
     { value: "Swift", label: "Swift" },
-    { value: "Typescript", label: "Typescript" },
+    { value: "TypeScript", label: "TypeScript" },
     { value: "Unity", label: "Unity" },
     { value: "Vue", label: "Vue" },
     { value: "Zeplin", label: "Zeplin" },
@@ -212,7 +212,7 @@ const PostEditPage = () => {
   return (
     <>
       <ToastContainer />
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+      <div className="w-full mx-auto max-w-[744px] s:max-w-container-s text-fontWhite rounded-lg">
         <button
           onClick={() => router.push(`/maindetail/${id}`)}
           className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2"
@@ -223,9 +223,9 @@ const PostEditPage = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
+        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-fillAlternative text-fontWhite rounded-lg"
       >
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className=" bg-fillStrong p-6 rounded-lg space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNeutral font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
@@ -292,7 +292,7 @@ const PostEditPage = () => {
         </div>
         <hr className="border-fillNeutral mb-4" />
 
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong p-6 rounded-lg space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <FormMultiSelect
@@ -329,7 +329,7 @@ const PostEditPage = () => {
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong p-6 rounded-lg space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
