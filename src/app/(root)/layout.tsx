@@ -1,10 +1,35 @@
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
 import type { Metadata } from "next";
 
-const inter = Inter({ subsets: ["latin"] });
+const pretendard = localFont({
+  src: [
+    {
+      path: "../../fonts/PretendardVariable.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PretendardVariable.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PretendardVariable.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../fonts/PretendardVariable.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  variable: "--font-pretendard",
+});
 
 export const metadata: Metadata = {
   title: "@gather_here",
@@ -43,8 +68,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="font-main bg-background text-fontWhite">
+    <html lang="ko" className={pretendard.className}>
+      <body className="bg-background text-fontWhite">
         <CombinedProviders>
           <Header />
           {children}
