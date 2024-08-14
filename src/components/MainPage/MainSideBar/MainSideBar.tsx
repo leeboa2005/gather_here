@@ -8,7 +8,6 @@ import ChatModal from "./Chat/ChatModal";
 
 const MainSideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const openModal = () => {
@@ -20,30 +19,33 @@ const MainSideBar = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1068);
-    };
+    let timer: NodeJS.Timeout | undefined;
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200 && !isMobile) {
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
+      if (timer) {
+        clearTimeout(timer);
       }
+      timer = setTimeout(() => {
+        if (window.scrollY > 200) {
+          setShowScrollToTop(true);
+        } else {
+          setShowScrollToTop(false);
+        }
+      }, 200);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -57,20 +59,24 @@ const MainSideBar = () => {
           <Calender />
         </div>
       </div>
-      {!isMobile && showScrollToTop && (
-        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 hover:animate-bounce">
-          <Image
-            src="/assets/top.svg"
-            alt="Top icon"
-            width={20}
-            height={20}
-            style={{ width: "auto", height: "auto" }}
-          />
+      <ChatModal isOpen={isModalOpen} onRequestClose={closeModal}>
+        <Chat />
+      </ChatModal>
+      {showScrollToTop && (
+        <button onClick={scrollToTop} className="m:hidden fixed flex bottom-20 right-1 hover:animate-bounce">
+          <Image src="/assets/top.svg" alt="상단으로 이동 버튼" width={90} height={60} className="w-auto h-auto" />
         </button>
       )}
       {isModalOpen ? (
-        <button onClick={closeModal} className="fixed bottom-4 right-1 z-10 hover:animate-bounce">
-          <Image src="/Chat/close.svg" alt="채팅창 닫기 버튼" width={90} height={60} priority />
+        <button onClick={closeModal} className="m:hidden fixed flex bottom-7 right-4 z-10 hover:animate-bounce">
+          <Image
+            src="/Chat/close.svg"
+            alt="채팅창 닫기 버튼"
+            width={90}
+            height={60}
+            priority
+            className="w-auto h-auto"
+          />
         </button>
       ) : (
         <button onClick={openModal} className="fixed bottom-4 right-1 z-10 hover:animate-bounce">
@@ -84,9 +90,6 @@ const MainSideBar = () => {
           />
         </button>
       )}
-      <ChatModal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <Chat />
-      </ChatModal>
     </>
   );
 };

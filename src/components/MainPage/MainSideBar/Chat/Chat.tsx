@@ -17,12 +17,10 @@ const Chat = () => {
     handleSubmit,
     handleDelete,
   } = useChat();
-  {
-    /* TODO: 채팅창 내부 디자인 시안 반영하기 */
-  }
+
   return (
     <>
-      <div id="container" className="h-[453px] w-full flex-col justify-start items-start inline-flex">
+      <div id="container" className="h-full s:h-max w-full flex-col justify-start items-start inline-flex">
         <div
           id="header"
           className="self-stretch h-16 p-5 bg-[#141415] rounded-tl-[20px] rounded-tr-[20px] flex-col justify-center items-center flex"

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { FC, ReactNode } from "react";
 import ReactModal from "react-modal";
 import Modal from "react-modal";
@@ -15,12 +16,7 @@ const customStyle: ReactModal.Styles = {
     position: "fixed", // Change from absolute to fixed
     bottom: "100px", // Adjust based on your button’s position
     right: "20px", // Adjust based on your button’s position
-    transform: "none", // No need for translate transform
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
-    width: "375px", // Set width as needed
-    maxWidth: "100%", // Ensure it doesn’t overflow the viewport
-    height: "auto", // Adjust as needed
-    overflow: "auto",
   },
 };
 
@@ -38,22 +34,19 @@ const ChatModal: FC<ChatModalProps> = ({ isOpen, onRequestClose, children }) => 
       <div className="relative bg-fillStrong rounded-lg p-8 max-w-lg mx-auto">
         {/* 모달 닫기 버튼 */}
         {/* TODO: 채팅창 내부 디자인 시안 반영하기 */}
-        {/* <button
+        <button
           onClick={onRequestClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          aria-label="모달 닫기 버튼"
+          className="hidden m:block absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button> */}
+          <Image
+            src="/Chat/close_in_modal.svg"
+            alt="채팅창 닫기 버튼"
+            width={90}
+            height={60}
+            priority
+            className="w-auto h-auto"
+          />
+        </button>
         {children}
       </div>
     </Modal>
