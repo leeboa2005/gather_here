@@ -57,16 +57,20 @@ const MainSideBar = () => {
           <Calender />
         </div>
       </div>
+      {!isMobile && showScrollToTop && (
+        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 hover:animate-bounce">
+          <Image
+            src="/assets/top.svg"
+            alt="Top icon"
+            width={20}
+            height={20}
+            style={{ width: "auto", height: "auto" }}
+          />
+        </button>
+      )}
       {isModalOpen ? (
         <button onClick={closeModal} className="fixed bottom-4 right-1 z-10 hover:animate-bounce">
-          <Image
-            src="/Chat/close.svg"
-            alt="채팅창 닫기 버튼"
-            width={90}
-            height={60}
-            priority
-            className="w-auto h-auto"
-          />
+          <Image src="/Chat/close.svg" alt="채팅창 닫기 버튼" width={90} height={60} priority />
         </button>
       ) : (
         <button onClick={openModal} className="fixed bottom-4 right-1 z-10 hover:animate-bounce">
@@ -83,17 +87,6 @@ const MainSideBar = () => {
       <ChatModal isOpen={isModalOpen} onRequestClose={closeModal}>
         <Chat />
       </ChatModal>
-      {!isMobile && showScrollToTop && (
-        <button onClick={scrollToTop} className="fixed flex bottom-20 right-1 hover:animate-bounce">
-          <Image
-            src="/assets/top.svg"
-            alt="Top icon"
-            width={20}
-            height={20}
-            style={{ width: "auto", height: "auto" }}
-          />
-        </button>
-      )}
     </>
   );
 };

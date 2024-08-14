@@ -11,15 +11,15 @@ interface ChatModalProps {
 const customStyle: ReactModal.Styles = {
   overlay: {},
   content: {
-    zIndex: "150",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "10px",
+    zIndex: "10",
+    position: "fixed", // Change from absolute to fixed
+    bottom: "100px", // Adjust based on your button’s position
+    right: "20px", // Adjust based on your button’s position
+    transform: "none", // No need for translate transform
     boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
-    backgroundColor: "white",
-    justifyContent: "center",
+    width: "375px", // Set width as needed
+    maxWidth: "100%", // Ensure it doesn’t overflow the viewport
+    height: "auto", // Adjust as needed
     overflow: "auto",
   },
 };
