@@ -5,8 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@/provider/UserContextProvider";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+// import Image from "next/image";
 // import { useModal } from "@/provider/ContextProvider";
 // import { useRouter } from "next/navigation";
 
@@ -14,7 +13,7 @@ const ProfileInfo: React.FC = () => {
   // const { openModal, closeModal } = useModal();
   // const router = useRouter();
   const supabase = createClient();
-  const router = useRouter();
+
   const { user, userData, fetchUserData } = useUser();
   const [nickname, setNickname] = useState("");
   const [blog, setBlog] = useState("");
@@ -22,8 +21,6 @@ const ProfileInfo: React.FC = () => {
   const [experience, setExperience] = useState("");
   const [nicknameError, setNicknameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     if (userData) {
@@ -36,6 +33,7 @@ const ProfileInfo: React.FC = () => {
 
   const validateForm = () => {
     let valid = true;
+
     // 닉네임 유효성 검사
     if (nickname.length < 2 || nickname.length > 11) {
       setNicknameError("닉네임은 2-11자가 아닙니다.");
@@ -75,28 +73,6 @@ const ProfileInfo: React.FC = () => {
     }
   };
 
-  // 취소 버튼 클릭 시 모달 열기
-  const handleReset = () => {
-    setIsCancelModalOpen(true);
-  };
-
-  // 취소 모달 나갈래요
-  const handleConfirmLeave = () => {
-    setIsCancelModalOpen(false);
-    if (userData) {
-      setNickname(userData.nickname ?? "");
-      setBlog(userData.blog ?? "");
-      setJob(userData.job_title ?? "");
-      setExperience(userData.experience ?? "");
-    }
-    router.push("/");
-  };
-
-  // 취소 모달에서 '마저 쓸래요' 클릭 시 처리
-  const handleCloseCancelModal = () => {
-    setIsCancelModalOpen(false);
-  };
-
   // 회원 탈퇴 기능 (추후 작업예정)
   // const handleDeleteAccount = async () => {
   //   if (!user) return;
@@ -116,38 +92,58 @@ const ProfileInfo: React.FC = () => {
   //   }
   // };
 
-  // 회원 탈퇴 모달 열기
-  const handleOpenDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
+  // 회원 탈퇴 모달 (mvp 이후)
+  // const handleOpenModal = () => {
+  //   const onRequestClose = () => {
+  //     closeModal();
+  //   };
 
-  // 회원 탈퇴 모달 닫기
-  const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
-
-  // 모달 UI 렌더링 - 취소 모달
-  const renderCancelModal = () => (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65 text-center z-50">
-      <div className="relative min-w-[340px] m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg z-60">
-        <h2 className="mb-2 text-lg font-baseBold text-fontWhite">수정 중인 내용이 있어요.</h2>
-        <p className="text-labelNeutral text-baseS mb-5">이 화면을 나가시면 변경한 내용이 저장되지 않아요.</p>
-        <div className="flex justify-center space-x-2">
-          <button onClick={handleCloseCancelModal} className="shared-button-gray w-1/2">
-            마저 쓸래요
-          </button>
-          <button onClick={handleConfirmLeave} className="shared-button-green w-1/2">
-            나갈래요
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  //   openModal(
+  //     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 text-center">
+  //       <div className="relative min-w-[340px]  m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg ">
+  //         <button
+  //           onClick={onRequestClose}
+  //           className="absolute top-2 right-2 text-gray-500 hover:"
+  //           aria-label="모달 닫기"
+  //         >
+  //           <svg
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             fill="none"
+  //             viewBox="0 0 24 24"
+  //             strokeWidth={2}
+  //             stroke="currentColor"
+  //             className="w-6 h-6"
+  //           >
+  //             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  //           </svg>
+  //         </button>
+  //         <div className="mb-4 w-auto flex justify-center">
+  //           <Image src="/Common/Icons/caution_icon.png" alt="Profile Image" width={70} height={70} />
+  //         </div>
+  //         <h2 className="mb-2 text-lg font-semibold text-fillStrong">정말 탈퇴하시겠어요?</h2>
+  //         <div className="mb-5">
+  //           <p className="text-gray-500 text-sm">
+  //             회원 탈퇴 시 계정은 삭제되며
+  //             <br /> 복구되지 않습니다.
+  //           </p>
+  //         </div>
+  //         <div className="flex justify-center space-x-2">
+  //           <button onClick={onRequestClose} className="shared-button-gray w-1/2" aria-label="회원 탈퇴 취소">
+  //             취소
+  //           </button>
+  //           <button onClick={handleDeleteAccount} className="shared-button-black w-1/2" aria-label="회원 탈퇴">
+  //             탈퇴
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>,
+  //   );
+  // };
 
   return (
     <section>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <fieldset className="p-6 s:p-0">
+        <fieldset className="p-6 s:p-0 ">
           <h1 className="text-subtitle font-baseBold text-labelNeutral mb-5">기본 정보</h1>
           <div className="grid grid-cols-2 m:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
             <div>
@@ -167,7 +163,7 @@ const ProfileInfo: React.FC = () => {
             </div>
             <div>
               <label htmlFor="nickname" className="block text-baseS text-labelNormal font-medium mb-1">
-                닉네임 <span className="text-statusDestructive ml-1">*</span>
+                닉네임
               </label>
               <input
                 type="text"
@@ -228,13 +224,13 @@ const ProfileInfo: React.FC = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="url" className="block text-sm font-medium mb-1 text-labelNormal">
+              <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
                 URL&nbsp;<span className="text-labelAssistive text-baseXs">(선택)</span>
               </label>
               <input
                 type="url"
-                id="url"
-                name="url"
+                id="blog"
+                name="blog"
                 value={blog}
                 onChange={(e) => setBlog(e.target.value)}
                 placeholder="링크를 입력해주세요."
@@ -247,17 +243,12 @@ const ProfileInfo: React.FC = () => {
           </div>
           <div className="mt-6 mb-12">
             {/* mvp 이후 */}
-            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenDeleteModal} className="mb-6 hover:underline">
+            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
               탈퇴하기
             </button> */}
             <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-background s:z-10">
               <div className="flex justify-end s:justify-center gap-2 w-full s:max-w-container-s">
-                <button
-                  type="button"
-                  aria-label="회원 정보 취소"
-                  onClick={handleReset}
-                  className="shared-button-gray w-[65px] s:w-1/2"
-                >
+                <button type="button" aria-label="회원 정보 취소" className="shared-button-gray w-[65px] s:w-1/2">
                   취소
                 </button>
                 <button type="submit" aria-label="회원 정보 저장" className="shared-button-green w-[65px] s:w-1/2">
@@ -268,12 +259,6 @@ const ProfileInfo: React.FC = () => {
           </div>
         </fieldset>
       </form>
-
-      {/* 취소 모달 렌더링 */}
-      {isCancelModalOpen && renderCancelModal()}
-
-      {/* 탈퇴 모달 (추후 작업 예정) */}
-      {/* {isDeleteModalOpen && renderDeleteModal()} */}
     </section>
   );
 };
