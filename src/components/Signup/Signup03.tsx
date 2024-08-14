@@ -2,7 +2,7 @@
 import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
 import React, { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import NicknameInput from "@/components/Signup/components/NicknameInput";
 import BlogInput from "@/components/Signup/components/BlogInput";
 import useCheckNickname from "@/hooks/useCheckNickname";
@@ -12,7 +12,7 @@ const supabase = createClient();
 
 export interface FormValues {
   nickname: string;
-  blog: string;
+  blog?: string;   
 }
 
 interface Signup03Type {
@@ -29,7 +29,6 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
     setError,
   } = useForm<FormValues>();
   const watchNickname = watch("nickname");
-  const watchBlog = watch("blog");
   const nicknameAvailable = useCheckNickname(watchNickname);
   const { onSubmit, blogError, blogSuccess, setBlogError, setBlogSuccess, validateUrl } = useSubmitProfile(setUserData);
 
@@ -51,6 +50,16 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
 
     fetchUser();
   }, [setUser]);
+
+  const handleFormSubmit = (data: FormValues) => {
+    if (!data.blog || data.blog.trim() === "") {
+      const confirmResult = window.confirm("URL 주소를 입력하지 않으셨습니다. 그래도 프로필을 저장하시겠습니까?");
+      if (!confirmResult) {
+        return;
+      }
+    }
+    onSubmit(data, nicknameAvailable, setError);
+  };
 
   useEffect(() => {
     console.log(`
@@ -100,7 +109,7 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
         자신을 나타낼 수 있는 포트폴리오 링크를 알려주시면 <br /> 함께 할 동료를 만나는 데 큰 도움이 될거예요.
       </div>
 
-      <form onSubmit={handleSubmit((data) => onSubmit(data, nicknameAvailable, setError))}>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         <NicknameInput register={register} errors={errors} nicknameAvailable={nicknameAvailable} watch={watch} />
         <BlogInput
           register={register}
@@ -115,7 +124,7 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
           <button
             type="submit"
             className={`s:w-[300px] w-[350px] h-[40px] ml-5 py-2 rounded-md transition-transform transform hover:scale-105 active:scale-95 active:bg-gray-800 active:text-gray-200 ${
-              watchNickname && watchBlog
+              watchNickname && watchNickname.trim() !== ""
                 ? "bg-[#c3e88d] text-[#343437] hover:bg-[#c3e88d] hover:text-[#343437]"
                 : "bg-[#343437] text-[#ffffff]"
             }`}
