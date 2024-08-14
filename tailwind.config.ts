@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        pretendard: ["var(--font-pretendard)", "sans-serif"],
+      },
       screens: {
         m: { max: "1068px" },
         s: { max: "768px" },
@@ -16,9 +19,6 @@ const config: Config = {
         "container-l": "1048px",
         "container-m": "744px",
         "container-s": "335px",
-      },
-      fontFamily: {
-        main: ['"Pretendard"', "sans-serif"],
       },
       // ex) className : text-title
       fontSize: {
