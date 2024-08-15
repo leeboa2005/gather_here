@@ -179,7 +179,13 @@ const MainDetailPage = () => {
     <>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
         <button onClick={() => router.back()} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
-          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+          <Image
+            src="/Common/Icons/back.png"
+            alt="Back"
+            width={16}
+            height={16}
+            style={{ width: "16px", height: "16px", objectFit: "cover" }}
+          />
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
@@ -206,7 +212,7 @@ const MainDetailPage = () => {
                 alt={user.nickname}
                 width={28}
                 height={28}
-                className="rounded-full"
+                className="rounded-md object-cover w-[28px] h-[28px]"
               />
             )}
             <span className="text-base font-medium">{user?.nickname}</span>
@@ -323,12 +329,12 @@ const MainDetailPage = () => {
             <p className="mb-3 flex">
               <strong className="text-labelNeutral w-20">장소</strong> <span className="ml-5">{post.place}</span>
             </p>
-            <p className="mb-3 flex items-start">
+            <div className="mb-3 flex items-start">
               <strong className="text-labelNeutral w-20 flex-shrink-0">기술 스택</strong>
-              <span className="ml-4 flex flex-wrap justify-start items-center flex-grow">
+              <div className="ml-4 flex flex-wrap justify-start items-center flex-grow">
                 {renderTechStackIcons(post.tech_stack)}
-              </span>
-            </p>
+              </div>
+            </div>
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
