@@ -308,8 +308,8 @@ const MainDetailPage = () => {
           <div className="w-1/2 s:w-full">
             <hr className="hidden s:block border-fillNeutral my-5" />
             <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">모집 대상</strong>
-              <span className="ml-8">{post.target_position.join(", ")}</span>
+              <strong className="text-labelNeutral w-20 flex-shrink-0">모집 대상</strong>
+              <span className="ml-5 text-left">{post.target_position.join(", ")}</span>
             </p>
             <p className="mb-3 flex">
               <strong className="text-labelNeutral w-20">모집 인원</strong>
