@@ -10,14 +10,16 @@
 /* M */
 @media only screen and (max-width: 1068px) {
   .fc {
-    margin: 8px;
+    margin: 4px;
   }
 }
 
 /* S */
 @media only screen and (max-width: 768px) {
   .fc {
-    width: 287px;
+    /* width: 287px; */
+    width: 100%;
+    margin: 0;
   }
 }
 
@@ -95,6 +97,20 @@
   background-color: transparent;
 }
 
+/* 추가: 날짜 숫자가 중앙에 위치하도록 설정 */
+.fc-daygrid-day-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%; /* 날짜 셀의 높이를 채우도록 설정 */
+}
+
+.fc .fc-daygrid-day-number {
+  display: inline-block;
+  width: 90%; /* 숫자가 중앙에 위치하도록 설정 */
+  text-align: center;
+}
+
 /* Popover 창에 대한 설정 */
 .fc .fc-popover.fc-more-popover.fc-day {
   background-color: #141415;
@@ -158,8 +174,8 @@
 .custom_calender .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
   background: transparent;
   position: absolute;
-  top: 3px;
-  left: 7.5px;
+  top: 3.8px;
+  left: 9.8px;
 }
 
 .custom_calender .fc .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {

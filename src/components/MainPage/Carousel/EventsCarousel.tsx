@@ -31,6 +31,7 @@ const Carousel: React.FC<CarouselProps> = ({ posts }) => {
         spaceBetween={12}
         slidesPerView={2}
         navigation
+        loop={true}
         pagination={{ clickable: true }}
         className="w-full"
         style={{ height: "17rem" }}
