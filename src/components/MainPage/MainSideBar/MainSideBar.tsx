@@ -68,7 +68,7 @@ const MainSideBar = () => {
         </button>
       )}
       {isModalOpen ? (
-        <button onClick={closeModal} className="m:hidden fixed flex bottom-7 right-4 z-10 hover:animate-bounce">
+        <button onClick={closeModal} className="s:hidden fixed flex bottom-7 right-4 z-10 hover:animate-bounce">
           <Image
             src="/Chat/close.svg"
             alt="채팅창 닫기 버튼"
