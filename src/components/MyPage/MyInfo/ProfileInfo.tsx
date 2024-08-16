@@ -279,7 +279,6 @@ const ProfileInfo: React.FC = () => {
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
               {blogError && <p className="text-statusDestructive text-baseXs mt-1">{blogError}</p>}
-              {blogSuccess && <p className="text-statusPositive text-baseXs mt-1">{blogSuccess}</p>}
               <p className="text-labelAssistive text-baseXs mt-1">
                 자신을 나타낼 수 있는 포트폴리오 링크를 알려주세요.
               </p>
