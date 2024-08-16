@@ -1,133 +1,93 @@
-"use client";
+import React from "react";
+import { UseFormRegister, FieldErrors, UseFormWatch } from "react-hook-form";
+import { FormValues } from "../Signup03";
 
-import { useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import toastcancel from "/public/assets/toastcancel.svg";
-import toastcheck from "/public/assets/toastcheck.svg";
+interface NicknameInputProps {
+  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<FormValues>;
+  nicknameAvailable: boolean | null;
+  watch: UseFormWatch<FormValues>;
+}
 
-type ToastProps = {
-  state: string;
-  message: string;
-  onClear?: () => void;
-};
+const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknameAvailable, watch }) => {
+  const nickname = watch("nickname");
 
-const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
-  useEffect(() => {
-    if (state && message) {
-      const notify = () => {
-        switch (state) {
-          case "error":
-            toast.error(message, {
-              icon: <img src={toastcancel.src} width={24} height={24} alt="에러 알림 아이콘" />,
-              style: {
-                background: "#141415",
-                color: "#f7f7f7",
-                fontWeight: "500",
-                border: "1px solid #FF3F02",
-                wordBreak: "keep-all",
-              },
-              progressStyle: {
-                background: "#FF3F02",
-              },
-              closeButton: true,
-            });
-            break;
-          case "warn":
-            toast.warn(message, {
-              style: {
-                background: "#141415",
-                color: "#f7f7f7",
-                fontWeight: "500",
-                border: "1px solid #fac66a",
-                wordBreak: "keep-all",
-              },
-              progressStyle: {
-                background: "#fac66a",
-              },
-              closeButton: true,
-            });
-            break;
-          case "info":
-            toast.info(message, {
-              style: {
-                background: "#141415",
-                color: "#f7f7f7",
-                fontWeight: "500",
-                border: "1px solid #82aaff",
-                wordBreak: "keep-all",
-              },
-              progressStyle: {
-                background: "#82aaff",
-              },
-              closeButton: true,
-            });
-            break;
-          case "success":
-            toast.success(message, {
-              icon: <img src={toastcheck.src} width={24} height={24} alt="성공 알림 아이콘" />,
-              style: {
-                background: "#141415",
-                color: "#f7f7f7",
-                fontWeight: "500",
-                border: "1px solid #c3e88d",
-                wordBreak: "keep-all",
-              },
-              progressStyle: {
-                background: "#c3e88d",
-              },
-              closeButton: true,
-            });
-            break;
-          case "custom":
-            toast.warn(message, {
-              icon: <img src={toastcheck.src} width={24} height={24} alt="커스텀 알림 아이콘" />,
-              position: "bottom-right",
-              style: {
-                background: "#141415",
-                color: "#f7f7f7",
-                fontSize: "16px",
-                wordBreak: "keep-all",
-              },
-              progressStyle: {
-                background: "#faa6c9",
-                borderStyle: "none",
-              },
-              closeButton: true,
-            });
-            break;
-          default:
-            break;
-        }
-      };
+  const hasSpecialCharacter = (value: string) => /[^a-zA-Z0-9가-힣_]/.test(value);
 
-      try {
-        notify();
-      } catch (error) {
-        console.error("Toast 오류:", error);
-      }
-
-      // 3초 후에 토스트 상태 초기화
-      if (onClear) {
-        const timer = setTimeout(onClear, 3000);
-        return () => clearTimeout(timer);
-      }
+  const getLengthMessageClass = () => {
+    if (nickname && (nickname.length < 2 || nickname.length > 11)) {
+      return "text-red-500";
+    } else if (nickname && nickname.length >= 2 && nickname.length <= 11 && !hasSpecialCharacter(nickname)) {
+      return "text-green-500";
+    } else {
+      return "text-gray-500";
     }
-  }, [state, message, onClear]);
+  };
+
+  const getNicknameMessageClass = () => {
+    if (errors.nickname && errors.nickname.type === "validate") {
+      return "text-red-500";
+    } else if (
+      nicknameAvailable === true &&
+      !hasSpecialCharacter(nickname) &&
+      nickname.length >= 2 &&
+      nickname.length <= 11
+    ) {
+      return "text-green-500";
+    } else if (nicknameAvailable === false) {
+      return "text-red-500";
+    } else {
+      return "text-gray-500";
+    }
+  };
+
+  const getSpecialCharacterMessageClass = () => {
+    if (hasSpecialCharacter(nickname)) {
+      return "text-red-500";
+    } else {
+      return "text-gray-500";
+    }
+  };
 
   return (
-    <div>
-      <ToastContainer
-        limit={1}
-        autoClose={3000}
-        newestOnTop={true}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+    <div className="s:mt-6 mt-9">
+      <label className="block text-sm ml-5 font-medium text-[#bebec1]">
+        닉네임 <span className="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        placeholder="닉네임을 입력해주세요"
+        {...register("nickname", {
+          required: "닉네임을 입력해주세요.",
+          minLength: { value: 2, message: "닉네임은 2 ~ 11자 내로 작성해주세요." },
+          maxLength: { value: 11, message: "닉네임은 2 ~ 11자 내로 작성해주세요." },
+          validate: (value) => {
+            if (value.trim() === "") return "닉네임에 공백이 포함될 수 없습니다.";
+            if (/\s/.test(value)) return "닉네임에 공백이 포함될 수 없습니다.";
+            if (hasSpecialCharacter(value)) return "닉네임에 공백 및 특수문자가 포함될 수 없습니다.";
+            return true;
+          },
+        })}
+        className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
       />
+      <p className={`text-xs mt-2 ml-5 ${getLengthMessageClass()}`}>
+        {nickname && (nickname.length < 2 || nickname.length > 11)
+          ? "닉네임은 2 ~ 11자 내로 작성해주세요."
+          : "닉네임은 2 ~ 11자 내로 작성해주세요."}
+      </p>
+      {hasSpecialCharacter(nickname) && (
+        <p className={`text-xs mt-2 ml-5 ${getSpecialCharacterMessageClass()}`}>
+          닉네임에 공백 및 특수문자가 포함될 수 없습니다.
+        </p>
+      )}
+      {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>}
+      {nicknameAvailable === true &&
+        nickname &&
+        nickname.length >= 2 &&
+        nickname.length <= 11 &&
+        !hasSpecialCharacter(nickname) && <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>}
     </div>
   );
 };
 
-export default Toast;
+export default NicknameInput;

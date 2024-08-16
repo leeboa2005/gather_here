@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import toastcancel from "/public/assets/toastcancel.svg";
-import toastcheck from "/public/assets/toastcheck.svg";
-
-type ToastProps = {
+import Image from "next/image";
+interface ToastProps {
   state: string;
   message: string;
   onClear?: () => void;
-};
+}
 
 const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
   useEffect(() => {
@@ -19,7 +17,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
         switch (state) {
           case "error":
             toast.error(message, {
-              icon: <img src={toastcancel.src} width={24} height={24} alt="에러 알림 아이콘" />,
+              icon: <Image src="/assets/toastcancel.svg" width={24} height={24} alt="에러 알림 아이콘" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -65,7 +63,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
             break;
           case "success":
             toast.success(message, {
-              icon: <img src={toastcheck.src} width={24} height={24} alt="성공 알림 아이콘" />,
+              icon: <Image src="/assets/toastcheck.svg" width={24} height={24} alt="성공 알림 아이콘" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -81,7 +79,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
             break;
           case "custom":
             toast.warn(message, {
-              icon: <img src={toastcheck.src} width={24} height={24} alt="커스텀 알림 아이콘" />,
+              icon: <Image src="/assets/toastcheck.svg" width={24} height={24} alt="커스텀 알림 아이콘" />,
               position: "bottom-right",
               style: {
                 background: "#141415",

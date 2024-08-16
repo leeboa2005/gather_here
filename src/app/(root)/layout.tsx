@@ -73,7 +73,6 @@ export default function RootLayout({
     <html lang="ko" className={pretendard.className}>
       <body className="bg-background text-fontWhite">
         <CombinedProviders>
-          <ToastContainer limit={1} autoClose={3000} theme="dark" />
           <Header />
           {children}
         </CombinedProviders>
