@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
 import { FormValues } from '@/components/Signup/Signup03';
@@ -6,13 +6,29 @@ import { FormValues } from '@/components/Signup/Signup03';
 const supabase = createClient();
 
 const useSubmitProfile = (setUserData: (data: any) => void) => {
-  const { nextStep, setNickname, setBlog, user, job_title, experience, profile_image_url } = useSignupStore();
+  const { nextStep, setNickname, setBlog, setUser, setProfileImageUrl, user, job_title, experience, profile_image_url } = useSignupStore();
   const [blogError, setBlogError] = useState<string | null>(null);
   const [blogSuccess, setBlogSuccess] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        setUser(session.user);
+        if (session.user.user_metadata?.avatar_url) {
+          setProfileImageUrl(session.user.user_metadata.avatar_url);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [setUser, setProfileImageUrl]);
+
   const validateUrl = (url: string): boolean => {
     if (!url || url.trim() === "") {
-      return true; // URL이 비어 있으면 유효한 것으로 처리
+      return true;
     }
 
     const urlPattern = new RegExp(
@@ -68,18 +84,18 @@ const useSubmitProfile = (setUserData: (data: any) => void) => {
 
       if (updateError) {
         console.error("Error updating data:", updateError);
-        setError("nickname", { message: "Failed to update profile. Please try again." });
+        setError("nickname", { message: "프로필 업데이트에 실패했습니다. 다시 시도해 주세요." });
         return;
       }
 
       setNickname(nickname);
-      setBlog(formattedBlog || ""); // 블로그가 비어있을 경우 빈 문자열로 설정
+      setBlog(formattedBlog || "");
       setUserData({ ...user, nickname, blog: formattedBlog, job_title, experience, profile_image_url });
 
       nextStep();
     } catch (err) {
       console.error("Unexpected error:", err);
-      setError("nickname", { message: "An unexpected error occurred. Please try again." });
+      setError("nickname", { message: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요." });
     }
   };
 
