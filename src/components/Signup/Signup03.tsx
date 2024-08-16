@@ -7,8 +7,7 @@ import NicknameInput from "@/components/Signup/components/NicknameInput";
 import BlogInput from "@/components/Signup/components/BlogInput";
 import useCheckNickname from "@/hooks/useCheckNickname";
 import useSubmitProfile from "@/hooks/useSubmitProfile";
-
-const supabase = createClient();
+import AlertModal from "./components/AlertModal";
 
 export interface FormValues {
   nickname: string;
@@ -20,7 +19,7 @@ interface Signup03Type {
 }
 
 const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
-  const { prevStep, setProfileImageUrl, user, setUser } = useSignupStore();
+  const { prevStep } = useSignupStore();
   const {
     register,
     handleSubmit,
@@ -32,34 +31,23 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
   const nicknameAvailable = useCheckNickname(watchNickname);
   const { onSubmit, blogError, blogSuccess, setBlogError, setBlogSuccess, validateUrl } = useSubmitProfile(setUserData);
 
-  useEffect(() => {
-    if (user?.user_metadata?.avatar_url) {
-      setProfileImageUrl(user.user_metadata.avatar_url);
-    }
-  }, [user, setProfileImageUrl]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session) {
-        setUser(session.user);
-      }
-    };
-
-    fetchUser();
-  }, [setUser]);
-
   const handleFormSubmit = (data: FormValues) => {
+    document.body.classList.remove("page-disabled");  
+
     if (!data.blog || data.blog.trim() === "") {
-      const confirmResult = window.confirm("URL 주소를 입력하지 않으셨습니다. 그래도 프로필을 저장하시겠습니까?");
-      if (!confirmResult) {
-        return;
-      }
+      AlertModal({
+        title: 'URL 주소가 비어 있습니다.',
+        text: 'URL 주소를 입력하지 않으셨습니다.\n그래도 프로필을 저장하시겠습니까?',
+        icon: 'warning',
+        confirmButtonText: '네, 저장하기',
+        cancelButtonText: '아니요, 다시 입력하기',
+        onConfirm: () => onSubmit(data, nicknameAvailable, setError),
+        onCancel: () => document.body.classList.add("page-disabled"),
+      });
+    } else {
+      onSubmit(data, nicknameAvailable, setError);
     }
-    onSubmit(data, nicknameAvailable, setError);
-  };
+};
 
   useEffect(() => {
     console.log(`
@@ -80,7 +68,7 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
   return (
     <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (
-        <button onClick={prevStep} className="absolute left-9 top-10 text-[c4c4c4]">
+        <button onClick={prevStep} className="absolute left-9 top-10 text-[c4c4c4]  hover:text-[#777]">
           &larr;
         </button>
       )}
@@ -104,7 +92,7 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
         </div>
       </div>
 
-      <div className="text-center text-2xl font-medium text-[#fffff] leading-9 mt-20">거의 다 왔어요!</div>
+      <div className="text-center text-2xl font-medium text-[#ffffff] leading-9 mt-20">거의 다 왔어요!</div>
       <div className="text-center text-[#9a9a9a] s:mt-1 mt-3">
         자신을 나타낼 수 있는 포트폴리오 링크를 알려주시면 <br /> 함께 할 동료를 만나는 데 큰 도움이 될거예요.
       </div>
