@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import type { Metadata } from "next";
 
 const pretendard = localFont({
@@ -71,6 +73,7 @@ export default function RootLayout({
     <html lang="ko" className={pretendard.className}>
       <body className="bg-background text-fontWhite">
         <CombinedProviders>
+          <ToastContainer limit={1} autoClose={3000} theme="dark" />
           <Header />
           {children}
         </CombinedProviders>

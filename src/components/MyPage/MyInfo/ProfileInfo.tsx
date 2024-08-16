@@ -2,17 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@/provider/UserContextProvider";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-// import { useModal } from "@/provider/ContextProvider";
-// import { useRouter } from "next/navigation";
+import Toast from "@/components/Common/Toast/Toast";
+import MypageProfileInfo from "@/components/Common/Skeleton/MypageProfileInfo";
 
 const ProfileInfo: React.FC = () => {
-  // const { openModal, closeModal } = useModal();
-  // const router = useRouter();
   const supabase = createClient();
   const router = useRouter();
   const { user, userData, fetchUserData } = useUser();
@@ -23,10 +18,11 @@ const ProfileInfo: React.FC = () => {
   const [nicknameError, setNicknameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [toastState, setToastState] = useState({ state: "", message: "" });
 
   useEffect(() => {
     if (userData) {
+      // 유저 데이터가 있을 경우 상태 업데이트
       setNickname(userData.nickname ?? "");
       setBlog(userData.blog ?? "");
       setJob(userData.job_title ?? "");
@@ -36,6 +32,7 @@ const ProfileInfo: React.FC = () => {
 
   const validateForm = () => {
     let valid = true;
+
     // 닉네임 유효성 검사
     if (nickname.length < 2 || nickname.length > 11) {
       setNicknameError("닉네임은 2-11자가 아닙니다.");
@@ -56,31 +53,31 @@ const ProfileInfo: React.FC = () => {
     return valid;
   };
 
-  // 사용자 정보 업데이트
+  // 사용자 정보 업데이트 함수
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user || !validateForm()) return;
+    if (!user?.id || !validateForm()) {
+      return;
+    }
 
+    // 사용자 정보 업데이트
     const { error } = await supabase
       .from("Users")
       .update({ nickname, blog, job_title: job, experience })
       .eq("user_id", user.id);
 
     if (error) {
-      console.error("사용자 정보 업데이트 에러:", error);
-      toast.error("완료되지 않았습니다.");
+      setToastState({ state: "error", message: "업데이트에 실패했습니다." });
     } else {
-      toast.success("정보가 업데이트되었습니다.");
+      setToastState({ state: "success", message: "업데이트 완료되었습니다." });
       fetchUserData();
     }
   };
 
-  // 취소 버튼 클릭 시 모달 열기
   const handleReset = () => {
     setIsCancelModalOpen(true);
   };
 
-  // 취소 모달 나갈래요
   const handleConfirmLeave = () => {
     setIsCancelModalOpen(false);
     if (userData) {
@@ -92,41 +89,10 @@ const ProfileInfo: React.FC = () => {
     router.push("/");
   };
 
-  // 취소 모달에서 '마저 쓸래요' 클릭 시 처리
   const handleCloseCancelModal = () => {
     setIsCancelModalOpen(false);
   };
 
-  // 회원 탈퇴 기능 (추후 작업예정)
-  // const handleDeleteAccount = async () => {
-  //   if (!user) return;
-
-  //   try {
-  //     const { error: deleteError } = await supabase.from("Users").delete().eq("user_id", user.id);
-  //     if (deleteError) throw deleteError;
-
-  //     const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
-  //     if (authError) throw authError;
-
-  //     await supabase.auth.signOut();
-  //     router.push("/");
-  //   } catch (error) {
-  //     console.error("회원 탈퇴 중 오류 발생:", error);
-  //     toast.error("회원 탈퇴 중 오류가 발생했습니다.");
-  //   }
-  // };
-
-  // 회원 탈퇴 모달 열기
-  const handleOpenDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
-
-  // 회원 탈퇴 모달 닫기
-  const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
-
-  // 모달 UI 렌더링 - 취소 모달
   const renderCancelModal = () => (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65 text-center z-50">
       <div className="relative min-w-[340px] m:min-w-[300px] p-6 bg-fillStrong rounded-lg shadow-lg z-60">
@@ -144,10 +110,15 @@ const ProfileInfo: React.FC = () => {
     </div>
   );
 
+  if (!user) {
+    return <MypageProfileInfo />;
+  }
+  
+
   return (
     <section>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <fieldset className="p-6 s:p-0">
+        <fieldset className="p-6 s:p-0 ">
           <h1 className="text-subtitle font-baseBold text-labelNeutral mb-5">기본 정보</h1>
           <div className="grid grid-cols-2 m:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
             <div>
@@ -228,13 +199,13 @@ const ProfileInfo: React.FC = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="url" className="block text-sm font-medium mb-1 text-labelNormal">
+              <label htmlFor="blog" className="block text-sm font-medium mb-1 text-labelNormal">
                 URL&nbsp;<span className="text-labelAssistive text-baseXs">(선택)</span>
               </label>
               <input
                 type="url"
-                id="url"
-                name="url"
+                id="blog"
+                name="blog"
                 value={blog}
                 onChange={(e) => setBlog(e.target.value)}
                 placeholder="링크를 입력해주세요."
@@ -247,17 +218,12 @@ const ProfileInfo: React.FC = () => {
           </div>
           <div className="mt-6 mb-12">
             {/* mvp 이후 */}
-            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenDeleteModal} className="mb-6 hover:underline">
+            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
               탈퇴하기
             </button> */}
             <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-background s:z-10">
               <div className="flex justify-end s:justify-center gap-2 w-full s:max-w-container-s">
-                <button
-                  type="button"
-                  aria-label="회원 정보 취소"
-                  onClick={handleReset}
-                  className="shared-button-gray w-[65px] s:w-1/2"
-                >
+                <button type="button" aria-label="회원 정보 취소" className="shared-button-gray w-[65px] s:w-1/2">
                   취소
                 </button>
                 <button type="submit" aria-label="회원 정보 저장" className="shared-button-green w-[65px] s:w-1/2">
@@ -268,12 +234,14 @@ const ProfileInfo: React.FC = () => {
           </div>
         </fieldset>
       </form>
-
-      {/* 취소 모달 렌더링 */}
       {isCancelModalOpen && renderCancelModal()}
-
-      {/* 탈퇴 모달 (추후 작업 예정) */}
-      {/* {isDeleteModalOpen && renderDeleteModal()} */}
+      {toastState.state && (
+        <Toast
+          state={toastState.state}
+          message={toastState.message}
+          onClear={() => setToastState({ state: "", message: "" })}
+        />
+      )}
     </section>
   );
 };
