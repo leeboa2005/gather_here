@@ -10,9 +10,10 @@ interface LikeButtonProps {
   postId: string;
   currentUser: any;
   category: string;
+  onRemoveBookmark?: (postId: string) => void;
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category, onRemoveBookmark }) => {
   const [liked, setLiked] = useState(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
 
@@ -28,6 +29,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }
         if (likeError) {
           if (status !== 406) {
             console.error("Error checking like status:", likeError.message);
+            setToastState({ state: "error", message: "좋아요 상태를 확인하는 중 오류가 발생했습니다." });
           }
         } else if (likeData && likeData.length > 0) {
           setLiked(true);
@@ -45,34 +47,30 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, currentUser, category }
     }
 
     if (!liked) {
-      const { error, status } = await supabase.from("Interests").insert({
+      const { error } = await supabase.from("Interests").insert({
         user_id: currentUser.id,
         post_id: postId,
         category,
       });
       if (error) {
-        if (status !== 406) {
-          console.error("Error liking post:", error.message);
-          setToastState({ state: "error", message: "좋아요 등록 중 오류가 발생했습니다." });
-        }
+        setToastState({ state: "error", message: "좋아요 등록 중 오류가 발생했습니다." });
+        console.error("Error liking post:", error.message);
       } else {
         setLiked(true);
         setToastState({ state: "success", message: "게시글을 좋아요 했습니다!" });
       }
     } else {
-      const { error, status } = await supabase
-        .from("Interests")
-        .delete()
-        .eq("user_id", currentUser.id)
-        .eq("post_id", postId);
+      const { error } = await supabase.from("Interests").delete().eq("user_id", currentUser.id).eq("post_id", postId);
       if (error) {
-        if (status !== 406) {
-          console.error("Error unliking post:", error.message);
-          setToastState({ state: "error", message: "좋아요 취소 중 오류가 발생했습니다." });
-        }
+        setToastState({ state: "error", message: "좋아요 취소 중 오류가 발생했습니다." });
+        console.error("Error unliking post:", error.message);
       } else {
         setLiked(false);
         setToastState({ state: "success", message: "게시글 좋아요를 취소했습니다." });
+
+        if (onRemoveBookmark) {
+          onRemoveBookmark(postId);
+        }
       }
     }
   };

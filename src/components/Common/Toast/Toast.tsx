@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import toastcancel from "/public/assets/toastcancel.svg";
 import toastcheck from "/public/assets/toastcheck.svg";
+import closebtn from "/public/assets/header/close.svg";
 
 type ToastProps = {
   state: string;
@@ -21,6 +22,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
           case "error":
             toast.error(message, {
               icon: <Image src={toastcancel} width={24} height={24} alt="에러 알림 아이콘" />,
+              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -35,6 +37,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
             break;
           case "warn":
             toast.warn(message, {
+              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -49,6 +52,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
             break;
           case "info":
             toast.info(message, {
+              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -64,6 +68,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
           case "success":
             toast.success(message, {
               icon: <Image src={toastcheck} width={24} height={24} alt="성공 알림 아이콘" />,
+              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -79,6 +84,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
           case "custom":
             toast.warn(message, {
               icon: <Image src={toastcheck} width={24} height={24} alt="커스텀 알림 아이콘" />,
+              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               position: "bottom-right",
               style: {
                 background: "#141415",

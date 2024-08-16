@@ -113,7 +113,6 @@ const ProfileInfo: React.FC = () => {
   if (!user) {
     return <MypageProfileInfo />;
   }
-  
 
   return (
     <section>

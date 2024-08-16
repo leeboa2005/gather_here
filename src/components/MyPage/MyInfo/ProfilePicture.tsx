@@ -99,13 +99,15 @@ const ProfilePicture: React.FC = () => {
     }
   };
 
-  const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
+  const getProfileImageUrl = (url: string) => {
+    return url ? `${url}?${new Date().getTime()}` : defaultImage;
+  };
 
   useEffect(() => {
-    if (userData) {
+    if (userData && userData.profile_image_url !== profileImage) {
       setProfileImage(userData?.profile_image_url || defaultImage);
     }
-  }, [userData]);
+  }, [userData, profileImage]);
 
   const base64Encode = (str: string) => {
     return Buffer.from(str).toString("base64");

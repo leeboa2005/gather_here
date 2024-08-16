@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
-import { FormValues } from '@/components/Signup/Signup03';
+import { FormValues } from "@/components/Signup/Signup03";
 
 const supabase = createClient();
 
@@ -17,11 +17,11 @@ const useSubmitProfile = (setUserData: (data: any) => void) => {
 
     const urlPattern = new RegExp(
       "^(https?:\\/\\/)?" +
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})" +
-      "(:\\d+)?(\\/[-a-z\\d%_.~+\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF@]*)*" +
-      "(\\?[;&a-z\\d%_.~+=-]*)?" +
-      "(\\#[-a-z\\d_]*)?$",
-      "i"
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})" +
+        "(:\\d+)?(\\/[-a-z\\d%_.~+\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF@]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
+        "(\\#[-a-z\\d_]*)?$",
+      "i",
     );
     return urlPattern.test(url);
   };
