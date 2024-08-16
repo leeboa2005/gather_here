@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import toastcancel from "/public/assets/toastcancel.svg";
 import toastcheck from "/public/assets/toastcheck.svg";
-import closebtn from "/public/assets/header/close.svg";
 
 type ToastProps = {
   state: string;
@@ -21,8 +19,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
         switch (state) {
           case "error":
             toast.error(message, {
-              icon: <Image src={toastcancel} width={24} height={24} alt="에러 알림 아이콘" />,
-              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
+              icon: <img src={toastcancel.src} width={24} height={24} alt="에러 알림 아이콘" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -33,11 +30,11 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
               progressStyle: {
                 background: "#FF3F02",
               },
+              closeButton: true,
             });
             break;
           case "warn":
             toast.warn(message, {
-              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -48,11 +45,11 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
               progressStyle: {
                 background: "#fac66a",
               },
+              closeButton: true,
             });
             break;
           case "info":
             toast.info(message, {
-              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -63,12 +60,12 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
               progressStyle: {
                 background: "#82aaff",
               },
+              closeButton: true,
             });
             break;
           case "success":
             toast.success(message, {
-              icon: <Image src={toastcheck} width={24} height={24} alt="성공 알림 아이콘" />,
-              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
+              icon: <img src={toastcheck.src} width={24} height={24} alt="성공 알림 아이콘" />,
               style: {
                 background: "#141415",
                 color: "#f7f7f7",
@@ -79,12 +76,12 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
               progressStyle: {
                 background: "#c3e88d",
               },
+              closeButton: true,
             });
             break;
           case "custom":
             toast.warn(message, {
-              icon: <Image src={toastcheck} width={24} height={24} alt="커스텀 알림 아이콘" />,
-              closeButton: <Image src={closebtn} width={12} height={12} alt="닫기 버튼" />,
+              icon: <img src={toastcheck.src} width={24} height={24} alt="커스텀 알림 아이콘" />,
               position: "bottom-right",
               style: {
                 background: "#141415",
@@ -96,6 +93,7 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
                 background: "#faa6c9",
                 borderStyle: "none",
               },
+              closeButton: true,
             });
             break;
           default:
@@ -109,7 +107,6 @@ const Toast: React.FC<ToastProps> = ({ state, message, onClear }) => {
         console.error("Toast 오류:", error);
       }
 
-      // 3초 후에 토스트 상태 초기화
       if (onClear) {
         const timer = setTimeout(onClear, 3000);
         return () => clearTimeout(timer);

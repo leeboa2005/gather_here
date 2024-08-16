@@ -6,6 +6,7 @@ import { useUser } from "@/provider/UserContextProvider";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/Common/Toast/Toast";
 import MypageProfileInfo from "@/components/Common/Skeleton/MypageProfileInfo";
+import useCheckNickname from "@/hooks/useCheckNickname";
 
 const ProfileInfo: React.FC = () => {
   const supabase = createClient();
@@ -17,12 +18,15 @@ const ProfileInfo: React.FC = () => {
   const [experience, setExperience] = useState("");
   const [nicknameError, setNicknameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [blogError, setBlogError] = useState<string | null>(null);
+  const [blogSuccess, setBlogSuccess] = useState<string | null>(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
+  const [nicknameChecked, setNicknameChecked] = useState(false);
+  const nicknameAvailable = useCheckNickname(nickname);
 
   useEffect(() => {
     if (userData) {
-      // 유저 데이터가 있을 경우 상태 업데이트
       setNickname(userData.nickname ?? "");
       setBlog(userData.blog ?? "");
       setJob(userData.job_title ?? "");
@@ -30,18 +34,80 @@ const ProfileInfo: React.FC = () => {
     }
   }, [userData]);
 
+  useEffect(() => {
+    const checkNicknameValidity = async () => {
+      if (!nickname || nickname === userData?.nickname) {
+        setNicknameError("");
+        return;
+      }
+
+      // 특수문자 및 공백 유효성 검사
+      const specialCharPattern = /[^a-zA-Z0-9가-힣_]/; // 허용된 문자: 영문자, 숫자, 한글, 밑줄(_)
+
+      if (nickname.length < 2 || nickname.length > 11) {
+        setNicknameError("닉네임은 2-11자 내로 입력해주세요.");
+        return;
+      } else if (specialCharPattern.test(nickname)) {
+        setNicknameError("닉네임에는 공백이나 특수문자를 사용할 수 없습니다.");
+        return;
+      }
+
+      // 중복 닉네임 검사 (현재 사용자 제외)
+      const { data, error } = await supabase
+        .from("Users")
+        .select("nickname")
+        .eq("nickname", nickname)
+        .neq("user_id", user?.id);
+
+      if (error) {
+        setNicknameError("닉네임 중복 검사에 실패했습니다.");
+        console.error("닉네임 중복 검사 오류:", error);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        setNicknameError("이미 사용 중인 닉네임입니다.");
+      } else {
+        setNicknameError("");
+      }
+    };
+
+    if (nickname) {
+      checkNicknameValidity();
+    }
+  }, [nickname, supabase, user?.id, userData?.nickname]);
+
+  useEffect(() => {
+    if (blog && blog.trim() !== "") {
+      const validateUrl = (url: string) => {
+        try {
+          new URL(url);
+          return true;
+        } catch {
+          return false;
+        }
+      };
+
+      if (validateUrl(blog)) {
+        setBlogError(null);
+        setBlogSuccess("유효한 URL입니다.");
+      } else {
+        setBlogError("유효한 URL을 입력하세요.");
+        setBlogSuccess(null);
+      }
+    } else {
+      setBlogError(null);
+      setBlogSuccess(null);
+    }
+  }, [blog]);
+
   const validateForm = () => {
     let valid = true;
 
-    // 닉네임 유효성 검사
-    if (nickname.length < 2 || nickname.length > 11) {
-      setNicknameError("닉네임은 2-11자가 아닙니다.");
+    if (nickname.length < 2 || nickname.length > 11 || nicknameError) {
       valid = false;
-    } else {
-      setNicknameError("");
     }
 
-    // 이메일 유효성 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(user?.email ?? "")) {
       setEmailError("유효한 이메일 주소를 입력해주세요.");
@@ -50,17 +116,19 @@ const ProfileInfo: React.FC = () => {
       setEmailError("");
     }
 
+    if (blog && blogError) {
+      valid = false;
+    }
+
     return valid;
   };
 
-  // 사용자 정보 업데이트 함수
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!user?.id || !validateForm()) {
       return;
     }
 
-    // 사용자 정보 업데이트
     const { error } = await supabase
       .from("Users")
       .update({ nickname, blog, job_title: job, experience })
@@ -117,7 +185,7 @@ const ProfileInfo: React.FC = () => {
   return (
     <section>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <fieldset className="p-6 s:p-0 ">
+        <fieldset className="p-6 s:p-0">
           <h1 className="text-subtitle font-baseBold text-labelNeutral mb-5">기본 정보</h1>
           <div className="grid grid-cols-2 m:grid-cols-1 gap-10 pb-11 border-b-[1px] border-fillNormal">
             <div>
@@ -148,8 +216,8 @@ const ProfileInfo: React.FC = () => {
                 placeholder="닉네임을 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
-              <p className="text-labelAssistive text-baseXs mt-1">닉네임은 2-11자 내로 작성해주세요.</p>
               {nicknameError && <p className="text-statusDestructive text-baseXs mt-1">{nicknameError}</p>}
+              <p className="text-labelAssistive text-baseXs mt-1">닉네임은 2-11자 내로 작성해주세요.</p>
             </div>
             <div className="mt-[-13px] s:mt-0">
               <label htmlFor="job" className="block text-sm font-medium text-labelNormal mb-1">
@@ -210,16 +278,14 @@ const ProfileInfo: React.FC = () => {
                 placeholder="링크를 입력해주세요."
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
               />
+              {blogError && <p className="text-statusDestructive text-baseXs mt-1">{blogError}</p>}
+              {blogSuccess && <p className="text-statusPositive text-baseXs mt-1">{blogSuccess}</p>}
               <p className="text-labelAssistive text-baseXs mt-1">
                 자신을 나타낼 수 있는 포트폴리오 링크를 알려주세요.
               </p>
             </div>
           </div>
           <div className="mt-6 mb-12">
-            {/* mvp 이후 */}
-            {/* <button type="button" aria-label="회원 탈퇴하기" onClick={handleOpenModal} className="mb-6 hover:underline">
-              탈퇴하기
-            </button> */}
             <div className="s:fixed flex s:justify-center s:bottom-0 s:left-0 s:right-0 s:p-4 s:bg-background s:z-10">
               <div className="flex justify-end s:justify-center gap-2 w-full s:max-w-container-s">
                 <button type="button" aria-label="회원 정보 취소" className="shared-button-gray w-[65px] s:w-1/2">
