@@ -2,7 +2,7 @@
 name: "✨STYLE"
 about: CSS, 스타일 요소
 title: "[STYLE] "
-labels: Style
+labels: style
 assignees: ""
 ---
 
