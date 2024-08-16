@@ -39,33 +39,7 @@ const SignupPage = () => {
     checkUser();
   }, [openModal, router, modalOpened]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "고객님의 기본적인 정보는 마이페이지에서 수정하실 수 있습니다.";
-    };
-
-    const handlePopState = () => {
-      const confirmLeave = window.confirm(
-        "고객님의 기본적인 정보는 마이페이지에서 수정하실 수 있습니다. 정말로 이 페이지를 떠나시겠습니까?"
-      );
-      if (confirmLeave) {
-        router.push("/");
-      } else {
-        history.pushState(null, "", location.href);
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, [router]);
-
-  return <></>;
+  return null;
 };
 
 export default SignupPage;

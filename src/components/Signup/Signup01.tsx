@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-
 import JobSelectionButton from './components/JobSelectionButton';
 import SkipButton from './components/SkipButton';
 import useSelectJob from '@/hooks/useSelectJob';
-
+import { useRouter } from 'next/navigation';
+import { useModal } from "@/provider/ContextProvider";
+import AlertModal from './components/AlertModal';
 
 const jobTitles = [
   '프론트엔드', '백엔드', 'IOS', '안드로이드', '데브옵스', 
@@ -25,12 +26,30 @@ const jobClasses: { [key: string]: string } = {
 };
 
 const Signup01: React.FC = () => {
-  const { selectedJob, handleJobSelection, handleSkip } = useSelectJob
-    ();
+  const { selectedJob, handleJobSelection } = useSelectJob();
+  const router = useRouter();
+  const { closeModal } = useModal(); // useModal에서 closeModal 가져오기
+
+  const handleSkipWithConfirmation = () => {
+    document.body.classList.remove("page-disabled");
+
+    AlertModal({
+      title: '정말 건너뛰시겠습니까?',
+      text: '기본정보는 마이페이지에서 수정할 수 있습니다.',
+      icon: 'warning',
+      confirmButtonText: '네, 건너뛰기',
+      cancelButtonText: '아니요, 계속 입력하기',
+      onConfirm: () => {
+        closeModal();
+        router.push('/');
+      },
+      onCancel: () => document.body.classList.add("page-disabled"),
+    });
+};
 
   return (
     <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
-      <SkipButton onSkip={handleSkip} />
+      <SkipButton onSkip={handleSkipWithConfirmation} />
 
       <div className="absolute left-1/2 transform -translate-x-1/2 top-4 flex space-x-2">
         <div className="w-[136px] s:h-18 h-20 justify-start items-center gap-2 inline-flex">

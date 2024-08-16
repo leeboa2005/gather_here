@@ -2,17 +2,16 @@
 
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image"; // Next.js의 Image 컴포넌트를 가져옵니다.
+import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import FormInput from "@/components/MainDetail/FormInput";
 import FormDropdown from "@/components/MainDetail/FormDropdown";
 import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
 import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
 import "react-quill/dist/quill.snow.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import LoginForm from "@/components/Login/LoginForm";
+import Toast from "@/components/Common/Toast/Toast";
 
 interface Option {
   value: string;
@@ -36,6 +35,7 @@ const PostPage = () => {
   const [place, setPlace] = useState<string>("");
   const [userId, setUserId] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const [toastState, setToastState] = useState({ state: "", message: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -44,8 +44,7 @@ const PostPage = () => {
       if (data?.user) {
         setUserId(data.user.id);
       } else {
-        toast.error("로그인이 필요합니다!");
-        // setShowLoginModal(true);
+        setToastState({ state: "error", message: "로그인이 필요합니다!" });
       }
     };
     getUser();
@@ -79,9 +78,9 @@ const PostPage = () => {
 
     if (error) {
       console.error("데이터 안들어간다:", error);
-      toast.error("다시 시도해주세요!");
+      setToastState({ state: "error", message: "다시 시도해주세요!" });
     } else {
-      toast.success("제출되었습니다!");
+      setToastState({ state: "success", message: "제출되었습니다!" });
       if (data && data[0] && data[0].post_id) {
         router.push(`/maindetail/${data[0].post_id}`);
       }
@@ -202,12 +201,12 @@ const PostPage = () => {
     { value: "오프라인", label: "오프라인" },
     { value: "온/오프라인", label: "온/오프라인" },
   ];
+
   return (
     <>
       <CommonModal isOpen={showLoginModal} onRequestClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </CommonModal>
-      <ToastContainer />
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
         <button onClick={() => router.push("/")} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
@@ -336,6 +335,13 @@ const PostPage = () => {
           </button>
         </div>
       </form>
+      {toastState.state && (
+        <Toast
+          state={toastState.state}
+          message={toastState.message}
+          onClear={() => setToastState({ state: "", message: "" })}
+        />
+      )}
     </>
   );
 };

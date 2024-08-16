@@ -30,14 +30,28 @@ const PostsTap: React.FC = () => {
       if (user && user.id) {
         setLoading(true);
         try {
-          const userPosts = await fetchPosts(
-            1,
-            selectedTab !== "전체" ? selectedTab : undefined,
-            { user_id: user.id },
-            { order: { column: "created_at", ascending: false } },
-          );
-          setPosts(userPosts);
-          setTotalPages(Math.ceil(userPosts.length / 9));
+          let allPosts: any[] = [];
+          let page = 1;
+          let hasMore = true;
+
+          while (hasMore) {
+            const userPosts = await fetchPosts(
+              page,
+              undefined,
+              { user_id: user.id },
+              { order: { column: "created_at", ascending: false } },
+            );
+
+            if (userPosts.length === 0) {
+              hasMore = false;
+            } else {
+              allPosts = [...allPosts, ...userPosts];
+              page++;
+            }
+          }
+
+          setPosts(allPosts);
+          updateTotalPages(allPosts);
         } catch (error) {
           console.error("포스트 불러오는 중 오류 발생:", error);
         } finally {
@@ -46,19 +60,32 @@ const PostsTap: React.FC = () => {
       }
     };
     loadPosts();
-  }, [user, selectedTab]);
+  }, [user]);
+
+  const updateTotalPages = (filteredPosts: any[]) => {
+    setTotalPages(Math.ceil(filteredPosts.length / 9));
+  };
 
   const handleTabClick = (tab: Tab) => {
     setSelectedTab(tab);
     setCurrentPage(1);
+    updateTotalPages(filterPosts(posts, tab));
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const startIndex = (currentPage - 1) * 9;
-  const currentPosts = posts.slice(startIndex, startIndex + 9);
+  const filterPosts = (allPosts: any[], tab: Tab) => {
+    if (tab === "전체") return allPosts;
+    return allPosts.filter((post) => post.category === tab);
+  };
+
+  const getCurrentPosts = () => {
+    const filteredPosts = filterPosts(posts, selectedTab);
+    const startIndex = (currentPage - 1) * 9;
+    return filteredPosts.slice(startIndex, startIndex + 9);
+  };
 
   const handleEdit = (postId: string) => {
     router.push(`/post/${postId}`);
@@ -71,7 +98,9 @@ const PostsTap: React.FC = () => {
         if (error) {
           console.error("게시물 삭제 실패:", error);
         } else {
-          setPosts(posts.filter((post) => post.post_id !== postIdToDelete));
+          const updatedPosts = posts.filter((post) => post.post_id !== postIdToDelete);
+          setPosts(updatedPosts);
+          updateTotalPages(filterPosts(updatedPosts, selectedTab));
         }
       } catch (error) {
         console.error("삭제 중 오류 발생:", error);
@@ -82,13 +111,13 @@ const PostsTap: React.FC = () => {
     }
   };
 
-  // 삭제 확인 모달
   const confirmDelete = (postId: string) => {
     setPostIdToDelete(postId);
     setIsModalOpen(true);
   };
+
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex flex-col min-h-screen">
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65 text-center z-50">
           <div className="relative min-w-[300px] m:min-w-[260px] p-6 bg-fillStrong rounded-lg shadow-lg z-60">
@@ -147,8 +176,8 @@ const PostsTap: React.FC = () => {
             Array(3)
               .fill(0)
               .map((_, index) => <MypageList key={index} />)
-          ) : posts.length > 0 ? (
-            currentPosts.map((post) => (
+          ) : getCurrentPosts().length > 0 ? (
+            getCurrentPosts().map((post) => (
               <div key={post.post_id} className="s:w-full h-[260px] relative group">
                 <PostCardLong post={post} />
                 {user?.id === post.user_id && (
@@ -186,7 +215,7 @@ const PostsTap: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="mt-auto flex justify-center py-4">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
