@@ -2,6 +2,7 @@
 
 import useSignupStore from '@/store/useSignupStore';
 import React, { useState } from 'react';
+import ExperienceLevelButton from './components/ExperienceLevelButton';
 
 const experienceLevels = [
   '1년 미만', '1년', '2년', '3년', '4년', 
@@ -44,7 +45,7 @@ const Signup02: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="text-center text-2xl font-medium text-[#ffffff] leading-9 s:mt-16 mt-20">
+      <div className="text-center text-2xl font-medium text-[#ffffff] leading-9 s:mt-18 mt-20">
         얼마나 오래 하셨나요?
       </div>
       <div className="text-center text-[#9a9a9a] mt-2">
@@ -52,13 +53,12 @@ const Signup02: React.FC = () => {
       </div>
       <div className="grid grid-cols-3 gap-1 s:mt-4 mt-6 s:w-[335px] w-[370px] mx-auto">
         {experienceLevels.map((experience) => (
-          <button
+          <ExperienceLevelButton
             key={experience}
-            onClick={() => handleExperienceSelection(experience)}
-            className={getButtonClass(experience)}
-          >
-            {experience}
-          </button>
+            experience={experience}
+            isSelected={selectedExperience === experience}
+            onSelect={handleExperienceSelection}
+          />
         ))}
       </div>
     </div>
