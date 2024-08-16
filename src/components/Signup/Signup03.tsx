@@ -11,7 +11,7 @@ import AlertModal from "./components/AlertModal";
 
 export interface FormValues {
   nickname: string;
-  blog?: string;   
+  blog?: string;
 }
 
 interface Signup03Type {
@@ -32,22 +32,22 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
   const { onSubmit, blogError, blogSuccess, setBlogError, setBlogSuccess, validateUrl } = useSubmitProfile(setUserData);
 
   const handleFormSubmit = (data: FormValues) => {
-    document.body.classList.remove("page-disabled");  
+    document.body.classList.remove("page-disabled");
 
     if (!data.blog || data.blog.trim() === "") {
       AlertModal({
-        title: 'URL 주소가 비어 있습니다.',
-        text: 'URL 주소를 입력하지 않으셨습니다.\n그래도 프로필을 저장하시겠습니까?',
-        icon: 'warning',
-        confirmButtonText: '네, 저장하기',
-        cancelButtonText: '아니요, 다시 입력하기',
+        title: "URL 주소가 비어 있습니다.",
+        text: "URL 주소를 입력하지 않으셨습니다.\n그래도 프로필을 저장하시겠습니까?",
+        icon: "warning",
+        confirmButtonText: "네, 저장하기",
+        cancelButtonText: "아니요, 다시 입력하기",
         onConfirm: () => onSubmit(data, nicknameAvailable, setError),
         onCancel: () => document.body.classList.add("page-disabled"),
       });
     } else {
       onSubmit(data, nicknameAvailable, setError);
     }
-};
+  };
 
   useEffect(() => {
     console.log(`

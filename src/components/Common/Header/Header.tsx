@@ -48,7 +48,6 @@ const Header: React.FC = () => {
     setIsMypageModalOpen(false);
   };
 
-  // 모달 닫기 함수 추가
   const handleCloseLoginModal = () => {
     setIsModalOpen(false);
   };
@@ -64,6 +63,14 @@ const Header: React.FC = () => {
     }
   };
 
+  // 모바일 환경감지 마이페이지 모달을 닫는 함수
+  const closeModalOnRouteChange = () => {
+    if (window.innerWidth <= 768 && isMypageModalOpen) {
+      setIsMypageModalOpen(false);
+    }
+  };
+
+  // 프로필 사진 캐싱 방지
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   return (
@@ -125,7 +132,7 @@ const Header: React.FC = () => {
                 >
                   <Image
                     src={isMypageModalOpen ? "/assets/header/primary_close.svg" : "/assets/header/mobile_logo.svg"}
-                    alt={isMypageModalOpen ? "닫기 버튼 아이콘" : "마이페이지 아이콘"}
+                    alt={isMypageModalOpen ? "마이페이지 닫기 버튼 아이콘" : "마이페이지 아이콘"}
                     priority
                     width={20}
                     height={24}
@@ -133,6 +140,7 @@ const Header: React.FC = () => {
                 </button>
                 <Link
                   href="/mypage"
+                  onClick={closeModalOnRouteChange}
                   className="flex s:hidden items-center justify-center w-[45px] h-[45px]  s:w-[32px] s:h-[35px] rounded-lg bg-fillLight hover:bg-fillNormal text-white"
                 >
                   <Image src="/assets/header/mobile_logo.svg" alt="마이페이지 아이콘" priority width={20} height={24} />
@@ -184,8 +192,8 @@ const Header: React.FC = () => {
       )}
       {isMypageModalOpen && user && (
         <>
-          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleMypageModal}></div>
           {/* 마이페이지 모달 */}
+          <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleMypageModal}></div>
           <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-full max-w-[80%] border-[1px] border-fillLight bg-fillStrong shadow-lg rounded-lg p-5 z-50 s:block hidden">
             <div className="flex items-center mb-4 pb-4 border-b-[1px] border-b-fillLight">
               <div className="w-12 h-12 bg-fillNeutral rounded-[12px] flex items-center justify-center overflow-hidden">
@@ -208,17 +216,29 @@ const Header: React.FC = () => {
             </div>
             <ul className="space-y-2">
               <li>
-                <Link href="/mypage" className="block text-labelNormal font-base hover:text-fontWhite">
+                <Link
+                  href="/mypage"
+                  onClick={closeModalOnRouteChange}
+                  className="block text-labelNormal font-base hover:text-fontWhite"
+                >
                   프로필 수정
                 </Link>
               </li>
               <li>
-                <Link href="/mypage/myinterests" className="block text-labelNormal font-base hover:text-fontWhite">
+                <Link
+                  href="/mypage/myinterests"
+                  onClick={closeModalOnRouteChange}
+                  className="block text-labelNormal font-base hover:text-fontWhite"
+                >
                   내 관심글
                 </Link>
               </li>
               <li>
-                <Link href="/mypage/myposts" className="block text-labelNormal font-base hover:text-fontWhite">
+                <Link
+                  href="/mypage/myposts"
+                  onClick={closeModalOnRouteChange}
+                  className="block text-labelNormal font-base hover:text-fontWhite"
+                >
                   내 작성글
                 </Link>
               </li>
