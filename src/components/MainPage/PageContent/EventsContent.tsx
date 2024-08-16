@@ -1,14 +1,14 @@
 "use client";
 import Image from "next/image";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { NextPage } from "next";
 import { Tables } from "@/types/supabase";
 import { fetchEventsPosts, fetchEventsPostsWithDeadLine, FetchPostsFilters } from "@/lib/fetchPosts";
 import EventsInfiniteScrollComponent from "../InfiniteScroll/EventsInfiniteScroll";
-import MainLayout from "@/components/Layout/MainLayout";
 import Calender from "../MainSideBar/Calender/Calender";
+import useSearch from "@/hooks/useSearch";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/EventsCarousel"), { ssr: false });
 
@@ -16,6 +16,7 @@ const EventsContent: NextPage = () => {
   const [posts, setPosts] = useState<Tables<"IT_Events">[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const { searchWord } = useSearch();
 
   const [carouselPosts, setCarouselPosts] = useState<Tables<"IT_Events">[]>([]);
   const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
@@ -130,6 +131,15 @@ const EventsContent: NextPage = () => {
     initialLoad();
   }, []);
 
+  const filteredPosts = useMemo(() => {
+    if (!searchWord) return posts;
+    const lowerSearchWord = searchWord.toLowerCase();
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(lowerSearchWord) || post.description.toLowerCase().includes(lowerSearchWord),
+    );
+  }, [posts, searchWord]);
+
   return (
     <>
       <div className="hidden m:block">
@@ -160,7 +170,7 @@ const EventsContent: NextPage = () => {
           <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
           <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
         </div>
-        <EventsInfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+        <EventsInfiniteScrollComponent posts={filteredPosts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
       </div>
     </>
   );

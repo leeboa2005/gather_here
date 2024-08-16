@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { PostWithUser } from "@/types/posts/Post.type";
 import { FetchPostsFilters, fetchPosts, fetchPostsWithDeadLine } from "@/lib/fetchPosts";
@@ -7,6 +7,7 @@ import FilterBar from "../FilterBar/FilterBar";
 import Image from "next/image";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
 import dynamic from "next/dynamic";
+import useSearch from "@/hooks/useSearch";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -18,6 +19,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
   const [posts, setPosts] = useState<PostWithUser[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const { searchWord } = useSearch();
 
   const [carouselPosts, setCarouselPosts] = useState<PostWithUser[]>([]);
   const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
@@ -129,6 +131,15 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
     initialLoad();
   }, []);
 
+  const filteredPosts = useMemo(() => {
+    if (!searchWord) return posts;
+    const lowerSearchWord = searchWord.toLowerCase();
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(lowerSearchWord) || post.content.toLowerCase().includes(lowerSearchWord),
+    );
+  }, [posts, searchWord]);
+
   return (
     <div className="w-full">
       <div className="flex items-center">
@@ -155,7 +166,7 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
         selectedDuration={selectedDuration}
         onChange={handleFilterChange}
       />
-      <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+      <InfiniteScrollComponent posts={filteredPosts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
     </div>
   );
 };
