@@ -24,7 +24,12 @@ const MainDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [previousPage, setPreviousPage] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setPreviousPage(document.referrer); // 추가된 부분: 이전 페이지를 추적하여 상태에 저장
+  }, []);
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
@@ -148,6 +153,15 @@ const MainDetailPage = () => {
     return `${days}일 전`;
   };
 
+  const handleBackClick = () => {
+    const previousPage = localStorage.getItem("previousPage"); // localStorage에서 이전 페이지 경로를 가져옴
+    if (previousPage) {
+      router.push(previousPage);
+    } else {
+      router.push("/all"); // 기본적으로 "/all"로 이동
+    }
+  };
+
   if (!post) return <></>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
@@ -178,7 +192,7 @@ const MainDetailPage = () => {
   return (
     <>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
-        <button onClick={() => router.back()} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
+        <button onClick={handleBackClick} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image
             src="/Common/Icons/back.png"
             alt="Back"
@@ -331,9 +345,9 @@ const MainDetailPage = () => {
             </p>
             <div className="mb-3 flex items-start">
               <strong className="text-labelNeutral w-20 flex-shrink-0">기술 스택</strong>
-              <div className="ml-4 flex flex-wrap justify-start items-center flex-grow">
+              <span className="ml-4 flex flex-wrap justify-start items-center flex-grow">
                 {renderTechStackIcons(post.tech_stack)}
-              </div>
+              </span>
             </div>
           </div>
         </div>

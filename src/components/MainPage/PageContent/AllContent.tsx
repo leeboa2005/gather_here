@@ -37,6 +37,10 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("previousPage", "/all");
+  }, []);
+
   const loadMorePosts = async () => {
     const newPosts: PostWithUser[] = await fetchPosts(page);
 

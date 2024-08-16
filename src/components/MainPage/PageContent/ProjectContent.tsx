@@ -7,7 +7,6 @@ import FilterBar from "../FilterBar/FilterBar";
 import Image from "next/image";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
 import dynamic from "next/dynamic";
-import MainLayout from "@/components/Layout/MainLayout";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/Carousel"), { ssr: false });
 
@@ -47,6 +46,10 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("previousPage", "/projects");
   }, []);
 
   const loadMorePosts = async () => {

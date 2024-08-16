@@ -218,14 +218,14 @@ const PostEditPage = () => {
           className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2"
         >
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
-          <span>목록으로 돌아갈게요</span>
+          <span>게시글로 돌아갈게요</span>
         </button>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-fillAlternative text-fontWhite rounded-lg"
+        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg"
       >
-        <div className=" bg-fillStrong p-6 rounded-lg space-y-4">
+        <div className="bg-fillStrong p-6 rounded-t-lg space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNeutral font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
@@ -290,9 +290,9 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
+        <hr className="border-fillNeutral" />
 
-        <div className="bg-fillStrong p-6 rounded-lg space-y-4">
+        <div className="bg-fillStrong p-6 space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <FormMultiSelect
@@ -328,13 +328,13 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg space-y-4">
+        <hr className="border-fillNeutral" />
+        <div className="bg-fillStrong p-6 rounded-b-lg space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
 
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end space-x-4 mb-3">
           <button type="button" className="shared-button-gray mt-3" onClick={() => router.push(`/maindetail/${id}`)}>
             취소
           </button>

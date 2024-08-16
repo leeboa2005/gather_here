@@ -48,6 +48,10 @@ const StudiesContent: React.FC<StudiesContentProps> = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("previousPage", "/studies");
+  }, []);
+
   const loadMorePosts = async () => {
     const filterOptions: FetchPostsFilters = {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
