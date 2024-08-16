@@ -8,9 +8,10 @@ import LikeButton from "@/components/MainDetail/LikeButton";
 
 interface PostCardProps {
   post: PostWithUser;
+  onRemoveBookmark?: () => void;
 }
 
-const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
+const PostCardLong: React.FC<PostCardProps> = ({ post,  onRemoveBookmark}) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const deadlineDate = new Date(post.deadline);
@@ -62,7 +63,12 @@ const PostCardLong: React.FC<PostCardProps> = ({ post }) => {
               <time dateTime="YYYY-MM-DD">~{dayjs(post.deadline).format("YY.MM.DD")}</time>
             </li>
             <li className="absolute right-0">
-              <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
+              <LikeButton
+                postId={post.post_id}
+                currentUser={currentUser}
+                category={post.category}
+                onRemoveBookmark={onRemoveBookmark}
+              />
             </li>
           </ul>
         ) : null}

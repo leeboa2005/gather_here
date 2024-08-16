@@ -31,74 +31,62 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const fetchUserAndData = useCallback(async () => {
     setLoading(true);
     try {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
-
+      const { data, error } = await supabase.auth.getUser();
       if (error) {
-        // console.error("사용자 정보 불러오기 실패:", error.message);
+        console.error("사용자 정보를 불러오는 데 실패했습니다:", error.message);
         return;
       }
 
-      setUser(user);
+      setUser(data.user);
 
-      if (user) {
-        const { data, error: dataError } = await supabase
+      if (data.user) {
+        const { data: userData, error: dataError } = await supabase
           .from("Users")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("user_id", data.user.id)
           .limit(1)
           .single();
 
         if (dataError) {
-          // console.error("사용자 데이터 불러오기 실패:", dataError.message);
+          console.error("사용자 데이터를 불러오는 데 실패했습니다:", dataError.message);
         } else {
-          setUserData(data || null);
+          setUserData(userData);
         }
       }
     } catch (error) {
-      // console.error("사용자 정보 불러오기 실패:", error);
+      console.error("예기치 못한 오류가 발생했습니다:", error);
     } finally {
       setLoading(false);
     }
-  }, [supabase]);
+  }, []);
 
   const fetchUserData = useCallback(async () => {
-    if (!user) {
-      return;
-    }
+    if (!user) return;
     setLoading(true);
 
     try {
       const { data, error } = await supabase.from("Users").select("*").eq("user_id", user.id).limit(1).single();
-
       if (error) {
-        // console.error("사용자 데이터 불러오기 실패:", error.message);
+        console.error("사용자 데이터를 불러오는 데 실패했습니다:", error.message);
       } else {
-        setUserData(data || null);
+        setUserData(data);
       }
     } catch (error) {
-      // console.error("사용자 데이터 불러오기 중 예외 발생:", error);
+      console.error("사용자 데이터를 불러오는 중 오류가 발생했습니다:", error);
     } finally {
       setLoading(false);
     }
-  }, [user, supabase]);
+  }, [user]);
 
   const initializationUser = useCallback(() => {
     setUserData(null);
     setUser(null);
+    setLoading(true);
   }, []);
 
   useEffect(() => {
     fetchUserAndData();
   }, [fetchUserAndData]);
-
-  useEffect(() => {
-    if (user) {
-      fetchUserData();
-    }
-  }, [user, fetchUserData]);
 
   const contextValue = {
     user,

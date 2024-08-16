@@ -1,6 +1,6 @@
-import React from 'react';
-import { UseFormRegister, FieldErrors, UseFormWatch } from 'react-hook-form';
-import { FormValues } from '../Signup03';
+import React from "react";
+import { UseFormRegister, FieldErrors, UseFormWatch } from "react-hook-form";
+import { FormValues } from "../Signup03";
 
 interface NicknameInputProps {
   register: UseFormRegister<FormValues>;
@@ -25,9 +25,14 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
   };
 
   const getNicknameMessageClass = () => {
-    if (errors.nickname && errors.nickname.type === 'validate') {
+    if (errors.nickname && errors.nickname.type === "validate") {
       return "text-red-500";
-    } else if (nicknameAvailable === true && !hasSpecialCharacter(nickname) && nickname.length >= 2 && nickname.length <= 11) {
+    } else if (
+      nicknameAvailable === true &&
+      !hasSpecialCharacter(nickname) &&
+      nickname.length >= 2 &&
+      nickname.length <= 11
+    ) {
       return "text-green-500";
     } else if (nicknameAvailable === false) {
       return "text-red-500";
@@ -52,16 +57,16 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
       <input
         type="text"
         placeholder="닉네임을 입력해주세요"
-        {...register("nickname", { 
-          required: "닉네임을 입력해주세요.", 
-          minLength: { value: 2, message: "닉네임은 2 ~ 11자 내로 작성해주세요." }, 
+        {...register("nickname", {
+          required: "닉네임을 입력해주세요.",
+          minLength: { value: 2, message: "닉네임은 2 ~ 11자 내로 작성해주세요." },
           maxLength: { value: 11, message: "닉네임은 2 ~ 11자 내로 작성해주세요." },
-          validate: value => {
+          validate: (value) => {
             if (value.trim() === "") return "닉네임에 공백이 포함될 수 없습니다.";
             if (/\s/.test(value)) return "닉네임에 공백이 포함될 수 없습니다.";
             if (hasSpecialCharacter(value)) return "닉네임에 공백 및 특수문자가 포함될 수 없습니다.";
             return true;
-          }
+          },
         })}
         className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
       />
@@ -75,12 +80,12 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
           닉네임에 공백 및 특수문자가 포함될 수 없습니다.
         </p>
       )}
-      {nicknameAvailable === false && (
-        <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>
-      )}
-      {nicknameAvailable === true && nickname && nickname.length >= 2 && nickname.length <= 11 && !hasSpecialCharacter(nickname) && (
-        <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>
-      )}
+      {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>}
+      {nicknameAvailable === true &&
+        nickname &&
+        nickname.length >= 2 &&
+        nickname.length <= 11 &&
+        !hasSpecialCharacter(nickname) && <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>}
     </div>
   );
 };

@@ -5,13 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import DOMPurify from "dompurify";
 import Image from "next/image";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
+// import { toast, ToastContainer } from "react-toastify";
 
 const supabase = createClient();
 
@@ -74,54 +73,54 @@ const MainDetailPage = () => {
     fetchPostAndUser();
   }, [id]);
 
-  const handleDelete = async () => {
-    if (!currentUser || currentUser.id !== post.user_id) {
-      toast.error("본인의 글만 삭제할 수 있습니다");
-      return;
-    }
+  // const handleDelete = async () => {
+  //   if (!currentUser || currentUser.id !== post.user_id) {
+  //     toast.error("본인의 글만 삭제할 수 있습니다");
+  //     return;
+  //   }
 
-    const { error } = await supabase.from("Posts").delete().eq("post_id", id);
-    if (error) {
-      toast.error("게시물 삭제에 실패했습니다.");
-    } else {
-      toast.success("게시물이 삭제되었습니다.");
-      router.push("/");
-      router.refresh();
-    }
-  };
+  //   const { error } = await supabase.from("Posts").delete().eq("post_id", id);
+  //   if (error) {
+  //     toast.error("게시물 삭제에 실패했습니다.");
+  //   } else {
+  //     toast.success("게시물이 삭제되었습니다.");
+  //     router.push("/");
+  //     router.refresh();
+  //   }
+  // };
 
-  const confirmDelete = () => {
-    toast(
-      <div className="bg-fillAlternative p-4 ml-6 rounded-lg shadow-md text-fontWhite flex flex-col items-center">
-        <p className="text-xl font-semibold mb-2">정말 삭제하시겠어요?</p>
-        <p className="text-sm text-labelNeutral mb-4 text-center">삭제하면 다시 복구할 수 없어요.</p>
-        <div className="flex justify-end space-x-4">
-          <button
-            onClick={() => toast.dismiss()}
-            className="bg-fillLight hover:bg-fillNormal text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            취소할래요
-          </button>
-          <button
-            onClick={() => {
-              handleDelete();
-              toast.dismiss();
-            }}
-            className="bg-primaryStrong hover:bg-primary text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            삭제할래요
-          </button>
-        </div>
-      </div>,
-      {
-        position: "top-center",
-        autoClose: false,
-        closeOnClick: false,
-        draggable: false,
-        closeButton: false,
-      },
-    );
-  };
+  // const confirmDelete = () => {
+  //   toast(
+  //     <div className="bg-fillAlternative p-4 ml-6 rounded-lg shadow-md text-fontWhite flex flex-col items-center">
+  //       <p className="text-xl font-semibold mb-2">정말 삭제하시겠어요?</p>
+  //       <p className="text-sm text-labelNeutral mb-4 text-center">삭제하면 다시 복구할 수 없어요.</p>
+  //       <div className="flex justify-end space-x-4">
+  //         <button
+  //           onClick={() => toast.dismiss()}
+  //           className="bg-fillLight hover:bg-fillNormal text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  //         >
+  //           취소할래요
+  //         </button>
+  //         <button
+  //           onClick={() => {
+  //             handleDelete();
+  //             toast.dismiss();
+  //           }}
+  //           className="bg-primaryStrong hover:bg-primary text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  //         >
+  //           삭제할래요
+  //         </button>
+  //       </div>
+  //     </div>,
+  //     {
+  //       position: "top-center",
+  //       autoClose: false,
+  //       closeOnClick: false,
+  //       draggable: false,
+  //       closeButton: false,
+  //     },
+  //   );
+  // };
 
   const handleMoreOptions = () => {
     setShowOptions(!showOptions);
@@ -204,7 +203,7 @@ const MainDetailPage = () => {
         </button>
       </div>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s p-5 bg-fillAlternative text-fontWhite rounded-lg">
-        <ToastContainer
+        {/* <ToastContainer
           toastClassName={() =>
             "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-fillAlternative"
           }
@@ -214,7 +213,7 @@ const MainDetailPage = () => {
           hideProgressBar
           closeOnClick
           pauseOnHover
-        />
+        /> */}
         <div className="mb-4">
           <h1 className="text-title font-title">{post.title}</h1>
         </div>
@@ -232,7 +231,7 @@ const MainDetailPage = () => {
             <span className="text-base font-medium">{user?.nickname}</span>
             <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center w-[60px] ">
             <ShareButton />
             <LikeButton postId={id} currentUser={currentUser} category={post.category} />
             {currentUser?.id === post.user_id && (
@@ -276,7 +275,7 @@ const MainDetailPage = () => {
                       </svg>
                       수정하기
                     </button>
-                    <button
+                    {/* <button
                       className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
                       onClick={confirmDelete}
                     >
@@ -294,7 +293,7 @@ const MainDetailPage = () => {
                         />
                       </svg>
                       삭제하기
-                    </button>
+                    </button> */}
                   </div>
                 )}
               </div>

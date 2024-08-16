@@ -7,9 +7,8 @@ import FormInput from "@/components/MainDetail/FormInput";
 import FormDropdown from "@/components/MainDetail/FormDropdown";
 import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
 import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
+import Toast from "@/components/Common/Toast/Toast";
 import "react-quill/dist/quill.snow.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 
 interface Option {
@@ -36,6 +35,7 @@ const PostEditPage = () => {
   const [deadline, setDeadline] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [place, setPlace] = useState<string>("");
+  const [toastState, setToastState] = useState({ state: "", message: "" });
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -87,9 +87,9 @@ const PostEditPage = () => {
 
     if (error) {
       console.error("데이터 수정 실패:", error);
-      toast.error("다시 시도해주세요!");
+      setToastState({ state: "error", message: "다시 시도해주세요!" });
     } else {
-      toast.success("수정되었습니다!");
+      setToastState({ state: "success", message: "수정되었습니다!" });
       router.push(`/maindetail/${id}`);
     }
   };
@@ -211,7 +211,6 @@ const PostEditPage = () => {
 
   return (
     <>
-      <ToastContainer />
       <div className="w-full mx-auto max-w-[744px] s:max-w-container-s text-fontWhite rounded-lg">
         <button
           onClick={() => router.push(`/maindetail/${id}`)}
@@ -343,6 +342,13 @@ const PostEditPage = () => {
           </button>
         </div>
       </form>
+      {toastState.state && (
+        <Toast
+          state={toastState.state}
+          message={toastState.message}
+          onClear={() => setToastState({ state: "", message: "" })}
+        />
+      )}
     </>
   );
 };

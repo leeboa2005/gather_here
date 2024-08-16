@@ -1,19 +1,22 @@
-import LikeButton from "@/components/EventsDetail/ITLikeButton";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { Tables } from "@/types/supabase";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import LikeButton from "@/components/EventsDetail/ITLikeButton";
 import dayjs from "dayjs";
-import "dayjs/locale/ko"; // 한국어 로케일 임포트
+import "dayjs/locale/ko";
 
 interface EventsCardProps {
   post: Tables<"IT_Events">;
   style?: React.CSSProperties;
+  onRemoveBookmark?: () => void;
 }
 
-const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
+const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark }) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const deadlineDate = new Date(post.date_done);
@@ -47,8 +50,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post }) => {
                 {dayjs(post.date_done).format("YY.MM.DD (ddd)")}
               </time>
             </li>
-
-            <LikeButton eventId={post.event_id} currentUser={currentUser} />
+            <LikeButton eventId={post.event_id} currentUser={currentUser} onRemoveBookmark={onRemoveBookmark} />
           </ul>
         ) : null}
         <Link href={`/eventsdetail/${post.event_id}`}>
