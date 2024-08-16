@@ -54,7 +54,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
       (post) =>
         post.title.toLowerCase().includes(lowerSearchWord) || post.content.toLowerCase().includes(lowerSearchWord),
     );
-  }, [posts, searchWord]);
+  }, [searchWord]);
 
   return (
     <>

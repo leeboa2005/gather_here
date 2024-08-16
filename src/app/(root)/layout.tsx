@@ -3,6 +3,7 @@ import "./globals.css";
 import CombinedProviders from "@/provider/CombinedProviders";
 import Header from "@/components/Common/Header/Header";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 const pretendard = localFont({
   src: [
@@ -71,7 +72,9 @@ export default function RootLayout({
     <html lang="ko" className={pretendard.className}>
       <body className="bg-background text-fontWhite">
         <CombinedProviders>
-          <Header />
+          <Suspense>
+            <Header />
+          </Suspense>
           {children}
         </CombinedProviders>
       </body>

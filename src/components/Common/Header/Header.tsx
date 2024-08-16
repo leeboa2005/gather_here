@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -89,88 +89,102 @@ const Header: React.FC = () => {
             className="hidden s:block"
           />
         </Link>
-        <nav className="flex items-center gap-2">
-          {/* 검색창 데스크탑 */}
-          <form className="relative s:hidden items-center overflow-hidden" onSubmit={handleSearch}>
-            <label htmlFor="input" className="sr-only">
+        <Suspense>
+          <nav className="flex items-center gap-2">
+            {/* 검색창 데스크탑 */}
+            <form className="relative s:hidden items-center overflow-hidden" onSubmit={handleSearch}>
+              <label htmlFor="input" className="sr-only">
+                검색창
+              </label>
+              <input
+                type="text"
+                id="input"
+                name="input"
+                placeholder="검색어를 입력해보세요"
+                className="shared-input-gray rounded-lg"
+                value={searchWord}
+                onChange={(evt) => setSearchWord(evt.target.value)}
+              />
+              <button className="absolute top-[10px] right-[8px]" type="submit">
+                <Image src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
+              </button>
+            </form>
+            <div className="flex items-center gap-2">
+              {/* 디테일 페이지 헤더의 검색 버튼 */}
+              {/* <button
+              onClick={toggleSearch}
+              type="submit"
+              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              >
+              <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
+              </button> */}
+              <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
+                <button className="flex items-center justify-center w-[45px] s:w-[32px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-background hover:bg-fillNormal s:hover:bg-transparent text-white">
+                  <Image src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
+                </button>
+              </Link>
+              {user ? (
+                <div className="flex items-center">
+                  <button
+                    onClick={toggleMypageModal}
+                    className="hidden s:flex items-center justify-center w-[45px] s:w-[35px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-fillStrong hover:bg-fillNormal s:hover:bg-black text-white z-50"
+                  >
+                    <Image
+                      src={isMypageModalOpen ? "/assets/header/primary_close.svg" : "/assets/header/mobile_logo.svg"}
+                      alt={isMypageModalOpen ? "닫기 버튼 아이콘" : "마이페이지 아이콘"}
+                      priority
+                      width={20}
+                      height={24}
+                    />
+                  </button>
+                  <Link
+                    href="/mypage"
+                    className="flex s:hidden items-center justify-center w-[45px] h-[45px]  s:w-[32px] s:h-[35px] rounded-lg bg-fillLight hover:bg-fillNormal text-white"
+                  >
+                    <Image
+                      src="/assets/header/mobile_logo.svg"
+                      alt="마이페이지 아이콘"
+                      priority
+                      width={20}
+                      height={24}
+                    />
+                  </Link>
+                  <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <button onClick={handleOpenLoginModal} className="shared-button-gray">
+                  로그인
+                </button>
+              )}
+            </div>
+          </nav>
+        </Suspense>
+      </div>
+      {/* 검색창 모바일 */}
+      {isSearchOpen && (
+        <Suspense>
+          <form className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
+            <label htmlFor="search" className="sr-only">
               검색창
             </label>
             <input
               type="text"
-              id="input"
-              name="input"
+              id="search"
+              name="search"
               placeholder="검색어를 입력해보세요"
-              className="shared-input-gray rounded-lg"
-              value={searchWord}
-              onChange={(evt) => setSearchWord(evt.target.value)}
+              className="shared-input-gray w-full"
             />
-            <button className="absolute top-[10px] right-[8px]" type="submit">
-              <Image src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
+            <button
+              type="button"
+              onClick={toggleSearch}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2"
+            >
+              <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
             </button>
           </form>
-          <div className="flex items-center gap-2">
-            {/* 디테일 페이지 헤더의 검색 버튼 */}
-            {/* <button
-              onClick={toggleSearch}
-              type="submit"
-              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
-            >
-              <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
-            </button> */}
-            <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
-              <button className="flex items-center justify-center w-[45px] s:w-[32px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-background hover:bg-fillNormal s:hover:bg-transparent text-white">
-                <Image src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
-              </button>
-            </Link>
-            {user ? (
-              <div className="flex items-center">
-                <button
-                  onClick={toggleMypageModal}
-                  className="hidden s:flex items-center justify-center w-[45px] s:w-[35px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-fillStrong hover:bg-fillNormal s:hover:bg-black text-white z-50"
-                >
-                  <Image
-                    src={isMypageModalOpen ? "/assets/header/primary_close.svg" : "/assets/header/mobile_logo.svg"}
-                    alt={isMypageModalOpen ? "닫기 버튼 아이콘" : "마이페이지 아이콘"}
-                    priority
-                    width={20}
-                    height={24}
-                  />
-                </button>
-                <Link
-                  href="/mypage"
-                  className="flex s:hidden items-center justify-center w-[45px] h-[45px]  s:w-[32px] s:h-[35px] rounded-lg bg-fillLight hover:bg-fillNormal text-white"
-                >
-                  <Image src="/assets/header/mobile_logo.svg" alt="마이페이지 아이콘" priority width={20} height={24} />
-                </Link>
-                <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
-                  로그아웃
-                </button>
-              </div>
-            ) : (
-              <button onClick={handleOpenLoginModal} className="shared-button-gray">
-                로그인
-              </button>
-            )}
-          </div>
-        </nav>
-      </div>
-      {/* 검색창 모바일 */}
-      {isSearchOpen && (
-        <form className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
-          <label htmlFor="search" className="sr-only">
-            검색창
-          </label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="검색어를 입력해보세요"
-            className="shared-input-gray w-full"
-          />
-          <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
-          </button>
-        </form>
+        </Suspense>
       )}
       {isModalOpen && (
         <>
