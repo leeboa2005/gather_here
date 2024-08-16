@@ -8,6 +8,7 @@ import LoginForm from "@/components/Login/LoginForm";
 import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
+import useSearch from "@/hooks/useSearch";
 
 const supabase = createClient();
 
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMypageModalOpen, setIsMypageModalOpen] = useState(false);
   const defaultImage = "/assets/header/user.svg";
+  const { searchWord, setSearchWord, handleSearch } = useSearch();
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -89,33 +91,35 @@ const Header: React.FC = () => {
         </Link>
         <nav className="flex items-center gap-2">
           {/* 검색창 데스크탑 */}
-          <form className="relative s:hidden items-center overflow-hidden">
-            <label htmlFor="search" className="sr-only">
+          <form className="relative s:hidden items-center overflow-hidden" onSubmit={handleSearch}>
+            <label htmlFor="input" className="sr-only">
               검색창
             </label>
             <input
               type="text"
-              id="search"
-              name="search"
-              placeholder="준비 중입니다."
+              id="input"
+              name="input"
+              placeholder="검색어를 입력해보세요"
               className="shared-input-gray rounded-lg"
-              disabled
+              value={searchWord}
+              onChange={(evt) => setSearchWord(evt.target.value)}
             />
             <button className="absolute top-[10px] right-[8px]" type="submit">
-              <img src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
+              <Image src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
             </button>
           </form>
           <div className="flex items-center gap-2">
-            <button
+            {/* 디테일 페이지 헤더의 검색 버튼 */}
+            {/* <button
               onClick={toggleSearch}
               type="submit"
               className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
             >
-              <img src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘"></img>
-            </button>
+              <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
+            </button> */}
             <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
               <button className="flex items-center justify-center w-[45px] s:w-[32px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-background hover:bg-fillNormal s:hover:bg-transparent text-white">
-                <img src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
+                <Image src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
               </button>
             </Link>
             {user ? (
@@ -152,7 +156,7 @@ const Header: React.FC = () => {
       </div>
       {/* 검색창 모바일 */}
       {isSearchOpen && (
-        <div className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
+        <form className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
           <label htmlFor="search" className="sr-only">
             검색창
           </label>
@@ -160,14 +164,13 @@ const Header: React.FC = () => {
             type="text"
             id="search"
             name="search"
-            placeholder="준비 중입니다."
+            placeholder="검색어를 입력해보세요"
             className="shared-input-gray w-full"
-            disabled
           />
           <button type="button" onClick={toggleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
             <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
           </button>
-        </div>
+        </form>
       )}
       {isModalOpen && (
         <>
