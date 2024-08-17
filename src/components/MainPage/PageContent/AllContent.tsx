@@ -53,9 +53,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
       return uniquePosts;
     });
 
-    setPage((prevPage) => {
-      return prevPage + 1;
-    });
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (

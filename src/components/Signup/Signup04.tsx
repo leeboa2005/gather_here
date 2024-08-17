@@ -12,7 +12,7 @@ const Signup04: React.FC = () => {
 
   const handleExplore = () => {
     closeModal();
-    router.push("/");
+    router.replace("/");
   };
 
   return (
@@ -28,7 +28,6 @@ const Signup04: React.FC = () => {
       </div>
       <div className="text-center">
         <div className="text-center text-2xl font-medium text-[#ffffff]">
-          {" "}
           @gather_here에 <br />
           환영해요!
         </div>
