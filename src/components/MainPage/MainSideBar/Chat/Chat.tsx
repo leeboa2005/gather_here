@@ -104,7 +104,6 @@ const Chat = () => {
                 <textarea
                   value={inputValue}
                   onChange={(evt) => setInputValue(evt.target.value)}
-                  // onKeyUp={(evt) => handleEnterKeyUp(evt)}
                   onKeyDown={(evt) => handleEnterKeyDown(evt)}
                   placeholder="메시지를 입력해보세요"
                   className="w-full h-12 self-stretch bg-fillNeutral border-0 rounded-lg justify-start items-start inline-flex border self-stretch text-fontWhite overflow-auto scrollbar-hide resize-none mr-4 p-3 focus:outline-none"
