@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import StudiesContent from "@/components/MainPage/PageContent/StudiesContent";
 import { fetchPostsWithDeadLine } from "@/lib/fetchPosts";
 
@@ -8,7 +8,11 @@ const StudiesPage = async () => {
     return <div>포스트를 불러오는 중 문제가 발생했습니다.</div>;
   }
 
-  return <StudiesContent initialPosts={posts} />;
+  return (
+    <Suspense>
+      <StudiesContent initialPosts={posts} />
+    </Suspense>
+  );
 };
 
 export default StudiesPage;
