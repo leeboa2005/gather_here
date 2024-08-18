@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
+import useDraft from "@/hooks/useDraft";
 import FormInput from "@/components/MainDetail/FormInput";
 import FormDropdown from "@/components/MainDetail/FormDropdown";
 import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
@@ -21,18 +22,7 @@ interface Option {
 const supabase = createClient();
 
 const PostPage = () => {
-  const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [duration, setDuration] = useState<string>("");
-  const [totalMembers, setTotalMembers] = useState<string>("");
-  const [personalLink, setPersonalLink] = useState<string>("");
-  const [targetPosition, setTargetPosition] = useState<Option[]>([]);
-  const [recruitments, setRecruitments] = useState<string>("");
-  const [techStack, setTechStack] = useState<Option[]>([]);
-  const [deadline, setDeadline] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [place, setPlace] = useState<string>("");
+  const [draft, updateDraft, saveDraft] = useDraft();
   const [userId, setUserId] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
@@ -60,18 +50,18 @@ const PostPage = () => {
 
     const payload = {
       user_id: userId,
-      title,
-      category,
-      location,
-      duration: Number(duration),
-      total_members: Number(totalMembers),
-      personal_link: personalLink,
-      target_position: targetPosition.map((pos) => pos.value),
-      recruitments: Number(recruitments),
-      tech_stack: techStack.map((ts) => ts.value),
-      deadline: deadline || "",
-      content: content,
-      place: place,
+      title: draft.title,
+      category: draft.category,
+      location: draft.location,
+      duration: Number(draft.duration),
+      total_members: Number(draft.totalMembers),
+      personal_link: draft.personalLink,
+      target_position: draft.targetPosition.map((pos) => pos.value),
+      recruitments: Number(draft.recruitments),
+      tech_stack: draft.techStack.map((ts) => ts.value),
+      deadline: draft.deadline || "",
+      content: draft.content,
+      place: draft.place,
     };
 
     const { data, error } = await supabase.from("Posts").insert([payload]).select("post_id");
@@ -82,20 +72,24 @@ const PostPage = () => {
     } else {
       setToastState({ state: "success", message: "제출되었습니다!" });
       if (data && data[0] && data[0].post_id) {
+        localStorage.removeItem("draftPost");
         router.push(`/maindetail/${data[0].post_id}`);
       }
     }
   };
 
-  const handleInputChange =
-    (setter: React.Dispatch<React.SetStateAction<any>>) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      setter(e.target.value);
-    };
+  const handleSaveDraft = () => {
+    saveDraft();
+    setToastState({ state: "success", message: "임시 저장이 완료되었습니다!" });
+  };
 
-  const handleMultiSelectChange =
-    (setter: React.Dispatch<React.SetStateAction<Option[]>>) => (selectedOptions: Option[]) => {
-      setter(selectedOptions);
-    };
+  const handleInputChange = (key: keyof typeof draft) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    updateDraft(key, e.target.value);
+  };
+
+  const handleMultiSelectChange = (key: keyof typeof draft) => (selectedOptions: Option[]) => {
+    updateDraft(key, selectedOptions);
+  };
 
   const categoryOptions: Option[] = [
     { value: "스터디", label: "스터디" },
@@ -174,7 +168,7 @@ const PostPage = () => {
     { value: "Go", label: "Go" },
     { value: "GraphQL", label: "GraphQL" },
     { value: "Java", label: "Java" },
-    { value: "Javascript", label: "Javascript" },
+    { value: "JavaScript", label: "JavaScript" },
     { value: "Jest", label: "Jest" },
     { value: "Kotlin", label: "Kotlin" },
     { value: "Kubernetes", label: "Kubernetes" },
@@ -190,7 +184,7 @@ const PostPage = () => {
     { value: "Spring", label: "Spring" },
     { value: "Svelte", label: "Svelte" },
     { value: "Swift", label: "Swift" },
-    { value: "Typescript", label: "Typescript" },
+    { value: "TypeScript", label: "TypeScript" },
     { value: "Unity", label: "Unity" },
     { value: "Vue", label: "Vue" },
     { value: "Zeplin", label: "Zeplin" },
@@ -207,12 +201,8 @@ const PostPage = () => {
       <CommonModal isOpen={showLoginModal} onRequestClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </CommonModal>
-      <div className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
-          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
-          <span>목록으로 돌아갈게요</span>
-        </button>
-      </div>
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md"></div>
+
       <form
         onSubmit={handleSubmit}
         className="bg-fillStrong w-full mx-auto max-w-[744px] s:max-w-container-s p-5 text-fontWhite rounded-lg"
@@ -224,12 +214,12 @@ const PostPage = () => {
             </h2>
             <FormInput
               label=""
-              value={title}
-              onChange={handleInputChange(setTitle)}
+              value={draft.title}
+              onChange={handleInputChange("title")}
               maxLength={50}
               placeholder="제목을 입력해주세요"
             />
-            <p className="text-sm text-labelNeutral">제목은 50자 내로 작성해주세요. ({title.length}/50)</p>
+            <p className="text-sm text-labelNeutral">제목은 50자 내로 작성해주세요. ({draft.title.length}/50)</p>
           </div>
           <hr className="border-fillNeutral mb-4" />
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">기본 정보</h2>
@@ -237,102 +227,122 @@ const PostPage = () => {
             <FormDropdown
               label="분류"
               options={categoryOptions}
-              value={category}
-              onChange={handleInputChange(setCategory)}
+              value={draft.category}
+              onChange={handleInputChange("category")}
               placeholder="분류를 선택해주세요"
             />
             <FormDropdown
               label="방식"
               options={placeOptions}
-              value={place}
-              onChange={handleInputChange(setPlace)}
+              value={draft.place}
+              onChange={handleInputChange("place")}
               placeholder="진행 방식을 선택해주세요"
             />
             <FormDropdown
               label="지역"
               options={locationOptions}
-              value={location}
-              onChange={handleInputChange(setLocation)}
+              value={draft.location}
+              onChange={handleInputChange("location")}
               placeholder="지역을 선택해주세요"
             />
             <FormDropdown
               label="기간"
               options={durationOptions}
-              value={duration}
-              onChange={handleInputChange(setDuration)}
+              value={draft.duration}
+              onChange={handleInputChange("duration")}
               placeholder="기간을 선택해주세요"
             />
             <FormDropdown
               label="총 인원"
               options={totalMembersOptions}
-              value={totalMembers}
-              onChange={handleInputChange(setTotalMembers)}
+              value={draft.totalMembers}
+              onChange={handleInputChange("totalMembers")}
               placeholder="총 참여 인원을 선택해주세요"
             />
             <FormInput
               label={
                 <>
                   <span>연락 방법</span>
-                  <span className="text-labelNeutral ml-1">(선택)</span>
+                  <span className="text-red-500 ml-1">*</span>
                 </>
               }
-              value={personalLink}
-              onChange={handleInputChange(setPersonalLink)}
+              value={draft.personalLink}
+              onChange={handleInputChange("personalLink")}
               placeholder="연락 받을 번호 혹은 이메일을 입력해주세요"
             />
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
-
         <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
-            <FormMultiSelect
-              label="모집 대상"
-              options={targetPositionOptions}
-              value={targetPosition}
-              onChange={handleMultiSelectChange(setTargetPosition)}
-            />
-            <FormDropdown
-              label="모집 인원"
-              options={recruitmentsOptions}
-              value={recruitments}
-              onChange={handleInputChange(setRecruitments)}
-              placeholder="모집 인원을 선택해주세요"
-            />
-            <FormMultiSelect
-              label="기술 스택"
-              options={techStackOptions}
-              value={techStack}
-              onChange={handleMultiSelectChange(setTechStack)}
-            />
-            <FormInput
-              label={
-                <>
-                  <span>마감일</span>
-                  <span className="text-red-500 ml-1">*</span>
-                </>
-              }
-              type="date"
-              value={deadline || ""}
-              onChange={handleInputChange(setDeadline)}
-              placeholder="마감일을 선택해주세요"
-            />
+            <div className="space-y-2">
+              <FormMultiSelect
+                label="모집 대상"
+                options={targetPositionOptions}
+                value={draft.targetPosition}
+                onChange={handleMultiSelectChange("targetPosition")}
+              />
+              <p className="text-sm text-labelNeutral mb-1">다중 선택이 가능해요.</p>
+            </div>
+            <div className="space-y-2">
+              <FormDropdown
+                label="모집 인원"
+                options={recruitmentsOptions}
+                value={draft.recruitments}
+                onChange={handleInputChange("recruitments")}
+                placeholder="모집 인원을 선택해주세요"
+              />
+            </div>
+            <div className="space-y-2">
+              <FormMultiSelect
+                label="기술 스택"
+                options={techStackOptions}
+                value={draft.techStack}
+                onChange={handleMultiSelectChange("techStack")}
+              />
+              <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
+            </div>
+            <div className="space-y-2">
+              <FormInput
+                label={
+                  <>
+                    <span>마감일</span>
+                    <span className="text-red-500 ml-1">*</span>
+                  </>
+                }
+                type="date"
+                value={draft.deadline || ""}
+                onChange={handleInputChange("deadline")}
+                placeholder="마감일을 선택해주세요"
+              />
+            </div>
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
         <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
-          <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
+          <ReactQuillEditor
+            value={draft.content}
+            onChange={(value: string) =>
+              handleInputChange("content")({ target: { value } } as ChangeEvent<HTMLInputElement>)
+            }
+            className="bg-fillAssistive text-labelNeutral"
+          />
         </div>
-
-        <div className="flex justify-end space-x-4">
-          <button type="button" className="shared-button-gray mt-3" onClick={() => router.push("/")}>
-            취소
+        <div className="flex justify-between items-center mt-4">
+          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2">
+            <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+            <span>나가기</span>
           </button>
-          <button type="submit" className="shared-button-green mt-3">
-            등록
-          </button>
+          <div className="flex space-x-4">
+            <button type="button" className="shared-button-gray" onClick={handleSaveDraft}>
+              임시 저장
+            </button>
+            <button type="submit" className="shared-button-green">
+              등록
+            </button>
+          </div>
         </div>
       </form>
       {toastState.state && (
