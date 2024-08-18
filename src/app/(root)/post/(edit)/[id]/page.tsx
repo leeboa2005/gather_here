@@ -87,9 +87,7 @@ const PostEditPage = () => {
 
     if (error) {
       console.error("데이터 수정 실패:", error);
-      toast.error("다시 시도해주세요!");
     } else {
-      toast.success("수정되었습니다!");
       router.push(`/maindetail/${id}`);
     }
   };
@@ -212,15 +210,6 @@ const PostEditPage = () => {
   return (
     <>
       <ToastContainer />
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button
-          onClick={() => router.push(`/maindetail/${id}`)}
-          className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2"
-        >
-          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
-          <span>목록으로 돌아갈게요</span>
-        </button>
-      </div>
       <form
         onSubmit={handleSubmit}
         className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
@@ -281,7 +270,7 @@ const PostEditPage = () => {
               label={
                 <>
                   <span>연락 방법</span>
-                  <span className="text-labelNeutral ml-1">(선택)</span>
+                  <span className="text-red-500 ml-1">*</span>
                 </>
               }
               value={personalLink}
@@ -295,12 +284,15 @@ const PostEditPage = () => {
         <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
-            <FormMultiSelect
-              label="모집 대상"
-              options={targetPositionOptions}
-              value={targetPosition}
-              onChange={handleMultiSelectChange(setTargetPosition)}
-            />
+            <div className="space-y-2">
+              <FormMultiSelect
+                label="모집 대상"
+                options={targetPositionOptions}
+                value={targetPosition}
+                onChange={handleMultiSelectChange(setTargetPosition)}
+              />
+              <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
+            </div>
             <FormDropdown
               label="모집 인원"
               options={recruitmentsOptions}
@@ -308,12 +300,15 @@ const PostEditPage = () => {
               onChange={handleInputChange(setRecruitments)}
               placeholder="모집 인원을 선택해주세요"
             />
-            <FormMultiSelect
-              label="기술 스택"
-              options={techStackOptions}
-              value={techStack}
-              onChange={handleMultiSelectChange(setTechStack)}
-            />
+            <div className="space-y-2">
+              <FormMultiSelect
+                label="기술 스택"
+                options={techStackOptions}
+                value={techStack}
+                onChange={handleMultiSelectChange(setTechStack)}
+              />
+              <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
+            </div>
             <FormInput
               label={
                 <>
@@ -334,13 +329,20 @@ const PostEditPage = () => {
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
 
-        <div className="flex justify-end space-x-4">
-          <button type="button" className="shared-button-gray mt-3" onClick={() => router.push(`/maindetail/${id}`)}>
-            취소
+        <div className="flex justify-between items-center mt-4 px-4">
+          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2 ml-1">
+            <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+            <span>목록으로</span>
           </button>
-          <button type="submit" className="shared-button-green mt-3">
-            수정
-          </button>
+
+          <div className="flex space-x-4 mr-1">
+            <button type="button" className="shared-button-gray mt-3" onClick={() => router.push(`/maindetail/${id}`)}>
+              취소
+            </button>
+            <button type="submit" className="shared-button-green mt-3">
+              수정
+            </button>
+          </div>
         </div>
       </form>
     </>
