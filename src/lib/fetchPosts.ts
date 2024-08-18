@@ -10,7 +10,15 @@ export interface FetchPostsFilters {
   user_id?: string;
 }
 
+export interface FetchEventsPostsFilters {
+  category?: string;
+}
+
 interface FetchPostsOptions {
+  order?: { column: string; ascending: boolean };
+}
+
+interface FetchEventsPostsOptions {
   order?: { column: string; ascending: boolean };
 }
 
@@ -189,9 +197,9 @@ export const fetchEventsPostsWithDeadLine = async (
   const query = supabase
     .from("IT_Events")
     .select("*")
-    .gte("date_done", formattedToday)
-    .lte("date_done", formattedFutureDate)
-    .order("date_start", { ascending: false });
+    .gte("apply_done", formattedToday)
+    .lte("apply_done", formattedFutureDate)
+    .order("apply_start", { ascending: false });
 
   if (category) {
     query.eq("category", category);
@@ -204,41 +212,22 @@ export const fetchEventsPostsWithDeadLine = async (
 export const fetchEventsPosts = async (
   page: number,
   category?: string,
-  filters: FetchPostsFilters = {},
-  options: FetchPostsOptions = {},
+  filters: FetchEventsPostsFilters = {},
+  options: FetchEventsPostsOptions = {},
 ): Promise<Tables<"IT_Events">[]> => {
   const supabase = createClient();
   const postsPerPage = 5;
   const today = new Date().toISOString().split("T")[0];
   const start = (page - 1) * postsPerPage;
 
-  const query = supabase.from("IT_Events").select("*").gte("date_done", today);
+  let query = supabase.from("IT_Events").select("*").gte("date_done", today);
 
-  if (category) {
-    query.eq("category", category);
+  if (category && category !== "") {
+    query = query.eq("category", category); // Apply category filter if provided
   }
-  if (filters.targetPosition && filters.targetPosition.length > 0) {
-    query.contains("target_position", filters.targetPosition);
-  }
-  if (filters.place && filters.place !== "") {
-    query.eq("place", filters.place);
-  }
-  if (filters.location && filters.location !== "") {
-    query.eq("location", filters.location);
-  }
-  if (filters.duration !== null && filters.duration !== undefined) {
-    if (filters.duration.gt !== undefined) {
-      query.gt("duration", filters.duration.gt);
-    }
-    if (filters.duration.lte !== undefined) {
-      query.lte("duration", filters.duration.lte);
-    }
-  }
-  if (filters.user_id) {
-    query.eq("user_id", filters.user_id);
-  }
+
   if (options.order) {
-    query.order(options.order.column, { ascending: options.order.ascending });
+    query = query.order(options.order.column, { ascending: options.order.ascending });
   }
 
   query.range(start, start + postsPerPage - 1);

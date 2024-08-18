@@ -16,7 +16,7 @@ const Chat = () => {
     chatContentDivRef,
     formRef,
     handleSubmit,
-    handleEnterKeyUp,
+    // handleEnterKeyUp,
     handleEnterKeyDown,
     handleDelete,
   } = useChat();
@@ -98,19 +98,25 @@ const Chat = () => {
           {user ? (
             <div
               id="input"
-              className="self-stretch h-[88px] w-full p-5 bg-fillStrong rounded-b-[20px] border-l border-r border-b border-fillNormal flex justify-center items-center"
+              className="self-stretch h-[88px] w-full p-5 bg-fillStrong rounded-b-[20px] border-l border-r border-b border-fillNormal"
             >
-              <textarea
-                value={inputValue}
-                onChange={(evt) => setInputValue(evt.target.value)}
-                onKeyUp={(evt) => handleEnterKeyUp(evt)}
-                onKeyDown={(evt) => handleEnterKeyDown(evt)}
-                placeholder="메시지를 입력해보세요"
-                className="w-full h-12 self-stretch bg-fillNeutral rounded-lg justify-start items-start inline-flex border self-stretch text-fontWhite overflow-auto scrollbar-hide resize-none mr-4 p-3"
-              />
-              <button type="submit" className={`w-5 h-5 ml-1 text-fontWhite ${!inputValue.trim() ? "invisible" : ""}`}>
-                <Image src="/Chat/send.svg" alt="Send Button" width={30} height={30} />
-              </button>
+              <div className="w-full h-full flex justify-center items-center bg-fillNeutral rounded-xl">
+                <textarea
+                  value={inputValue}
+                  onChange={(evt) => setInputValue(evt.target.value)}
+                  onKeyDown={(evt) => handleEnterKeyDown(evt)}
+                  placeholder="메시지를 입력해보세요"
+                  className="w-full h-12 self-stretch bg-fillNeutral border-0 rounded-lg justify-start items-start inline-flex border self-stretch text-fontWhite overflow-auto scrollbar-hide resize-none mr-4 p-3 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className={`w-5 h-5 m-3 text-fontWhite ${
+                    inputValue.trim() ? "cursor-pointer" : "hover:cursor-default"
+                  }`}
+                >
+                  <Image src="/Chat/send.svg" alt="Send Button" width={30} height={30} />
+                </button>
+              </div>
             </div>
           ) : (
             <div

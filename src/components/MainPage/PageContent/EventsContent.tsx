@@ -1,14 +1,15 @@
 "use client";
 import Image from "next/image";
 import CarouselLoader from "@/components/Common/Skeleton/CarouselLoader";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { NextPage } from "next";
 import { Tables } from "@/types/supabase";
-import { fetchEventsPosts, fetchEventsPostsWithDeadLine, FetchPostsFilters } from "@/lib/fetchPosts";
+import { fetchEventsPosts, FetchEventsPostsFilters, fetchEventsPostsWithDeadLine } from "@/lib/fetchPosts";
 import EventsInfiniteScrollComponent from "../InfiniteScroll/EventsInfiniteScroll";
-import MainLayout from "@/components/Layout/MainLayout";
 import Calender from "../MainSideBar/Calender/Calender";
+import EventFilterBar from "../FilterBar/EventFilterBar";
+import useSearch from "@/hooks/useSearch";
 
 const Carousel = dynamic(() => import("@/components/MainPage/Carousel/EventsCarousel"), { ssr: false });
 
@@ -16,15 +17,13 @@ const EventsContent: NextPage = () => {
   const [posts, setPosts] = useState<Tables<"IT_Events">[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const { searchWord } = useSearch();
 
   const [carouselPosts, setCarouselPosts] = useState<Tables<"IT_Events">[]>([]);
   const [isLoadingCarousel, setIsLoadingCarousel] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
-  const [selectedPosition, setSelectedPosition] = useState<string>("");
-  const [selectedPlace, setSelectedPlace] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
-  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [days, setDays] = useState<number>(30); // D-일수이내
 
   useEffect(() => {
@@ -48,20 +47,9 @@ const EventsContent: NextPage = () => {
   }, []);
 
   const loadMorePosts = async () => {
-    const filterOptions: FetchPostsFilters = {
-      targetPosition: selectedPosition ? [selectedPosition] : undefined,
-      place: selectedPlace,
-      location: selectedLocation,
-      duration: null,
+    const filterOptions: FetchEventsPostsFilters = {
+      category: selectedCategory,
     };
-
-    if (selectedDuration !== null) {
-      if (selectedDuration === 7) {
-        filterOptions.duration = { gt: 6 };
-      } else {
-        filterOptions.duration = { lte: selectedDuration };
-      }
-    }
 
     const newPosts = await fetchEventsPosts(page);
 
@@ -79,45 +67,20 @@ const EventsContent: NextPage = () => {
     }
   };
 
-  const handleFilterChange = useCallback(
-    async (position: string, place: string, location: string, duration: number | null) => {
-      setSelectedPosition(position);
-      setSelectedPlace(place);
-      setSelectedLocation(location);
-      setSelectedDuration(duration);
+  const handleEventFilterChange = useCallback(async (category: string) => {
+    setSelectedCategory(category); // Set the selected category
 
-      const isDefaultFilter = !position && !place && !location && duration === null;
+    // Reset pagination and posts
+    setPage(1);
+    setHasMore(true);
 
-      if (isDefaultFilter) {
-        const allPosts = await fetchEventsPosts(1);
-        setPosts(allPosts);
-        setPage(2);
-        setHasMore(allPosts.length === 5);
-      } else {
-        const filterOptions: FetchPostsFilters = {
-          targetPosition: position ? [position] : undefined,
-          place: place,
-          location: location,
-          duration: null,
-        };
+    const filteredPosts = await fetchEventsPosts(1, category);
 
-        if (duration !== null) {
-          if (duration === 7) {
-            filterOptions.duration = { gt: 6 };
-          } else {
-            filterOptions.duration = { lte: duration };
-          }
-        }
+    setPosts(filteredPosts);
+    setPage(2);
 
-        const filteredPosts = await fetchEventsPosts(1);
-
-        setPosts(filteredPosts);
-        setPage(2);
-        setHasMore(filteredPosts.length === 5);
-      }
-    },
-    [],
-  );
+    setHasMore(filteredPosts.length === 5);
+  }, []);
 
   useEffect(() => {
     const initialLoad = async () => {
@@ -129,6 +92,15 @@ const EventsContent: NextPage = () => {
 
     initialLoad();
   }, []);
+
+  const filteredPosts = useMemo(() => {
+    if (!searchWord) return posts;
+    const lowerSearchWord = searchWord.toLowerCase();
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(lowerSearchWord) || post.description.toLowerCase().includes(lowerSearchWord),
+    );
+  }, [posts, searchWord]);
 
   return (
     <>
@@ -149,18 +121,8 @@ const EventsContent: NextPage = () => {
         ) : (
           <Carousel posts={carouselPosts} />
         )}
-        {/* <FilterBar
-            selectedPosition={selectedPosition}
-            selectedPlace={selectedPlace}
-            selectedLocation={selectedLocation}
-            selectedDuration={selectedDuration}
-            onChange={handleFilterChange}
-          /> */}
-        <div className="flex items-center mt-7 mb-4">
-          <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} />
-          <p className="ml-2 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
-        </div>
-        <EventsInfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+        <EventFilterBar selectedCategory={selectedCategory} onChange={handleEventFilterChange} />
+        <EventsInfiniteScrollComponent posts={filteredPosts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
       </div>
     </>
   );
