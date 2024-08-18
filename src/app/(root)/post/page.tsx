@@ -78,6 +78,11 @@ const PostPage = () => {
     }
   };
 
+  const handleSaveDraft = () => {
+    saveDraft();
+    setToastState({ state: "success", message: "임시 저장이 완료되었습니다!" });
+  };
+
   const handleInputChange = (key: keyof typeof draft) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateDraft(key, e.target.value);
   };
@@ -331,7 +336,7 @@ const PostPage = () => {
             <span>나가기</span>
           </button>
           <div className="flex space-x-4">
-            <button type="button" className="shared-button-gray" onClick={saveDraft}>
+            <button type="button" className="shared-button-gray" onClick={handleSaveDraft}>
               임시 저장
             </button>
             <button type="submit" className="shared-button-green">
