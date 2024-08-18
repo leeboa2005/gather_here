@@ -5,6 +5,7 @@ import Chat from "@/components/MainPage/MainSideBar/Chat/Chat";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ChatModal from "./Chat/ChatModal";
+import PRCard from "./PrCard/PrCard";
 
 const MainSideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,10 +53,7 @@ const MainSideBar = () => {
     <>
       <div className="col-span-1 m:hidden">
         <div className="sticky top-4">
-          <h4 className="flex items-center ml-2 mb-4 text-labelStrong">아래에 새로운 요소 들어갈 자리임</h4>
-          <div className="w-full h-full bg-primary">
-            <Image src="/assets/blank.svg" width={322} height={256} alt="빈 이미지" />
-          </div>
+          <PRCard />
           <Calender />
         </div>
       </div>
