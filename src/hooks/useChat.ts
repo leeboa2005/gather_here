@@ -3,6 +3,15 @@ import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
 import { MessageRow } from "@/types/chats/Chats.type";
 
+// debounce 함수 추가
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
+
 const useChat = () => {
   const { user } = useUser();
   const [messages, setMessages] = useState<MessageRow[]>([]);
@@ -67,50 +76,51 @@ const useChat = () => {
     };
   }, []);
 
-  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = async (evt?: FormEvent<HTMLFormElement>) => {
+    evt?.preventDefault();
 
     if (!user) {
       return;
-    }
+    } else if (formRef.current && inputValue.trim()) {
+      const supabase = createClient();
 
-    const supabase = createClient();
+      const { error } = await supabase
+        .from("Messages")
+        .insert({
+          channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675", // 예제에서는 하드코딩된 채널 ID 사용
+          user_id: `${user.id}`,
+          content: inputValue,
+        })
+        .select("*");
 
-    const { error } = await supabase
-      .from("Messages")
-      .insert({
-        channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675", // 예제에서는 하드코딩된 채널 ID 사용
-        user_id: `${user.id}`,
-        content: inputValue,
-      })
-      .select("*");
-
-    if (error) {
-      console.error("에러: ", error);
-      return;
-    }
-
-    setInputValue("");
-  };
-
-  const handleEnterKeyUp = (evt: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!evt.shiftKey && evt.key === "Enter") {
-      evt.preventDefault();
-      if (formRef.current && inputValue.trim()) {
-        console.log(inputValue);
-        formRef.current.requestSubmit();
-      } else {
+      if (error) {
+        console.error("에러: ", error);
         return;
       }
+
+      setInputValue("");
     }
   };
+
+  // debounce된 submit 함수
+  const debouncedSubmit = debounce(handleSubmit, 300);
+
+  // const handleEnterKeyUp = (evt: KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (!evt.shiftKey && evt.key === "Enter") {
+  //     evt.preventDefault();
+  //     if (formRef.current && inputValue.trim()) {
+  //       debouncedSubmit();
+  //     } else {
+  //       return;
+  //     }
+  //   }
+  // };
 
   const handleEnterKeyDown = (evt: KeyboardEvent<HTMLTextAreaElement>) => {
     if (!evt.shiftKey && evt.key === "Enter") {
       evt.preventDefault();
       if (formRef.current && inputValue.trim()) {
-        console.log(inputValue);
-        formRef.current.requestSubmit();
+        debouncedSubmit();
       } else {
         return;
       }
@@ -138,7 +148,7 @@ const useChat = () => {
     chatContentDivRef,
     formRef,
     handleSubmit,
-    handleEnterKeyUp,
+    // handleEnterKeyUp,
     handleEnterKeyDown,
     handleDelete,
   };
