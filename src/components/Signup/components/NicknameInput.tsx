@@ -68,7 +68,7 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
             return true;
           },
         })}
-        className="block s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
+        className="block focus:outline-primaryHeavy s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
       />
       <p className={`text-xs mt-2 ml-5 ${getLengthMessageClass()}`}>
         {nickname && (nickname.length < 2 || nickname.length > 11)
