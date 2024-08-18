@@ -207,7 +207,7 @@ const PostPage = () => {
       <CommonModal isOpen={showLoginModal} onRequestClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </CommonModal>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
+      <div className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
         <button onClick={() => router.push("/")} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
           <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
           <span>목록으로 돌아갈게요</span>
@@ -215,9 +215,9 @@ const PostPage = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-fillStrong w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
+        className="bg-fillStrong w-full mx-auto max-w-[744px] s:max-w-container-s p-5 text-fontWhite rounded-lg"
       >
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNormal font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
@@ -284,7 +284,7 @@ const PostPage = () => {
         </div>
         <hr className="border-fillNeutral mb-4" />
 
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <FormMultiSelect
@@ -321,7 +321,7 @@ const PostPage = () => {
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>

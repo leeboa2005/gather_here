@@ -50,6 +50,10 @@ const ProjectContent: React.FC<ProjectContentProps> = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("previousPage", "/projects");
+  }, []);
+
   const loadMorePosts = async () => {
     const filterOptions: FetchPostsFilters = {
       targetPosition: selectedPosition ? [selectedPosition] : undefined,
