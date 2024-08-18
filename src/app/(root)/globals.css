@@ -7,6 +7,8 @@ body {
   font-weight: 400;
   line-height: 1.5;
   word-break: keep-all;
+  background: #212121 !important;
+  font-color: #f7f7f7;
 }
 
 /* input styles  */
@@ -266,6 +268,11 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(208, 208, 208, 0.3) transparent;
+}
+
+/* Toastify */
+.Toastify__close-button {
+  color: #f7f7f7 !important;
 }
 
 /* mypage tooltip style*/

@@ -4,11 +4,8 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
-
 
 const supabase = createClient();
 
@@ -51,18 +48,6 @@ const EventDetailPage = () => {
     fetchEvent();
   }, [eventId]);
 
-  const handleShare = () => {
-    const url = window.location.href;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        toast.success("URL이 클립보드에 복사되었습니다!");
-      })
-      .catch(() => {
-        toast.error("URL 복사에 실패했습니다.");
-      });
-  };
-
   if (!event) return <></>;
 
   const formatDate = (dateString: string) => {
@@ -92,13 +77,12 @@ const EventDetailPage = () => {
         </button>
       </div>
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillStrong text-fontWhite rounded-lg shadow-md">
-        <ToastContainer />
         <h1 className="text-title font-title mb-4 p-2">{event.title}</h1>
-        <div className="flex justify-end items-center mb-4 mr-4 space-x-2">
+        <div className="flex items-center ml-auto justify-between w-[60px]">
           <ShareButton />
           <LikeButton eventId={eventId} currentUser={currentUser} />
         </div>
-        <div className="bg-fillStrong p-4 rounded-lg mb-4">
+        <div className="bg-fillStrong py-4 rounded-lg mb-4">
           {event.img_url && (
             <img src={event.img_url} alt={event.title} className="w-full h-64 object-cover mb-4 rounded-lg" />
           )}
