@@ -41,7 +41,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     안드로이드: "text-accentRed",
     PM: "text-accentColumbia",
     기획자: "text-accentPink",
-    마케터: "text-accentYellow",
+    마케팅: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",
@@ -86,7 +86,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
                 <p className="text-sm text-labelNeutral truncate">{post.user?.nickname}</p>
               </div>
             </div>
-            <div className="text-subtitle flex items-center justify-between bg-fillNormal p-3 rounded-lg truncate">
+            <div className="text-subtitle xs:text-base flex items-center justify-between bg-fillNormal p-3 xs:p-2 rounded-lg truncate">
               <div className="flex-1 text-left truncate">
                 {post.target_position?.length > 0 && (
                   <>

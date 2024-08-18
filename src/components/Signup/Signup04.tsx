@@ -16,7 +16,7 @@ const Signup04: React.FC = () => {
   };
 
   return (
-    <div className="s:w-[370px] s:h-[550px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
+    <div className="s:w-[370px] s:h-[600px] w-[430px] h-[630px] relative bg-background rounded-[20px] p-4 select-none">
       <div className="text-center s:mt-1 mt-3">
         <div className="w-full h-65 pt-3 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img
@@ -37,10 +37,10 @@ const Signup04: React.FC = () => {
           <br /> 더 많은 경험을 할 수 있도록 도울게요
         </div>
       </div>
-      <div className="absolute s:bottom-8 bottom-9 left-1/2 transform -translate-x-1/2 w-full px-4">
+      <div className="s:bottom-8 bottom-9 w-full px-4 mt-9 flex justify-center items-center">
         <button
           onClick={handleExplore}
-          className="s:w-[300px] w-[350px] h-[40px] ml-5 bg-[#c3e88d] text-[#343437] py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-[#343437] hover:text-white active:scale-95 active:bg-gray-800 active:text-gray-200"
+          className="s:w-[300px] w-[350px] h-[45px] bg-[#C3E88D] text-[#343437] py-2 rounded-md transition-transform transform hover:scale-105 hover:bg-primaryStrong active:scale-95 active:bg-gray-800 active:text-gray-200"
         >
           둘러보기
         </button>

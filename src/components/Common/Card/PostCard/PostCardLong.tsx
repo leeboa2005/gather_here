@@ -11,7 +11,7 @@ interface PostCardProps {
   onRemoveBookmark?: () => void;
 }
 
-const PostCardLong: React.FC<PostCardProps> = ({ post,  onRemoveBookmark}) => {
+const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
   const { user: currentUser } = useUser();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const deadlineDate = new Date(post.deadline);
@@ -44,7 +44,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post,  onRemoveBookmark}) => {
     안드로이드: "text-accentRed",
     PM: "text-accentColumbia",
     기획자: "text-accentPink",
-    마케터: "text-accentYellow",
+    마케팅: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",
@@ -75,7 +75,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post,  onRemoveBookmark}) => {
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
-        <p className="mt-2 mb-4 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">{cleanContent}</p>
+        <p className="mt-2 mb-4 s:h-11 xs:h-14 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
+          {cleanContent}
+        </p>
         <div className="flex items-center mb-4">
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
