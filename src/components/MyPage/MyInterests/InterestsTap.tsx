@@ -56,11 +56,18 @@ const InterestsTap: React.FC = () => {
     setCurrentPage(page);
   };
 
+  // 북마크 취소 시 해당 포스트를 리스트에서 제거
+  const handleRemoveBookmark = (postId: string | number) => {
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => (post as PostWithUser).post_id !== postId && (post as ITEvent).event_id !== postId),
+    );
+  };
+
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="relative flex flex-col min-h-screen">
       <div className="sticky z-10 s:relative s:top-auto">
         <div className="flex space-x-4 s:space-x-6">
           <button
@@ -89,7 +96,7 @@ const InterestsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
+      <div className="flex-1 s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
         {loading ? (
           Array(3)
             .fill(0)
@@ -98,9 +105,9 @@ const InterestsTap: React.FC = () => {
           currentPosts.map((post) => (
             <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full h-[260px]">
               {"event_id" in post ? (
-                <ItEventCardShort post={post as ITEvent} />
+                <ItEventCardShort post={post as ITEvent} onRemoveBookmark={() => handleRemoveBookmark(post.event_id)} />
               ) : (
-                <PostCardLong post={post as PostWithUser} />
+                <PostCardLong post={post as PostWithUser} onRemoveBookmark={() => handleRemoveBookmark(post.post_id)} />
               )}
             </div>
           ))
@@ -108,7 +115,7 @@ const InterestsTap: React.FC = () => {
           <p className="mt-5 text-center text-labelNeutral col-span-full">북마크 한 글이 아직 없어요.🥺</p>
         )}
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="mt-auto flex justify-center py-4">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
@@ -10,10 +10,9 @@ import FormDropdown from "@/components/MainDetail/FormDropdown";
 import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
 import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
 import "react-quill/dist/quill.snow.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import LoginForm from "@/components/Login/LoginForm";
+import Toast from "@/components/Common/Toast/Toast";
 
 interface Option {
   value: string;
@@ -24,8 +23,9 @@ const supabase = createClient();
 
 const PostPage = () => {
   const [draft, updateDraft, saveDraft] = useDraft();
-  const [userId, setUserId] = React.useState<string | null>(null);
-  const [showLoginModal, setShowLoginModal] = React.useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const [toastState, setToastState] = useState({ state: "", message: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const PostPage = () => {
       if (data?.user) {
         setUserId(data.user.id);
       } else {
-        toast.error("로그인이 필요합니다!");
+        setToastState({ state: "error", message: "로그인이 필요합니다!" });
       }
     };
     getUser();
@@ -68,8 +68,9 @@ const PostPage = () => {
 
     if (error) {
       console.error("데이터 안들어간다:", error);
-      toast.error("다시 시도해주세요!");
+      setToastState({ state: "error", message: "다시 시도해주세요!" });
     } else {
+      setToastState({ state: "success", message: "제출되었습니다!" });
       if (data && data[0] && data[0].post_id) {
         localStorage.removeItem("draftPost");
         router.push(`/maindetail/${data[0].post_id}`);
@@ -195,13 +196,13 @@ const PostPage = () => {
       <CommonModal isOpen={showLoginModal} onRequestClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </CommonModal>
-      <ToastContainer />
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md"></div>
+
       <form
         onSubmit={handleSubmit}
-        className="bg-fillStrong w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
+        className="bg-fillStrong w-full mx-auto max-w-[744px] s:max-w-container-s p-5 text-fontWhite rounded-lg"
       >
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNormal font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
@@ -267,7 +268,7 @@ const PostPage = () => {
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <div className="space-y-2">
@@ -277,7 +278,7 @@ const PostPage = () => {
                 value={draft.targetPosition}
                 onChange={handleMultiSelectChange("targetPosition")}
               />
-              <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
+              <p className="text-sm text-labelNeutral mb-1">다중 선택이 가능해요.</p>
             </div>
             <div className="space-y-2">
               <FormDropdown
@@ -314,7 +315,7 @@ const PostPage = () => {
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor
             value={draft.content}
@@ -324,12 +325,12 @@ const PostPage = () => {
             className="bg-fillAssistive text-labelNeutral"
           />
         </div>
-        <div className="flex justify-between items-center mt-4 px-4">
-          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2 ml-1">
+        <div className="flex justify-between items-center mt-4">
+          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2">
             <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
             <span>나가기</span>
           </button>
-          <div className="flex space-x-4 mr-2">
+          <div className="flex space-x-4">
             <button type="button" className="shared-button-gray" onClick={saveDraft}>
               임시 저장
             </button>
@@ -339,6 +340,13 @@ const PostPage = () => {
           </div>
         </div>
       </form>
+      {toastState.state && (
+        <Toast
+          state={toastState.state}
+          message={toastState.message}
+          onClear={() => setToastState({ state: "", message: "" })}
+        />
+      )}
     </>
   );
 };

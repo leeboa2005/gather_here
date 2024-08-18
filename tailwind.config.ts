@@ -14,6 +14,7 @@ const config: Config = {
       screens: {
         m: { max: "1068px" },
         s: { max: "768px" },
+        xs: { max: "420px" },
       },
       maxWidth: {
         "container-l": "1048px",

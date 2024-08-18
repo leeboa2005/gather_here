@@ -26,17 +26,6 @@ const SignupPage = () => {
       }
 
       if (!user) {
-        return;
-      }
-
-      const { data, error } = await supabase.from("Users").select("user_id").eq("user_id", user.id).maybeSingle();
-
-      if (error) {
-        console.error("Error fetching user from Users table:", error.message);
-        return;
-      }
-
-      if (data) {
         router.push("/");
         return;
       }
@@ -50,7 +39,7 @@ const SignupPage = () => {
     checkUser();
   }, [openModal, router, modalOpened]);
 
-  return <></>;
+  return null;
 };
 
 export default SignupPage;

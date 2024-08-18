@@ -1,14 +1,23 @@
-import { useState, useEffect, useRef, FormEvent } from "react";
+import { useState, useEffect, useRef, FormEvent, KeyboardEvent } from "react";
 import { useUser } from "@/provider/UserContextProvider";
 import { createClient } from "@/utils/supabase/client";
 import { MessageRow } from "@/types/chats/Chats.type";
+
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
 
 const useChat = () => {
   const { user } = useUser();
   const [messages, setMessages] = useState<MessageRow[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const chatContentDiv = useRef<HTMLDivElement>(null);
+  const chatContentDivRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -26,9 +35,9 @@ const useChat = () => {
 
       setMessages(messages as MessageRow[]);
 
-      if (chatContentDiv.current) {
+      if (chatContentDivRef.current) {
         requestAnimationFrame(() => {
-          chatContentDiv.current!.scrollTop = chatContentDiv.current!.scrollHeight;
+          chatContentDivRef.current!.scrollTop = chatContentDivRef.current!.scrollHeight;
         });
       }
     };
@@ -66,28 +75,43 @@ const useChat = () => {
     };
   }, []);
 
-  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = async (evt?: FormEvent<HTMLFormElement>) => {
+    evt?.preventDefault();
 
-    if (!user) return;
-
-    const supabase = createClient();
-
-    const { error } = await supabase
-      .from("Messages")
-      .insert({
-        channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675", // 예제에서는 하드코딩된 채널 ID 사용
-        user_id: `${user.id}`,
-        content: inputValue,
-      })
-      .select("*");
-
-    if (error) {
-      console.error("에러: ", error);
+    if (!user) {
       return;
-    }
+    } else if (formRef.current && inputValue.trim()) {
+      const supabase = createClient();
 
-    setInputValue("");
+      const { error } = await supabase
+        .from("Messages")
+        .insert({
+          channel_id: "214322ba-1cbd-424c-9ef1-e4b281f71675",
+          user_id: `${user.id}`,
+          content: inputValue,
+        })
+        .select("*");
+
+      if (error) {
+        console.error("에러: ", error);
+        return;
+      }
+
+      setInputValue("");
+    }
+  };
+
+  const debouncedSubmit = debounce(handleSubmit, 300);
+
+  const handleEnterKeyDown = (evt: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!evt.shiftKey && evt.key === "Enter") {
+      evt.preventDefault();
+      if (formRef.current && inputValue.trim()) {
+        debouncedSubmit();
+      } else {
+        return;
+      }
+    }
   };
 
   const handleDelete = async (message_id: string) => {
@@ -108,8 +132,11 @@ const useChat = () => {
     setInputValue,
     isModalOpen,
     setIsModalOpen,
-    chatContentDiv,
+    chatContentDivRef,
+    formRef,
     handleSubmit,
+    // handleEnterKeyUp,
+    handleEnterKeyDown,
     handleDelete,
   };
 };

@@ -1,23 +1,43 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
-import { FormValues } from '@/components/Signup/Signup03';
+import { FormValues } from "@/components/Signup/Signup03";
 
 const supabase = createClient();
 
 const useSubmitProfile = (setUserData: (data: any) => void) => {
-  const { nextStep, setNickname, setBlog, user, job_title, experience, profile_image_url } = useSignupStore();
+  const { nextStep, setNickname, setBlog, setUser, setProfileImageUrl, user, job_title, experience, profile_image_url } = useSignupStore();
   const [blogError, setBlogError] = useState<string | null>(null);
   const [blogSuccess, setBlogSuccess] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        setUser(session.user);
+        if (session.user.user_metadata?.avatar_url) {
+          setProfileImageUrl(session.user.user_metadata.avatar_url);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [setUser, setProfileImageUrl]);
+
   const validateUrl = (url: string): boolean => {
+    if (!url || url.trim() === "") {
+      return true;
+    }
+
     const urlPattern = new RegExp(
       "^(https?:\\/\\/)?" +
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})" +
-      "(:\\d+)?(\\/[-a-z\\d%_.~+\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF@]*)*" +
-      "(\\?[;&a-z\\d%_.~+=-]*)?" +
-      "(\\#[-a-z\\d_]*)?$",
-      "i"
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,6})" +
+        "(:\\d+)?(\\/[-a-z\\d%_.~+\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF@]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
+        "(\\#[-a-z\\d_]*)?$",
+      "i",
     );
     return urlPattern.test(url);
   };
@@ -36,11 +56,11 @@ const useSubmitProfile = (setUserData: (data: any) => void) => {
     }
 
     let formattedBlog = blog;
-    if (!/^https?:\/\//i.test(blog)) {
+    if (blog && !/^https?:\/\//i.test(blog)) {
       formattedBlog = "http://" + blog;
     }
 
-    if (!validateUrl(formattedBlog)) {
+    if (formattedBlog && !validateUrl(formattedBlog)) {
       setBlogError("유효한 URL을 입력하세요.");
       setBlogSuccess(null);
       return;
@@ -50,63 +70,32 @@ const useSubmitProfile = (setUserData: (data: any) => void) => {
     setBlogSuccess("유효한 URL입니다.");
 
     try {
-      const { data, error: fetchError } = await supabase.from("Users").select("user_id").eq("user_id", user.id);
+      const { error: updateError } = await supabase
+        .from("Users")
+        .update({
+          job_title,
+          experience,
+          nickname,
+          blog: formattedBlog,
+          email: user.email,
+          profile_image_url,
+        })
+        .eq("user_id", user.id);
 
-      if (fetchError) {
-        console.error("Error fetching data:", fetchError);
-        setError("nickname", { message: "Failed to fetch user data. Please try again." });
+      if (updateError) {
+        console.error("Error updating data:", updateError);
+        setError("nickname", { message: "프로필 업데이트에 실패했습니다. 다시 시도해 주세요." });
         return;
       }
 
-      if (data && data.length > 0) {
-        const { error: updateError } = await supabase
-          .from("Users")
-          .update({
-            job_title,
-            experience,
-            nickname,
-            blog: formattedBlog,
-            email: user.email,
-            profile_image_url,
-          })
-          .eq("user_id", user.id);
-
-        if (updateError) {
-          console.error("Error updating data:", updateError);
-          setError("nickname", { message: "Failed to update profile. Please try again." });
-          return;
-        }
-
-        setNickname(nickname);
-        setBlog(formattedBlog);
-      } else {
-        const { data, error: insertError } = await supabase
-          .from("Users")
-          .insert({
-            user_id: user.id,
-            job_title,
-            experience,
-            nickname,
-            blog: formattedBlog,
-            email: user.email,
-            profile_image_url,
-          })
-          .select();
-
-        if (insertError) {
-          console.error("Error inserting data:", insertError);
-          setError("nickname", { message: "Failed to save profile. Please try again." });
-          return;
-        }
-        setUserData(data[0]);
-        setNickname(nickname);
-        setBlog(formattedBlog);
-      }
+      setNickname(nickname);
+      setBlog(formattedBlog || "");
+      setUserData({ ...user, nickname, blog: formattedBlog, job_title, experience, profile_image_url });
 
       nextStep();
     } catch (err) {
       console.error("Unexpected error:", err);
-      setError("nickname", { message: "An unexpected error occurred. Please try again." });
+      setError("nickname", { message: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요." });
     }
   };
 

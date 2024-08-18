@@ -7,9 +7,8 @@ import FormInput from "@/components/MainDetail/FormInput";
 import FormDropdown from "@/components/MainDetail/FormDropdown";
 import FormMultiSelect from "@/components/MainDetail/FormMultiSelect";
 import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
+import Toast from "@/components/Common/Toast/Toast";
 import "react-quill/dist/quill.snow.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 
 interface Option {
@@ -36,6 +35,7 @@ const PostEditPage = () => {
   const [deadline, setDeadline] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [place, setPlace] = useState<string>("");
+  const [toastState, setToastState] = useState({ state: "", message: "" });
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -87,6 +87,7 @@ const PostEditPage = () => {
 
     if (error) {
       console.error("데이터 수정 실패:", error);
+      setToastState({ state: "error", message: "다시 시도해주세요!" });
     } else {
       router.push(`/maindetail/${id}`);
     }
@@ -179,7 +180,7 @@ const PostEditPage = () => {
     { value: "Go", label: "Go" },
     { value: "GraphQL", label: "GraphQL" },
     { value: "Java", label: "Java" },
-    { value: "Javascript", label: "Javascript" },
+    { value: "JavaScript", label: "JavaScript" },
     { value: "Jest", label: "Jest" },
     { value: "Kotlin", label: "Kotlin" },
     { value: "Kubernetes", label: "Kubernetes" },
@@ -195,7 +196,7 @@ const PostEditPage = () => {
     { value: "Spring", label: "Spring" },
     { value: "Svelte", label: "Svelte" },
     { value: "Swift", label: "Swift" },
-    { value: "Typescript", label: "Typescript" },
+    { value: "TypeScript", label: "TypeScript" },
     { value: "Unity", label: "Unity" },
     { value: "Vue", label: "Vue" },
     { value: "Zeplin", label: "Zeplin" },
@@ -209,12 +210,11 @@ const PostEditPage = () => {
 
   return (
     <>
-      <ToastContainer />
       <form
         onSubmit={handleSubmit}
-        className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md"
+        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg"
       >
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong p-6 rounded-t-lg space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNeutral font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
@@ -279,9 +279,9 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
+        <hr className="border-fillNeutral" />
 
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <div className="bg-fillStrong p-6 space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <div className="space-y-2">
@@ -323,8 +323,8 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
-        <div className="bg-fillStrong p-6 rounded-lg shadow-md space-y-4">
+        <hr className="border-fillNeutral" />
+        <div className="bg-fillStrong p-6 rounded-b-lg space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
@@ -345,6 +345,13 @@ const PostEditPage = () => {
           </div>
         </div>
       </form>
+      {toastState.state && (
+        <Toast
+          state={toastState.state}
+          message={toastState.message}
+          onClear={() => setToastState({ state: "", message: "" })}
+        />
+      )}
     </>
   );
 };

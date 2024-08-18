@@ -5,8 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import DOMPurify from "dompurify";
 import Image from "next/image";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
@@ -24,7 +22,12 @@ const MainDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [previousPage, setPreviousPage] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setPreviousPage(document.referrer); // 추가된 부분: 이전 페이지를 추적하여 상태에 저장
+  }, []);
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
@@ -69,55 +72,6 @@ const MainDetailPage = () => {
     fetchPostAndUser();
   }, [id]);
 
-  const handleDelete = async () => {
-    if (!currentUser || currentUser.id !== post.user_id) {
-      toast.error("본인의 글만 삭제할 수 있습니다");
-      return;
-    }
-
-    const { error } = await supabase.from("Posts").delete().eq("post_id", id);
-    if (error) {
-      toast.error("게시물 삭제에 실패했습니다.");
-    } else {
-      toast.success("게시물이 삭제되었습니다.");
-      router.push("/");
-      router.refresh();
-    }
-  };
-
-  const confirmDelete = () => {
-    toast(
-      <div className="bg-fillAlternative p-4 ml-6 rounded-lg shadow-md text-fontWhite flex flex-col items-center">
-        <p className="text-xl font-semibold mb-2">정말 삭제하시겠어요?</p>
-        <p className="text-sm text-labelNeutral mb-4 text-center">삭제하면 다시 복구할 수 없어요.</p>
-        <div className="flex justify-end space-x-4">
-          <button
-            onClick={() => toast.dismiss()}
-            className="bg-fillLight hover:bg-fillNormal text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            취소할래요
-          </button>
-          <button
-            onClick={() => {
-              handleDelete();
-              toast.dismiss();
-            }}
-            className="bg-primaryStrong hover:bg-primary text-labelAssistive font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            삭제할래요
-          </button>
-        </div>
-      </div>,
-      {
-        position: "top-center",
-        autoClose: false,
-        closeOnClick: false,
-        draggable: false,
-        closeButton: false,
-      },
-    );
-  };
-
   const handleMoreOptions = () => {
     setShowOptions(!showOptions);
   };
@@ -148,6 +102,15 @@ const MainDetailPage = () => {
     return `${days}일 전`;
   };
 
+  const handleBackClick = () => {
+    const previousPage = localStorage.getItem("previousPage"); // localStorage에서 이전 페이지 경로를 가져옴
+    if (previousPage) {
+      router.push(previousPage);
+    } else {
+      router.push("/all"); // 기본적으로 "/all"로 이동
+    }
+  };
+
   if (!post) return <></>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
@@ -157,34 +120,43 @@ const MainDetailPage = () => {
 
   const renderTechStackIcons = (techStack: string[]) => {
     return techStack.map((tech) => (
-      <Image key={tech} src={`/Stacks/${tech}.png`} alt={tech} width={40} height={40} className="inline-block mr-2" />
+      <div key={tech} className="inline-flex items-center mr-1">
+        <div className="flex items-center my-1 bg-fillNormal px-2.5 py-1 rounded-full">
+          <div className="flex items-center">
+            <Image
+              src={`/Stacks/${tech}.svg`}
+              alt={tech}
+              width={20}
+              height={20}
+              className="mr-1"
+              style={{ width: "20px", height: "20px" }}
+            />
+          </div>
+          <span className="text-baseS text-labelNeutral">{tech}</span>
+        </div>
+      </div>
     ));
   };
 
   return (
     <>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md">
-        <button onClick={() => router.push("/")} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
-          <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
+        <button onClick={handleBackClick} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
+          <Image
+            src="/Common/Icons/back.png"
+            alt="Back"
+            width={16}
+            height={16}
+            style={{ width: "16px", height: "16px", objectFit: "cover" }}
+          />
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s p-4 bg-fillAlternative text-fontWhite rounded-lg shadow-md">
-        <ToastContainer
-          toastClassName={() =>
-            "relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-fillAlternative"
-          }
-          bodyClassName={() => "text-sm font-white font-med block p-3"}
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar
-          closeOnClick
-          pauseOnHover
-        />
-        <div className="mb-4 p-3">
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s p-5 bg-fillAlternative text-fontWhite rounded-lg">
+        <div className="mb-4">
           <h1 className="text-title font-title">{post.title}</h1>
         </div>
-        <div className="flex items-center justify-between mb-4 pl-3 pr-3">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             {user?.profile_image_url && (
               <Image
@@ -192,13 +164,13 @@ const MainDetailPage = () => {
                 alt={user.nickname}
                 width={28}
                 height={28}
-                className="rounded-full"
+                className="rounded-md object-cover w-[28px] h-[28px]"
               />
             )}
             <span className="text-base font-medium">{user?.nickname}</span>
             <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center w-[60px] ">
             <ShareButton />
             <LikeButton postId={id} currentUser={currentUser} category={post.category} />
             {currentUser?.id === post.user_id && (
@@ -220,9 +192,9 @@ const MainDetailPage = () => {
                   </svg>
                 </button>
                 {showOptions && (
-                  <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg py-2">
+                  <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg">
                     <button
-                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
                       onClick={() => router.push(`/post/${id}`)}
                     >
                       <svg
@@ -242,25 +214,6 @@ const MainDetailPage = () => {
                       </svg>
                       수정하기
                     </button>
-                    <button
-                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
-                      onClick={confirmDelete}
-                    >
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mr-2"
-                      >
-                        <path
-                          d="M8 5.6C8 5.17565 8.16857 4.76869 8.46863 4.46863C8.76869 4.16857 9.17565 4 9.6 4H14.4C14.8243 4 15.2313 4.16857 15.5314 4.46863C15.8314 4.76869 16 5.17565 16 5.6V7.2H19.2C19.4122 7.2 19.6157 7.28429 19.7657 7.43431C19.9157 7.58434 20 7.78783 20 8C20 8.21217 19.9157 8.41566 19.7657 8.56569C19.6157 8.71571 19.4122 8.8 19.2 8.8H18.3448L17.6512 18.5136C17.6225 18.9173 17.4418 19.2951 17.1457 19.5709C16.8495 19.8467 16.4599 20 16.0552 20H7.944C7.53931 20 7.14965 19.8467 6.85351 19.5709C6.55736 19.2951 6.37673 18.9173 6.348 18.5136L5.656 8.8H4.8C4.58783 8.8 4.38434 8.71571 4.23431 8.56569C4.08429 8.41566 4 8.21217 4 8C4 7.78783 4.08429 7.58434 4.23431 7.43431C4.38434 7.28429 4.58783 7.2 4.8 7.2H8V5.6ZM9.6 7.2H14.4V5.6H9.6V7.2ZM7.2592 8.8L7.9448 18.4H16.056L16.7416 8.8H7.2592Z"
-                          fill="#919191"
-                        />
-                      </svg>
-                      삭제하기
-                    </button>
                   </div>
                 )}
               </div>
@@ -272,50 +225,54 @@ const MainDetailPage = () => {
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
         </div>
         <div className="flex mb-4 flex-wrap">
-          <div className="w-1/2 p-4">
-            <p className="mb-3">
-              <strong className="text-labelNeutral">분류</strong> <span className="ml-5">{post.category}</span>
+          <div className="w-1/2 s:w-full">
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">분류</strong> <span className="ml-5">{post.category}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">지역</strong> <span className="ml-5">{post.location}</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">지역</strong> <span className="ml-5">{post.location}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">기간</strong> <span className="ml-5">{post.duration}개월</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">기간</strong> <span className="ml-5">{post.duration}개월</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">총 인원</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">총 인원</strong>
               <span className="ml-5">{post.total_members}명</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">지원 방법</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">지원 방법</strong>
               <span className="ml-5">{post.personal_link}</span>
             </p>
           </div>
-          <div className="w-1/2 p-3">
-            <p className="mb-3">
-              <strong className="text-labelNeutral">모집 대상</strong>{" "}
-              <span className="ml-5">{post.target_position.join(", ")}</span>
+          <div className="w-1/2 s:w-full">
+            <hr className="hidden s:block border-fillNeutral my-5" />
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20 flex-shrink-0">모집 대상</strong>
+              <span className="ml-5 text-left">{post.target_position.join(", ")}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">모집 인원</strong>{" "}
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">모집 인원</strong>
               <span className="ml-5">{post.recruitments}명</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">기술 스택</strong>
-              <span className="ml-5">{renderTechStackIcons(post.tech_stack)}</span>
-            </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">마감일</strong>{" "}
+
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">마감일</strong>
               <span className="ml-5">{new Date(post.deadline).toLocaleDateString()}</span>
             </p>
-            <p className="mb-3">
-              <strong className="text-labelNeutral">장소</strong> <span className="ml-5">{post.place}</span>
+            <p className="mb-3 flex">
+              <strong className="text-labelNeutral w-20">장소</strong> <span className="ml-5">{post.place}</span>
             </p>
+            <div className="mb-3 flex items-start">
+              <strong className="text-labelNeutral w-20 flex-shrink-0">기술 스택</strong>
+              <span className="ml-4 flex flex-wrap justify-start items-center flex-grow">
+                {renderTechStackIcons(post.tech_stack)}
+              </span>
+            </div>
           </div>
         </div>
         <hr className="border-fillNeutral mb-4" />
         <div>
-          <h2 className="text-lg text-labelAssistive font-semibold mb-5">모집 내용</h2>
+          <h2 className="text-lg text-labelAssistive font-semibold mb-5 w-w-20">모집 내용</h2>
         </div>
         <div className="bg-fillLight p-4 rounded-lg shadow-md">
           <div className="ql-editor" dangerouslySetInnerHTML={{ __html: cleanContent }} />
