@@ -47,7 +47,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark })
             </li>
             <li>
               <time dateTime={post.date_done} className="text-baseS text-labelNormal">
-                {dayjs(post.date_done).format("YY.MM.DD (ddd)")}
+                {dayjs(post.apply_done).format("YY.MM.DD (ddd)")}
               </time>
             </li>
             <LikeButton eventId={post.event_id} currentUser={currentUser} onRemoveBookmark={onRemoveBookmark} />

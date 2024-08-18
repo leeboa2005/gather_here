@@ -2,7 +2,6 @@
 import LikeButton from "@/components/EventsDetail/ITLikeButton";
 import { useUser } from "@/provider/UserContextProvider";
 import { Tables } from "@/types/supabase";
-import { createClient } from "@/utils/supabase/client";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -41,10 +40,10 @@ const ItEventCardLong: NextPage<EventsCardProps> = ({ post }) => {
       {isMounted ? (
         <ul className="flex items-center relative">
           <li>
-            <span className="label-secondary rounded-full text-baseS  px-3 py-1.5 mr-1">{displayDaysLeft}</span>
+            <span className="label-secondary rounded-full text-baseS px-3 py-1.5 mr-1">{displayDaysLeft}</span>
           </li>
-          <li className="text-baseS  text-labelNormal ml-2">
-            <time dateTime="YYYY-MM-DD">{dayjs(post.date_done).format("YYYY.MM.DD (ddd)")}</time>
+          <li className="text-baseS text-labelNormal ml-2">
+            <time dateTime="YYYY-MM-DD">{dayjs(post.date_start).format("YYYY.MM.DD (ddd)")}</time>
           </li>
           <li className="absolute right-0">
             <LikeButton eventId={post.event_id} currentUser={currentUser} />
