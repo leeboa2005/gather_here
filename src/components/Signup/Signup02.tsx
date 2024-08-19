@@ -16,12 +16,6 @@ const Signup02: React.FC = () => {
     nextStep();
   };
 
-  const getButtonClass = (experience: string) => {
-    const baseClass = "square-button square-button-default bg-[#343437] text-[#c4c4c4]";
-    const selectedClass = selectedExperience === experience ? "bg-[#ffffff] text-[#343437] font-medium shadow-lg" : "";
-    return `${baseClass} ${selectedClass}`;
-  };
-
   return (
     <div className="s:w-[370px] s:h-[580px] w-[430px] h-[610px] relative bg-background rounded-[20px] p-4 select-none">
       {prevStep && (

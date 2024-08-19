@@ -1,5 +1,4 @@
 "use client";
-import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -92,7 +91,7 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
         도움이 될거예요.
       </div>
 
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="overflow-y-auto h-[calc(100%-200px)]">
         <NicknameInput register={register} errors={errors} nicknameAvailable={nicknameAvailable} watch={watch} />
         <BlogInput
           register={register}
@@ -119,4 +118,5 @@ const Signup03: React.FC<Signup03Type> = ({ setUserData }) => {
     </div>
   );
 };
+
 export default Signup03;
