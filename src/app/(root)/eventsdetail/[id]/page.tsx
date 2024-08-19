@@ -68,7 +68,7 @@ const EventDetailPage = () => {
 
   return (
     <div className="mb-8">
-      <div className="w-full mx-auto max-w-[744px] m:max-w-container-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
         <button
           onClick={() => router.push("/events")}
           className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2 group"
@@ -85,7 +85,7 @@ const EventDetailPage = () => {
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
-      <div className="w-full mx-auto max-w-[744px] m:max-w-container-[672px] s:max-w-container-s p-5 bg-fillStrong text-fontWhite rounded-lg">
+      <div className="w-full mx-auto max-w-[672px] s:max-w-container-s p-5 bg-fillStrong text-fontWhite rounded-lg">
         <h1 className="text-title font-baseBold mb-3">{event.title}</h1>
         <div className="flex items-center ml-auto justify-between w-[60px] mb-4">
           <ShareButton />
