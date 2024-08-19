@@ -6,35 +6,26 @@ import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
 import Calender from "../MainSideBar/Calender/Calender";
 import useSearch from "@/hooks/useSearch";
-
 interface AllContentProps {
   initialPosts: PostWithUser[];
 }
-
 const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
-
   const { searchWord } = useSearch();
 
-  // 초기 데이터 로드 부분에서 중복 로드를 방지하고, initialPosts를 사용해 상태를 설정
   useEffect(() => {
-    if (initialPosts.length > 0) {
-      setPosts(initialPosts);
-    } else {
-      const fetchInitialPosts = async () => {
-        const latestPosts: PostWithUser[] = await fetchPosts(1);
-        const uniquePosts = latestPosts.filter(
-          (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
-        );
-        setPosts(uniquePosts);
-      };
-      fetchInitialPosts();
-    }
-  }, [initialPosts]);
+    const fetchInitialPosts = async () => {
+      const latestPosts: PostWithUser[] = await fetchPosts(1);
+      const uniquePosts = latestPosts.filter(
+        (post, index, self) => index === self.findIndex((p) => p.post_id === post.post_id),
+      );
+      setPosts(uniquePosts);
+    };
+    fetchInitialPosts();
+  }, []);
 
-  // 추가 게시물을 불러오는 함수
   const loadMorePosts = async () => {
     const newPosts: PostWithUser[] = await fetchPosts(page);
 
@@ -51,10 +42,11 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
       return uniquePosts;
     });
 
-    setPage((prevPage) => prevPage + 1); // 페이지 번호 증가
+    setPage((prevPage) => {
+      return prevPage + 1;
+    });
   };
 
-  // 검색어에 따라 게시물을 필터링
   const filteredPosts = useMemo(() => {
     if (!searchWord) return posts;
     const lowerSearchWord = searchWord.toLowerCase();
@@ -77,5 +69,4 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     </>
   );
 };
-
 export default AllContent;
