@@ -329,20 +329,13 @@ const PostEditPage = () => {
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
 
-        <div className="flex justify-between items-center mt-4 px-4">
+        <div className="flex justify-between items-center mt-4">
           <button
+            type="button"
             onClick={() => router.push("/")}
-            className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2 group"
+            className="text-labelNeutral flex items-center space-x-2 ml-1"
           >
-            <div className="relative">
-              <Image
-                src="/assets/back.svg"
-                alt="목록으로"
-                width={24}
-                height={24}
-                className="transform transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </div>
+            <Image src="/assets/back.svg" alt="목록으로" width={24} height={24} />
             <span>목록으로</span>
           </button>
 

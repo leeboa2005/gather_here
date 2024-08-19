@@ -49,7 +49,6 @@ const useDraft = () => {
 
   const saveDraft = () => {
     localStorage.setItem("draftPost", JSON.stringify(draft));
-    alert("임시 저장되었습니다.");
   };
 
   return [draft, updateDraft, saveDraft] as const;
