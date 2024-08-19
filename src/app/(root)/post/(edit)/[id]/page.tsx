@@ -243,13 +243,13 @@ const PostEditPage = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg"
+        className="w-full mx-auto max-w-[744px] s:max-w-container-s bg-background text-fontWhite rounded-lg mt-5"
       >
-        <div className="bg-fillStrong p-6 rounded-t-lg space-y-4">
+        <div className="bg-fillStrong p-5 rounded-t-lg space-y-4">
           <div className="space-y-4">
             <h2 className="text-lg text-labelNeutral font-semibold mb-2">
               제목 <span className="text-red-500">*</span>
-            </h2>{" "}
+            </h2>
             <FormInput
               label=""
               value={title}
@@ -310,9 +310,8 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral" />
-
-        <div className="bg-fillStrong p-6 space-y-4">
+        <div className="bg-fillStrong p-5 space-y-4">
+          <hr className="border-fillNeutral mt-0 mb-0" /> {/* 여백을 없애기 위해 mt-0, mb-0 적용 */}
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
             <div className="space-y-2">
@@ -354,8 +353,9 @@ const PostEditPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral" />
-        <div className="bg-fillStrong p-6 rounded-b-lg space-y-4">
+
+        <div className="bg-fillStrong p-5 rounded-b-lg space-y-4">
+          <hr className="border-fillNeutral" />
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
@@ -364,7 +364,7 @@ const PostEditPage = () => {
           <button
             type="button"
             onClick={handleBackClick}
-            className="text-labelNeutral flex items-center space-x-2 ml-1 group"
+            className="text-labelNeutral flex items-center space-x-2 group"
           >
             <div className="relative">
               <Image
@@ -378,7 +378,7 @@ const PostEditPage = () => {
             <span>목록으로</span>
           </button>
 
-          <div className="flex space-x-4 mr-1">
+          <div className="flex space-x-4">
             <button type="button" className="shared-button-gray mt-3" onClick={() => router.push(`/maindetail/${id}`)}>
               취소
             </button>
