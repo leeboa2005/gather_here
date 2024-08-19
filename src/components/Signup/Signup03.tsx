@@ -1,5 +1,4 @@
 "use client";
-import { createClient } from "@/utils/supabase/client";
 import useSignupStore from "@/store/useSignupStore";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
