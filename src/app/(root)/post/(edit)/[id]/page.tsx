@@ -330,12 +330,16 @@ const PostEditPage = () => {
         </div>
 
         <div className="flex justify-between items-center mt-4">
-          <button
-            type="button"
-            onClick={() => router.push("/")}
-            className="text-labelNeutral flex items-center space-x-2 ml-1"
-          >
-            <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2 ml-1 group">
+            <div className="relative">
+              <Image
+                src="/assets/back.svg"
+                alt="목록으로"
+                width={24}
+                height={24}
+                className="transform transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </div>
             <span>목록으로</span>
           </button>
 
