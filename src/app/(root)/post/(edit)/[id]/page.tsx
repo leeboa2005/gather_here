@@ -10,6 +10,7 @@ import ReactQuillEditor from "@/components/MainDetail/ReactQuillEditor";
 import Toast from "@/components/Common/Toast/Toast";
 import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
+import { validateDraft } from "@/lib/validation";
 
 interface Option {
   value: string;
@@ -68,6 +69,26 @@ const PostEditPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const validationError = validateDraft({
+      title,
+      category,
+      location,
+      duration,
+      totalMembers,
+      personalLink,
+      targetPosition,
+      recruitments,
+      techStack,
+      deadline,
+      content,
+      place,
+    });
+
+    if (validationError) {
+      setToastState({ state: "error", message: validationError });
+      return;
+    }
+
     const payload = {
       title,
       category,
@@ -102,6 +123,16 @@ const PostEditPage = () => {
     (setter: React.Dispatch<React.SetStateAction<Option[]>>) => (selectedOptions: Option[]) => {
       setter(selectedOptions);
     };
+
+  const handleBackClick = () => {
+    if (category === "스터디") {
+      router.push("/studies");
+    } else if (category === "프로젝트") {
+      router.push("/projects");
+    } else {
+      router.push("/");
+    }
+  };
 
   const categoryOptions: Option[] = [
     { value: "스터디", label: "스터디" },
@@ -330,7 +361,11 @@ const PostEditPage = () => {
         </div>
 
         <div className="flex justify-between items-center mt-4">
-          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2 ml-1 group">
+          <button
+            type="button"
+            onClick={handleBackClick}
+            className="text-labelNeutral flex items-center space-x-2 ml-1 group"
+          >
             <div className="relative">
               <Image
                 src="/assets/back.svg"

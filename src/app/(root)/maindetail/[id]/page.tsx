@@ -152,7 +152,7 @@ const MainDetailPage = () => {
     <>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
         <button
-          onClick={() => router.push("/events")}
+          onClick={() => router.push("/")}
           className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2 group"
         >
           <div className="relative">
@@ -169,7 +169,7 @@ const MainDetailPage = () => {
       </div>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s p-5 bg-fillAlternative text-fontWhite rounded-lg">
         <div className="mb-4">
-          <h1 className="text-title font-title">{post.title}</h1>
+          <h1 className="text-title font-subtitle">{post.title}</h1>
         </div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
@@ -232,7 +232,7 @@ const MainDetailPage = () => {
                     </button>
                     <button
                       className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
-                      onClick={() => setShowDeleteModal(true)} // 삭제 모달 열기
+                      onClick={() => setShowDeleteModal(true)}
                     >
                       <svg
                         width="24"
