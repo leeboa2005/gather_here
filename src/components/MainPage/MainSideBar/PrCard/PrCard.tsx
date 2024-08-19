@@ -67,7 +67,7 @@ const PrCard: React.FC = () => {
     <>
       {" "}
       <h4 className="flex items-center my-3 text-labelNormal">
-        <Image src="/Main/mic.svg" alt="마이크 모양 아이콘" width={20} height={20} className="mr-1" />
+        <Image src="/assets/gif/mic.gif" alt="마이크 모양 아이콘" width={20} height={20} className="mr-1" />
         자랑스러운 게더_멤버들을 소개할게요
       </h4>
       <Slider {...settings}>
