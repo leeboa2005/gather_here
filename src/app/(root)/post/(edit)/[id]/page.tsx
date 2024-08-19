@@ -329,8 +329,12 @@ const PostEditPage = () => {
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
 
-        <div className="flex justify-between items-center mt-4 px-4">
-          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2 ml-1">
+        <div className="flex justify-between items-center mt-4">
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            className="text-labelNeutral flex items-center space-x-2 ml-1"
+          >
             <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
             <span>목록으로</span>
           </button>

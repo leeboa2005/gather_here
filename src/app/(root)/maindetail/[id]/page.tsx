@@ -10,6 +10,7 @@ import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
+import CommonModal from "@/components/Common/Modal/CommonModal";
 
 const supabase = createClient();
 
@@ -22,12 +23,8 @@ const MainDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
-  const [previousPage, setPreviousPage] = useState<string | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const optionsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setPreviousPage(document.referrer); // 추가된 부분: 이전 페이지를 추적하여 상태에 저장
-  }, []);
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
@@ -103,11 +100,24 @@ const MainDetailPage = () => {
   };
 
   const handleBackClick = () => {
-    const previousPage = localStorage.getItem("previousPage"); // localStorage에서 이전 페이지 경로를 가져옴
+    const previousPage = localStorage.getItem("previousPage");
     if (previousPage) {
       router.push(previousPage);
     } else {
-      router.push("/all"); // 기본적으로 "/all"로 이동
+      router.push("/all");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!currentUser || currentUser.id !== post.user_id) {
+      alert("본인의 글만 삭제할 수 있습니다.");
+      return;
+    }
+
+    const { error } = await supabase.from("Posts").delete().eq("post_id", id);
+    if (error) {
+    } else {
+      router.push("/");
     }
   };
 
@@ -170,9 +180,13 @@ const MainDetailPage = () => {
             <span className="text-base font-medium">{user?.nickname}</span>
             <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
           </div>
-          <div className="flex items-center w-[60px] ">
-            <ShareButton />
-            <LikeButton postId={id} currentUser={currentUser} category={post.category} />
+          <div className="flex items-center w-[60px] mr-8">
+            <div className="mr-1">
+              <ShareButton />
+            </div>
+            <div className="mr-3">
+              <LikeButton postId={id} currentUser={currentUser} category={post.category} />
+            </div>
             {currentUser?.id === post.user_id && (
               <div className="relative" ref={optionsRef}>
                 <button onClick={handleMoreOptions} className="flex items-center">
@@ -191,6 +205,7 @@ const MainDetailPage = () => {
                     />
                   </svg>
                 </button>
+
                 {showOptions && (
                   <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg">
                     <button
@@ -213,6 +228,25 @@ const MainDetailPage = () => {
                         />
                       </svg>
                       수정하기
+                    </button>
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      onClick={() => setShowDeleteModal(true)} // 삭제 모달 열기
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mr-2"
+                      >
+                        <path
+                          d="M8 5.6C8 5.17565 8.16857 4.76869 8.46863 4.46863C8.76869 4.16857 9.17565 4 9.6 4H14.4C14.8243 4 15.2313 4.16857 15.5314 4.46863C15.8314 4.76869 16 5.17565 16 5.6V7.2H19.2C19.4122 7.2 19.6157 7.28429 19.7657 7.43431C19.9157 7.58434 20 7.78783 20 8C20 8.21217 19.9157 8.41566 19.7657 8.56569C19.6157 8.71571 19.4122 8.8 19.2 8.8H18.3448L17.6512 18.5136C17.6225 18.9173 17.4418 19.2951 17.1457 19.5709C16.8495 19.8467 16.4599 20 16.0552 20H7.944C7.53931 20 7.14965 19.8467 6.85351 19.5709C6.55736 19.2951 6.37673 18.9173 6.348 18.5136L5.656 8.8H4.8C4.58783 8.8 4.38434 8.71571 4.23431 8.56569C4.08429 8.41566 4 8.21217 4 8C4 7.78783 4.08429 7.58434 4.23431 7.43431C4.38434 7.28429 4.58783 7.2 4.8 7.2H8V5.6ZM9.6 7.2H14.4V5.6H9.6V7.2ZM7.2592 8.8L7.9448 18.4H16.056L16.7416 8.8H7.2592Z"
+                          fill="#919191"
+                        />
+                      </svg>
+                      삭제하기
                     </button>
                   </div>
                 )}
@@ -278,6 +312,27 @@ const MainDetailPage = () => {
           <div className="ql-editor" dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <CommonModal isOpen={showDeleteModal} onRequestClose={() => setShowDeleteModal(false)}>
+          <div className="p-4 text-center">
+            <p className="text-lg font-semibold mb-4">정말 삭제하시겠어요?</p>
+            <p className="text-sm text-labelNeutral mb-5">한번 삭제된 글은 다시 복구할 수 없어요.</p>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 bg-fillNeutral rounded-lg text-primary"
+              >
+                안 할래요
+              </button>
+              <button onClick={handleDelete} className="px-4 py-2 bg-primary rounded-lg text-fillNeutral">
+                삭제할래요
+              </button>
+            </div>
+          </div>
+        </CommonModal>
+      )}
     </>
   );
 };
