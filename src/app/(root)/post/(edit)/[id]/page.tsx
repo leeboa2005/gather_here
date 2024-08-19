@@ -328,7 +328,6 @@ const PostEditPage = () => {
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor value={content} onChange={setContent} className="bg-fillAssistive text-labelNeutral" />
         </div>
-
         <div className="flex justify-between items-center mt-4 px-4">
           <button
             onClick={() => router.push("/")}
