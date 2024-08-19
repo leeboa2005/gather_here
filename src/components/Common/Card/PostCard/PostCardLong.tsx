@@ -74,8 +74,8 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
         ) : null}
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
-        <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
-        <p className="mt-2 mb-4 h-[45px] s:h-11 xs:h-14 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
+        <h2 className="text-left text-subtitle mt-3 font-semibold text-labelStrong truncate w-3/4">{post.title}</h2>
+        <p className="mt-2 mb-4 h-[45px] s:h-11 xs:h-14 overflow-hidden text-left text-labelNeutral font-thin line-clamp-2 ">
           {cleanContent}
         </p>
         <div className="flex items-center mb-4">
