@@ -24,7 +24,7 @@ const PostsTap: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [postIdToDelete, setPostIdToDelete] = useState<string | null>(null);
-  const postsPerPage = 6; // 페이지당 표시할 포스트 수를 6개로 설정
+  const postsPerPage = 6;
 
   useEffect(() => {
     const loadPosts = async () => {
