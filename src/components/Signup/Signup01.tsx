@@ -38,7 +38,8 @@ const Signup01: React.FC = () => {
       cancelButtonText: "아니요, 계속 입력하기",
       onConfirm: () => {
         closeModal();
-        router.push("/");
+        router.replace('/');
+
       },
       onCancel: () => document.body.classList.add("page-disabled"),
     });

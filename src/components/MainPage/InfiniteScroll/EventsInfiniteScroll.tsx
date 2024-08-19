@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import AdCard from "@/components/MainPage/AdCard/AdCard";
