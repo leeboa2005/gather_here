@@ -24,6 +24,7 @@ const PostsTap: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [postIdToDelete, setPostIdToDelete] = useState<string | null>(null);
+  const postsPerPage = 6; // 페이지당 표시할 포스트 수를 6개로 설정
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -63,7 +64,7 @@ const PostsTap: React.FC = () => {
   }, [user]);
 
   const updateTotalPages = (filteredPosts: any[]) => {
-    setTotalPages(Math.ceil(filteredPosts.length / 9));
+    setTotalPages(Math.ceil(filteredPosts.length / postsPerPage));
   };
 
   const handleTabClick = (tab: Tab) => {
@@ -83,8 +84,8 @@ const PostsTap: React.FC = () => {
 
   const getCurrentPosts = () => {
     const filteredPosts = filterPosts(posts, selectedTab);
-    const startIndex = (currentPage - 1) * 9;
-    return filteredPosts.slice(startIndex, startIndex + 9);
+    const startIndex = (currentPage - 1) * postsPerPage;
+    return filteredPosts.slice(startIndex, startIndex + postsPerPage);
   };
 
   const handleEdit = (postId: string) => {
@@ -117,7 +118,7 @@ const PostsTap: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65 text-center z-50">
           <div className="relative min-w-[300px] m:min-w-[260px] p-6 bg-fillStrong rounded-lg shadow-lg z-60">
@@ -170,15 +171,15 @@ const PostsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-1 flex flex-col">
-        <div className="flex-1 s:w-full mt-5 grid s:grid-cols-1 m:grid-cols-2 grid-cols-3 gap-6">
+      <div className="flex flex-col">
+        <div className="s:w-full mt-5 grid s:grid-cols-1 m:grid-cols-2 grid-cols-3 gap-6">
           {loading ? (
             Array(3)
               .fill(0)
               .map((_, index) => <MypageList key={index} />)
           ) : getCurrentPosts().length > 0 ? (
             getCurrentPosts().map((post) => (
-              <div key={post.post_id} className="s:w-full h-[260px] relative group">
+              <div key={post.post_id} className="s:w-full h-[261px] relative group">
                 <PostCardLong post={post} />
                 {user?.id === post.user_id && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-50 rounded-2xl">
