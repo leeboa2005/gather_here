@@ -1,19 +1,20 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScrollComponent from "@/components/MainPage/InfiniteScroll/InfiniteScrollComponents";
 import { fetchPosts } from "@/lib/fetchPosts";
 import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
 import Calender from "../MainSideBar/Calender/Calender";
-import useSearch from "@/hooks/useSearch";
+
 interface AllContentProps {
   initialPosts: PostWithUser[];
 }
+
 const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
   const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
-  const { searchWord } = useSearch();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchInitialPosts = async () => {
@@ -24,6 +25,16 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
       setPosts(uniquePosts);
     };
     fetchInitialPosts();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1068);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const loadMorePosts = async () => {
@@ -47,15 +58,6 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     });
   };
 
-  const filteredPosts = useMemo(() => {
-    if (!searchWord) return posts;
-    const lowerSearchWord = searchWord.toLowerCase();
-    return posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(lowerSearchWord) || post.content.toLowerCase().includes(lowerSearchWord),
-    );
-  }, [searchWord, posts]);
-
   return (
     <>
       <div className="hidden m:block">
@@ -65,8 +67,9 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
         <Image src="/assets/puzzle.svg" alt="Puzzle Icon" width={20} height={20} className="mb-3" />
         <p className="m-2 mb-4 text-labelNormal">나에게 꼭 맞는 동료들을 찾아보세요</p>
       </div>
-      <InfiniteScrollComponent posts={filteredPosts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
+      <InfiniteScrollComponent posts={posts} hasMore={hasMore} loadMorePosts={loadMorePosts} />
     </>
   );
 };
+
 export default AllContent;
