@@ -141,14 +141,19 @@ const MainDetailPage = () => {
   return (
     <>
       <div className="w-full mx-auto max-w-[672px] s:max-w-container-s bg-background text-fontWhite rounded-lg">
-        <button onClick={handleBackClick} className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2">
-          <Image
-            src="/Common/Icons/back.png"
-            alt="Back"
-            width={16}
-            height={16}
-            style={{ width: "16px", height: "16px", objectFit: "cover" }}
-          />
+        <button
+          onClick={() => router.push("/events")}
+          className="text-labelNeutral mt-5 mb-4 flex items-center space-x-2 group"
+        >
+          <div className="relative">
+            <Image
+              src="/assets/back.svg"
+              alt="목록으로 돌아가기"
+              width={24}
+              height={24}
+              className="transform transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </div>
           <span>목록으로 돌아갈게요</span>
         </button>
       </div>
@@ -226,44 +231,48 @@ const MainDetailPage = () => {
         </div>
         <div className="flex mb-4 flex-wrap">
           <div className="w-1/2 s:w-full">
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">분류</strong> <span className="ml-5">{post.category}</span>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">분류</strong>{" "}
+              <span className="ml-5">{post.category}</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">지역</strong> <span className="ml-5">{post.location}</span>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">지역</strong>{" "}
+              <span className="ml-5">{post.location}</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">기간</strong> <span className="ml-5">{post.duration}개월</span>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">기간</strong>{" "}
+              <span className="ml-5">{post.duration}개월</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">총 인원</strong>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">총 인원</strong>
               <span className="ml-5">{post.total_members}명</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">지원 방법</strong>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">지원 방법</strong>
               <span className="ml-5">{post.personal_link}</span>
             </p>
           </div>
           <div className="w-1/2 s:w-full">
             <hr className="hidden s:block border-fillNeutral my-5" />
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20 flex-shrink-0">모집 대상</strong>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold flex-shrink-0">모집 대상</strong>
               <span className="ml-5 text-left">{post.target_position.join(", ")}</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">모집 인원</strong>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">모집 인원</strong>
               <span className="ml-5">{post.recruitments}명</span>
             </p>
 
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">마감일</strong>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">마감일</strong>
               <span className="ml-5">{new Date(post.deadline).toLocaleDateString()}</span>
             </p>
-            <p className="mb-3 flex">
-              <strong className="text-labelNeutral w-20">장소</strong> <span className="ml-5">{post.place}</span>
+            <p className="mb-4 flex">
+              <strong className="text-labelNeutral w-20 font-baseBold">장소</strong>{" "}
+              <span className="ml-5">{post.place}</span>
             </p>
-            <div className="mb-3 flex items-start">
-              <strong className="text-labelNeutral w-20 flex-shrink-0">기술 스택</strong>
+            <div className="mb-4 flex items-start">
+              <strong className="text-labelNeutral w-20 font-baseBold flex-shrink-0">기술 스택</strong>
               <span className="ml-4 flex flex-wrap justify-start items-center flex-grow">
                 {renderTechStackIcons(post.tech_stack)}
               </span>
