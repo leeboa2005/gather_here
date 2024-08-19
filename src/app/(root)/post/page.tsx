@@ -26,7 +26,7 @@ const PostPage = () => {
   const [draft, updateDraft, saveDraft] = useDraft();
   const [userId, setUserId] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [showExitModal, setShowExitModal] = useState<boolean>(false); // 나가기 모달 상태 추가
+  const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
   const router = useRouter();
 
@@ -49,9 +49,15 @@ const PostPage = () => {
       setShowLoginModal(true);
       return;
     }
+
     const validationError = validateDraft(draft);
     if (validationError) {
-      setToastState({ state: "error", message: validationError });
+      if (toastState.message !== validationError) {
+        setToastState({ state: "error", message: validationError });
+        setTimeout(() => {
+          setToastState({ state: "", message: "" });
+        }, 2000);
+      }
       return;
     }
 
@@ -76,7 +82,6 @@ const PostPage = () => {
     if (error) {
       console.error("데이터 안들어간다:", error);
     } else {
-      setToastState({ state: "success", message: "제출되었습니다!" });
       if (data && data[0] && data[0].post_id) {
         localStorage.removeItem("draftPost");
         router.push(`/maindetail/${data[0].post_id}`);
@@ -86,7 +91,12 @@ const PostPage = () => {
 
   const handleSaveDraft = () => {
     saveDraft();
-    setToastState({ state: "success", message: "임시 저장이 완료되었습니다!" });
+    if (toastState.state !== "success") {
+      setToastState({ state: "success", message: "임시 저장이 완료되었습니다!" });
+      setTimeout(() => {
+        setToastState({ state: "", message: "" });
+      }, 2000);
+    }
   };
 
   const handleInputChange = (key: keyof typeof draft) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -234,7 +244,7 @@ const PostPage = () => {
         </div>
       </CommonModal>
 
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md"></div>
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md mb-5"></div>
 
       <form
         onSubmit={handleSubmit}
@@ -305,7 +315,7 @@ const PostPage = () => {
             />
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
+        <hr className="border-fillNeutral mt-2 mb-4" />
         <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">모집 정보</h2>
           <div className="grid grid-cols-2 s:grid-cols-1 gap-4">
@@ -352,7 +362,7 @@ const PostPage = () => {
             </div>
           </div>
         </div>
-        <hr className="border-fillNeutral mb-4" />
+        <hr className="border-fillNeutral mt-4 mb-4" />
         <div className="bg-fillStrong rounded-lg shadow-md space-y-4">
           <h2 className="text-lg text-labelNeutral font-semibold mb-2">상세 설명</h2>
           <ReactQuillEditor
@@ -365,7 +375,7 @@ const PostPage = () => {
         </div>
         <div className="flex justify-between items-center mt-4">
           <button type="button" onClick={handleExitClick} className="text-labelNeutral flex items-center space-x-2">
-            <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
+            <Image src="/assets/back.svg" alt="Back" width={24} height={24} />
             <span>나가기</span>
           </button>
           <div className="flex space-x-4">
