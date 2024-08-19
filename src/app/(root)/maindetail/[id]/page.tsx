@@ -10,6 +10,7 @@ import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.core.css";
 import LikeButton from "@/components/MainDetail/LikeButton";
 import ShareButton from "@/components/MainDetail/ShareButton";
+import CommonModal from "@/components/Common/Modal/CommonModal";
 
 const supabase = createClient();
 
@@ -22,12 +23,8 @@ const MainDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showOptions, setShowOptions] = useState(false);
-  const [previousPage, setPreviousPage] = useState<string | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const optionsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setPreviousPage(document.referrer); // 추가된 부분: 이전 페이지를 추적하여 상태에 저장
-  }, []);
 
   useEffect(() => {
     const fetchPostAndUser = async () => {
@@ -103,11 +100,24 @@ const MainDetailPage = () => {
   };
 
   const handleBackClick = () => {
-    const previousPage = localStorage.getItem("previousPage"); // localStorage에서 이전 페이지 경로를 가져옴
+    const previousPage = localStorage.getItem("previousPage");
     if (previousPage) {
       router.push(previousPage);
     } else {
-      router.push("/all"); // 기본적으로 "/all"로 이동
+      router.push("/all");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!currentUser || currentUser.id !== post.user_id) {
+      alert("본인의 글만 삭제할 수 있습니다.");
+      return;
+    }
+
+    const { error } = await supabase.from("Posts").delete().eq("post_id", id);
+    if (error) {
+    } else {
+      router.push("/");
     }
   };
 
@@ -170,11 +180,11 @@ const MainDetailPage = () => {
             <span className="text-base font-medium">{user?.nickname}</span>
             <span className="text-sm text-labelNeutral">{timeAgo(post.created_at)}</span>
           </div>
-          <div className="flex items-center w-[60px] ">
+          <div className="flex items-center">
             <ShareButton />
             <LikeButton postId={id} currentUser={currentUser} category={post.category} />
             {currentUser?.id === post.user_id && (
-              <div className="relative" ref={optionsRef}>
+              <div className="relative ml-2" ref={optionsRef}>
                 <button onClick={handleMoreOptions} className="flex items-center">
                   <svg
                     width="20"
@@ -191,28 +201,20 @@ const MainDetailPage = () => {
                     />
                   </svg>
                 </button>
+
                 {showOptions && (
                   <div className="absolute right-0 mt-2 w-48 bg-fillStrong rounded-lg shadow-lg">
                     <button
                       className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
                       onClick={() => router.push(`/post/${id}`)}
                     >
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mr-2"
-                      >
-                        <path
-                          d="M9.16616 10.4135L9.16604 10.4136C6.79968 12.786 5.00766 15.6684 3.92724 18.8402C3.86842 19.0115 3.85906 19.196 3.90024 19.3724C3.94142 19.5489 4.0315 19.7102 4.16015 19.8378L4.1624 19.84C4.16246 19.8401 4.16251 19.8402 4.16256 19.8402C4.25205 19.9303 4.35848 20.0019 4.47571 20.0508C4.59301 20.0997 4.71883 20.1249 4.84592 20.125H4.84609C4.95285 20.1249 5.05887 20.1073 5.15993 20.0729L5.11963 19.9546L5.15994 20.0729C8.3318 18.9925 11.2143 17.2005 13.5866 14.834L13.5867 14.8339L19.2096 9.21091C19.7958 8.62473 20.1251 7.8297 20.1251 7.00071C20.1251 6.17172 19.7958 5.37669 19.2096 4.7905C18.9194 4.50026 18.5748 4.27002 18.1956 4.11293C17.8164 3.95585 17.4099 3.875 16.9994 3.875C16.1705 3.875 15.3754 4.20431 14.7892 4.79049L9.16616 10.4135ZM18.2686 8.26967L18.2685 8.2698L16.8478 9.69045L14.3097 7.15229L15.7303 5.7316L15.7305 5.73147C15.897 5.56441 16.0949 5.43183 16.3128 5.34132C16.5306 5.2508 16.7642 5.20412 17.0001 5.20395C17.236 5.20378 17.4697 5.25012 17.6876 5.34033C17.9056 5.43053 18.1037 5.56282 18.2705 5.72964C18.4373 5.89645 18.5696 6.09452 18.6598 6.31251C18.75 6.5305 18.7963 6.76413 18.7962 7.00004C18.796 7.23595 18.7493 7.46952 18.6588 7.68737C18.5683 7.90523 18.4357 8.1031 18.2686 8.26967ZM12.6456 13.8927C10.5978 15.9352 8.1441 17.5235 5.44446 18.5557C6.47662 15.856 8.06493 13.4024 10.1074 11.3545L13.3685 8.0934L15.9067 10.6316L12.6456 13.8927Z"
-                          fill="#919191"
-                          stroke="#919191"
-                          strokeWidth="0.25"
-                        />
-                      </svg>
                       수정하기
+                    </button>
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm text-white hover:bg-fillAssistive flex items-center"
+                      onClick={() => setShowDeleteModal(true)}
+                    >
+                      삭제하기
                     </button>
                   </div>
                 )}
@@ -220,6 +222,7 @@ const MainDetailPage = () => {
             )}
           </div>
         </div>
+
         <hr className="border-fillNeutral mb-4" />
         <div>
           <h2 className="text-lg text-labelAssistive font-semibold mb-2">모집 정보</h2>
@@ -278,6 +281,26 @@ const MainDetailPage = () => {
           <div className="ql-editor" dangerouslySetInnerHTML={{ __html: cleanContent }} />
         </div>
       </div>
+
+      {showDeleteModal && (
+        <CommonModal isOpen={showDeleteModal} onRequestClose={() => setShowDeleteModal(false)}>
+          <div className="p-4 text-center">
+            <p className="text-lg font-semibold mb-4">정말 삭제하시겠어요?</p>
+            <p className="text-sm text-labelNeutral mb-5">한번 삭제된 글은 다시 복구할 수 없어요.</p>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 bg-fillNeutral rounded-lg text-primary"
+              >
+                안 할래요
+              </button>
+              <button onClick={handleDelete} className="px-4 py-2 bg-primary rounded-lg text-fillNeutral">
+                삭제할래요
+              </button>
+            </div>
+          </div>
+        </CommonModal>
+      )}
     </>
   );
 };

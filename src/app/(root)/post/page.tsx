@@ -13,6 +13,7 @@ import "react-quill/dist/quill.snow.css";
 import CommonModal from "@/components/Common/Modal/CommonModal";
 import LoginForm from "@/components/Login/LoginForm";
 import Toast from "@/components/Common/Toast/Toast";
+import { validateDraft } from "@/lib/validation";
 
 interface Option {
   value: string;
@@ -25,6 +26,7 @@ const PostPage = () => {
   const [draft, updateDraft, saveDraft] = useDraft();
   const [userId, setUserId] = useState<string | null>(null);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const [showExitModal, setShowExitModal] = useState<boolean>(false); // 나가기 모달 상태 추가
   const [toastState, setToastState] = useState({ state: "", message: "" });
   const router = useRouter();
 
@@ -45,6 +47,11 @@ const PostPage = () => {
 
     if (!userId) {
       setShowLoginModal(true);
+      return;
+    }
+    const validationError = validateDraft(draft);
+    if (validationError) {
+      setToastState({ state: "error", message: validationError });
       return;
     }
 
@@ -68,7 +75,6 @@ const PostPage = () => {
 
     if (error) {
       console.error("데이터 안들어간다:", error);
-      setToastState({ state: "error", message: "다시 시도해주세요!" });
     } else {
       setToastState({ state: "success", message: "제출되었습니다!" });
       if (data && data[0] && data[0].post_id) {
@@ -89,6 +95,14 @@ const PostPage = () => {
 
   const handleMultiSelectChange = (key: keyof typeof draft) => (selectedOptions: Option[]) => {
     updateDraft(key, selectedOptions);
+  };
+
+  const handleExitClick = () => {
+    setShowExitModal(true);
+  };
+
+  const handleConfirmExit = () => {
+    router.push("/");
   };
 
   const categoryOptions: Option[] = [
@@ -201,6 +215,25 @@ const PostPage = () => {
       <CommonModal isOpen={showLoginModal} onRequestClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </CommonModal>
+      <CommonModal isOpen={showExitModal} onRequestClose={() => setShowExitModal(false)}>
+        <div className="p-4 text-center">
+          <p className="text-lg font-semibold mb-4">작성 중인 내용이 있어요.</p>
+          <p className="text-sm text-labelNeutral">작성을 종료하면 변경한 내용이 저장되지 않아요.</p>
+          <p className="text-sm text-labelNeutral mb-4">모집하기 글 작성을 취소하시겠어요?</p>
+          <div className="flex justify-center space-x-4">
+            <button
+              onClick={() => setShowExitModal(false)}
+              className="px-4 py-2 bg-fillNeutral rounded-lg text-primary"
+            >
+              마저 쓸래요
+            </button>
+            <button onClick={handleConfirmExit} className="px-4 py-2 bg-primary rounded-lg text-fillNeutral">
+              나갈래요
+            </button>
+          </div>
+        </div>
+      </CommonModal>
+
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s bg-background text-fontWhite rounded-lg shadow-md"></div>
 
       <form
@@ -331,7 +364,7 @@ const PostPage = () => {
           />
         </div>
         <div className="flex justify-between items-center mt-4">
-          <button onClick={() => router.push("/")} className="text-labelNeutral flex items-center space-x-2">
+          <button type="button" onClick={handleExitClick} className="text-labelNeutral flex items-center space-x-2">
             <Image src="/Common/Icons/back.png" alt="Back" width={16} height={16} />
             <span>나가기</span>
           </button>
