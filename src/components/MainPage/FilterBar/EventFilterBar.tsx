@@ -13,7 +13,7 @@ const EventFilterBar: React.FC<EventFilterBarProps> = ({ selectedCategory, onCha
   };
 
   return (
-    <div className="flex justify-between items-center mt-1 mb-5">
+    <div className="flex justify-between items-center mt-3 mb-5">
       <div className="grid grid-cols-1 gap-2 w-full s:grid-cols-2 md:grid-cols-4 md:gap-3">
         <select
           className={`shared-select-gray-2 ${
