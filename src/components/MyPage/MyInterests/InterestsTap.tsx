@@ -69,7 +69,7 @@ const InterestsTap: React.FC = () => {
   return (
     <div className="relative flex flex-col">
       <div className="sticky z-10 s:relative s:top-auto">
-        <div className="flex items-center m:justify-start s:justify-center space-x-4 s:space-x-6 p-3 bg-fillStrong rounded-2xl">
+        <div className="flex w-[320px] s:w-full items-center m:justify-start s:justify-center space-x-4 s:space-x-6 p-3 bg-fillStrong rounded-2xl">
           <button
             className={`text-baseS min-w-[60px] ${selectedTab === "전체" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("전체")}
