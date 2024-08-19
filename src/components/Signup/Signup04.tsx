@@ -12,7 +12,7 @@ const Signup04: React.FC = () => {
 
   const handleExplore = () => {
     closeModal();
-    router.push("/");
+    router.replace("/");
   };
 
   return (
@@ -20,7 +20,7 @@ const Signup04: React.FC = () => {
       <div className="text-center s:mt-1 mt-3">
         <div className="w-full h-65 pt-3 rounded-md mb-4 flex items-center justify-center overflow-hidden">
           <img
-            src="/logos/welcomeImage.svg"
+            src="/logos/welcomeIcon.gif"
             alt="Welcome Image"
             className="object-contain s:w-[300px] w-[350px] s:h-[300px] h-[350px]"
           />
@@ -28,7 +28,6 @@ const Signup04: React.FC = () => {
       </div>
       <div className="text-center">
         <div className="text-center text-2xl font-medium text-[#ffffff]">
-          {" "}
           @gather_here에 <br />
           환영해요!
         </div>
