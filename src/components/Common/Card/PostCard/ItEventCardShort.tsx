@@ -39,7 +39,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark })
 
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-4 h-64 text-center bg-fillStrong rounded-2xl">
+      <div className="p-4 h-[261px] text-center bg-fillStrong rounded-2xl">
         {isMounted ? (
           <ul className="flex justify-between items-center">
             <li>

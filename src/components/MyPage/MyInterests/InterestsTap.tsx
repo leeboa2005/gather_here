@@ -18,7 +18,7 @@ const InterestsTap: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const postsPerPage = 9;
+  const postsPerPage = 6;
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -67,9 +67,9 @@ const InterestsTap: React.FC = () => {
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
 
   return (
-    <div className="relative flex flex-col min-h-screen">
+    <div className="relative flex flex-col">
       <div className="sticky z-10 s:relative s:top-auto">
-        <div className="flex items-center m:justify-start s:justify-center space-x-4 s:space-x-6 p-3 bg-fillStrong rounded-2xl">
+        <div className="flex w-[320px] s:w-full items-center m:justify-start s:justify-center space-x-4 s:space-x-6 p-3 bg-fillStrong rounded-2xl">
           <button
             className={`text-baseS min-w-[60px] ${selectedTab === "전체" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("전체")}
@@ -96,14 +96,14 @@ const InterestsTap: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex-1 s:w-full mt-5 grid gap-6 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
+      <div className="s:w-full mt-5 grid gap-5 s:grid-cols-1 m:grid-cols-2 grid-cols-3">
         {loading ? (
           Array(3)
             .fill(0)
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full h-[260px]">
+            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full h-[261px]">
               {"event_id" in post ? (
                 <ItEventCardShort post={post as ITEvent} onRemoveBookmark={() => handleRemoveBookmark(post.event_id)} />
               ) : (
@@ -115,7 +115,7 @@ const InterestsTap: React.FC = () => {
           <p className="mt-5 text-center text-labelNeutral col-span-full">북마크 한 글이 아직 없어요.🥺</p>
         )}
       </div>
-      <div className="mt-auto flex justify-center py-4">
+      <div className="flex justify-center py-4">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
