@@ -6,11 +6,9 @@ import { PostWithUser } from "@/types/posts/Post.type";
 import Image from "next/image";
 import Calender from "../MainSideBar/Calender/Calender";
 import useSearch from "@/hooks/useSearch";
-interface AllContentProps {
-  initialPosts: PostWithUser[];
-}
-const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<PostWithUser[]>(initialPosts);
+
+const AllContent: React.FC = () => {
+  const [posts, setPosts] = useState<PostWithUser[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(2);
   const { searchWord } = useSearch();
