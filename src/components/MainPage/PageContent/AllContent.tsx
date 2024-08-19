@@ -39,7 +39,7 @@ const AllContent: React.FC<AllContentProps> = ({ initialPosts }) => {
     const newPosts: PostWithUser[] = await fetchPosts(page);
 
     if (!newPosts || newPosts.length === 0) {
-      setHasMore(false); // 더 이상 불러올 게시물이 없을 때
+      setHasMore(false);
       return;
     }
 
