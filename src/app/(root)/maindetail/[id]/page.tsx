@@ -124,7 +124,25 @@ const MainDetailPage = () => {
   if (!post) return <></>;
 
   const cleanContent = DOMPurify.sanitize(post.content, {
-    ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "h1", "h2", "h3", "p", "span", "ul", "ol", "li"],
+    ALLOWED_TAGS: [
+      "b",
+      "i",
+      "em",
+      "strong",
+      "a",
+      "h1",
+      "h2",
+      "h3",
+      "p",
+      "span",
+      "ul",
+      "ol",
+      "li",
+      "br",
+      "gt",
+      "lt",
+      "amp",
+    ],
     ALLOWED_ATTR: ["href", "target", "style", "class"],
   });
 

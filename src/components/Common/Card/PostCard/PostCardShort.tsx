@@ -67,9 +67,9 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
           <h2 className="text-left text-subtitle font-semibold truncate mt-3 text-labelStrong">{post.title}</h2>
-          <p className="hidden sm:block mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
-            {cleanContent}
-          </p>
+          <div className="hidden sm:block mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
+            <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+          </div>
           <div className="mt-1">
             <div className="flex items-center mb-4">
               <div className="hidden sm:flex items-center">
