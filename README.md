@@ -24,7 +24,7 @@
 - [기술적 의사결정](#technical)
 - [프로젝트 구조](#structure)
 - [UI](#UI)
-- [트러블슈팅](troubleshooting)
+- [트러블슈팅](#troubleshooting)
 
 </details>
 
