@@ -77,14 +77,14 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-background shadow-md relative text-fontWhite">
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-[14px] s:py-2">
         <Link href="/">
           <Image
-            src="/assets/header/logo.svg"
+            src={user ? "/assets/header/login_logo.svg" : "/assets/header/logout_logo.svg"}
             alt="@gather_here 로고"
             priority
-            width={183}
-            height={28}
+            width={166}
+            height={24}
             className="s:hidden"
           />
           <Image
@@ -108,12 +108,12 @@ const Header: React.FC = () => {
                 id="input"
                 name="input"
                 placeholder="검색어를 입력해보세요"
-                className="shared-input-gray rounded-lg"
+                className="shared-input-thin-gray text-labelAssistive w-[335px]"
                 value={searchWord}
                 onChange={(evt) => setSearchWord(evt.target.value)}
               />
-              <button className="absolute top-[10px] right-[8px]" type="submit">
-                <Image src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
+              <button className="absolute top-[9px] right-[8px]" type="submit">
+                <Image src="/assets/header/search.svg" width={20} height={20} alt="검색 버튼 아이콘" />
               </button>
             </form>
             <div className="flex items-center gap-2">
@@ -126,43 +126,40 @@ const Header: React.FC = () => {
               <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
               </button> */}
               <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
-                <button className="flex items-center justify-center w-[45px] s:w-[32px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-background hover:bg-fillNormal s:hover:bg-transparent text-white">
-                  <Image src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
+                <button className="square-header-button-gray">
+                  <Image src="/assets/header/write.svg" width={16} height={16} alt="글쓰기 버튼 아이콘" />
                 </button>
               </Link>
               {user ? (
                 <div className="flex items-center">
                   <button
                     onClick={toggleMypageModal}
-                    className="hidden s:flex items-center justify-center w-[45px] s:w-[35px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-fillStrong hover:bg-fillNormal s:hover:bg-black text-white z-50"
+                    className="hidden s:flex items-center justify-center w-[32px] h-[32px] rounded-lg bg-fillNeutral hover:bg-fillAssistive  z-50"
                   >
                     <Image
                       src={isMypageModalOpen ? "/assets/header/primary_close.svg" : "/assets/header/mobile_logo.svg"}
                       alt={isMypageModalOpen ? "닫기 버튼 아이콘" : "마이페이지 아이콘"}
                       priority
-                      width={20}
-                      height={24}
+                      width={14}
+                      height={16}
                     />
                   </button>
-                  <Link
-                    href="/mypage"
-                    className="flex s:hidden items-center justify-center w-[45px] h-[45px]  s:w-[32px] s:h-[35px] rounded-lg bg-fillLight hover:bg-fillNormal text-white"
-                  >
+                  <Link href="/mypage" className="square-header-button-gray s:hidden">
                     <Image
                       src="/assets/header/mobile_logo.svg"
                       alt="마이페이지 아이콘"
                       priority
-                      width={20}
-                      height={24}
+                      width={14}
+                      height={16}
                     />
                   </Link>
-                  <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
+                  <button onClick={signOut} className="shared-button-small-gray-2 ml-2 s:hidden">
                     로그아웃
                   </button>
                 </div>
               ) : (
-                <button onClick={handleOpenLoginModal} className="shared-button-gray">
-                  로그인
+                <button onClick={handleOpenLoginModal} className="shared-button-small-green">
+                  시작하기
                 </button>
               )}
             </div>

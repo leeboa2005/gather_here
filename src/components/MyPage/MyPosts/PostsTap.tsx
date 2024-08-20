@@ -212,7 +212,7 @@ const PostsTap: React.FC = () => {
               </div>
             ))
           ) : (
-            <p className="mt-5 text-center text-labelNeutral col-span-full">작성된 글이 없어요. 🥺</p>
+            <p className="mt-8 text-center text-labelNeutral col-span-full">작성된 글이 없어요. 🥺</p>
           )}
         </div>
       </div>

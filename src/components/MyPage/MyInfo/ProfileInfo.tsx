@@ -199,7 +199,7 @@ const ProfileInfo: React.FC = () => {
                 disabled
                 value={user?.email ?? ""}
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
-                style={{ color: "#454545" }}
+                style={{ color: "#5E5E5E" }}
               />
               {emailError && <p className="text-statusDestructive text-baseXs mt-1">{emailError}</p>}
             </div>
@@ -233,12 +233,12 @@ const ProfileInfo: React.FC = () => {
                 <option value="">선택해주세요</option>
                 <option value="프론트엔드">프론트엔드</option>
                 <option value="백엔드">백엔드</option>
-                <option value="디자이너">디자이너</option>
+                <option value="디자인">디자인</option>
                 <option value="IOS">IOS</option>
                 <option value="안드로이드">안드로이드</option>
                 <option value="데브옵스">데브옵스</option>
                 <option value="PM">PM</option>
-                <option value="기획자">기획자</option>
+                <option value="기획">기획</option>
                 <option value="마케팅">마케팅</option>
               </select>
             </div>

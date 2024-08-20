@@ -1,9 +1,8 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 import loadingSpinner from "../../../assets/loadingSpinner.json";
-import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
+import LottieAnimation from "@/components/Common/Loading/LottieAnimation";
 import ItEventCardLong from "../../Common/Card/PostCard/ItEventCardLong";
 import { Tables } from "@/types/supabase";
 
@@ -25,7 +24,7 @@ const EventsInfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({
       hasMore={hasMore}
       loader={
         <div className="flex justify-center items-center w-full" style={{ marginTop: "20px" }}>
-          <LottiAnimation animationData={loadingSpinner} size="50px" />
+          <LottieAnimation animationData={loadingSpinner} size="50px" />
         </div>
       }
       endMessage={<p style={{ textAlign: "center", color: "white" }}>모든 포스트를 불러왔습니다.</p>}
