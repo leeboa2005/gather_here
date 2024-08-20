@@ -23,3 +23,11 @@
 .ql-toolbar .ql-picker-item::before {
   color: inherit;
 }
+.ql-editor::before {
+  font-size: 16px;
+  color: #919191;
+}
+
+.ql-editor {
+  min-height: 200px;
+}

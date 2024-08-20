@@ -92,7 +92,8 @@ const InterestsTap: React.FC = () => {
             className={`text-baseS min-w-[64px] ${selectedTab === "IT 행사" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("IT 행사")}
           >
-            IT 행사
+            <span className="sm:hidden">IT행사</span>
+            <span className="hidden sm:inline">IT 행사</span>
           </button>
         </div>
       </div>
@@ -103,7 +104,10 @@ const InterestsTap: React.FC = () => {
             .map((_, index) => <MypageList key={index} />)
         ) : currentPosts.length > 0 ? (
           currentPosts.map((post) => (
-            <div key={(post as PostWithUser).post_id || (post as ITEvent).event_id} className="s:w-full h-[261px]">
+            <div
+              key={(post as PostWithUser).post_id || (post as ITEvent).event_id}
+              className="s:w-full h-[261px] mb-4 sm:mb-0"
+            >
               {"event_id" in post ? (
                 <ItEventCardShort post={post as ITEvent} onRemoveBookmark={() => handleRemoveBookmark(post.event_id)} />
               ) : (

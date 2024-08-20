@@ -80,11 +80,11 @@ const Header: React.FC = () => {
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-[14px] s:py-2">
         <Link href="/">
           <Image
-            src={user ? "/logos/login_logo.png" : "/logos/logout_logo.png"}
+            src="/assets/header/logo.svg"
             alt="@gather_here 로고"
             priority
-            width={166}
-            height={24}
+            width={178}
+            height={25}
             className="s:hidden"
           />
           <Image
