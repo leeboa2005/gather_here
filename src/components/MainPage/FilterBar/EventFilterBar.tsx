@@ -21,7 +21,7 @@ const EventFilterBar: React.FC<EventFilterBarProps> = ({ selectedCategory, onCha
           } cursor-pointer`}
           value={selectedCategory}
           onChange={handleCategoryChange}
-          style={{ height: "40px", minHeight: "40px", lineHeight: "38px", padding: "0 1rem" }}
+          style={{ height: "40px", minHeight: "40px", lineHeight: "15px", padding: "0 1rem" }}
         >
           <option value="">유형</option>
           <option value="공모전">공모전</option>

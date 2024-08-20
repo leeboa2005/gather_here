@@ -10,7 +10,7 @@ const NavTabs = () => {
     <nav className="flex items-center w-[370px] s:w-full m:justify-start s:justify-center space-x-4 mt-3 mb-6 p-3 bg-fillStrong rounded-2xl">
       <Link
         href="/all"
-        className={`px-4 py-2 s:px-[12px] xs:px-[10px] rounded-xl ${
+        className={`px-4 py-2 s:px-[12px] xs:px-[8px] rounded-xl ${
           pathname === "/all" ? "bg-fillNormal text-primary" : "text-labelNeutral"
         }`}
       >
@@ -18,7 +18,7 @@ const NavTabs = () => {
       </Link>
       <Link
         href="/studies"
-        className={`px-4 py-2 s:px-[12px] xs:px-[10px] rounded-xl ${
+        className={`px-4 py-2 s:px-[12px] xs:px-[8px] rounded-xl ${
           pathname === "/studies" ? "bg-fillNormal  text-primary" : "text-labelNeutral"
         }`}
       >
@@ -26,7 +26,7 @@ const NavTabs = () => {
       </Link>
       <Link
         href="/projects"
-        className={`px-4 py-2 s:px-[12px] xs:px-[10px] rounded-xl ${
+        className={`px-4 py-2 s:px-[12px] xs:px-[8px] rounded-xl ${
           pathname === "/projects" ? "bg-fillNormal  text-primary" : "text-labelNeutral"
         }`}
       >
@@ -34,7 +34,7 @@ const NavTabs = () => {
       </Link>
       <Link
         href="/events"
-        className={`px-4 py-2 s:px-[12px] xs:px-[10px] rounded-xl ${
+        className={`px-4 py-2 s:px-[12px] xs:px-[8px] rounded-xl ${
           pathname === "/events" ? "bg-fillNormal  text-primary" : "text-labelNeutral"
         }`}
       >
