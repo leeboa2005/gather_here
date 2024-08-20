@@ -33,7 +33,28 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
   let cleanContent = post.content;
   if (typeof window !== "undefined" && isMounted) {
     const DOMPurify = require("dompurify");
-    cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+    cleanContent = DOMPurify.sanitize(post.content, {
+      ALLOWED_TAGS: [
+        "b",
+        "i",
+        "em",
+        "strong",
+        "a",
+        "h1",
+        "h2",
+        "h3",
+        "p",
+        "span",
+        "ul",
+        "ol",
+        "li",
+        "br",
+        "gt",
+        "lt",
+        "amp",
+      ],
+      ALLOWED_ATTR: ["href", "target", "style", "class"],
+    });
   }
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
@@ -75,9 +96,9 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
         <h2 className="text-left text-subtitle mt-3 font-semibold text-labelStrong truncate w-3/4">{post.title}</h2>
-        <p className="mt-2 mb-4 h-[45px] s:h-11 xs:h-14 overflow-hidden text-left text-labelNeutral font-thin line-clamp-2 ">
-          {cleanContent}
-        </p>
+        <div className="mt-2 mb-4 h-[45px] s:h-11 xs:h-14 overflow-hidden text-left text-labelNeutral font-thin line-clamp-2">
+          <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+        </div>
         <div className="flex items-center mb-4">
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">
