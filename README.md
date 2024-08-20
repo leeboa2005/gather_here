@@ -8,7 +8,7 @@
 
 #### <img src="https://github.com/user-attachments/assets/42e201d2-f6e9-4269-bd09-37108d5f649e" alt="frontend" style="width: 16px; vertical-align: middle; margin-right: 5px;"/> 서비스 소개 <img src="https://github.com/user-attachments/assets/855c502b-ea52-4f41-b94a-3d1763eee7b9" alt="frontend" style="width: 16px; vertical-align: middle; margin-right: 5px;"/> 
 
-- `@gather_here`는 개발자, 디자이너, 기획자 등 9개의 IT 직군 종사자들과 IT 직군 취업을 목표로 하는 준비생들을 연결해주는 플랫폼입니다.
+- `@gather_here`는 개발자, 디자이너, 기획자 등 9개의 IT 직군 종사자들과 IT 직군 취업을 목표로 하는 준비생들을 연결해주는 반응형 플랫폼입니다.
 - 회원가입 시 한 번의 설문으로 나의 정보를 등록해 서비스를 편리하게 이용할 수 있습니다.
 - 사용자들은 원하는 프로젝트나 스터디 멤버를 모집하기 위해 게시글을 작성할 수 있으며, 지역 또는 유형별로 게시물을 구분해 볼 수 있습니다.
 - 북마크 기능을 통해 원하는 게시물을 저장하고, 북마크한 글과 내가 작성한 글을 한눈에 확인할 수 있습니다.
