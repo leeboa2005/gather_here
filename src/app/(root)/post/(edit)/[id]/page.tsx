@@ -306,7 +306,7 @@ const PostEditPage = () => {
               }
               value={personalLink}
               onChange={handleInputChange(setPersonalLink)}
-              placeholder="연락 받을 링크 또는 이메일을 입력해주세요"
+              placeholder="연락 받을 번호나 이메일을 입력해주세요"
             />
           </div>
         </div>
@@ -320,6 +320,7 @@ const PostEditPage = () => {
                 options={targetPositionOptions}
                 value={targetPosition}
                 onChange={handleMultiSelectChange(setTargetPosition)}
+                placeholder="모집 대상을 선택해주세요"
               />
               <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
             </div>
@@ -336,6 +337,7 @@ const PostEditPage = () => {
                 options={techStackOptions}
                 value={techStack}
                 onChange={handleMultiSelectChange(setTechStack)}
+                placeholder="기술 스택을 선택해주세요"
               />
               <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
             </div>

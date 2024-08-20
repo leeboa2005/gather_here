@@ -164,7 +164,7 @@ const PostsTap: React.FC = () => {
             스터디
           </button>
           <button
-            className={`text-baseS min-w-[64px] ${selectedTab === "프로젝트" ? "tab-button" : ""}`}
+            className={`text-baseS min-w-[66px] ${selectedTab === "프로젝트" ? "tab-button" : ""}`}
             onClick={() => handleTabClick("프로젝트")}
           >
             프로젝트
@@ -179,7 +179,7 @@ const PostsTap: React.FC = () => {
               .map((_, index) => <MypageList key={index} />)
           ) : getCurrentPosts().length > 0 ? (
             getCurrentPosts().map((post) => (
-              <div key={post.post_id} className="s:w-full h-[261px] relative group">
+              <div key={post.post_id} className="s:w-full h-[261px] relative group mb-4 sm:mb-0">
                 <PostCardLong post={post} />
                 {user?.id === post.user_id && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-50 rounded-2xl">

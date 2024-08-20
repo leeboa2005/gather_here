@@ -311,7 +311,7 @@ const PostPage = () => {
               }
               value={draft.personalLink}
               onChange={handleInputChange("personalLink")}
-              placeholder="연락 받을 번호 혹은 이메일을 입력해주세요"
+              placeholder="연락 받을 번호나 이메일을 입력해주세요"
             />
           </div>
         </div>
@@ -325,6 +325,7 @@ const PostPage = () => {
                 options={targetPositionOptions}
                 value={draft.targetPosition}
                 onChange={handleMultiSelectChange("targetPosition")}
+                placeholder="모집 대상을 선택해주세요"
               />
               <p className="text-sm text-labelNeutral mb-1">다중 선택이 가능해요.</p>
             </div>
@@ -343,6 +344,7 @@ const PostPage = () => {
                 options={techStackOptions}
                 value={draft.techStack}
                 onChange={handleMultiSelectChange("techStack")}
+                placeholder="기술 스택을 선택해주세요"
               />
               <p className="text-sm text-labelNeutral">다중 선택이 가능해요.</p>
             </div>
