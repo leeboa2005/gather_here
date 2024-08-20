@@ -14,15 +14,19 @@ body {
 /* input styles  */
 @layer utilities {
   .shared-input {
-    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-lg focus:outline-primaryHeavy;
   }
 
   .shared-input-gray {
-    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg  focus:outline-fontWhite;
   }
 
   .shared-input-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md  focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg  focus:outline-fontWhite;
+  }
+
+  .shared-input-thin-gray {
+    @apply bg-fillLight text-fontWhite text-baseS px-4 py-[10px]  h-[36px] rounded-lg focus:outline-fontWhite;
   }
 
   /* input icon*/
@@ -32,7 +36,7 @@ body {
 
   /* select styles */
   .shared-select {
-    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-md focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-lg focus:outline-primaryHeavy;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -43,7 +47,7 @@ body {
   }
 
   .shared-select-gray {
-    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg focus:outline-fontWhite;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -54,7 +58,7 @@ body {
   }
 
   .shared-select-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-md focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg focus:outline-fontWhite;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -69,27 +73,35 @@ body {
 @layer utilities {
   /* button - green */
   .shared-button-green {
-    @apply text-labelAlternative bg-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
+    @apply text-labelAlternative bg-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-lg font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
+  }
+
+  .shared-button-small-green {
+    @apply text-labelAlternative bg-primary px-3 py-2 h-[36px] text-baseS flex items-center justify-center rounded-lg font-baseBold transition-colors duration-300 hover:bg-primaryStrong;
   }
 
   /* button - gray  */
   .shared-button-gray {
-    @apply text-fontWhite bg-fillLight px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+    @apply text-fontWhite bg-fillLight px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-lg font-baseBold transition-colors duration-300 hover:bg-fillNeutral;
+  }
+
+  .shared-button-small-gray-2 {
+    @apply text-primary text-baseS bg-fillNeutral px-3 py-2 h-[36px] flex items-center justify-center rounded-lg font-baseBold transition-colors duration-300 hover:bg-fillAssistive;
   }
 
   /* button - black */
   .shared-button-black {
-    @apply text-fontWhite bg-fillStrong px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-black;
+    @apply text-fontWhite bg-fillStrong px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-lg  font-baseBold transition-colors duration-300 hover:bg-black;
   }
 
   /* button - white */
   .shared-button-white {
-    @apply text-fillStrong bg-fontWhite px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-white;
+    @apply text-fillStrong bg-fontWhite px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-lg  font-baseBold transition-colors duration-300 hover:bg-white;
   }
 
   /* button - outline */
   .shared-button-outline {
-    @apply text-primary border-[1px] border-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-md  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
+    @apply text-primary border-[1px] border-primary px-4 py-[10px] min-h-[45px] flex items-center justify-center rounded-lg  font-baseBold transition-colors duration-300 hover:bg-primary hover:text-labelAlternative;
   }
 
   /* button - tab */
@@ -113,7 +125,7 @@ body {
 
   /* button - square */
   .square-button {
-    @apply bg-fillLight text-labelNormal s:w-[101px] s:h-[101px] w-[111px] h-[111px] p-[10px] flex items-center justify-center rounded-md font-baseBold transition-colors duration-300 m-1;
+    @apply bg-fillLight text-labelNormal s:w-[101px] s:h-[101px] w-[111px] h-[111px] p-[10px] flex items-center justify-center rounded-lg font-baseBold transition-colors duration-300 m-1;
   }
 
   .square-button:hover {
@@ -150,19 +162,23 @@ body {
     @apply bg-accentRed;
   }
 
+  .square-header-button-gray {
+    @apply flex items-center justify-center w-[36px] h-[36px] rounded-lg bg-fillNeutral hover:bg-fillAssistive  text-white;
+  }
+
   /* button - google  */
   .shared-button-google {
-    @apply text-labelAlternative bg-white min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-white min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-lg  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - kakao */
   .shared-button-kakao {
-    @apply text-labelAlternative bg-[#FEE500] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-labelAlternative bg-[#FEE500] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-lg  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 
   /* button - github */
   .shared-button-github {
-    @apply text-fontWhite bg-[#24292F] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-md  font-baseBold transition-transform duration-300 hover:shadow-lg;
+    @apply text-fontWhite bg-[#24292F] min-w-[303px] px-4 py-[10px] flex items-center justify-center rounded-lg  font-baseBold transition-transform duration-300 hover:shadow-lg;
   }
 }
 

@@ -33,7 +33,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const { data, error } = await supabase.auth.getUser();
       if (error) {
-        console.error("사용자 정보를 불러오는 데 실패했습니다:", error.message);
+        // console.error("사용자 정보를 불러오는 데 실패했습니다:", error.message);
         return;
       }
 
@@ -48,7 +48,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .single();
 
         if (dataError) {
-          console.error("사용자 데이터를 불러오는 데 실패했습니다:", dataError.message);
+          // console.error("사용자 데이터를 불러오는 데 실패했습니다:", dataError.message);
         } else {
           setUserData(userData);
         }
