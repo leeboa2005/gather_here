@@ -11,12 +11,6 @@ body {
   font-color: #f7f7f7;
 }
 
-@layer utilities {
-  .outline-1 {
-    outline-width: 1px;
-  }
-}
-
 /* input styles  */
 @layer utilities {
   .shared-input {
