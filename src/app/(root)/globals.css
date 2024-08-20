@@ -14,19 +14,19 @@ body {
 /* input styles  */
 @layer utilities {
   .shared-input {
-    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-lg focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border border-transparent rounded-lg transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
   }
 
   .shared-input-gray {
-    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg  focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg border border-transparent transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
   }
 
   .shared-input-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg  focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg border border-transparent transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
   }
 
   .shared-input-thin-gray {
-    @apply bg-fillLight text-fontWhite text-baseS px-4 py-[10px]  h-[36px] rounded-lg focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite text-baseS px-4 py-[10px] h-[36px] rounded-lg border border-transparent transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
   }
 
   /* input icon*/
@@ -36,7 +36,7 @@ body {
 
   /* select styles */
   .shared-select {
-    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border-[1px] border-labelStrong rounded-lg focus:outline-primaryHeavy;
+    @apply bg-background text-fontWhite px-4 py-[10px] min-h-[45px] border border-transparent rounded-lg transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -47,7 +47,7 @@ body {
   }
 
   .shared-select-gray {
-    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg focus:outline-fontWhite;
+    @apply bg-fillLight text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg border border-transparent transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -58,7 +58,7 @@ body {
   }
 
   .shared-select-gray-2 {
-    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg focus:outline-fontWhite;
+    @apply bg-fillNormal text-fontWhite px-4 py-[10px] min-h-[45px] rounded-lg border border-transparent transition-all duration-200 ease-in-out focus:border-[#C3E88D] focus:ring-1 focus:ring-[#C3E88D] focus:outline-none;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -68,7 +68,6 @@ body {
     padding-right: 1.5rem;
   }
 }
-
 /* button styles  */
 @layer utilities {
   /* button - green */
