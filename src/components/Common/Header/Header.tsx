@@ -117,14 +117,14 @@ const Header: React.FC = () => {
               </button>
             </form>
             <div className="flex items-center gap-2">
-              {/* 디테일 페이지 헤더의 검색 버튼 */}
-              {/* <button
-              onClick={toggleSearch}
-              type="submit"
-              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              {/* 모바일 검색 버튼 */}
+              <button
+                onClick={toggleSearch}
+                type="submit"
+                className="hidden s:flex items-center justify-center w-[36px] h-[36px] rounded-lg bg-fillNeutral hover:bg-fillAssistive pt-1"
               >
-              <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
-              </button> */}
+                <Image src="/assets/header/search.svg" width={22} height={22} alt="검색 버튼 아이콘" />
+              </button>
               <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
                 <button className="square-header-button-gray">
                   <Image src="/assets/header/write.svg" width={16} height={16} alt="글쓰기 버튼 아이콘" />
@@ -166,10 +166,13 @@ const Header: React.FC = () => {
           </nav>
         </Suspense>
       </div>
-      {/* 검색창 모바일 */}
+      {/* 모바일 검색창 input */}
       {isSearchOpen && (
         <Suspense>
-          <form className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
+          <form
+            className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center s:block"
+            onSubmit={handleSearch}
+          >
             <label htmlFor="search" className="sr-only">
               검색창
             </label>
@@ -178,14 +181,16 @@ const Header: React.FC = () => {
               id="search"
               name="search"
               placeholder="검색어를 입력해보세요"
-              className="shared-input-gray w-full"
+              className="shared-input-thin-gray w-full"
+              value={searchWord}
+              onChange={(evt) => setSearchWord(evt.target.value)}
             />
             <button
               type="button"
               onClick={toggleSearch}
               className="absolute right-4 top-1/2 transform -translate-y-1/2"
             >
-              <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
+              <Image src="/assets/header/close.svg" alt="닫기 버튼" width={16} height={16} />
             </button>
           </form>
         </Suspense>
