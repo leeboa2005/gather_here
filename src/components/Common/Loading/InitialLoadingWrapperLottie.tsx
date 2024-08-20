@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
+import LottiAnimation from "@/components/Common/Loading/LottieAnimation";
 import loadingBar from "../../../assets/loadingBar.json";
 
 interface InitialLoadingWrapperProps {
@@ -27,7 +27,6 @@ const InitialLoadingWrapper: React.FC<InitialLoadingWrapperProps> = ({ children 
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background z-50">
         <LottiAnimation animationData={loadingBar} size="400px" />
-
       </div>
     );
   }
