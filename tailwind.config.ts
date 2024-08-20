@@ -79,9 +79,14 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(-10%)" },
           "50%": { transform: "translateY(0)" },
         },
+        loadingBounce: {
+          "0%, 100%": { transform: "translateY(-10%)" },
+          "50%": { transform: "translateY(0)" },
+        },
       },
       animation: {
         bounce: "bounce 0.5s infinite",
+        loadingBounce: "loadingBounce 0.5s ease-in-out",
       },
     },
   },
