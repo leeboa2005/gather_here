@@ -94,7 +94,7 @@ body {
 
   /* button - tab */
   .tab-button {
-    @apply flex items-center justify-center px-3 py-2 text-baseS rounded-[12px] text-primary bg-fillNormal hover:bg-black transition-opacity;
+    @apply flex items-center justify-center px-3 py-2 text-baseS rounded-[12px] text-primary bg-fillNormal hover:bg-fillNormal transition-opacity;
     width: 60px;
   }
 
