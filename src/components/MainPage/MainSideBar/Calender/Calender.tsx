@@ -126,7 +126,7 @@ const Calender: NextPage = () => {
             : { start: "title", end: "prev next viewChanger" }
         }
         titleFormat={(date) => {
-          return date.date.year + ". " + String(date.date.month + 1).padStart(2, "0");
+          return date.date.year + ". " + String(date.date.month + 1).padStart(2, "0") + ".";
         }}
         // Grid View 옵션
         dayMaxEventRows={0}

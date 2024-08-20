@@ -73,7 +73,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark })
               </svg>
               <p className="text-baseS text-labelNeutral">{post.location}</p>
             </div>
-            <div className="w-full h-[125px] bg-fillNeutral shadow-custom rounded-2xl">
+            <div className="w-full h-[125px] xs:h-[110px] bg-fillNeutral shadow-custom rounded-2xl">
               <Image
                 src={post.img_url}
                 alt="행사 이미지"
