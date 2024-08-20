@@ -19,14 +19,14 @@ const LeftNav: React.FC = () => {
   // 직군에 따라 클래스명 매핑
   const jobTitleClassMap: { [key: string]: string } = {
     프론트엔드: "text-primary",
-    IOS: "text-accentPurple",
-    안드로이드: "text-accentRed",
+    IOS: "text-accentMaya",
+    안드로이드: "text-accentPurple",
     PM: "text-accentColumbia",
-    기획자: "text-accentPink",
+    기획: "text-accentPink",
     마케팅: "text-accentYellow",
     백엔드: "text-accentOrange",
-    디자이너: "text-accentMaya",
-    데브옵스: "text-accentMint",
+    디자인: "text-accentMint",
+    데브옵스: "text-accentRed",
   };
 
   // 직군에 따라 클래스명을 동적으로 설정
@@ -61,7 +61,7 @@ const LeftNav: React.FC = () => {
   }, [user, setUserData]);
 
   return (
-    <aside className="sticky top-0 p-6 s:p-0 w-[250px] max-h-[257px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
+    <aside className="sticky top-0 p-6 s:p-0 w-[250px] max-h-[235px] flex flex-col items-start gap-3 rounded-[20px] bg-fillStrong text-fontWhite shadow-sm s:hidden">
       {loading ? (
         <LeftNavLoader />
       ) : userData ? (
@@ -80,7 +80,7 @@ const LeftNav: React.FC = () => {
           <ol>
             <li className="font-baseBold text-labelStrong">{userData.nickname}</li>
             <li className={`text-sm ${jobTitleClass} relative`}>
-              <span className="pr-1">{userData.job_title}</span>
+              <span className="pr-2">{userData.job_title}</span>
               <span>{userData.experience}</span>
             </li>
           </ol>

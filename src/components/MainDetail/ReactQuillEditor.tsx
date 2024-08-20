@@ -36,7 +36,7 @@ const ReactQuillEditor: React.FC<ReactQuillEditorProps> = ({ value, onChange, cl
         ],
       }}
       formats={FORMATS}
-      placeholder="상세 내용을 입력해주세요"
+      placeholder="상세 내용을 작성해주세요"
       className={className}
     />
   );

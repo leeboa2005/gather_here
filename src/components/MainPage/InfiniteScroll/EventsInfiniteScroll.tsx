@@ -1,6 +1,5 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import AdCard from "@/components/MainPage/AdCard/AdCard";
 import loadingSpinner from "../../../assets/loadingSpinner.json";
 import LottieAnimation from "@/components/Common/Loading/LottieAnimation";

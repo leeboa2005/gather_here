@@ -28,11 +28,20 @@ const FormInput: React.FC<FormInputProps> = ({
         onChange={onChange}
         maxLength={maxLength}
         placeholder={placeholder}
-        className={`shared-input-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className} ${
+        className={`shared-input-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none ${className} ${
           type === "date" ? "date-input" : ""
         }`}
-        style={{ color: value === "" ? "#919191" : undefined }}
+        style={{ color: value === "" ? "#919191" : undefined, border: "1px solid #3B3D3F" }}
       />
+      <style jsx>{`
+        input.shared-input-gray:hover,
+        input.shared-input-gray:focus {
+          border-color: #c3e88d !important;
+        }
+        input.shared-input-gray:focus {
+          box-shadow: none !important;
+        }
+      `}</style>
     </div>
   );
 };
