@@ -6,7 +6,6 @@ import { useUser } from "@/provider/UserContextProvider";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/Common/Toast/Toast";
 import MypageProfileInfo from "@/components/Common/Skeleton/MypageProfileInfo";
-import useCheckNickname from "@/hooks/useCheckNickname";
 
 const ProfileInfo: React.FC = () => {
   const supabase = createClient();
@@ -22,8 +21,6 @@ const ProfileInfo: React.FC = () => {
   const [blogSuccess, setBlogSuccess] = useState<string | null>(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
-  const [nicknameChecked, setNicknameChecked] = useState(false);
-  const nicknameAvailable = useCheckNickname(nickname);
 
   useEffect(() => {
     if (userData) {
@@ -41,8 +38,7 @@ const ProfileInfo: React.FC = () => {
         return;
       }
 
-      // 특수문자 및 공백 유효성 검사
-      const specialCharPattern = /[^a-zA-Z0-9가-힣_]/; // 허용된 문자: 영문자, 숫자, 한글, 밑줄(_)
+      const specialCharPattern = /[^a-zA-Z0-9가-힣_]/;
 
       if (nickname.length < 2 || nickname.length > 11) {
         setNicknameError("닉네임은 2-11자 내로 입력해주세요.");
@@ -52,7 +48,6 @@ const ProfileInfo: React.FC = () => {
         return;
       }
 
-      // 중복 닉네임 검사 (현재 사용자 제외)
       const { data, error } = await supabase
         .from("Users")
         .select("nickname")
