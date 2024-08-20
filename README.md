@@ -288,7 +288,7 @@
 │  └─ tsconfig.json
 
 ```
-## <span id="ui"> 6. UI 🎨</span>
+## <span id="ui"> 6. 🎨 UI </span>
 
 #### 시작하기, 메인페이지 게시물 리스트 
 
@@ -303,7 +303,7 @@
 <img src="https://github.com/user-attachments/assets/f45c4fb7-1333-4d0c-be3d-1d3d2c2c0131" alt="프로젝트 결과 4" width="800px" />
 
 
-## <span id="troubleshooting"> 7. 트러블 슈팅🔨</span>
+## <span id="troubleshooting"> 7.🔨 트러블 슈팅</span>
 
 ### react-select로 다중 선택을 구현하며 server와 client의 id가 다른 이슈
 
