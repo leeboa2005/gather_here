@@ -80,7 +80,7 @@ const Header: React.FC = () => {
       <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-[14px] s:py-2">
         <Link href="/">
           <Image
-            src={user ? "/assets/header/login_logo.svg" : "/assets/header/logout_logo.svg"}
+            src={user ? "/logos/login_logo.png" : "/logos/logout_logo.png"}
             alt="@gather_here 로고"
             priority
             width={166}
