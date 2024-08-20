@@ -31,14 +31,14 @@
 ## <span id="teamintro">1.📢 팀 소개</span>
 <p>안녕하세요! 5명의 프론트엔드 개발자와 1명의 디자이너로 구성된 <strong>게더 히어</strong>팀입니다.<br>
 `게더 히어`는 각기 다른 역량을 가진 우리가 모여, 협업의 시너지를 극대화 시킨다 라는 의미를 가지고 있습니다. <br>
-새로운 가능성을 발견하는 팀입니다! 🤲🔥<br>
+ 항상 새로운 가능성을 발견하는 팀입니다! 🤲🔥<br>
 </p>
 
 | 👑김영범| 💻조은영 | 🔎이하름 | 💡김성준 | 🪄이보아 | 🎨전정현 |
 | :---: | :---: | :---: | :---: | :---:  | :---: |
 | <img src="https://github.com/user-attachments/assets/8720fef6-8ab1-4350-b9a4-068548e70e1e" width="200">| <img src="https://github.com/user-attachments/assets/b5f761ab-9343-4726-9a70-32e0745567dc" width="200"> | <img src="https://github.com/user-attachments/assets/5a108b91-7992-428e-a8a9-ceb78284685f" width="200"> | <img src="https://github.com/user-attachments/assets/819e65bc-ca66-4dcd-870d-80b6a4c3dbb2" width="200"> | <img src="https://github.com/user-attachments/assets/b0aaa5a1-4e9c-4a6e-8ccb-615b22e6fbd1" width="200"> | <img src="https://github.com/user-attachments/assets/f394d0c9-314a-441e-8683-7f35e12f49f2" width="200"> |
 | ![Team%20Leader](https://img.shields.io/badge/-Team%20leader-yellow)  ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb)| ![Deputy%20Leader](https://img.shields.io/badge/-Deputy%20Leader-green) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Development%20Leader](https://img.shields.io/badge/-Development%20leader-orange)  ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![WorkManagement](https://img.shields.io/badge/-Work%20Management%20leader-f67280) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Communication%20Leader](https://img.shields.io/badge/-Comunication%20Leader-mint) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Design%20Leader](https://img.shields.io/badge/-Design%20leader-purple) ![Designer](https://img.shields.io/badge/Designer-004088)|
-| github: [kubap](https://github.com/kybaq)| github: [Eunyoung](https://github.com/Eunyoung-Jo) | github: [Hareum](https://github.com/LeeHareum) | github: [SungJoon](https://github.com/ilovezerocokeya)| github: [Boa](https://github.com/leeboa2005) | blog: [Junghyun](https://velog.io/@yardvvorker/posts) |    
+| github:<br> [kubap](https://github.com/kybaq)| github:<br> [Eunyoung](https://github.com/Eunyoung-Jo) | github:<br> [Hareum](https://github.com/LeeHareum) | github:<br> [SungJoon](https://github.com/ilovezerocokeya)| github:<br> [Boa](https://github.com/leeboa2005) | blog:<br> [Junghyun](https://velog.io/@yardvvorker/posts) |    
 
 ## <span id="architecture">2. 🏗 아키텍쳐</span>
 <img src="https://github.com/user-attachments/assets/5ffed050-2b2f-4de8-b97b-6be1b11aec33" alt="image" width="800px" />
