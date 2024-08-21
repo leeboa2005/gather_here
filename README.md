@@ -4,7 +4,7 @@
 
 ## 📖 소개 및 개요
 - 프로젝트 기간 : 2023.7.16 ~ 8.20
-- 배포 URL : [🔗 @gather_here](https://gather-here.com)
+- 배포 URL : [🔗 @gather_here](https://www.gatherhere.dev/all))
 
 #### <img src="https://github.com/user-attachments/assets/42e201d2-f6e9-4269-bd09-37108d5f649e" alt="frontend" style="width: 16px; vertical-align: middle; margin-right: 5px;"/> 서비스 소개 <img src="https://github.com/user-attachments/assets/855c502b-ea52-4f41-b94a-3d1763eee7b9" alt="frontend" style="width: 16px; vertical-align: middle; margin-right: 5px;"/> 
 
