@@ -28,7 +28,7 @@
 
 </details>
 
-## <span id="teamintro">1.📢 팀 소개</span>
+## <h3 id="teamintro">1.📢 팀 소개</h3>
 <p>안녕하세요! 5명의 프론트엔드 개발자와 1명의 디자이너로 구성된 <strong>게더 히어</strong>팀입니다.<br>
 `게더 히어`는 각기 다른 역량을 가진 우리가 모여, 협업의 시너지를 극대화 시킨다 라는 의미를 가지고 있습니다. <br>
  항상 새로운 가능성을 발견하는 팀입니다! 🤲🔥<br>
@@ -40,10 +40,10 @@
 | ![Team%20Leader](https://img.shields.io/badge/-Team%20leader-yellow)  ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb)| ![Deputy%20Leader](https://img.shields.io/badge/-Deputy%20Leader-green) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Development%20Leader](https://img.shields.io/badge/-Development%20leader-orange)  ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![WorkManagement](https://img.shields.io/badge/-Work%20Management%20leader-f67280) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Communication%20Leader](https://img.shields.io/badge/-Comunication%20Leader-mint) ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) | ![Design%20Leader](https://img.shields.io/badge/-Design%20leader-purple) ![Designer](https://img.shields.io/badge/Designer-004088)|
 | github:<br> [kubap](https://github.com/kybaq)| github:<br> [Eunyoung](https://github.com/Eunyoung-Jo) | github:<br> [Hareum](https://github.com/LeeHareum) | github:<br> [SungJoon](https://github.com/ilovezerocokeya)| github:<br> [Boa](https://github.com/leeboa2005) | blog:<br> [Junghyun](https://velog.io/@yardvvorker/posts) |    
 
-## <span id="architecture">2. 🏗 아키텍쳐</span>
+## <h3 id="architecture">2. 🏗 아키텍쳐</h3>
 <img src="https://github.com/user-attachments/assets/5ffed050-2b2f-4de8-b97b-6be1b11aec33" alt="image" width="800px" />
 
-## <span id="skill">3.🍀주요 기술</span>
+## <h3 id="skill">3.🍀주요 기술</h3>
 
 <details>
   <summary>로그인</summary>
@@ -121,6 +121,8 @@
     - 내 관심글
      - 내 관심글 확인 : 내가 북마크한 게시글을 스터디/ 프로젝트 / IT 행사 별로 한눈에 볼 수 있습니다. 
 </details>
+
+## <h3 id="technical">4.🧩 기술적 의사결정</h3>
 
 ### 프레임워크
 <div>
@@ -201,7 +203,7 @@
 </div>
 
 
-## <span id="structure">5.📦프로젝트 구조</span>
+## <h3 id="structure">5.📦프로젝트 구조</h3>
 
 ``` plaintext 
 ├─ public
@@ -278,7 +280,7 @@
 │  └─ tsconfig.json
 
 ```
-## <span id="ui"> 6. 🎨 UI </span>
+## <h3 id="ui"> 6. 🎨 UI </h3>
 
 #### 시작하기, 메인페이지 게시물 리스트 
 
