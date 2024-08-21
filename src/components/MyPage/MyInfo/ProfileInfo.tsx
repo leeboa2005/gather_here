@@ -6,7 +6,6 @@ import { useUser } from "@/provider/UserContextProvider";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/Common/Toast/Toast";
 import MypageProfileInfo from "@/components/Common/Skeleton/MypageProfileInfo";
-import useCheckNickname from "@/hooks/useCheckNickname";
 
 const ProfileInfo: React.FC = () => {
   const supabase = createClient();
@@ -22,8 +21,6 @@ const ProfileInfo: React.FC = () => {
   const [blogSuccess, setBlogSuccess] = useState<string | null>(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [toastState, setToastState] = useState({ state: "", message: "" });
-  const [nicknameChecked, setNicknameChecked] = useState(false);
-  const nicknameAvailable = useCheckNickname(nickname);
 
   useEffect(() => {
     if (userData) {
@@ -41,8 +38,7 @@ const ProfileInfo: React.FC = () => {
         return;
       }
 
-      // 특수문자 및 공백 유효성 검사
-      const specialCharPattern = /[^a-zA-Z0-9가-힣_]/; // 허용된 문자: 영문자, 숫자, 한글, 밑줄(_)
+      const specialCharPattern = /[^a-zA-Z0-9가-힣_]/;
 
       if (nickname.length < 2 || nickname.length > 11) {
         setNicknameError("닉네임은 2-11자 내로 입력해주세요.");
@@ -52,7 +48,6 @@ const ProfileInfo: React.FC = () => {
         return;
       }
 
-      // 중복 닉네임 검사 (현재 사용자 제외)
       const { data, error } = await supabase
         .from("Users")
         .select("nickname")
@@ -199,7 +194,7 @@ const ProfileInfo: React.FC = () => {
                 disabled
                 value={user?.email ?? ""}
                 className="w-full shared-input-gray-2 border-[1px] border-fillLight"
-                style={{ color: "#454545" }}
+                style={{ color: "#5E5E5E" }}
               />
               {emailError && <p className="text-statusDestructive text-baseXs mt-1">{emailError}</p>}
             </div>
@@ -233,12 +228,12 @@ const ProfileInfo: React.FC = () => {
                 <option value="">선택해주세요</option>
                 <option value="프론트엔드">프론트엔드</option>
                 <option value="백엔드">백엔드</option>
-                <option value="디자이너">디자이너</option>
+                <option value="디자인">디자인</option>
                 <option value="IOS">IOS</option>
                 <option value="안드로이드">안드로이드</option>
                 <option value="데브옵스">데브옵스</option>
                 <option value="PM">PM</option>
-                <option value="기획자">기획자</option>
+                <option value="기획">기획</option>
                 <option value="마케팅">마케팅</option>
               </select>
             </div>

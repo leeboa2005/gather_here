@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import LottiAnimation from "@/components/Common/Loading/LottiAnimation";
-import loadingBar from "../../../assets/loadingBar.json";
+import PuzzleAnimation from "./PuzzleAnimation";
 
 interface InitialLoadingWrapperProps {
   children: React.ReactNode;
@@ -26,8 +25,7 @@ const InitialLoadingWrapper: React.FC<InitialLoadingWrapperProps> = ({ children 
   if (initialLoading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background z-50">
-        <LottiAnimation animationData={loadingBar} size="400px" />
-
+        <PuzzleAnimation />
       </div>
     );
   }

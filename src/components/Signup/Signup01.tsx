@@ -25,7 +25,7 @@ const jobClasses: { [key: string]: string } = {
 const Signup01: React.FC = () => {
   const { selectedJob, handleJobSelection } = useSelectJob();
   const router = useRouter();
-  const { closeModal } = useModal(); // useModal에서 closeModal 가져오기
+  const { closeModal } = useModal();
 
   const handleSkipWithConfirmation = () => {
     document.body.classList.remove("page-disabled");
@@ -38,7 +38,7 @@ const Signup01: React.FC = () => {
       cancelButtonText: "아니요, 계속 입력하기",
       onConfirm: () => {
         closeModal();
-        router.push("/");
+        router.replace("/");
       },
       onCancel: () => document.body.classList.add("page-disabled"),
     });

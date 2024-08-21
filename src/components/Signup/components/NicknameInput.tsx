@@ -17,25 +17,6 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
   const getLengthMessageClass = () => {
     if (nickname && (nickname.length < 2 || nickname.length > 11)) {
       return "text-red-500";
-    } else if (nickname && nickname.length >= 2 && nickname.length <= 11 && !hasSpecialCharacter(nickname)) {
-      return "text-green-500";
-    } else {
-      return "text-gray-500";
-    }
-  };
-
-  const getNicknameMessageClass = () => {
-    if (errors.nickname && errors.nickname.type === "validate") {
-      return "text-red-500";
-    } else if (
-      nicknameAvailable === true &&
-      !hasSpecialCharacter(nickname) &&
-      nickname.length >= 2 &&
-      nickname.length <= 11
-    ) {
-      return "text-green-500";
-    } else if (nicknameAvailable === false) {
-      return "text-red-500";
     } else {
       return "text-gray-500";
     }
@@ -71,9 +52,7 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
         className="block focus:outline-primaryHeavy s:w-[300px] w-[350px] s:mt-1 mt-3 ml-5 h-[50px] p-2 bg-background rounded-md border-2 border-fillLight"
       />
       <p className={`text-xs mt-2 ml-5 ${getLengthMessageClass()}`}>
-        {nickname && (nickname.length < 2 || nickname.length > 11)
-          ? "닉네임은 2 ~ 11자 내로 작성해주세요."
-          : "닉네임은 2 ~ 11자 내로 작성해주세요."}
+        닉네임은 2 ~ 11자 내로 작성해주세요.
       </p>
       {hasSpecialCharacter(nickname) && (
         <p className={`text-xs mt-2 ml-5 ${getSpecialCharacterMessageClass()}`}>
@@ -81,11 +60,6 @@ const NicknameInput: React.FC<NicknameInputProps> = ({ register, errors, nicknam
         </p>
       )}
       {nicknameAvailable === false && <p className="text-xs text-red-500 mt-1 ml-5">이미 사용 중인 닉네임입니다.</p>}
-      {nicknameAvailable === true &&
-        nickname &&
-        nickname.length >= 2 &&
-        nickname.length <= 11 &&
-        !hasSpecialCharacter(nickname) && <p className="text-xs text-green-500 mt-1 ml-5">사용 가능한 닉네임입니다.</p>}
     </div>
   );
 };

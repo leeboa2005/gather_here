@@ -41,7 +41,7 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
     안드로이드: "text-accentRed",
     PM: "text-accentColumbia",
     기획자: "text-accentPink",
-    마케팅: "text-accentYellow",
+    마케터: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",
@@ -66,10 +66,10 @@ const PostCardShort: React.FC<PostCardProps> = ({ post }) => {
           <LikeButton postId={post.post_id} currentUser={currentUser} category={post.category} />
         </div>
         <Link href={`/maindetail/${post.post_id}`}>
-          <h2 className="text-left text-subtitle font-base truncate mt-3 text-labelStrong">{post.title}</h2>
-          <p className="hidden sm:block mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
-            {cleanContent}
-          </p>
+          <h2 className="text-left text-subtitle font-semibold truncate mt-3 text-labelStrong">{post.title}</h2>
+          <div className="hidden sm:block mt-2 mb-3 h-11 overflow-hidden text-left font-thin line-clamp-2 text-labelNeutral">
+            <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+          </div>
           <div className="mt-1">
             <div className="flex items-center mb-4">
               <div className="hidden sm:flex items-center">

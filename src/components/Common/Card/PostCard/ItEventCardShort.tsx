@@ -34,12 +34,11 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark })
     };
   }, []);
 
-  // dayjs 로케일을 한국어로 설정
   dayjs.locale("ko");
 
   return (
     <article className="w-full h-full max-w-container-l m:max-w-container-m s:max-w-container-s">
-      <div className="p-4 h-64 text-center bg-fillStrong rounded-2xl">
+      <div className="p-4 h-[261px] text-center bg-fillStrong rounded-2xl">
         {isMounted ? (
           <ul className="flex justify-between items-center">
             <li>
@@ -73,7 +72,7 @@ const ItEventCardShort: NextPage<EventsCardProps> = ({ post, onRemoveBookmark })
               </svg>
               <p className="text-baseS text-labelNeutral">{post.location}</p>
             </div>
-            <div className="w-full h-[125px] bg-fillNeutral shadow-custom rounded-2xl">
+            <div className="w-full h-[125px] xs:h-[110px] bg-fillNeutral shadow-custom rounded-2xl">
               <Image
                 src={post.img_url}
                 alt="행사 이미지"

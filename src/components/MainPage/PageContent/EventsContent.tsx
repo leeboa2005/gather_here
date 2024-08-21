@@ -24,7 +24,7 @@ const EventsContent: NextPage = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [days, setDays] = useState<number>(30); // D-일수이내
+  const [days, setDays] = useState<number>(30);
 
   useEffect(() => {
     const loadCarouselData = async () => {
@@ -68,9 +68,8 @@ const EventsContent: NextPage = () => {
   };
 
   const handleEventFilterChange = useCallback(async (category: string) => {
-    setSelectedCategory(category); // Set the selected category
+    setSelectedCategory(category);
 
-    // Reset pagination and posts
     setPage(1);
     setHasMore(true);
 
@@ -109,7 +108,7 @@ const EventsContent: NextPage = () => {
       </div>
       <div className="w-full mb-4">
         <div className="flex items-center">
-          <Image src="/assets/run.svg" alt="Run Icon" width={20} height={20} className="w-5 h-5" priority />
+          <Image src="/assets/gif/run.gif" alt="Run Icon" width={20} height={20} className="w-5 h-5" priority />
           <p className="m-2 text-labelNormal">모집이 곧 종료돼요</p>
         </div>
         {isLoadingCarousel ? (

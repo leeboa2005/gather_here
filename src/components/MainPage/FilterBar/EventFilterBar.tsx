@@ -13,7 +13,7 @@ const EventFilterBar: React.FC<EventFilterBarProps> = ({ selectedCategory, onCha
   };
 
   return (
-    <div className="flex justify-between items-center mt-1 mb-5">
+    <div className="flex justify-between items-center mt-3 mb-5">
       <div className="grid grid-cols-1 gap-2 w-full s:grid-cols-2 md:grid-cols-4 md:gap-3">
         <select
           className={`shared-select-gray-2 ${
@@ -21,7 +21,7 @@ const EventFilterBar: React.FC<EventFilterBarProps> = ({ selectedCategory, onCha
           } cursor-pointer`}
           value={selectedCategory}
           onChange={handleCategoryChange}
-          style={{ height: "40px", minHeight: "40px", lineHeight: "38px", padding: "0 1rem" }}
+          style={{ height: "40px", minHeight: "40px", lineHeight: "15px", padding: "0 1rem" }}
         >
           <option value="">유형</option>
           <option value="공모전">공모전</option>

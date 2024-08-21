@@ -33,7 +33,28 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
   let cleanContent = post.content;
   if (typeof window !== "undefined" && isMounted) {
     const DOMPurify = require("dompurify");
-    cleanContent = DOMPurify.sanitize(post.content, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+    cleanContent = DOMPurify.sanitize(post.content, {
+      ALLOWED_TAGS: [
+        "b",
+        "i",
+        "em",
+        "strong",
+        "a",
+        "h1",
+        "h2",
+        "h3",
+        "p",
+        "span",
+        "ul",
+        "ol",
+        "li",
+        "br",
+        "gt",
+        "lt",
+        "amp",
+      ],
+      ALLOWED_ATTR: ["href", "target", "style", "class"],
+    });
   }
 
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
@@ -44,7 +65,7 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
     안드로이드: "text-accentRed",
     PM: "text-accentColumbia",
     기획자: "text-accentPink",
-    마케팅: "text-accentYellow",
+    마케터: "text-accentYellow",
     백엔드: "text-accentOrange",
     디자이너: "text-accentMaya",
     데브옵스: "text-accentMint",
@@ -74,10 +95,10 @@ const PostCardLong: React.FC<PostCardProps> = ({ post, onRemoveBookmark }) => {
         ) : null}
       </div>
       <Link href={`/maindetail/${post.post_id}`}>
-        <h2 className="text-left text-subtitle mt-3 font-base text-labelStrong truncate w-3/4">{post.title}</h2>
-        <p className="mt-2 mb-4 s:h-11 xs:h-14 overflow-hidden text-left font-thin line-clamp-2 text-fontWhite">
-          {cleanContent}
-        </p>
+        <h2 className="text-left text-subtitle mt-3 font-semibold text-labelStrong truncate w-3/4">{post.title}</h2>
+        <div className="mt-2 mb-4 h-[45px] s:h-11 xs:h-14 overflow-hidden text-left text-labelNeutral font-thin line-clamp-2">
+          <div dangerouslySetInnerHTML={{ __html: cleanContent }} />
+        </div>
         <div className="flex items-center mb-4">
           {post.user?.profile_image_url && (
             <div className="relative w-7 h-7 mr-2">

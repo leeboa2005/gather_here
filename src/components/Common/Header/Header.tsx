@@ -28,23 +28,20 @@ const Header: React.FC = () => {
       console.error("Error logging out:", error);
       return;
     }
-    // 상태 초기화 및 리디렉션
+
     resetAuthUser();
     initializationUser();
     router.push("/");
   };
 
-  // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
-  // 마이페이지 모달 토글
   const toggleMypageModal = () => {
     setIsMypageModalOpen(!isMypageModalOpen);
   };
 
-  // 모달 열기
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
     setIsMypageModalOpen(false);
@@ -65,26 +62,24 @@ const Header: React.FC = () => {
     }
   };
 
-  // 모바일 환경감지 마이페이지 모달을 닫는 함수
   const closeModalOnRouteChange = () => {
     if (window.innerWidth <= 768 && isMypageModalOpen) {
       setIsMypageModalOpen(false);
     }
   };
 
-  // 프로필 사진 캐싱 방지
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   return (
     <header className="bg-background shadow-md relative text-fontWhite">
-      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-3 s:py-2">
+      <div className="w-full mx-auto max-w-container-l m:max-w-container-m s:max-w-container-s flex justify-between items-center py-[14px] s:py-2">
         <Link href="/">
           <Image
             src="/assets/header/logo.svg"
             alt="@gather_here 로고"
             priority
-            width={183}
-            height={28}
+            width={182}
+            height={25}
             className="s:hidden"
           />
           <Image
@@ -98,7 +93,6 @@ const Header: React.FC = () => {
         </Link>
         <Suspense>
           <nav className="flex items-center gap-2">
-            {/* 검색창 데스크탑 */}
             <form className="relative s:hidden items-center overflow-hidden" onSubmit={handleSearch}>
               <label htmlFor="input" className="sr-only">
                 검색창
@@ -108,71 +102,69 @@ const Header: React.FC = () => {
                 id="input"
                 name="input"
                 placeholder="검색어를 입력해보세요"
-                className="shared-input-gray rounded-lg"
+                className="shared-input-thin-gray text-labelAssistive w-[335px]"
                 value={searchWord}
                 onChange={(evt) => setSearchWord(evt.target.value)}
               />
-              <button className="absolute top-[10px] right-[8px]" type="submit">
-                <Image src="/assets/header/search.svg" width={28} height={28} alt="검색 버튼 아이콘" />
+              <button className="absolute top-[9px] right-[8px]" type="submit">
+                <Image src="/assets/header/search.svg" width={20} height={20} alt="검색 버튼 아이콘" />
               </button>
             </form>
             <div className="flex items-center gap-2">
-              {/* 디테일 페이지 헤더의 검색 버튼 */}
-              {/* <button
-              onClick={toggleSearch}
-              type="submit"
-              className="hidden s:flex items-center justify-center w-[45px] h-[45px] rounded-lg bg-fillLight hover:bg-fillLight text-white"
+              <button
+                onClick={toggleSearch}
+                type="submit"
+                className="hidden s:flex items-center justify-center w-[36px] h-[36px] rounded-lg bg-fillNeutral hover:bg-fillAssistive pt-1"
               >
-              <Image src="/assets/header/search.svg" width={26} height={26} alt="검색 버튼 아이콘" />
-              </button> */}
+                <Image src="/assets/header/search.svg" width={22} height={22} alt="검색 버튼 아이콘" />
+              </button>
               <Link onClick={(evt) => handleClickPost(evt)} href="/post" passHref>
-                <button className="flex items-center justify-center w-[45px] s:w-[32px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-background hover:bg-fillNormal s:hover:bg-transparent text-white">
-                  <Image src="/assets/header/write.svg" width={21} height={21} alt="글쓰기 버튼 아이콘" />
+                <button className="square-header-button-gray">
+                  <Image src="/assets/header/write.svg" width={16} height={16} alt="글쓰기 버튼 아이콘" />
                 </button>
               </Link>
               {user ? (
                 <div className="flex items-center">
                   <button
                     onClick={toggleMypageModal}
-                    className="hidden s:flex items-center justify-center w-[45px] s:w-[35px] h-[42px] s:h-[35px] rounded-lg bg-fillLight s:bg-fillStrong hover:bg-fillNormal s:hover:bg-black text-white z-50"
+                    className="hidden s:flex items-center justify-center w-[32px] h-[32px] rounded-lg bg-fillNeutral hover:bg-fillAssistive  z-50"
                   >
                     <Image
                       src={isMypageModalOpen ? "/assets/header/primary_close.svg" : "/assets/header/mobile_logo.svg"}
                       alt={isMypageModalOpen ? "닫기 버튼 아이콘" : "마이페이지 아이콘"}
                       priority
-                      width={20}
-                      height={24}
+                      width={14}
+                      height={16}
                     />
                   </button>
-                  <Link
-                    href="/mypage"
-                    className="flex s:hidden items-center justify-center w-[45px] h-[45px]  s:w-[32px] s:h-[35px] rounded-lg bg-fillLight hover:bg-fillNormal text-white"
-                  >
+                  <Link href="/mypage" className="square-header-button-gray s:hidden">
                     <Image
                       src="/assets/header/mobile_logo.svg"
                       alt="마이페이지 아이콘"
                       priority
-                      width={20}
-                      height={24}
+                      width={14}
+                      height={16}
                     />
                   </Link>
-                  <button onClick={signOut} className="shared-button-gray ml-2 s:hidden">
+                  <button onClick={signOut} className="shared-button-small-gray-2 ml-2 s:hidden">
                     로그아웃
                   </button>
                 </div>
               ) : (
-                <button onClick={handleOpenLoginModal} className="shared-button-gray">
-                  로그인
+                <button onClick={handleOpenLoginModal} className="shared-button-small-green">
+                  시작하기
                 </button>
               )}
             </div>
           </nav>
         </Suspense>
       </div>
-      {/* 검색창 모바일 */}
       {isSearchOpen && (
         <Suspense>
-          <form className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center">
+          <form
+            className="absolute top-0 left-0 w-full bg-background z-50 p-2 flex items-center s:block"
+            onSubmit={handleSearch}
+          >
             <label htmlFor="search" className="sr-only">
               검색창
             </label>
@@ -181,14 +173,16 @@ const Header: React.FC = () => {
               id="search"
               name="search"
               placeholder="검색어를 입력해보세요"
-              className="shared-input-gray w-full"
+              className="shared-input-thin-gray w-full"
+              value={searchWord}
+              onChange={(evt) => setSearchWord(evt.target.value)}
             />
             <button
               type="button"
               onClick={toggleSearch}
               className="absolute right-4 top-1/2 transform -translate-y-1/2"
             >
-              <Image src="/assets/header/close.svg" alt="닫기 버튼" width={21} height={21} />
+              <Image src="/assets/header/close.svg" alt="닫기 버튼" width={16} height={16} />
             </button>
           </form>
         </Suspense>
@@ -209,7 +203,6 @@ const Header: React.FC = () => {
       )}
       {isMypageModalOpen && user && (
         <>
-          {/* 마이페이지 모달 */}
           <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleMypageModal}></div>
           <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-full max-w-[80%] border-[1px] border-fillLight bg-fillStrong shadow-lg rounded-lg p-5 z-50 s:block hidden">
             <div className="flex items-center mb-4 pb-4 border-b-[1px] border-b-fillLight">

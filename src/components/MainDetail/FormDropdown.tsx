@@ -29,8 +29,11 @@ const FormDropdown: React.FC<FormDropdownProps> = ({
         value={value}
         onChange={onChange}
         multiple={multiple}
-        className={`shared-select-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:shadow-outline ${className}`}
-        style={{ color: value === "" ? "#919191" : undefined }}
+        className={`shared-select-gray border-none rounded w-full py-2 px-3 text-labelNeutral leading-tight focus:outline-none focus:ring-2 focus:ring-c3e88d focus:border-c3e88d hover:border-c3e88d ${className}`}
+        style={{
+          color: value === "" ? "#919191" : undefined,
+          border: "1px solid #3B3D3F",
+        }}
       >
         <option value="" style={{ color: "#919191" }}>
           {placeholder}
@@ -41,6 +44,15 @@ const FormDropdown: React.FC<FormDropdownProps> = ({
           </option>
         ))}
       </select>
+      <style jsx>{`
+        select.shared-select-gray:hover {
+          border-color: #c3e88d !important;
+        }
+        select.shared-select-gray:focus {
+          border-color: #c3e88d !important;
+          box-shadow: 0 0 0 1px rgba(195, 232, 141, 0.5) !important;
+        }
+      `}</style>
     </div>
   );
 };

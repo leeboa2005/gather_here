@@ -13,20 +13,21 @@ interface FormMultiSelectProps {
   value: Option[];
   onChange: (selectedOptions: Option[]) => void;
   className?: string;
+  placeholder?: string;
 }
 
 const customStyles = {
   control: (provided: any, state: any) => ({
     ...provided,
     backgroundColor: "#3B3D3F",
-    border: state.isFocused ? "1px solid #3B3D3F" : "1px solid #3B3D3F",
+    border: state.isFocused ? "1px solid #C3E88D" : "1px solid #3B3D3F",
     color: "#919191",
-    padding: "2px 12px",
+    padding: "2px 8px",
     borderRadius: "7px",
     boxShadow: "none",
     minHeight: "45px",
     "&:hover": {
-      borderColor: "#919191",
+      borderColor: "#C3E88D",
     },
   }),
   menu: (provided: any) => ({
@@ -37,11 +38,19 @@ const customStyles = {
   }),
   multiValue: (provided: any) => ({
     ...provided,
-    backgroundColor: "#444",
+    backgroundColor: "#19191A",
   }),
   multiValueLabel: (provided: any) => ({
     ...provided,
-    color: "#ffffff",
+    color: "#C4C4C4",
+  }),
+  multiValueRemove: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isFocused ? "#5E5E5E" : "#5E5E5E",
+    ":hover": {
+      backgroundColor: "#19191A",
+      color: "#919191",
+    },
   }),
   placeholder: (provided: any) => ({
     ...provided,
@@ -63,9 +72,34 @@ const customStyles = {
       backgroundColor: "#28282A",
     },
   }),
+  clearIndicator: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isFocused ? "#919191" : "#919191",
+    padding: "5px",
+    cursor: "pointer",
+    ":hover": {
+      color: "#FF3F02",
+    },
+  }),
+  dropdownIndicator: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isFocused ? "#919191" : "#919191",
+    padding: "0px",
+    cursor: "pointer",
+    ":hover": {
+      color: "#5E5E5E",
+    },
+  }),
 };
 
-const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value, onChange, className }) => {
+const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
+  label,
+  options,
+  value,
+  onChange,
+  className,
+  placeholder,
+}) => {
   const instanceId = useId();
 
   const handleChange = (selectedOptions: any) => {
@@ -87,7 +121,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({ label, options, value
         className={className}
         classNamePrefix="select"
         instanceId={instanceId}
-        placeholder="선택..."
+        placeholder={placeholder || "선택해주세요"}
         components={{ IndicatorSeparator: () => null }}
       />
     </div>
