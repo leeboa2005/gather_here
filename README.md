@@ -122,92 +122,82 @@
      - 내 관심글 확인 : 내가 북마크한 게시글을 스터디/ 프로젝트 / IT 행사 별로 한눈에 볼 수 있습니다. 
 </details>
 
-## <span id="technical">4.🧩기술적 의사결정</span>
-
-### Framework & Library
-
+### 프레임워크
 <div>
   <h4>
-    <img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/nextjs_icon_132160.png" alt="NextJS Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-    NextJS (App Router)
+    <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Next.js&logoColor=white">
   </h4>
-  <p>Next.js는 자동으로 페이지 간 코드를 분할하여 필요한 코드만을 클라이언트에 전송하여 초기 로딩 시간을 최적화합니다. 그중에서도 Next.js의 app router는 서버 컴포넌트를 지원하고 페이지 라우터보다 더 많은 유연성과 기능을 제공하여 채팅 등 실시간 데이터 통신이 동적이고 성능 최적화된 애플리케이션을 빠르게 구축할 수 있도록 도와주기 때문에 프레임워크로 Next.js app router를 선택하였습니다.</p>
+  <p>Next.js는 페이지 간 코드를 자동으로 분할하여 초기 로딩 시간을 줄여줍니다. 특히, Next.js의 App Router는 서버 컴포넌트를 지원하며, 기존 페이지 라우터보다 더 유연하고 다양한 기능을 제공해줍니다. 실시간 데이터 통신이 중요한 애플리케이션에서는 이 기능들이 성능 최적화에 큰 도움이 됩니다. 이러한 이유로, 동적인 데이터를 처리하는 데 최적화된 Next.js App Router를 프레임워크로 선택했습니다.</p>
 </div>
 
-### State Management Library
-
+### 상태 관리
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/0bb4fc11-672c-4e6e-832b-9745fa13475b" alt="Zustand Icon" width="30px" style="vertical-align: middle; margin-right: 10px;" />
-    Zustand
+    <img src="https://img.shields.io/badge/Zustand-181717?style=flat-square&logo=Zustand&logoColor=white">
   </h4>
-  <p>Zustand를 사용하게 된 이유는 설정이 복잡하지 않고 코드가 직관적이기 때문에 상태관리를 빠르고 쉽게 구현할 수 있기 때문입니다. 또한 Zustand는 전역 상태와 로컬 상태를 구분하지 않고 사용이 가능해서 상태 관리의 복잡성을 줄여주는 장점이 있어 React 외의 환경에서도 사용할 수도 있어서 유연하게 개발을 가능하게 합니다.</p>
+  <p>Zustand를 선택한 이유는 간단한 설정과 직관적인 코드로 빠르고 쉽게 상태 관리를 구현할 수 있기 때문입니다. Zustand는 전역 상태와 로컬 상태를 유연하게 관리할 수 있어 복잡한 상태 관리 구조에서도 효율적입니다. React 외의 환경에서도 적용 가능하기 때문에 확장성과 유연성을 동시에 제공합니다.</p>
+</div>
+<div>
+  <h4>
+    <img src="https://img.shields.io/badge/ContextAPI-61DAFB?style=flat-square&logo=React&logoColor=white">
+  </h4>
+  <p>Context API는 프로젝트에서 users 테이블의 정보를 여러 컴포넌트에서 공유해야 했기 때문에 전역 상태 관리 도구로 사용했습니다. 외부 라이브러리 없이 간단하게 설정할 수 있으며, 특정 컴포넌트 트리 내에서 상태를 공유하고 업데이트하는 데 매우 적합합니다. 이를 통해 코드의 복잡성을 줄이고 데이터 관리의 일관성을 유지할 수 있었습니다.</p>
 </div>
 
+### 데이터베이스
+
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/5440caef-f393-4c5f-9294-1c400fc50960" alt="ContextAPI Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-    ContextAPI
+    <img src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=Supabase&logoColor=white">
   </h4>
-  <p>Context API를 전역 상태 관리에 사용한 이유는 프로젝트에서 users 테이블 정보를 여러 컴포넌트에서 공동적으로 불러와야 했기 때문에 사용하였습니다. Context API는 리액트 애플리케이션에서 상태를 전역으로 관리할 때 간단하면서도 효율적인 도구였습니다. 불필요한 외부 라이브러리를 추가하지 않고도 쉽게 설정할 수 있어 개발 속도를 높일 수 있었고, 특정 컴포넌트 트리에서 상태를 공유하고 업데이트하기에 매우 적합했습니다. 이를 통해 코드의 복잡도를 줄이고, 데이터 관리의 일관성을 유지할 수 있었습니다.</p>
+  <p>Supabase는 백엔드 구성에 필요한 시간을 크게 단축시켜줍니다. 또한 실시간 데이터 동기화 기능과 다양한 데이터베이스 기능을 제공하여 생산성과 기능성을 동시에 확보할 수 있습니다. 프론트엔드 개발자가 백엔드 구성에 쉽게 접근할 수 있도록 도와주는 Supabase를 선택했습니다.</p>
 </div>
 
-### Database
+### 스타일링
 
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/15bcf8d5-ff50-4890-8923-1099351626ad" alt="ContextAPI Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-    ContextAPI
+    <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=Tailwind%20CSS&logoColor=white">
   </h4>
-  <p>Context API를 전역 상태 관리에 사용한 이유는 프로젝트에서 users 테이블 정보를 여러 컴포넌트에서 공동적으로 불러와야 했기 때문에 사용하였습니다. Context API는 리액트 애플리케이션에서 상태를 전역으로 관리할 때 간단하면서도 효율적인 도구였습니다. 불필요한 외부 라이브러리를 추가하지 않고도 쉽게 설정할 수 있어 개발 속도를 높일 수 있었고, 특정 컴포넌트 트리에서 상태를 공유하고 업데이트하기에 매우 적합했습니다. 이를 통해 코드의 복잡도를 줄이고, 데이터 관리의 일관성을 유지할 수 있었습니다.</p>
+  <p>Tailwind CSS는 추가적인 CSS 파일 없이도 유지보수가 용이하며, 직관적인 클래스 네이밍으로 빠른 스타일링을 지원합니다. 조건부 스타일링이 쉽고, Next.js와의 호환성도 뛰어나기 때문에 효율적인 개발을 위해 선택했습니다.</p>
 </div>
 
-### Design
+### 협업 도구
 
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/277d98e2-2d9d-45e6-a8c1-b186ef40acc5" alt="ContextAPI Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-   Tailwind CSS
+    <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white">
   </h4>
-  <p>유지보수가 용이하며 추가적인 CSS 파일이나 코드 생성없이 빠른 스타일링이 가능합니다. 해당 코드를 보더라도 어떠한 스타일링인지 추측이 가능하며 조건부 스타일링도 쉽게 구현이 가능하며 NextJS에서 원활하게 사용할 수 있습니다.</p>
+  <p>GitHub는 분산된 팀 환경에서 효율적인 버전 관리와 협업을 가능하게 합니다. CI/CD 통합, 오픈소스 생태계, 코드 리뷰 및 이슈 관리 기능을 통해 개발 워크플로우를 최적화하고 있습니다.</p>
+</div>
+<div>
+  <h4>
+    <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white">
+  </h4>
+  <p>Figma는 실시간 협업과 디자인 시스템 관리를 지원하는 강력한 UI/UX 도구입니다. 클라우드 기반으로 언제 어디서나 접근이 가능하며, 디자이너와 개발자 간 원활한 협업을 도와 디자인 프로세스를 최적화합니다.</p>
+</div>
+<div>
+  <h4>
+    <img src="https://img.shields.io/badge/Excalidraw-000000?style=flat-square&logo=Excalidraw&logoColor=white">
+  </h4>
+  <p>Excalidraw는 손으로 그린 듯한 직관적인 다이어그램 작성 도구로, 실시간 협업 기능을 통해 아이디어를 빠르게 시각화하고 공유할 수 있습니다. 오픈소스이기 때문에 자유롭게 사용하고 확장할 수 있습니다.</p>
 </div>
 
-### Collaboration Tool
+### 개발 언어
 
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/56874eb2-7f98-4126-a403-db52373a9d93" alt="Figma Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-     Figma
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white">
   </h4>
-  <p>실시간 협업과 디자인 시스템 관리를 지원하는 강력한 UI/UX 디자인 도구입니다. 클라우드 기반으로 언제 어디서나 접근할 수 있으며, 디자이너와 개발자 간의 원활한 협업을 통해 디자인 워크플로우를 효율적으로 관리할 수 있습니다.</p>
-</div>
+  <p>TypeScript는 타입 지정으로 인해 코드의 안정성을 높여주고, 런타임 오류를 줄여줍니다. 자동완성 기능과 타입 기반 검증 덕분에 협업 시 개발 생산성을 크게 향상시킵니다. 코드의 안전성과 유지보수성 측면에서 TypeScript를 선택했습니다.</p>
+</div> 
 
+### 배포 서비스
 <div>
   <h4>
-    <img src="https://github.com/user-attachments/assets/ae7bd9a1-1224-4fd5-8a36-6228cfede1e5" alt="Excalidraw Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-     Excalidraw
+    <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white">
   </h4>
-  <p>직관적이고 사용하기 쉬운 인터페이스를 통해 손으로 그린 듯한 다이어그램을 빠르게 작성할 수 있습니다. 실시간 협업 기능과 오픈소스 특성을 가지고 있어 팀원 간의 아이디어 공유 및 시각적 커뮤니케이션을 효율적으로 지원합니다.</p>
-</div>
-
-### Programing Language
-
-<div>
-  <h4>
-    <img src="https://github.com/user-attachments/assets/266c60d1-ca8f-4042-824f-4e61271fed39" alt="TypeScript Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-     Figma
-  </h4>
-  <p>타입을 지정하여 JavaScript를 사용 했을 때 개발자에 의해 발생하는 버그 및 에러를 미리 방지합니다. 또한, 누구나 접근하지 못하도록 하여 코드의 변형을 막아 코드의 안정성을 높여주며 배포 전 런타임에 에러를 미리 파악 하여 잡을 수 있습니다. 타입을 미리 지정하면 해당 데이터 입력시 타입에 맞는 데이터를 ‘자동완성’ 과 같은 기능을 제공하기에 협업에서의 개발 생산성을 향상시킬 수 있습니다.</p>
-</div>
-
-### Deployment Platform
-
-<div>
-  <h4>
-    <img src="https://github.com/user-attachments/assets/7c761176-efbb-4715-b3a3-fde2032dff2b" alt="Vercel Icon" width="20px" style="vertical-align: middle; margin-right: 10px;" />
-     Vercel
-  </h4>
-  <p>타입을 지정하여 JavaScript를 사용 했을 때 개발자에 의해 발생하는 버그 및 에러를 미리 방지합니다. 또한, 누구나 접근하지 못하도록 하여 코드의 변형을 막아 코드의 안정성을 높여주며 배포 전 런타임에 에러를 미리 파악 하여 잡을 수 있습니다. 타입을 미리 지정하면 해당 데이터 입력시 타입에 맞는 데이터를 ‘자동완성’ 과 같은 기능을 제공하기에 협업에서의 개발 생산성을 향상시킬 수 있습니다.</p>
+  <p>Vercel은 빠르고 간편한 배포를 지원하며, 서버리스 환경에서 자동으로 스케일링되어 성능이 우수합니다. Next.js와의 완벽한 통합을 통해 최신 웹 애플리케이션을 손쉽게 개발, 배포, 최적화할 수 있어 개발자 경험을 극대화합니다.</p>
 </div>
 
 
