@@ -28,23 +28,20 @@ const Header: React.FC = () => {
       console.error("Error logging out:", error);
       return;
     }
-    // 상태 초기화 및 리디렉션
+
     resetAuthUser();
     initializationUser();
     router.push("/");
   };
 
-  // 검색창 토글
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
-  // 마이페이지 모달 토글
   const toggleMypageModal = () => {
     setIsMypageModalOpen(!isMypageModalOpen);
   };
 
-  // 모달 열기
   const handleOpenLoginModal = () => {
     setIsModalOpen(true);
     setIsMypageModalOpen(false);
@@ -65,14 +62,12 @@ const Header: React.FC = () => {
     }
   };
 
-  // 모바일 환경감지 마이페이지 모달을 닫는 함수
   const closeModalOnRouteChange = () => {
     if (window.innerWidth <= 768 && isMypageModalOpen) {
       setIsMypageModalOpen(false);
     }
   };
 
-  // 프로필 사진 캐싱 방지
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
   return (
@@ -98,7 +93,6 @@ const Header: React.FC = () => {
         </Link>
         <Suspense>
           <nav className="flex items-center gap-2">
-            {/* 검색창 데스크탑 */}
             <form className="relative s:hidden items-center overflow-hidden" onSubmit={handleSearch}>
               <label htmlFor="input" className="sr-only">
                 검색창
@@ -117,7 +111,6 @@ const Header: React.FC = () => {
               </button>
             </form>
             <div className="flex items-center gap-2">
-              {/* 모바일 검색 버튼 */}
               <button
                 onClick={toggleSearch}
                 type="submit"
@@ -166,7 +159,6 @@ const Header: React.FC = () => {
           </nav>
         </Suspense>
       </div>
-      {/* 모바일 검색창 input */}
       {isSearchOpen && (
         <Suspense>
           <form
@@ -211,7 +203,6 @@ const Header: React.FC = () => {
       )}
       {isMypageModalOpen && user && (
         <>
-          {/* 마이페이지 모달 */}
           <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleMypageModal}></div>
           <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-full max-w-[80%] border-[1px] border-fillLight bg-fillStrong shadow-lg rounded-lg p-5 z-50 s:block hidden">
             <div className="flex items-center mb-4 pb-4 border-b-[1px] border-b-fillLight">

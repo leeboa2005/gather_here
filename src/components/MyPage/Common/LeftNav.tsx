@@ -13,10 +13,8 @@ const LeftNav: React.FC = () => {
   const { user, userData, setUserData, loading } = useUser();
   const defaultImage = "/assets/header/user.svg";
 
-  // 캐시 방지용 URL 생성 함수
   const getProfileImageUrl = (url: string) => `${url}?${new Date().getTime()}`;
 
-  // 직군에 따라 클래스명 매핑
   const jobTitleClassMap: { [key: string]: string } = {
     프론트엔드: "text-primary",
     IOS: "text-accentMaya",
@@ -29,7 +27,6 @@ const LeftNav: React.FC = () => {
     데브옵스: "text-accentRed",
   };
 
-  // 직군에 따라 클래스명을 동적으로 설정
   const getJobTitleClass = (jobTitle: string) => {
     if (!jobTitle) {
       return "";
