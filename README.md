@@ -1,6 +1,6 @@
 ## 💻 @gather_here
 
-<img src="https://github.com/user-attachments/assets/c229353f-3ae5-4338-a96a-2c2e0527d9b5" alt="Group 4" width="800px" />
+<img src="https://github.com/user-attachments/assets/717b927f-3030-41cd-b76a-239c3768ba68" alt="Group 4" width="800px" />
 
 ## 📖 소개 및 개요
 - 프로젝트 기간 : 2023.7.16 ~ 8.20
